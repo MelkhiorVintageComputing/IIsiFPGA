@@ -83,23 +83,23 @@ _pds_pds_v1_0 = [
                                    "V4  J18 K16 J17 K15 K13 J15 J13 "
                                    "H15 H14 J14 G14 H17 G16 G17 G18 "
                                    "F16 F18 E18 F15 D18 E17 G13 D17 "), IOStandard("lvttl")),
-    ("D_3v3",              0, Pins("A14 A13 M4  B12 C12 T1  B14 B13 "
+    ("D_3v3",              0, Pins("R1 A13 M4  B12 C12 T1  B14 B13 "
                                    "N4  A16 A15 P3  D13 D12 L5  C14 "
                                    "D14 P4  B17 B16 L6  C15 D15 A18 "
                                    "B18 C17 C16 E16 E15 F13 F14 K6  "), IOStandard("lvttl")),
     ("cpuclk_3v3_n",       0, Pins("H16"), IOStandard("lvttl")),
-    ("reset_3v3_n",        0, Pins("B11"), IOStandard("lvttl")),
+    ("reset_3v3_n",        0, Pins("M3"), IOStandard("lvttl")),
     ("berr_3v3_n",         0, Pins("A11"), IOStandard("lvttl")),
     ("cback_3v3_n",        0, Pins("T8"), IOStandard("lvttl")),
     ("cbreq_3v3_n",        0, Pins("R8"), IOStandard("lvttl")),
     ("ciout_3v3_n",        0, Pins("V2"), IOStandard("lvttl")),
     ("cache_3v3",          0, Pins("U2"), IOStandard("lvttl")),
-    ("fc_3v3",             0, Pins("M3 R2 M2"), IOStandard("lvttl")),
+    ("fc_3v3",             0, Pins("B11 R2 M2"), IOStandard("lvttl")),
     ("siz_3v3",            0, Pins("K5 N2"), IOStandard("lvttl")),
     ("rw_3v3_n",           0, Pins("L4"), IOStandard("lvttl")),
     ("dsack_3v3_n",        0, Pins("N1 L3"), IOStandard("lvttl")),
     ("ds_3v3_n",           0, Pins("K3"), IOStandard("lvttl")),
-    ("halt_3v3_n",         0, Pins("R1"), IOStandard("lvttl")),
+    ("halt_3v3_n",         0, Pins("A14"), IOStandard("lvttl")),
     ("as_3v3_n",           0, Pins("P2"), IOStandard("lvttl")),
     ("sterm_3v3_n",        0, Pins("M1"), IOStandard("lvttl")),
     ("irq1_3v3_n",           0, Pins("L1"), IOStandard("lvttl")),

@@ -1,0 +1,6 @@
+[submodule "IIsi-to-ztex-gateware/VintageBusFPGA_Common"]
+	path = IIsi-to-ztex-gateware/VintageBusFPGA_Common
+	url = git@github.com:rdolbeau/VintageBusFPGA_Common.git
+[submodule "IIsi-to-ztex-gateware/hdl-util_hdmi"]
+	path = IIsi-to-ztex-gateware/hdl-util_hdmi
+	url = https://github.com/hdl-util/hdmi

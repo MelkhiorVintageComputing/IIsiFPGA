@@ -1,0 +1,48 @@
+### Module positions - created on Mon Mar 27 12:10:54 2023 ###
+### Printed by Pcbnew version kicad 5.1.9+dfsg1-1~bpo10+1
+## Unit = mm, Angle = deg.
+## Side : top
+# Ref     Val                           Package                                                 PosX       PosY       Rot  Side
+C1        100nF                         C_0603_1608Metric                                    51.5750    42.0000    0.0000  top
+C2        100nF                         C_0603_1608Metric                                    54.1150    62.2900    0.0000  top
+C3        47uF_10V+                     C_1206_3216Metric                                    16.7150    41.7500    0.0000  top
+C4        100nF                         C_0603_1608Metric                                    56.5350    26.7500   90.0000  top
+C5        100nF                         C_0603_1608Metric                                    67.5350    26.7500   90.0000  top
+C6        100nF                         C_0603_1608Metric                                   100.5350    26.7500   90.0000  top
+C7        100nF                         C_0603_1608Metric                                    89.5350    26.7500   90.0000  top
+C8        100nF                         C_0603_1608Metric                                    78.5350    26.7500   90.0000  top
+C9        100nF                         C_0603_1608Metric                                    45.5350    26.7500   90.0000  top
+C10       100nF                         C_0603_1608Metric                                    34.5350    26.7500   90.0000  top
+C11       100nF                         C_0603_1608Metric                                    23.5350    26.7500   90.0000  top
+C12       100nF                         C_0603_1608Metric                                    12.5350    26.7500   90.0000  top
+C13       100nF                         C_0603_1608Metric                                     1.5350    26.7500   90.0000  top
+C14       100nF                         C_0603_1608Metric                                    56.7100    45.0750  180.0000  top
+C15       10nF                          C_0603_1608Metric                                    41.8300    84.1200  180.0000  top
+C16       47uF_10V_1206                 C_1206_3216Metric                                    39.6050    81.6200  180.0000  top
+C17       100nF                         C_0603_1608Metric                                    54.5250    75.3200    0.0000  top
+C18       100nF                         C_0603_1608Metric                                    52.8300    77.3700    0.0000  top
+C19       100nF                         C_0603_1608Metric                                    52.5550    86.6200    0.0000  top
+C20       10nF_1kV_0805                 C_0805_2012Metric                                    27.5100    94.0000  180.0000  top
+C21       100nF                         C_0603_1608Metric                                    74.2850    82.5000    0.0000  top
+D1        RED_LED_0603                  LED_0603_1608Metric                                  15.4600    91.0000  270.0000  top
+J1        Conn_02x07_Odd_Even           PinHeader_2x07_P2.00mm_Horizontal_For_SeeedStudio   103.9100    60.1400    0.0000  top
+J2        650906-5                      6509065                                             104.1400     2.5400    0.0000  top
+J3        10029449-111RLF_(HDMI_A)      HDMI_A_Amphenol_10029449-111                         48.2300    92.3300  180.0000  top
+J4        A2541HWR-2x6P_(Pmod_2x6_F_R)  PinSocket_2x06_P2.54mm_Horizontal                    86.2100    86.2500  270.0000  top
+JAB1      ZTEX_AB-ztex_AB               PinHeader_2x32_P2.54mm_Vertical_For_SeeedStudio      15.2400    35.0000   90.0000  top
+JCD1      ZTEX_CD-ztex_CD               PinHeader_2x32_P2.54mm_Vertical_For_SeeedStudio      15.2400    66.7500   90.0000  top
+R1        560                           R_0603_1608Metric                                    15.4600    87.0000   90.0000  top
+R2        1M_500V_1206                  R_1206_3216Metric                                    26.9975    90.0000  180.0000  top
+U1        SN74CB3T3245PWR               SOP65P640X120-20N                                    59.4600    20.0000   90.0000  top
+U2        SN74CB3T3245PWR               SOP65P640X120-20N                                    70.4600    20.0000   90.0000  top
+U3        SN74CB3T3245PWR               SOP65P640X120-20N                                   103.4600    20.0000   90.0000  top
+U4        SN74CB3T3245PWR               SOP65P640X120-20N                                    92.4600    20.0000   90.0000  top
+U5        SN74CB3T3245PWR               SOP65P640X120-20N                                    81.4600    20.0000   90.0000  top
+U6        SN74CB3T3245PWR               SOP65P640X120-20N                                    48.4600    20.0000   90.0000  top
+U7        SN74CB3T3245PWR               SOP65P640X120-20N                                    37.4600    20.0000   90.0000  top
+U8        SN74CB3T3245PWR               SOP65P640X120-20N                                    26.4600    20.0000   90.0000  top
+U9        SN74CB3T3245PWR               SOP65P640X120-20N                                    15.4600    20.0000   90.0000  top
+U10       SN74CB3T3245PWR               SOP65P640X120-20N                                     4.4600    20.0000   90.0000  top
+U11       SN74CB3T3245PWR               SOP65P640X120-20N                                    63.4600    48.0000  180.0000  top
+U12       TPD12S016PWR                  SOP65P640X120-24N                                    46.5550    78.1900   90.0000  top
+## End

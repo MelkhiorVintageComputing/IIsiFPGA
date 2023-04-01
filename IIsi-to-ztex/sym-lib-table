@@ -1,0 +1,11 @@
+(sym_lib_table
+  (lib (name SN74CB3T3245PWR)(type Legacy)(uri ${KIPRJMOD}/SN74CB3T3245PWR.lib)(options "")(descr ""))
+  (lib (name logo)(type Legacy)(uri ${KIPRJMOD}/logo.lib)(options "")(descr ""))
+  (lib (name se30_pds_graphics)(type Legacy)(uri ${KIPRJMOD}/se30_pds_graphics.lib)(options "")(descr ""))
+  (lib (name ul_SN74CB3T3125PW)(type Legacy)(uri ${KIPRJMOD}/ul_SN74CB3T3125PW.lib)(options "")(descr ""))
+  (lib (name ul_SN74CB3T16210DGGR)(type Legacy)(uri ${KIPRJMOD}/ul_SN74CB3T16210DGGR.lib)(options "")(descr ""))
+  (lib (name ul_SN74CB3T16211DGGR)(type Legacy)(uri ${KIPRJMOD}/ul_SN74CB3T16211DGGR.lib)(options "")(descr ""))
+  (lib (name ztex_AB)(type Legacy)(uri ${KIPRJMOD}/ztex_AB.lib)(options "")(descr ""))
+  (lib (name ztex_CD)(type Legacy)(uri ${KIPRJMOD}/ztex_CD.lib)(options "")(descr ""))
+  (lib (name TPD12S016PWR)(type Legacy)(uri ${KIPRJMOD}/TPD12S016PWR.lib)(options "")(descr ""))
+)

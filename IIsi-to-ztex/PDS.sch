@@ -1,0 +1,2051 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 5
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 9650 5225 0    50   Input ~ 0
+CACHE
+Text GLabel 9650 5725 0    50   Input ~ 0
+~CBACK
+Text GLabel 9650 1625 0    50   Input ~ 0
+~CIOUT
+Text GLabel 9650 3625 0    50   Input ~ 0
+A29
+Text GLabel 10650 1525 2    50   Input ~ 0
+A28
+Text GLabel 9650 5825 0    50   Input ~ 0
+~DSACK0
+Text GLabel 10650 3825 2    50   Input ~ 0
+~AS
+Text GLabel 9650 6025 0    50   Input ~ 0
+~BG
+Text GLabel 9650 1825 0    50   Input ~ 0
+~DSACK1
+Text GLabel 10650 3625 2    50   Input ~ 0
+~CBREQ
+Text GLabel 9650 1725 0    50   Input ~ 0
+~STERM
+Text GLabel 10650 5425 2    50   Input ~ 0
+A30
+Text GLabel 9650 4825 0    50   Input ~ 0
+CPUCLK
+Text GLabel 10650 3325 2    50   Input ~ 0
+~IRQ1
+Text GLabel 10650 4125 2    50   Input ~ 0
+~HALT
+Text GLabel 9650 2125 0    50   Input ~ 0
+FC2
+Text GLabel 10650 4025 2    50   Input ~ 0
+FC0
+Text GLabel 10650 3525 2    50   Input ~ 0
+RMC
+Text GLabel 10650 5325 2    50   Input ~ 0
+D31
+Text GLabel 10650 5225 2    50   Input ~ 0
+D28
+Text GLabel 10650 5125 2    50   Input ~ 0
+D25
+Text GLabel 9650 7125 0    50   Input ~ 0
+D22
+Text GLabel 9650 7025 0    50   Input ~ 0
+D19
+Text GLabel 9650 2925 0    50   Input ~ 0
+D16
+Text GLabel 9650 2825 0    50   Input ~ 0
+D13
+Text GLabel 9650 2725 0    50   Input ~ 0
+D10
+Text GLabel 9650 2025 0    50   Input ~ 0
+~BGACK
+Text GLabel 10650 2525 2    50   Input ~ 0
+A1
+Text GLabel 9650 3725 0    50   Input ~ 0
+A26
+Text GLabel 9650 3825 0    50   Input ~ 0
+A23
+Text GLabel 10650 1825 2    50   Input ~ 0
+A20
+Text GLabel 10650 3425 2    50   Input ~ 0
+IPL0
+Text GLabel 9650 2425 0    50   Input ~ 0
+D2
+Text GLabel 10650 4225 2    50   Input ~ 0
+D1
+Text GLabel 10650 2425 2    50   Input ~ 0
+A4
+Text GLabel 10650 6325 2    50   Input ~ 0
+A6
+Text GLabel 10650 6125 2    50   Input ~ 0
+A11
+Text GLabel 10650 2225 2    50   Input ~ 0
+A9
+Text GLabel 10650 5925 2    50   Input ~ 0
+A16
+Text GLabel 9650 4025 0    50   Input ~ 0
+A18
+$Comp
+L power:+12V #PWR0115
+U 1 1 631F2920
+P 10650 6925
+F 0 "#PWR0115" H 10650 6775 50  0001 C CNN
+F 1 "+12V" V 10665 7053 50  0000 L CNN
+F 2 "" H 10650 6925 50  0001 C CNN
+F 3 "" H 10650 6925 50  0001 C CNN
+	1    10650 6925
+	0    1    1    0   
+$EndComp
+Text GLabel 10650 3725 2    50   Input ~ 0
+~RW
+Text GLabel 9650 1925 0    50   Input ~ 0
+SIZ1
+Text GLabel 10650 1325 2    50   Input ~ 0
+D30
+Text GLabel 10650 1225 2    50   Input ~ 0
+D27
+Text GLabel 9650 3225 0    50   Input ~ 0
+D24
+Text GLabel 9650 3125 0    50   Input ~ 0
+D21
+Text GLabel 9650 3025 0    50   Input ~ 0
+D18
+Text GLabel 10650 4725 2    50   Input ~ 0
+D15
+Text GLabel 10650 4625 2    50   Input ~ 0
+D12
+Text GLabel 10650 4525 2    50   Input ~ 0
+D9
+Text GLabel 10650 3925 2    50   Input ~ 0
+~BR
+Text GLabel 9650 3525 0    50   Input ~ 0
+A31
+Text GLabel 10650 1625 2    50   Input ~ 0
+A25
+Text GLabel 10650 5725 2    50   Input ~ 0
+A22
+Text GLabel 9650 1525 0    50   Input ~ 0
+IPL2
+Text GLabel 9650 6425 0    50   Input ~ 0
+D3
+Text GLabel 9650 2525 0    50   Input ~ 0
+D5
+Text GLabel 9650 2325 0    50   Input ~ 0
+D0
+Text GLabel 9650 4625 0    50   Input ~ 0
+A2
+Text GLabel 10650 2125 2    50   Input ~ 0
+A12
+Text GLabel 9650 4225 0    50   Input ~ 0
+A13
+Text GLabel 10650 6225 2    50   Input ~ 0
+A8
+Text GLabel 9650 4125 0    50   Input ~ 0
+A15
+Text GLabel 10650 1925 2    50   Input ~ 0
+A17
+Text GLabel 9650 5625 0    50   Input ~ 0
+~DS
+Text GLabel 9650 6225 0    50   Input ~ 0
+~BERR
+Text GLabel 9650 5925 0    50   Input ~ 0
+SIZ0
+Text GLabel 9650 6125 0    50   Input ~ 0
+FC1
+Text GLabel 9650 2225 0    50   Input ~ 0
+~RESET
+Text GLabel 9650 3425 0    50   Input ~ 0
+D29
+Text GLabel 9650 3325 0    50   Input ~ 0
+D26
+Text GLabel 10650 5025 2    50   Input ~ 0
+D23
+Text GLabel 10650 4925 2    50   Input ~ 0
+D20
+Text GLabel 10650 4825 2    50   Input ~ 0
+D17
+Text GLabel 9650 6825 0    50   Input ~ 0
+D14
+Text GLabel 9650 6725 0    50   Input ~ 0
+D11
+Text GLabel 9650 2625 0    50   Input ~ 0
+D8
+Text GLabel 10650 6525 2    50   Input ~ 0
+A0
+Text GLabel 10650 5525 2    50   Input ~ 0
+A27
+Text GLabel 10650 5625 2    50   Input ~ 0
+A24
+Text GLabel 9650 3925 0    50   Input ~ 0
+A21
+Text GLabel 9650 5525 0    50   Input ~ 0
+IPL1
+Text GLabel 10650 4325 2    50   Input ~ 0
+D4
+Text GLabel 9650 6525 0    50   Input ~ 0
+D6
+Text GLabel 10650 4425 2    50   Input ~ 0
+D7
+Text GLabel 10650 6425 2    50   Input ~ 0
+A3
+Text GLabel 9650 4525 0    50   Input ~ 0
+A5
+Text GLabel 9650 4425 0    50   Input ~ 0
+A7
+Text GLabel 9650 4325 0    50   Input ~ 0
+A10
+Text GLabel 10650 6025 2    50   Input ~ 0
+A14
+Text GLabel 10650 5825 2    50   Input ~ 0
+A19
+$Comp
+L power:-5V #PWR0117
+U 1 1 631F5730
+P 10650 2925
+F 0 "#PWR0117" H 10650 3025 50  0001 C CNN
+F 1 "-5V" V 10665 3053 50  0000 L CNN
+F 2 "" H 10650 2925 50  0001 C CNN
+F 3 "" H 10650 2925 50  0001 C CNN
+	1    10650 2925
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0118
+U 1 1 63223559
+P 2475 1050
+F 0 "#PWR0118" H 2475 900 50  0001 C CNN
+F 1 "+3V3" V 2490 1178 50  0000 L CNN
+F 2 "" H 2475 1050 50  0001 C CNN
+F 3 "" H 2475 1050 50  0001 C CNN
+	1    2475 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6322F267
+P 2625 1050
+AR Path="/618F532C/6322F267" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6322F267" Ref="C?"  Part="1" 
+AR Path="/631F3844/6322F267" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6322F267" Ref="C4"  Part="1" 
+AR Path="/6432B33E/6322F267" Ref="C6"  Part="1" 
+F 0 "C6" H 2650 1150 50  0000 L CNN
+F 1 "100nF" H 2650 950 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 2663 900 50  0001 C CNN
+F 3 "" H 2625 1050 50  0000 C CNN
+F 4 "www.yageo.com" H 2625 1050 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 2625 1050 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 2625 1050 50  0001 C CNN "Mouser"
+F 7 "?" H 2625 1050 50  0001 C CNN "Digikey"
+F 8 "?" H 2625 1050 50  0001 C CNN "LCSC"
+F 9 "?" H 2625 1050 50  0001 C CNN "Koncar"
+F 10 "TB" H 2625 1050 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 2625 1050 50  0001 C CNN "URL"
+	1    2625 1050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0119
+U 1 1 6322F27B
+P 2775 1050
+F 0 "#PWR0119" H 2775 800 50  0001 C CNN
+F 1 "GND" H 2780 877 50  0000 C CNN
+F 2 "" H 2775 1050 50  0001 C CNN
+F 3 "" H 2775 1050 50  0001 C CNN
+	1    2775 1050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0120
+U 1 1 6322FC30
+P 2475 4750
+F 0 "#PWR0120" H 2475 4600 50  0001 C CNN
+F 1 "+3V3" V 2490 4878 50  0000 L CNN
+F 2 "" H 2475 4750 50  0001 C CNN
+F 3 "" H 2475 4750 50  0001 C CNN
+	1    2475 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6322FC4A
+P 2625 4750
+AR Path="/618F532C/6322FC4A" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6322FC4A" Ref="C?"  Part="1" 
+AR Path="/631F3844/6322FC4A" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6322FC4A" Ref="C5"  Part="1" 
+AR Path="/6432B33E/6322FC4A" Ref="C8"  Part="1" 
+F 0 "C8" H 2650 4850 50  0000 L CNN
+F 1 "100nF" H 2650 4650 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 2663 4600 50  0001 C CNN
+F 3 "" H 2625 4750 50  0000 C CNN
+F 4 "www.yageo.com" H 2625 4750 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 2625 4750 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 2625 4750 50  0001 C CNN "Mouser"
+F 7 "?" H 2625 4750 50  0001 C CNN "Digikey"
+F 8 "?" H 2625 4750 50  0001 C CNN "LCSC"
+F 9 "?" H 2625 4750 50  0001 C CNN "Koncar"
+F 10 "TB" H 2625 4750 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 2625 4750 50  0001 C CNN "URL"
+	1    2625 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0121
+U 1 1 6322FC51
+P 2775 4750
+F 0 "#PWR0121" H 2775 4500 50  0001 C CNN
+F 1 "GND" H 2780 4577 50  0000 C CNN
+F 2 "" H 2775 4750 50  0001 C CNN
+F 3 "" H 2775 4750 50  0001 C CNN
+	1    2775 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0122
+U 1 1 6323610F
+P 2425 8450
+F 0 "#PWR0122" H 2425 8300 50  0001 C CNN
+F 1 "+3V3" V 2440 8578 50  0000 L CNN
+F 2 "" H 2425 8450 50  0001 C CNN
+F 3 "" H 2425 8450 50  0001 C CNN
+	1    2425 8450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 63236129
+P 2575 8450
+AR Path="/618F532C/63236129" Ref="C?"  Part="1" 
+AR Path="/618E8C75/63236129" Ref="C?"  Part="1" 
+AR Path="/631F3844/63236129" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/63236129" Ref="C6"  Part="1" 
+AR Path="/6432B33E/63236129" Ref="C4"  Part="1" 
+F 0 "C4" H 2600 8550 50  0000 L CNN
+F 1 "100nF" H 2600 8350 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 2613 8300 50  0001 C CNN
+F 3 "" H 2575 8450 50  0000 C CNN
+F 4 "www.yageo.com" H 2575 8450 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 2575 8450 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 2575 8450 50  0001 C CNN "Mouser"
+F 7 "?" H 2575 8450 50  0001 C CNN "Digikey"
+F 8 "?" H 2575 8450 50  0001 C CNN "LCSC"
+F 9 "?" H 2575 8450 50  0001 C CNN "Koncar"
+F 10 "TB" H 2575 8450 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 2575 8450 50  0001 C CNN "URL"
+	1    2575 8450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0123
+U 1 1 63236130
+P 2725 8450
+F 0 "#PWR0123" H 2725 8200 50  0001 C CNN
+F 1 "GND" H 2730 8277 50  0000 C CNN
+F 2 "" H 2725 8450 50  0001 C CNN
+F 3 "" H 2725 8450 50  0001 C CNN
+	1    2725 8450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0124
+U 1 1 63239855
+P 5675 4750
+F 0 "#PWR0124" H 5675 4600 50  0001 C CNN
+F 1 "+3V3" V 5690 4878 50  0000 L CNN
+F 2 "" H 5675 4750 50  0001 C CNN
+F 3 "" H 5675 4750 50  0001 C CNN
+	1    5675 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6323986F
+P 5825 4750
+AR Path="/618F532C/6323986F" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6323986F" Ref="C?"  Part="1" 
+AR Path="/631F3844/6323986F" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6323986F" Ref="C7"  Part="1" 
+AR Path="/6432B33E/6323986F" Ref="C11"  Part="1" 
+F 0 "C11" H 5850 4850 50  0000 L CNN
+F 1 "100nF" H 5850 4650 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5863 4600 50  0001 C CNN
+F 3 "" H 5825 4750 50  0000 C CNN
+F 4 "www.yageo.com" H 5825 4750 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 5825 4750 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 5825 4750 50  0001 C CNN "Mouser"
+F 7 "?" H 5825 4750 50  0001 C CNN "Digikey"
+F 8 "?" H 5825 4750 50  0001 C CNN "LCSC"
+F 9 "?" H 5825 4750 50  0001 C CNN "Koncar"
+F 10 "TB" H 5825 4750 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 5825 4750 50  0001 C CNN "URL"
+	1    5825 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0125
+U 1 1 63239876
+P 5975 4750
+F 0 "#PWR0125" H 5975 4500 50  0001 C CNN
+F 1 "GND" H 5980 4577 50  0000 C CNN
+F 2 "" H 5975 4750 50  0001 C CNN
+F 3 "" H 5975 4750 50  0001 C CNN
+	1    5975 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0126
+U 1 1 64B601A0
+P 2475 2450
+F 0 "#PWR0126" H 2475 2200 50  0001 C CNN
+F 1 "GND" H 2480 2277 50  0000 C CNN
+F 2 "" H 2475 2450 50  0001 C CNN
+F 3 "" H 2475 2450 50  0001 C CNN
+	1    2475 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U3
+U 1 1 64FC482D
+P 1775 1750
+F 0 "U3" H 1775 2720 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 1775 2629 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 1775 1750 50  0001 L BNN
+F 3 "" H 1775 1750 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 1775 1750 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 1775 1750 50  0001 C CNN "URL"
+	1    1775 1750
+	1    0    0    -1  
+$EndComp
+Connection ~ 2475 1050
+$Comp
+L power:+3V3 #PWR0128
+U 1 1 6503FC96
+P 2475 2900
+F 0 "#PWR0128" H 2475 2750 50  0001 C CNN
+F 1 "+3V3" V 2490 3028 50  0000 L CNN
+F 2 "" H 2475 2900 50  0001 C CNN
+F 3 "" H 2475 2900 50  0001 C CNN
+	1    2475 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0129
+U 1 1 6503FCAA
+P 2775 2900
+F 0 "#PWR0129" H 2775 2650 50  0001 C CNN
+F 1 "GND" H 2780 2727 50  0000 C CNN
+F 2 "" H 2775 2900 50  0001 C CNN
+F 3 "" H 2775 2900 50  0001 C CNN
+	1    2775 2900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U4
+U 1 1 6503FCB6
+P 1775 3600
+F 0 "U4" H 1775 4570 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 1775 4479 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 1775 3600 50  0001 L BNN
+F 3 "" H 1775 3600 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 1775 3600 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 1775 3600 50  0001 C CNN "URL"
+	1    1775 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0131
+U 1 1 65042426
+P 2475 4300
+F 0 "#PWR0131" H 2475 4050 50  0001 C CNN
+F 1 "GND" H 2480 4127 50  0000 C CNN
+F 2 "" H 2475 4300 50  0001 C CNN
+F 3 "" H 2475 4300 50  0001 C CNN
+	1    2475 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U5
+U 1 1 6508535F
+P 1775 5450
+F 0 "U5" H 1775 6420 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 1775 6329 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 1775 5450 50  0001 L BNN
+F 3 "" H 1775 5450 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 1775 5450 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 1775 5450 50  0001 C CNN "URL"
+	1    1775 5450
+	1    0    0    -1  
+$EndComp
+Connection ~ 2475 4750
+$Comp
+L power:GND #PWR0133
+U 1 1 650A07E7
+P 2475 6150
+F 0 "#PWR0133" H 2475 5900 50  0001 C CNN
+F 1 "GND" H 2480 5977 50  0000 C CNN
+F 2 "" H 2475 6150 50  0001 C CNN
+F 3 "" H 2475 6150 50  0001 C CNN
+	1    2475 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0134
+U 1 1 650DA70F
+P 2450 6600
+F 0 "#PWR0134" H 2450 6450 50  0001 C CNN
+F 1 "+3V3" V 2465 6728 50  0000 L CNN
+F 2 "" H 2450 6600 50  0001 C CNN
+F 3 "" H 2450 6600 50  0001 C CNN
+	1    2450 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 650DA71D
+P 2600 6600
+AR Path="/618F532C/650DA71D" Ref="C?"  Part="1" 
+AR Path="/618E8C75/650DA71D" Ref="C?"  Part="1" 
+AR Path="/631F3844/650DA71D" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/650DA71D" Ref="C17"  Part="1" 
+AR Path="/6432B33E/650DA71D" Ref="C5"  Part="1" 
+F 0 "C5" H 2625 6700 50  0000 L CNN
+F 1 "100nF" H 2625 6500 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 2638 6450 50  0001 C CNN
+F 3 "" H 2600 6600 50  0000 C CNN
+F 4 "www.yageo.com" H 2600 6600 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 2600 6600 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 2600 6600 50  0001 C CNN "Mouser"
+F 7 "?" H 2600 6600 50  0001 C CNN "Digikey"
+F 8 "?" H 2600 6600 50  0001 C CNN "LCSC"
+F 9 "?" H 2600 6600 50  0001 C CNN "Koncar"
+F 10 "TB" H 2600 6600 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 2600 6600 50  0001 C CNN "URL"
+	1    2600 6600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0136
+U 1 1 650DA723
+P 2750 6600
+F 0 "#PWR0136" H 2750 6350 50  0001 C CNN
+F 1 "GND" H 2755 6427 50  0000 C CNN
+F 2 "" H 2750 6600 50  0001 C CNN
+F 3 "" H 2750 6600 50  0001 C CNN
+	1    2750 6600
+	0    -1   -1   0   
+$EndComp
+Connection ~ 2450 6600
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U2
+U 1 1 650DA729
+P 1750 7300
+F 0 "U2" H 1750 8270 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 1750 8179 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 1750 7300 50  0001 L BNN
+F 3 "" H 1750 7300 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 1750 7300 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 1750 7300 50  0001 C CNN "URL"
+	1    1750 7300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0137
+U 1 1 65112952
+P 2450 8000
+F 0 "#PWR0137" H 2450 7750 50  0001 C CNN
+F 1 "GND" H 2455 7827 50  0000 C CNN
+F 2 "" H 2450 8000 50  0001 C CNN
+F 3 "" H 2450 8000 50  0001 C CNN
+	1    2450 8000
+	1    0    0    -1  
+$EndComp
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U1
+U 1 1 651C3CDE
+P 1725 9150
+F 0 "U1" H 1725 10120 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 1725 10029 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 1725 9150 50  0001 L BNN
+F 3 "" H 1725 9150 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 1725 9150 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 1725 9150 50  0001 C CNN "URL"
+	1    1725 9150
+	1    0    0    -1  
+$EndComp
+Connection ~ 2425 8450
+$Comp
+L power:GND #PWR0139
+U 1 1 651F429D
+P 2425 9850
+F 0 "#PWR0139" H 2425 9600 50  0001 C CNN
+F 1 "GND" H 2430 9677 50  0000 C CNN
+F 2 "" H 2425 9850 50  0001 C CNN
+F 3 "" H 2425 9850 50  0001 C CNN
+	1    2425 9850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0140
+U 1 1 6528F512
+P 5650 1075
+F 0 "#PWR0140" H 5650 925 50  0001 C CNN
+F 1 "+3V3" V 5665 1203 50  0000 L CNN
+F 2 "" H 5650 1075 50  0001 C CNN
+F 3 "" H 5650 1075 50  0001 C CNN
+	1    5650 1075
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6528F520
+P 5800 1075
+AR Path="/618F532C/6528F520" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6528F520" Ref="C?"  Part="1" 
+AR Path="/631F3844/6528F520" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6528F520" Ref="C18"  Part="1" 
+AR Path="/6432B33E/6528F520" Ref="C9"  Part="1" 
+F 0 "C9" H 5825 1175 50  0000 L CNN
+F 1 "100nF" H 5825 975 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5838 925 50  0001 C CNN
+F 3 "" H 5800 1075 50  0000 C CNN
+F 4 "www.yageo.com" H 5800 1075 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 5800 1075 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 5800 1075 50  0001 C CNN "Mouser"
+F 7 "?" H 5800 1075 50  0001 C CNN "Digikey"
+F 8 "?" H 5800 1075 50  0001 C CNN "LCSC"
+F 9 "?" H 5800 1075 50  0001 C CNN "Koncar"
+F 10 "TB" H 5800 1075 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 5800 1075 50  0001 C CNN "URL"
+	1    5800 1075
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0141
+U 1 1 6528F526
+P 5950 1075
+F 0 "#PWR0141" H 5950 825 50  0001 C CNN
+F 1 "GND" H 5955 902 50  0000 C CNN
+F 2 "" H 5950 1075 50  0001 C CNN
+F 3 "" H 5950 1075 50  0001 C CNN
+	1    5950 1075
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0143
+U 1 1 652C67DB
+P 5650 2475
+F 0 "#PWR0143" H 5650 2225 50  0001 C CNN
+F 1 "GND" H 5655 2302 50  0000 C CNN
+F 2 "" H 5650 2475 50  0001 C CNN
+F 3 "" H 5650 2475 50  0001 C CNN
+	1    5650 2475
+	1    0    0    -1  
+$EndComp
+Connection ~ 5650 1075
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U6
+U 1 1 6528F532
+P 4950 1775
+F 0 "U6" H 4950 2745 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 4950 2654 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 4950 1775 50  0001 L BNN
+F 3 "" H 4950 1775 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 4950 1775 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 4950 1775 50  0001 C CNN "URL"
+	1    4950 1775
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0144
+U 1 1 6536754C
+P 5675 2925
+F 0 "#PWR0144" H 5675 2775 50  0001 C CNN
+F 1 "+3V3" V 5690 3053 50  0000 L CNN
+F 2 "" H 5675 2925 50  0001 C CNN
+F 3 "" H 5675 2925 50  0001 C CNN
+	1    5675 2925
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6536755A
+P 5825 2925
+AR Path="/618F532C/6536755A" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6536755A" Ref="C?"  Part="1" 
+AR Path="/631F3844/6536755A" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6536755A" Ref="C19"  Part="1" 
+AR Path="/6432B33E/6536755A" Ref="C10"  Part="1" 
+F 0 "C10" H 5850 3025 50  0000 L CNN
+F 1 "100nF" H 5850 2825 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5863 2775 50  0001 C CNN
+F 3 "" H 5825 2925 50  0000 C CNN
+F 4 "www.yageo.com" H 5825 2925 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 5825 2925 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 5825 2925 50  0001 C CNN "Mouser"
+F 7 "?" H 5825 2925 50  0001 C CNN "Digikey"
+F 8 "?" H 5825 2925 50  0001 C CNN "LCSC"
+F 9 "?" H 5825 2925 50  0001 C CNN "Koncar"
+F 10 "TB" H 5825 2925 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 5825 2925 50  0001 C CNN "URL"
+	1    5825 2925
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0145
+U 1 1 65367560
+P 5975 2925
+F 0 "#PWR0145" H 5975 2675 50  0001 C CNN
+F 1 "GND" H 5980 2752 50  0000 C CNN
+F 2 "" H 5975 2925 50  0001 C CNN
+F 3 "" H 5975 2925 50  0001 C CNN
+	1    5975 2925
+	0    -1   -1   0   
+$EndComp
+Connection ~ 5675 2925
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U7
+U 1 1 6536756D
+P 4975 3625
+F 0 "U7" H 4975 4595 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 4975 4504 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 4975 3625 50  0001 L BNN
+F 3 "" H 4975 3625 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 4975 3625 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 4975 3625 50  0001 C CNN "URL"
+	1    4975 3625
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0147
+U 1 1 6536B1CC
+P 5675 4325
+F 0 "#PWR0147" H 5675 4075 50  0001 C CNN
+F 1 "GND" H 5680 4152 50  0000 C CNN
+F 2 "" H 5675 4325 50  0001 C CNN
+F 3 "" H 5675 4325 50  0001 C CNN
+	1    5675 4325
+	1    0    0    -1  
+$EndComp
+Connection ~ 5675 4750
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U8
+U 1 1 655662DF
+P 4975 5450
+F 0 "U8" H 4975 6420 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 4975 6329 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 4975 5450 50  0001 L BNN
+F 3 "" H 4975 5450 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 4975 5450 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 4975 5450 50  0001 C CNN "URL"
+	1    4975 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0149
+U 1 1 656BE387
+P 5675 6150
+F 0 "#PWR0149" H 5675 5900 50  0001 C CNN
+F 1 "GND" H 5680 5977 50  0000 C CNN
+F 2 "" H 5675 6150 50  0001 C CNN
+F 3 "" H 5675 6150 50  0001 C CNN
+	1    5675 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0150
+U 1 1 6571258D
+P 5675 6600
+F 0 "#PWR0150" H 5675 6450 50  0001 C CNN
+F 1 "+3V3" V 5690 6728 50  0000 L CNN
+F 2 "" H 5675 6600 50  0001 C CNN
+F 3 "" H 5675 6600 50  0001 C CNN
+	1    5675 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6571259B
+P 5825 6600
+AR Path="/618F532C/6571259B" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6571259B" Ref="C?"  Part="1" 
+AR Path="/631F3844/6571259B" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6571259B" Ref="C20"  Part="1" 
+AR Path="/6432B33E/6571259B" Ref="C12"  Part="1" 
+F 0 "C12" H 5850 6700 50  0000 L CNN
+F 1 "100nF" H 5850 6500 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5863 6450 50  0001 C CNN
+F 3 "" H 5825 6600 50  0000 C CNN
+F 4 "www.yageo.com" H 5825 6600 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 5825 6600 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 5825 6600 50  0001 C CNN "Mouser"
+F 7 "?" H 5825 6600 50  0001 C CNN "Digikey"
+F 8 "?" H 5825 6600 50  0001 C CNN "LCSC"
+F 9 "?" H 5825 6600 50  0001 C CNN "Koncar"
+F 10 "TB" H 5825 6600 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 5825 6600 50  0001 C CNN "URL"
+	1    5825 6600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0151
+U 1 1 657125A1
+P 5975 6600
+F 0 "#PWR0151" H 5975 6350 50  0001 C CNN
+F 1 "GND" H 5980 6427 50  0000 C CNN
+F 2 "" H 5975 6600 50  0001 C CNN
+F 3 "" H 5975 6600 50  0001 C CNN
+	1    5975 6600
+	0    -1   -1   0   
+$EndComp
+Connection ~ 5675 6600
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U9
+U 1 1 657125AE
+P 4975 7300
+F 0 "U9" H 4975 8270 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 4975 8179 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 4975 7300 50  0001 L BNN
+F 3 "" H 4975 7300 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 4975 7300 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 4975 7300 50  0001 C CNN "URL"
+	1    4975 7300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0153
+U 1 1 657CB09A
+P 5675 8000
+F 0 "#PWR0153" H 5675 7750 50  0001 C CNN
+F 1 "GND" H 5680 7827 50  0000 C CNN
+F 2 "" H 5675 8000 50  0001 C CNN
+F 3 "" H 5675 8000 50  0001 C CNN
+	1    5675 8000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0154
+U 1 1 657D8130
+P 5675 8475
+F 0 "#PWR0154" H 5675 8325 50  0001 C CNN
+F 1 "+3V3" V 5690 8603 50  0000 L CNN
+F 2 "" H 5675 8475 50  0001 C CNN
+F 3 "" H 5675 8475 50  0001 C CNN
+	1    5675 8475
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 657D813E
+P 5825 8475
+AR Path="/618F532C/657D813E" Ref="C?"  Part="1" 
+AR Path="/618E8C75/657D813E" Ref="C?"  Part="1" 
+AR Path="/631F3844/657D813E" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/657D813E" Ref="C21"  Part="1" 
+AR Path="/6432B33E/657D813E" Ref="C13"  Part="1" 
+F 0 "C13" H 5850 8575 50  0000 L CNN
+F 1 "100nF" H 5850 8375 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5863 8325 50  0001 C CNN
+F 3 "" H 5825 8475 50  0000 C CNN
+F 4 "www.yageo.com" H 5825 8475 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 5825 8475 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 5825 8475 50  0001 C CNN "Mouser"
+F 7 "?" H 5825 8475 50  0001 C CNN "Digikey"
+F 8 "?" H 5825 8475 50  0001 C CNN "LCSC"
+F 9 "?" H 5825 8475 50  0001 C CNN "Koncar"
+F 10 "TB" H 5825 8475 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 5825 8475 50  0001 C CNN "URL"
+	1    5825 8475
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0155
+U 1 1 657D8144
+P 5975 8475
+F 0 "#PWR0155" H 5975 8225 50  0001 C CNN
+F 1 "GND" H 5980 8302 50  0000 C CNN
+F 2 "" H 5975 8475 50  0001 C CNN
+F 3 "" H 5975 8475 50  0001 C CNN
+	1    5975 8475
+	0    -1   -1   0   
+$EndComp
+Connection ~ 5675 8475
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U10
+U 1 1 657D8151
+P 4975 9175
+F 0 "U10" H 4975 10145 50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 4975 10054 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 4975 9175 50  0001 L BNN
+F 3 "" H 4975 9175 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 4975 9175 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 4975 9175 50  0001 C CNN "URL"
+	1    4975 9175
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0157
+U 1 1 657D9E3B
+P 5675 9875
+F 0 "#PWR0157" H 5675 9625 50  0001 C CNN
+F 1 "GND" H 5680 9702 50  0000 C CNN
+F 2 "" H 5675 9875 50  0001 C CNN
+F 3 "" H 5675 9875 50  0001 C CNN
+	1    5675 9875
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0158
+U 1 1 65CAAC12
+P 7775 -250
+F 0 "#PWR0158" H 7775 -500 50  0001 C CNN
+F 1 "GND" H 7780 -423 50  0000 C CNN
+F 2 "" H 7775 -250 50  0001 C CNN
+F 3 "" H 7775 -250 50  0001 C CNN
+	1    7775 -250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0159
+U 1 1 65C3E185
+P 8075 -1650
+F 0 "#PWR0159" H 8075 -1900 50  0001 C CNN
+F 1 "GND" H 8080 -1823 50  0000 C CNN
+F 2 "" H 8075 -1650 50  0001 C CNN
+F 3 "" H 8075 -1650 50  0001 C CNN
+	1    8075 -1650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 65C3E17F
+P 7925 -1650
+AR Path="/618F532C/65C3E17F" Ref="C?"  Part="1" 
+AR Path="/618E8C75/65C3E17F" Ref="C?"  Part="1" 
+AR Path="/631F3844/65C3E17F" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/65C3E17F" Ref="C14"  Part="1" 
+AR Path="/6432B33E/65C3E17F" Ref="C14"  Part="1" 
+F 0 "C14" H 7950 -1550 50  0000 L CNN
+F 1 "100nF" H 7950 -1750 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 7963 -1800 50  0001 C CNN
+F 3 "" H 7925 -1650 50  0000 C CNN
+F 4 "www.yageo.com" H 7925 -1650 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 7925 -1650 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 7925 -1650 50  0001 C CNN "Mouser"
+F 7 "?" H 7925 -1650 50  0001 C CNN "Digikey"
+F 8 "?" H 7925 -1650 50  0001 C CNN "LCSC"
+F 9 "?" H 7925 -1650 50  0001 C CNN "Koncar"
+F 10 "TB" H 7925 -1650 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 7925 -1650 50  0001 C CNN "URL"
+	1    7925 -1650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0160
+U 1 1 65E776C2
+P 7775 -1650
+F 0 "#PWR0160" H 7775 -1800 50  0001 C CNN
+F 1 "+3V3" V 7790 -1522 50  0000 L CNN
+F 2 "" H 7775 -1650 50  0001 C CNN
+F 3 "" H 7775 -1650 50  0001 C CNN
+	1    7775 -1650
+	1    0    0    -1  
+$EndComp
+Connection ~ 7775 -1650
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U11
+U 1 1 65DF94BD
+P 7075 -950
+F 0 "U11" H 7075 20  50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 7075 -71 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 7075 -950 50  0001 L BNN
+F 3 "" H 7075 -950 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 7075 -950 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 7075 -950 50  0001 C CNN "URL"
+	1    7075 -950
+	1    0    0    -1  
+$EndComp
+Text GLabel 9650 5425 0    50   Input ~ 0
+~IRQ2
+Text GLabel 9650 1425 0    50   Input ~ 0
+~IRQ3
+Text GLabel 10650 3225 2    50   Input Italic 0
+~TM0A
+Text GLabel 9650 5325 0    50   Input Italic 0
+~TM1A
+Text GLabel 9650 1325 0    50   Input Italic 0
+~BUSLOCk
+Text GLabel 10650 6725 2    50   Input ~ 0
+C16M
+Text GLabel 9650 1225 0    50   Input ~ 0
+~FPU
+Text GLabel 10650 3125 2    50   Input Italic 0
+~NUBUS
+Text GLabel 10650 2725 2    50   Input Italic 0
+ECLK
+Text GLabel 10950 2725 2    50   Input Italic 0
+VIACLK
+Text GLabel 10650 3025 2    50   Input Italic 0
+~PFW
+Text GLabel 9650 5125 0    50   Input Italic 0
+C40M
+Text GLabel 9650 1125 0    50   Input Italic 0
+~RBV
+$Comp
+L 650906-5:650906-5 J2
+U 1 1 643E21AD
+P 9650 1125
+F 0 "J2" H 10150 1390 50  0000 C CNN
+F 1 "650906-5" H 10150 1299 50  0000 C CNN
+F 2 "For_SeeedStudio:6509065" H 10500 1225 50  0001 L CNN
+F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=650906&DocType=Customer+Drawing&DocLang=English&DocFormat=pdf&PartCntxt=650906-5" H 10500 1125 50  0001 L CNN
+F 4 "DIN 41612 Connectors PLUG 120 POS R/A TYPE C" H 10500 1025 50  0001 L CNN "Description"
+F 5 "11.1" H 10500 925 50  0001 L CNN "Height"
+F 6 "TE Connectivity" H 10500 825 50  0001 L CNN "Manufacturer_Name"
+F 7 "650906-5" H 10500 725 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "571-6509065" H 10500 625 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/TE-Connectivity/650906-5?qs=uJX40y%252BSWqjhmPijvbrtJw%3D%3D" H 10500 525 50  0001 L CNN "Mouser Price/Stock"
+F 10 "" H 10500 425 50  0001 L CNN "Arrow Part Number"
+F 11 "" H 10500 325 50  0001 L CNN "Arrow Price/Stock"
+F 12 "650906-5" H 9650 1125 50  0001 C CNN "MPN"
+F 13 "https://www.lcsc.com/product-detail/Mezzanine-Connectors-Board-to-Board_TE-Connectivity-650906-5_C3652939.html" H 9650 1125 50  0001 C CNN "URL"
+	1    9650 1125
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:-12V #PWR0162
+U 1 1 64456710
+P 9650 5025
+F 0 "#PWR0162" H 9650 5125 50  0001 C CNN
+F 1 "-12V" V 9665 5153 50  0000 L CNN
+F 2 "" H 9650 5025 50  0001 C CNN
+F 3 "" H 9650 5025 50  0001 C CNN
+	1    9650 5025
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0163
+U 1 1 64474BA8
+P 9650 4925
+F 0 "#PWR0163" H 9650 4675 50  0001 C CNN
+F 1 "GND" V 9655 4797 50  0000 R CNN
+F 2 "" H 9650 4925 50  0001 C CNN
+F 3 "" H 9650 4925 50  0001 C CNN
+	1    9650 4925
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0164
+U 1 1 64476A87
+P 9650 6625
+F 0 "#PWR0164" H 9650 6375 50  0001 C CNN
+F 1 "GND" V 9655 6497 50  0000 R CNN
+F 2 "" H 9650 6625 50  0001 C CNN
+F 3 "" H 9650 6625 50  0001 C CNN
+	1    9650 6625
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0165
+U 1 1 64478CBA
+P 10650 1125
+F 0 "#PWR0165" H 10650 875 50  0001 C CNN
+F 1 "GND" V 10655 997 50  0000 R CNN
+F 2 "" H 10650 1125 50  0001 C CNN
+F 3 "" H 10650 1125 50  0001 C CNN
+	1    10650 1125
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0166
+U 1 1 6447AF14
+P 10650 1725
+F 0 "#PWR0166" H 10650 1475 50  0001 C CNN
+F 1 "GND" V 10655 1597 50  0000 R CNN
+F 2 "" H 10650 1725 50  0001 C CNN
+F 3 "" H 10650 1725 50  0001 C CNN
+	1    10650 1725
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0167
+U 1 1 6447C6EC
+P 10650 2325
+F 0 "#PWR0167" H 10650 2075 50  0001 C CNN
+F 1 "GND" V 10655 2197 50  0000 R CNN
+F 2 "" H 10650 2325 50  0001 C CNN
+F 3 "" H 10650 2325 50  0001 C CNN
+	1    10650 2325
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0168
+U 1 1 6447D589
+P 10650 2825
+F 0 "#PWR0168" H 10650 2575 50  0001 C CNN
+F 1 "GND" V 10655 2697 50  0000 R CNN
+F 2 "" H 10650 2825 50  0001 C CNN
+F 3 "" H 10650 2825 50  0001 C CNN
+	1    10650 2825
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0169
+U 1 1 6447E87F
+P 10650 6825
+F 0 "#PWR0169" H 10650 6575 50  0001 C CNN
+F 1 "GND" V 10655 6697 50  0000 R CNN
+F 2 "" H 10650 6825 50  0001 C CNN
+F 3 "" H 10650 6825 50  0001 C CNN
+	1    10650 6825
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR0116
+U 1 1 64482245
+P 9650 6325
+F 0 "#PWR0116" H 9650 6175 50  0001 C CNN
+F 1 "+5V" V 9665 6453 50  0000 L CNN
+F 2 "" H 9650 6325 50  0001 C CNN
+F 3 "" H 9650 6325 50  0001 C CNN
+	1    9650 6325
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR0170
+U 1 1 64484CC0
+P 9650 6925
+F 0 "#PWR0170" H 9650 6775 50  0001 C CNN
+F 1 "+5V" V 9665 7053 50  0000 L CNN
+F 2 "" H 9650 6925 50  0001 C CNN
+F 3 "" H 9650 6925 50  0001 C CNN
+	1    9650 6925
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR0171
+U 1 1 64485295
+P 10650 2025
+F 0 "#PWR0171" H 10650 1875 50  0001 C CNN
+F 1 "+5V" V 10665 2153 50  0000 L CNN
+F 2 "" H 10650 2025 50  0001 C CNN
+F 3 "" H 10650 2025 50  0001 C CNN
+	1    10650 2025
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR0172
+U 1 1 6448744C
+P 10650 1425
+F 0 "#PWR0172" H 10650 1275 50  0001 C CNN
+F 1 "+5V" V 10665 1553 50  0000 L CNN
+F 2 "" H 10650 1425 50  0001 C CNN
+F 3 "" H 10650 1425 50  0001 C CNN
+	1    10650 1425
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR0173
+U 1 1 64487EE0
+P 10650 2625
+F 0 "#PWR0173" H 10650 2475 50  0001 C CNN
+F 1 "+5V" V 10665 2753 50  0000 L CNN
+F 2 "" H 10650 2625 50  0001 C CNN
+F 3 "" H 10650 2625 50  0001 C CNN
+	1    10650 2625
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR0174
+U 1 1 64488E65
+P 10650 6625
+F 0 "#PWR0174" H 10650 6475 50  0001 C CNN
+F 1 "+5V" V 10665 6753 50  0000 L CNN
+F 2 "" H 10650 6625 50  0001 C CNN
+F 3 "" H 10650 6625 50  0001 C CNN
+	1    10650 6625
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR0175
+U 1 1 6448A9CE
+P 9650 4725
+F 0 "#PWR0175" H 9650 4575 50  0001 C CNN
+F 1 "+5V" V 9665 4852 50  0000 L CNN
+F 2 "" H 9650 4725 50  0001 C CNN
+F 3 "" H 9650 4725 50  0001 C CNN
+	1    9650 4725
+	0    -1   -1   0   
+$EndComp
+Text GLabel 5675 3425 2    50   Input ~ 0
+A28
+Text GLabel 6375 -1050 0    50   Input ~ 0
+~CBREQ
+Text GLabel 5675 3625 2    50   Input ~ 0
+A30
+Text GLabel 2475 1750 2    50   Input ~ 0
+~IRQ1
+Text GLabel 1075 3400 0    50   Input ~ 0
+~HALT
+Text GLabel -1500 1300 0    50   Input ~ 0
+RMC
+Text GLabel 4250 1575 0    50   Input ~ 0
+D31
+Text GLabel 5650 1475 2    50   Input ~ 0
+D28
+Text GLabel 5650 1775 2    50   Input ~ 0
+D25
+Text GLabel 4275 9075 0    50   Input ~ 0
+A1
+Text GLabel 5675 5250 2    50   Input ~ 0
+A20
+Text GLabel -1500 1200 0    50   Input ~ 0
+IPL0
+Text GLabel 2475 5450 2    50   Input ~ 0
+D1
+Text GLabel 5675 8975 2    50   Input ~ 0
+A4
+Text GLabel 5675 9175 2    50   Input ~ 0
+A6
+Text GLabel 5675 7000 2    50   Input ~ 0
+A11
+Text GLabel 4275 7200 0    50   Input ~ 0
+A9
+Text GLabel 4275 5250 0    50   Input ~ 0
+A16
+Text GLabel 1075 1650 0    50   Input ~ 0
+~RW
+Text GLabel 4250 1675 0    50   Input ~ 0
+D30
+Text GLabel 5650 1575 2    50   Input ~ 0
+D27
+Text GLabel 1050 7100 0    50   Input ~ 0
+D15
+Text GLabel 2450 7000 2    50   Input ~ 0
+D12
+Text GLabel 2450 7300 2    50   Input ~ 0
+D9
+Text GLabel -1400 1675 0    50   Input ~ 0
+~BR
+Text GLabel 4275 3525 0    50   Input ~ 0
+A25
+Text GLabel 5675 5450 2    50   Input ~ 0
+A22
+Text GLabel 5675 7100 2    50   Input ~ 0
+A12
+Text GLabel 4275 7100 0    50   Input ~ 0
+A8
+Text GLabel 4275 5350 0    50   Input ~ 0
+A17
+Text GLabel 1025 8950 0    50   Input ~ 0
+D23
+Text GLabel 2425 8850 2    50   Input ~ 0
+D20
+Text GLabel 2425 9150 2    50   Input ~ 0
+D17
+Text GLabel 4275 8975 0    50   Input ~ 0
+A0
+Text GLabel 5675 3325 2    50   Input ~ 0
+A27
+Text GLabel 4275 3425 0    50   Input ~ 0
+A24
+Text GLabel 2475 5150 2    50   Input ~ 0
+D4
+Text GLabel 1075 5250 0    50   Input ~ 0
+D7
+Text GLabel 5675 8875 2    50   Input ~ 0
+A3
+Text GLabel 5675 7300 2    50   Input ~ 0
+A14
+Text GLabel 5675 5150 2    50   Input ~ 0
+A19
+Text GLabel -1475 3500 0    50   Input Italic 0
+~TM0A
+Text GLabel -1475 2900 0    50   Input ~ 0
+C16M
+Text GLabel -1325 2450 0    50   Input Italic 0
+~NUBUS
+Text GLabel -3500 2950 2    50   Input Italic 0
+ECLK
+Text GLabel -3550 2950 0    50   Input Italic 0
+VIACLK
+Text GLabel -1500 5725 0    50   Input Italic 0
+~PFW
+Text GLabel 6375 -1250 0    50   Input ~ 0
+~CBACK
+Text GLabel 7775 -1250 2    50   Input ~ 0
+~CIOUT
+Text GLabel 5675 3525 2    50   Input ~ 0
+A29
+Text GLabel 1075 1750 0    50   Input ~ 0
+~DSACK0
+Text GLabel -1400 1800 0    50   Input ~ 0
+~BG
+Text GLabel 2475 1450 2    50   Input ~ 0
+~DSACK1
+Text GLabel 2475 1550 2    50   Input ~ 0
+~STERM
+Text GLabel 4275 8875 0    50   Input ~ 0
+CPUCLK
+Text GLabel 1025 9050 0    50   Input ~ 0
+D22
+Text GLabel 2425 8950 2    50   Input ~ 0
+D19
+Text GLabel 1050 7000 0    50   Input ~ 0
+D16
+Text GLabel 1050 7300 0    50   Input ~ 0
+D13
+Text GLabel 2450 7200 2    50   Input ~ 0
+D10
+Text GLabel -1425 1925 0    50   Input ~ 0
+~BGACK
+Text GLabel 4275 3625 0    50   Input ~ 0
+A26
+Text GLabel 4275 3325 0    50   Input ~ 0
+A23
+Text GLabel 2475 5350 2    50   Input ~ 0
+D2
+Text GLabel 4275 5450 0    50   Input ~ 0
+A18
+Text GLabel 1075 1550 0    50   Input ~ 0
+SIZ1
+Text GLabel 1025 8850 0    50   Input ~ 0
+D24
+Text GLabel 1025 9150 0    50   Input ~ 0
+D21
+Text GLabel 2425 9050 2    50   Input ~ 0
+D18
+Text GLabel 4250 1475 0    50   Input ~ 0
+A31
+Text GLabel -1500 1100 0    50   Input ~ 0
+IPL2
+Text GLabel 2475 5250 2    50   Input ~ 0
+D3
+Text GLabel 1075 5450 0    50   Input ~ 0
+D5
+Text GLabel 1075 3300 0    50   Input ~ 0
+D0
+Text GLabel 4275 9175 0    50   Input ~ 0
+A2
+Text GLabel 5675 7200 2    50   Input ~ 0
+A13
+Text GLabel 4275 5150 0    50   Input ~ 0
+A15
+Text GLabel 2475 1650 2    50   Input ~ 0
+~DS
+Text GLabel 1075 3500 0    50   Input ~ 0
+~BERR
+Text GLabel 1075 1450 0    50   Input ~ 0
+SIZ0
+Text GLabel 1075 3600 0    50   Input ~ 0
+~RESET
+Text GLabel 4250 1775 0    50   Input ~ 0
+D29
+Text GLabel 5650 1675 2    50   Input ~ 0
+D26
+Text GLabel 1050 7200 0    50   Input ~ 0
+D14
+Text GLabel 2450 7100 2    50   Input ~ 0
+D11
+Text GLabel 1075 5150 0    50   Input ~ 0
+D8
+Text GLabel 5675 5350 2    50   Input ~ 0
+A21
+Text GLabel -1500 1000 0    50   Input ~ 0
+IPL1
+Text GLabel 1075 5350 0    50   Input ~ 0
+D6
+Text GLabel 5675 9075 2    50   Input ~ 0
+A5
+Text GLabel 4275 7000 0    50   Input ~ 0
+A7
+Text GLabel 4275 7300 0    50   Input ~ 0
+A10
+Text GLabel -1475 5325 0    50   Input ~ 0
+~IRQ2
+Text GLabel -1475 5175 0    50   Input ~ 0
+~IRQ3
+Text GLabel -1475 3625 0    50   Input Italic 0
+~TM1A
+Text GLabel -1325 2325 0    50   Input Italic 0
+~BUSLOCk
+Text GLabel -1525 4200 0    50   Input ~ 0
+~FPU
+Text GLabel -3600 3500 0    50   Input Italic 0
+C40M
+Text GLabel -1500 4725 0    50   Input Italic 0
+~RBV
+Text Notes -1725 925  0    50   ~ 0
+Not really used
+Text Notes -1725 1575 0    50   ~ 0
+Master only
+Text Notes -1750 2225 0    50   ~ 0
+"NuBus"\n(indicate another master is using the bus)
+Text Notes -1725 2825 0    50   ~ 0
+16 MHz clock (CPUCLK on IIfx)
+Text Notes -1725 3375 0    50   ~ 0
+Unused inputs to VIA2\n(~PDS.BR~, ~PDS.BG~ on IIfx)
+Text Notes -1725 4100 0    50   ~ 0
+We won't do stand-alone FPU\n(~PDS.MASTER~ on IIfx, RSVD on PDS)
+Text Notes -1700 4625 0    50   ~ 0
+Access to IIsi internal video\n(GND on IIfx, RSVD on PDS)
+Text Notes -1725 5075 0    50   ~ 0
+Extra IRQ\n(IRQ15 and RSVD on IIfx)
+Text Notes -3875 2825 0    50   ~ 0
+VIACLK on IIsi, ECLK on PDS, RSVD on IIfx\nECLK and VIACLK seem to be the same
+Text Notes -1725 5600 0    50   ~ 0
+power failure
+Text Notes -3875 3400 0    50   ~ 0
+Not weel documented... 40 MHZ clock on IIsi?\n(ECS on IIfx, RSVD on PDS)
+Text GLabel 1075 2150 0    50   Input ~ 0
+~RW_3V3
+Text GLabel 1075 2250 0    50   Input ~ 0
+~DSACK0_3V3
+Text GLabel 1075 2050 0    50   Input ~ 0
+SIZ1_3V3
+Text GLabel 1075 1950 0    50   Input ~ 0
+SIZ0_3V3
+Text GLabel 2475 2250 2    50   Input ~ 0
+~IRQ1_3V3
+Text GLabel 2475 1950 2    50   Input ~ 0
+~DSACK1_3V3
+Text GLabel 2475 2050 2    50   Input ~ 0
+~STERM_3V3
+Text GLabel 2475 2150 2    50   Input ~ 0
+~DS_3V3
+Text GLabel 1075 3900 0    50   Input ~ 0
+~HALT_3V3
+Text GLabel 1075 3800 0    50   Input ~ 0
+D0_3V3
+Text GLabel 1075 4000 0    50   Input ~ 0
+~BERR_3V3
+Text GLabel 1075 4100 0    50   Input ~ 0
+~RESET_3V3
+Connection ~ 2475 2900
+Text GLabel 2475 3400 2    50   Input ~ 0
+FC1
+Text GLabel 2475 3500 2    50   Input ~ 0
+FC2
+Text GLabel 2475 3300 2    50   Input ~ 0
+FC0
+Text GLabel 2475 3600 2    50   Input ~ 0
+~AS
+$Comp
+L Device:C C?
+U 1 1 6503FCA4
+P 2625 2900
+AR Path="/618F532C/6503FCA4" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6503FCA4" Ref="C?"  Part="1" 
+AR Path="/631F3844/6503FCA4" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6503FCA4" Ref="C16"  Part="1" 
+AR Path="/6432B33E/6503FCA4" Ref="C7"  Part="1" 
+F 0 "C7" H 2650 3000 50  0000 L CNN
+F 1 "100nF" H 2650 2800 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 2663 2750 50  0001 C CNN
+F 3 "" H 2625 2900 50  0000 C CNN
+F 4 "www.yageo.com" H 2625 2900 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 2625 2900 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 2625 2900 50  0001 C CNN "Mouser"
+F 7 "?" H 2625 2900 50  0001 C CNN "Digikey"
+F 8 "?" H 2625 2900 50  0001 C CNN "LCSC"
+F 9 "?" H 2625 2900 50  0001 C CNN "Koncar"
+F 10 "TB" H 2625 2900 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 2625 2900 50  0001 C CNN "URL"
+	1    2625 2900
+	0    -1   -1   0   
+$EndComp
+Text GLabel 2475 3900 2    50   Input ~ 0
+FC1_3V3
+Text GLabel 2475 4000 2    50   Input ~ 0
+FC2_3V3
+Text GLabel 2475 3800 2    50   Input ~ 0
+FC0_3V3
+Text GLabel 2475 4100 2    50   Input ~ 0
+~AS_3V3
+Text GLabel 2475 5950 2    50   Input ~ 0
+D1_3V3
+Text GLabel 2475 5650 2    50   Input ~ 0
+D4_3V3
+Text GLabel 2475 5850 2    50   Input ~ 0
+D2_3V3
+Text GLabel 2475 5750 2    50   Input ~ 0
+D3_3V3
+Text GLabel 1075 5750 0    50   Input ~ 0
+D7_3V3
+Text GLabel 1075 5950 0    50   Input ~ 0
+D5_3V3
+Text GLabel 1075 5850 0    50   Input ~ 0
+D6_3V3
+Text GLabel 1075 5650 0    50   Input ~ 0
+D8_3V3
+Text GLabel 2450 7500 2    50   Input ~ 0
+D12_3V3
+Text GLabel 2450 7800 2    50   Input ~ 0
+D9_3V3
+Text GLabel 2450 7700 2    50   Input ~ 0
+D10_3V3
+Text GLabel 2450 7600 2    50   Input ~ 0
+D11_3V3
+Text GLabel 1050 7600 0    50   Input ~ 0
+D15_3V3
+Text GLabel 1050 7500 0    50   Input ~ 0
+D16_3V3
+Text GLabel 1050 7800 0    50   Input ~ 0
+D13_3V3
+Text GLabel 1050 7700 0    50   Input ~ 0
+D14_3V3
+Text GLabel 2425 9350 2    50   Input ~ 0
+D20_3V3
+Text GLabel 2425 9650 2    50   Input ~ 0
+D17_3V3
+Text GLabel 2425 9450 2    50   Input ~ 0
+D19_3V3
+Text GLabel 2425 9550 2    50   Input ~ 0
+D18_3V3
+Text GLabel 1025 9450 0    50   Input ~ 0
+D23_3V3
+Text GLabel 1025 9550 0    50   Input ~ 0
+D22_3V3
+Text GLabel 1025 9350 0    50   Input ~ 0
+D24_3V3
+Text GLabel 1025 9650 0    50   Input ~ 0
+D21_3V3
+Text GLabel 4250 2075 0    50   Input ~ 0
+D31_3V3
+Text GLabel 4250 2175 0    50   Input ~ 0
+D30_3V3
+Text GLabel 4250 1975 0    50   Input ~ 0
+A31_3V3
+Text GLabel 4250 2275 0    50   Input ~ 0
+D29_3V3
+Text GLabel 5650 1975 2    50   Input ~ 0
+D28_3V3
+Text GLabel 5650 2275 2    50   Input ~ 0
+D25_3V3
+Text GLabel 5650 2075 2    50   Input ~ 0
+D27_3V3
+Text GLabel 5650 2175 2    50   Input ~ 0
+D26_3V3
+Text GLabel 4275 4025 0    50   Input ~ 0
+A25_3V3
+Text GLabel 4275 3925 0    50   Input ~ 0
+A24_3V3
+Text GLabel 4275 4125 0    50   Input ~ 0
+A26_3V3
+Text GLabel 4275 3825 0    50   Input ~ 0
+A23_3V3
+Text GLabel 5675 3925 2    50   Input ~ 0
+A28_3V3
+Text GLabel 5675 4125 2    50   Input ~ 0
+A30_3V3
+Text GLabel 5675 3825 2    50   Input ~ 0
+A27_3V3
+Text GLabel 5675 4025 2    50   Input ~ 0
+A29_3V3
+Text GLabel 4275 5750 0    50   Input ~ 0
+A16_3V3
+Text GLabel 4275 5850 0    50   Input ~ 0
+A17_3V3
+Text GLabel 4275 5950 0    50   Input ~ 0
+A18_3V3
+Text GLabel 4275 5650 0    50   Input ~ 0
+A15_3V3
+Text GLabel 5675 5750 2    50   Input ~ 0
+A20_3V3
+Text GLabel 5675 5950 2    50   Input ~ 0
+A22_3V3
+Text GLabel 5675 5650 2    50   Input ~ 0
+A19_3V3
+Text GLabel 5675 5850 2    50   Input ~ 0
+A21_3V3
+Text GLabel 4275 7700 0    50   Input ~ 0
+A9_3V3
+Text GLabel 4275 7600 0    50   Input ~ 0
+A8_3V3
+Text GLabel 4275 7500 0    50   Input ~ 0
+A7_3V3
+Text GLabel 4275 7800 0    50   Input ~ 0
+A10_3V3
+Text GLabel 5675 7500 2    50   Input ~ 0
+A11_3V3
+Text GLabel 5675 7600 2    50   Input ~ 0
+A12_3V3
+Text GLabel 5675 7800 2    50   Input ~ 0
+A14_3V3
+Text GLabel 5675 7700 2    50   Input ~ 0
+A13_3V3
+Text GLabel 4275 9575 0    50   Input ~ 0
+A1_3V3
+Text GLabel 4275 9475 0    50   Input ~ 0
+A0_3V3
+Text GLabel 4275 9375 0    50   Input ~ 0
+CPUCLK_3V3
+Text GLabel 4275 9675 0    50   Input ~ 0
+A2_3V3
+Text GLabel 5675 9475 2    50   Input ~ 0
+A4_3V3
+Text GLabel 5675 9675 2    50   Input ~ 0
+A6_3V3
+Text GLabel 5675 9375 2    50   Input ~ 0
+A3_3V3
+Text GLabel 5675 9575 2    50   Input ~ 0
+A5_3V3
+Text GLabel 6375 -550 0    50   Input ~ 0
+~CBREQ_3V3
+Text GLabel 7775 -550 2    50   Input ~ 0
+CACHE_3V3
+Text GLabel 6375 -750 0    50   Input ~ 0
+~CBACK_3V3
+Text GLabel 7775 -1050 2    50   Input ~ 0
+CACHE
+Text GLabel 7775 -750 2    50   Input ~ 0
+~CIOUT_3V3
+Text Notes 175  1775 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 2825 1475 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 2825 1575 0    50   ~ 0
+ 1kΩ pull-up (not on SE/30)
+Text Notes 2825 1675 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 2675 3325 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 2675 3425 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 2675 3525 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 225  3425 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 225  3625 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 150  2175 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 2625 3625 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 225  3525 0    50   ~ 0
+ 1kΩ pull-up
+NoConn ~ 7775 -450
+NoConn ~ 7775 -650
+NoConn ~ 6375 -450
+NoConn ~ 6375 -650
+$Comp
+L power:GND #PWR0184
+U 1 1 645C297F
+P 6375 -1150
+F 0 "#PWR0184" H 6375 -1400 50  0001 C CNN
+F 1 "GND" H 6380 -1323 50  0000 C CNN
+F 2 "" H 6375 -1150 50  0001 C CNN
+F 3 "" H 6375 -1150 50  0001 C CNN
+	1    6375 -1150
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0185
+U 1 1 645C2D7A
+P 6375 -950
+F 0 "#PWR0185" H 6375 -1200 50  0001 C CNN
+F 1 "GND" H 6380 -1123 50  0000 C CNN
+F 2 "" H 6375 -950 50  0001 C CNN
+F 3 "" H 6375 -950 50  0001 C CNN
+	1    6375 -950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0186
+U 1 1 645C2FC0
+P 7775 -1150
+F 0 "#PWR0186" H 7775 -1400 50  0001 C CNN
+F 1 "GND" H 7780 -1323 50  0000 C CNN
+F 2 "" H 7775 -1150 50  0001 C CNN
+F 3 "" H 7775 -1150 50  0001 C CNN
+	1    7775 -1150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0187
+U 1 1 645C3485
+P 7775 -950
+F 0 "#PWR0187" H 7775 -1200 50  0001 C CNN
+F 1 "GND" H 7780 -1123 50  0000 C CNN
+F 2 "" H 7775 -950 50  0001 C CNN
+F 3 "" H 7775 -950 50  0001 C CNN
+	1    7775 -950
+	0    -1   -1   0   
+$EndComp
+Text Notes -1425 1100 0    39   ~ 0
+direct interrupts to core
+Text Notes -1425 1325 0    39   ~ 0
+read-modify-write
+Text Notes -1475 4250 0    39   ~ 0
+/FPU might be re-creatable from FC|0-2] & A[13-19]\nsee section 10.3 in the 68881/68882 UM
+$Comp
+L Switch:SW_SPDT SW1
+U 1 1 646843DE
+P 11850 -825
+F 0 "SW1" H 11850 -540 50  0000 C CNN
+F 1 "SW_SPDT" H 11850 -631 50  0000 C CNN
+F 2 "For_SeeedStudio:CJS-1201B" H 11850 -825 50  0001 C CNN
+F 3 "~" H 11850 -825 50  0001 C CNN
+F 4 "CJS-1201TB" H 11850 -825 50  0001 C CNN "MPN"
+	1    11850 -825
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0127
+U 1 1 6468D0EA
+P 10675 -1625
+F 0 "#PWR0127" H 10675 -1875 50  0001 C CNN
+F 1 "GND" H 10680 -1798 50  0000 C CNN
+F 2 "" H 10675 -1625 50  0001 C CNN
+F 3 "" H 10675 -1625 50  0001 C CNN
+	1    10675 -1625
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6468D0F8
+P 10525 -1625
+AR Path="/618F532C/6468D0F8" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6468D0F8" Ref="C?"  Part="1" 
+AR Path="/631F3844/6468D0F8" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/6468D0F8" Ref="C?"  Part="1" 
+AR Path="/6432B33E/6468D0F8" Ref="C22"  Part="1" 
+F 0 "C22" H 10550 -1525 50  0000 L CNN
+F 1 "100nF" H 10550 -1725 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 10563 -1775 50  0001 C CNN
+F 3 "" H 10525 -1625 50  0000 C CNN
+F 4 "www.yageo.com" H 10525 -1625 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 10525 -1625 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 10525 -1625 50  0001 C CNN "Mouser"
+F 7 "?" H 10525 -1625 50  0001 C CNN "Digikey"
+F 8 "?" H 10525 -1625 50  0001 C CNN "LCSC"
+F 9 "?" H 10525 -1625 50  0001 C CNN "Koncar"
+F 10 "TB" H 10525 -1625 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 10525 -1625 50  0001 C CNN "URL"
+	1    10525 -1625
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0130
+U 1 1 6468D0FE
+P 10375 -1625
+F 0 "#PWR0130" H 10375 -1775 50  0001 C CNN
+F 1 "+3V3" V 10390 -1497 50  0000 L CNN
+F 2 "" H 10375 -1625 50  0001 C CNN
+F 3 "" H 10375 -1625 50  0001 C CNN
+	1    10375 -1625
+	1    0    0    -1  
+$EndComp
+Connection ~ 10375 -1625
+$Comp
+L SN74CB3T3245PWR:SN74CB3T3245PWR U13
+U 1 1 6468D10D
+P 9675 -925
+F 0 "U13" H 9675 45  50  0000 C CNN
+F 1 "SN74CB3T3245PWR" H 9675 -46 50  0000 C CNN
+F 2 "For_SeeedStudio:SOP65P640X120-20N" H 9675 -925 50  0001 L BNN
+F 3 "" H 9675 -925 50  0001 L BNN
+F 4 "SN74CB3T3245PWR" H 9675 -925 50  0001 C CNN "MPN"
+F 5 "https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html" H 9675 -925 50  0001 C CNN "URL"
+	1    9675 -925
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0132
+U 1 1 6468D99B
+P 10375 -225
+F 0 "#PWR0132" H 10375 -475 50  0001 C CNN
+F 1 "GND" H 10380 -398 50  0000 C CNN
+F 2 "" H 10375 -225 50  0001 C CNN
+F 3 "" H 10375 -225 50  0001 C CNN
+	1    10375 -225
+	1    0    0    -1  
+$EndComp
+Text GLabel 8975 -1425 0    50   Input ~ 0
+~MASTER_OE
+Text GLabel 11650 -825 0    50   Input ~ 0
+~MASTER_OE
+Text GLabel 10375 -1225 2    50   Input ~ 0
+~BR
+Text GLabel 8975 -1225 0    50   Input ~ 0
+~BGACK
+Text GLabel 10375 -925 2    50   Input ~ 0
+~FPU
+Text GLabel 8975 -1025 0    50   Input ~ 0
+~BG
+Text GLabel 10375 -725 2    50   Input ~ 0
+~BR_3V3
+Text GLabel 8975 -725 0    50   Input ~ 0
+~BGACK_3V3
+Text GLabel 10375 -425 2    50   Input ~ 0
+~FPU_3V3
+$Comp
+L power:GND #PWR0138
+U 1 1 646A7A85
+P 10375 -1125
+F 0 "#PWR0138" H 10375 -1375 50  0001 C CNN
+F 1 "GND" H 10380 -1298 50  0000 C CNN
+F 2 "" H 10375 -1125 50  0001 C CNN
+F 3 "" H 10375 -1125 50  0001 C CNN
+	1    10375 -1125
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0142
+U 1 1 646A7E11
+P 8975 -1125
+F 0 "#PWR0142" H 8975 -1375 50  0001 C CNN
+F 1 "GND" H 8980 -1298 50  0000 C CNN
+F 2 "" H 8975 -1125 50  0001 C CNN
+F 3 "" H 8975 -1125 50  0001 C CNN
+	1    8975 -1125
+	0    1    1    0   
+$EndComp
+NoConn ~ 8975 -425
+NoConn ~ 8975 -625
+NoConn ~ 10375 -625
+$Comp
+L Device:R R14
+U 1 1 646B5C31
+P 12200 -925
+F 0 "R14" V 11993 -925 50  0000 C CNN
+F 1 "10k" V 12084 -925 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 12130 -925 50  0001 C CNN
+F 3 "~" H 12200 -925 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 12200 -925 50  0001 C CNN "MPN"
+	1    12200 -925
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R15
+U 1 1 646B6346
+P 12200 -725
+F 0 "R15" V 11993 -725 50  0000 C CNN
+F 1 "10k" V 12084 -725 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 12130 -725 50  0001 C CNN
+F 3 "~" H 12200 -725 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 12200 -725 50  0001 C CNN "MPN"
+	1    12200 -725
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0148
+U 1 1 646B66F6
+P 12350 -725
+F 0 "#PWR0148" H 12350 -975 50  0001 C CNN
+F 1 "GND" H 12355 -898 50  0000 C CNN
+F 2 "" H 12350 -725 50  0001 C CNN
+F 3 "" H 12350 -725 50  0001 C CNN
+	1    12350 -725
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0152
+U 1 1 646B6DFB
+P 12350 -925
+F 0 "#PWR0152" H 12350 -1075 50  0001 C CNN
+F 1 "+3V3" V 12365 -797 50  0000 L CNN
+F 2 "" H 12350 -925 50  0001 C CNN
+F 3 "" H 12350 -925 50  0001 C CNN
+	1    12350 -925
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0156
+U 1 1 646CAEB5
+P 6075 -1450
+F 0 "#PWR0156" H 6075 -1700 50  0001 C CNN
+F 1 "GND" H 6080 -1623 50  0000 C CNN
+F 2 "" H 6075 -1450 50  0001 C CNN
+F 3 "" H 6075 -1450 50  0001 C CNN
+	1    6075 -1450
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0161
+U 1 1 646D6DF4
+P 775 1250
+F 0 "#PWR0161" H 775 1000 50  0001 C CNN
+F 1 "GND" H 780 1077 50  0000 C CNN
+F 2 "" H 775 1250 50  0001 C CNN
+F 3 "" H 775 1250 50  0001 C CNN
+	1    775  1250
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0188
+U 1 1 646D7CBC
+P 3950 1275
+F 0 "#PWR0188" H 3950 1025 50  0001 C CNN
+F 1 "GND" H 3955 1102 50  0000 C CNN
+F 2 "" H 3950 1275 50  0001 C CNN
+F 3 "" H 3950 1275 50  0001 C CNN
+	1    3950 1275
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0189
+U 1 1 646D8ADE
+P 775 3100
+F 0 "#PWR0189" H 775 2850 50  0001 C CNN
+F 1 "GND" H 780 2927 50  0000 C CNN
+F 2 "" H 775 3100 50  0001 C CNN
+F 3 "" H 775 3100 50  0001 C CNN
+	1    775  3100
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0190
+U 1 1 646D93D7
+P 3975 3125
+F 0 "#PWR0190" H 3975 2875 50  0001 C CNN
+F 1 "GND" H 3980 2952 50  0000 C CNN
+F 2 "" H 3975 3125 50  0001 C CNN
+F 3 "" H 3975 3125 50  0001 C CNN
+	1    3975 3125
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0191
+U 1 1 646DA1BF
+P 775 4950
+F 0 "#PWR0191" H 775 4700 50  0001 C CNN
+F 1 "GND" H 780 4777 50  0000 C CNN
+F 2 "" H 775 4950 50  0001 C CNN
+F 3 "" H 775 4950 50  0001 C CNN
+	1    775  4950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0192
+U 1 1 646DB4B5
+P 3975 4950
+F 0 "#PWR0192" H 3975 4700 50  0001 C CNN
+F 1 "GND" H 3980 4777 50  0000 C CNN
+F 2 "" H 3975 4950 50  0001 C CNN
+F 3 "" H 3975 4950 50  0001 C CNN
+	1    3975 4950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0193
+U 1 1 646DD84F
+P 750 6800
+F 0 "#PWR0193" H 750 6550 50  0001 C CNN
+F 1 "GND" H 755 6627 50  0000 C CNN
+F 2 "" H 750 6800 50  0001 C CNN
+F 3 "" H 750 6800 50  0001 C CNN
+	1    750  6800
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0194
+U 1 1 646DE70C
+P 3975 6800
+F 0 "#PWR0194" H 3975 6550 50  0001 C CNN
+F 1 "GND" H 3980 6627 50  0000 C CNN
+F 2 "" H 3975 6800 50  0001 C CNN
+F 3 "" H 3975 6800 50  0001 C CNN
+	1    3975 6800
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0195
+U 1 1 646E0163
+P 725 8650
+F 0 "#PWR0195" H 725 8400 50  0001 C CNN
+F 1 "GND" H 730 8477 50  0000 C CNN
+F 2 "" H 725 8650 50  0001 C CNN
+F 3 "" H 725 8650 50  0001 C CNN
+	1    725  8650
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0196
+U 1 1 646E09F8
+P 3975 8675
+F 0 "#PWR0196" H 3975 8425 50  0001 C CNN
+F 1 "GND" H 3980 8502 50  0000 C CNN
+F 2 "" H 3975 8675 50  0001 C CNN
+F 3 "" H 3975 8675 50  0001 C CNN
+	1    3975 8675
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6075 -1450 6375 -1450
+Wire Wire Line
+	725  8650 1025 8650
+Wire Wire Line
+	3975 8675 4275 8675
+Wire Wire Line
+	3975 6800 4275 6800
+Wire Wire Line
+	750  6800 1050 6800
+Wire Wire Line
+	3975 4950 4275 4950
+Wire Wire Line
+	775  4950 1075 4950
+Wire Wire Line
+	775  3100 1075 3100
+Wire Wire Line
+	3975 3125 4275 3125
+Wire Wire Line
+	3950 1275 4250 1275
+Wire Wire Line
+	775  1250 1075 1250
+Text GLabel 8975 -525 0    50   Input ~ 0
+~BG_3V3
+Wire Notes Line
+	-1850 1500 -1275 1500
+Wire Notes Line
+	-1275 1500 -1275 2000
+Wire Notes Line
+	-1275 2000 -1850 2000
+Wire Notes Line
+	-1850 2000 -1850 1500
+Wire Notes Line
+	-1750 3925 225  3925
+Wire Notes Line
+	225  3925 225  4300
+Wire Notes Line
+	225  4300 -1750 4325
+Wire Notes Line
+	-1750 4325 -1750 3925
+Text GLabel 10375 -1025 2    50   Input ~ 0
+C16M
+$Comp
+L power:GND #PWR0146
+U 1 1 6478CB98
+P 8975 -925
+F 0 "#PWR0146" H 8975 -1175 50  0001 C CNN
+F 1 "GND" H 8980 -1098 50  0000 C CNN
+F 2 "" H 8975 -925 50  0001 C CNN
+F 3 "" H 8975 -925 50  0001 C CNN
+	1    8975 -925
+	0    1    1    0   
+$EndComp
+Text GLabel 10375 -525 2    50   Input ~ 0
+C16M_3V3
+Wire Notes Line
+	-1750 2725 -500 2725
+Wire Notes Line
+	-500 2725 -500 2975
+Wire Notes Line
+	-500 2975 -1750 2975
+Wire Notes Line
+	-1750 2975 -1750 2725
+Text Notes -1250 2000 0    50   ~ 0
+PMod alternate
+Text Notes -475 2975 0    50   ~ 0
+PMod alternate
+Text Notes 250  4300 0    50   ~ 0
+PMod alternate
+$EndSCHEMATC

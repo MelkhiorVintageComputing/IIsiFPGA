@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name For_SeeedStudio)(type KiCad)(uri ${KIPRJMOD}/For_SeeedStudio.pretty)(options "")(descr ""))
+)

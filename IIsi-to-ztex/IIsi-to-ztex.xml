@@ -1,0 +1,2295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/IIsi-to-ztex.sch</source>
+    <date>Mon Mar 27 12:12:45 2023</date>
+    <tool>Eeschema 5.1.9+dfsg1-1~bpo10+1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>IIsi-to-ztex.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/B2B/" tstamps="/6432B233/">
+      <title_block>
+        <title>nubus-to-ztex B2B connector</title>
+        <company/>
+        <rev/>
+        <date/>
+        <source>B2B.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/PDS/" tstamps="/6432B33E/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>PDS.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="4" name="/HDMI/" tstamps="/64CBE795/">
+      <title_block>
+        <title>nubus-to-ztex HDMI</title>
+        <company/>
+        <rev/>
+        <date/>
+        <source>hdmi.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="5" name="/pmod/" tstamps="/64DE57E5/">
+      <title_block>
+        <title>sbus-to-ztex blinkey stuff</title>
+        <company/>
+        <rev/>
+        <date/>
+        <source>pmod.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="H1">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_5mm_Pad</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6444C98C</tstamp>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_5mm_Pad</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6444DCA2</tstamp>
+    </comp>
+    <comp ref="JCD1">
+      <value>ZTEX_CD-ztex_CD</value>
+      <footprint>For_SeeedStudio:PinHeader_2x32_P2.54mm_Vertical_For_SeeedStudio</footprint>
+      <fields>
+        <field name="MPN">77313-101-64LF</field>
+        <field name="URL">https://www.mouser.fr/ProductDetail/Amphenol-FCI/77313-101-64LF?qs=xJiur%252Bgubk1MSan%2F7C0v%252BA%3D%3D</field>
+      </fields>
+      <libsource lib="ztex_CD" part="ZTEX_CD" description=""/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>5F676F65</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_02x07_Odd_Even</value>
+      <footprint>For_SeeedStudio:PinHeader_2x07_P2.00mm_Horizontal_For_SeeedStudio</footprint>
+      <datasheet>https://www.molex.com/pdm_docs/sd/878331420_sd.pdf</datasheet>
+      <fields>
+        <field name="DNP">DNP</field>
+        <field name="Datasheet-ALT">https://datasheet.lcsc.com/lcsc/1811051309_MOLEX-878311420_C240854.pdf</field>
+        <field name="MPN">87831-1420</field>
+        <field name="MPN Right Angle">87833-1420</field>
+        <field name="MPN-ALT Right Angle">A2005WR-N-2X7P-B</field>
+        <field name="Notes">87831-1419, 87831-1420, 87831-1421, 87831-1436 only change plating</field>
+        <field name="URL">https://www2.mouser.com/ProductDetail/Molex/87831-1420?qs=QtQX4uD3c2VDCL534TqpVg%3D%3D</field>
+        <field name="URL Rihgt Angle">https://www2.mouser.com/ProductDetail/Molex/87833-1420?qs=%2Fha2pyFadujYFYCIYI1IvFCvLi7no9WQYzIL%2FpYxKhg%3D</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_02x07_Odd_Even" description="Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>5F749BE1</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>61B7E3FB</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>61F08531</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>RED LED 0603</value>
+      <footprint>LED_SMD:LED_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">19-217/R6C-AL1M2VY/3T</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Light-Emitting-Diodes-LED_Everlight-Elec-19-217-R6C-AL1M2VY-3T_C72044.html</field>
+      </fields>
+      <libsource lib="Device" part="LED_ALT" description="Light emitting diode, filled shape"/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>621E3C57</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>47uF 10V+</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">CL31A476MPHNNNE</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_Samsung-Electro-Mechanics-CL31A476MPHNNNE_C96123.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>621FCA7B</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>560</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">0603WAF5600T5E</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_UNI-ROYAL-Uniroyal-Elec-0603WAF5600T5E_C23204.html</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>621E3C4D</tstamp>
+    </comp>
+    <comp ref="JAB1">
+      <value>ZTEX_AB-ztex_AB</value>
+      <footprint>For_SeeedStudio:PinHeader_2x32_P2.54mm_Vertical_For_SeeedStudio</footprint>
+      <fields>
+        <field name="MPN">77313-101-64LF</field>
+        <field name="URL">https://www.mouser.fr/ProductDetail/Amphenol-FCI/77313-101-64LF?qs=xJiur%252Bgubk1MSan%2F7C0v%252BA%3D%3D</field>
+      </fields>
+      <libsource lib="ztex_AB" part="ZTEX_AB" description=""/>
+      <sheetpath names="/B2B/" tstamps="/6432B233/"/>
+      <tstamp>5F676E85</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6322F267</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6322FC4A</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>63236129</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6323986F</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>64FC482D</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6503FCB6</tstamp>
+    </comp>
+    <comp ref="U5">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6508535F</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>650DA71D</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>650DA729</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>651C3CDE</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6528F520</tstamp>
+    </comp>
+    <comp ref="U6">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6528F532</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6536755A</tstamp>
+    </comp>
+    <comp ref="U7">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6536756D</tstamp>
+    </comp>
+    <comp ref="U8">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>655662DF</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6571259B</tstamp>
+    </comp>
+    <comp ref="U9">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>657125AE</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>657D813E</tstamp>
+    </comp>
+    <comp ref="U10">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>657D8151</tstamp>
+    </comp>
+    <comp ref="C14">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>65C3E17F</tstamp>
+    </comp>
+    <comp ref="U11">
+      <value>SN74CB3T3245PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-20N</footprint>
+      <fields>
+        <field name="MPN">SN74CB3T3245PWR</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Signal-Switches-Encoders-Decoders-Multiplexers_Texas-Instruments-SN74CB3T3245PWR_C15298.html</field>
+      </fields>
+      <libsource lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>65DF94BD</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>650906-5</value>
+      <footprint>For_SeeedStudio:6509065</footprint>
+      <datasheet>https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&amp;DocNm=650906&amp;DocType=Customer+Drawing&amp;DocLang=English&amp;DocFormat=pdf&amp;PartCntxt=650906-5</datasheet>
+      <fields>
+        <field name="Description">DIN 41612 Connectors PLUG 120 POS R/A TYPE C</field>
+        <field name="Height">11.1</field>
+        <field name="MPN">650906-5</field>
+        <field name="Manufacturer_Name">TE Connectivity</field>
+        <field name="Manufacturer_Part_Number">650906-5</field>
+        <field name="Mouser Part Number">571-6509065</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/TE-Connectivity/650906-5?qs=uJX40y%252BSWqjhmPijvbrtJw%3D%3D</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Mezzanine-Connectors-Board-to-Board_TE-Connectivity-650906-5_C3652939.html</field>
+      </fields>
+      <libsource lib="650906-5" part="650906-5" description=""/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>643E21AD</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="LCSC">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/PDS/" tstamps="/6432B33E/"/>
+      <tstamp>6503FCA4</tstamp>
+    </comp>
+    <comp ref="U12">
+      <value>TPD12S016PWR</value>
+      <footprint>For_SeeedStudio:SOP65P640X120-24N</footprint>
+      <fields>
+        <field name="MANUFACTURER">Texas Instruments</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.2 mm</field>
+        <field name="MPN">TPD12S016PWR</field>
+        <field name="PARTREV">F</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="URL">https://lcsc.com/product-detail/Interface-Specialized_Texas-Instruments-TPD12S016PWR_C201665.html</field>
+      </fields>
+      <libsource lib="TPD12S016PWR" part="TPD12S016PWR" description=""/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>6148D344</tstamp>
+    </comp>
+    <comp ref="C19">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>6148D345</tstamp>
+    </comp>
+    <comp ref="C17">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>6148D349</tstamp>
+    </comp>
+    <comp ref="C18">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>6148D34B</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>10029449-111RLF (HDMI A)</value>
+      <footprint>For_SeeedStudio:HDMI_A_Amphenol_10029449-111</footprint>
+      <datasheet>https://en.wikipedia.org/wiki/HDMI</datasheet>
+      <fields>
+        <field name="MPN">10029449-111RLF</field>
+        <field name="URL">https://www.lcsc.com/product-detail/D-Sub-DVI-HDMI-Connectors_Amphenol-ICC-10029449-111RLF_C427307.html</field>
+        <field name="URL-ALT">https://www2.mouser.com/ProductDetail/Amphenol-FCI/10029449-111RLF?qs=fmpTyLOWOey0HPdD9%2F%2FaXA%3D%3D</field>
+      </fields>
+      <libsource lib="Connector" part="HDMI_A" description="HDMI type A connector"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>6148D34C</tstamp>
+    </comp>
+    <comp ref="C16">
+      <value>47uF 10V 1206</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">CL31A476MPHNNNE</field>
+        <field name="MPN-ALT">CC0805MRX5R5BB476 # obsolete</field>
+        <field name="MPN-ALT2">GRM21BR60J476ME15L # 6V3 # delay</field>
+        <field name="MPN-ALT3">GRM21BR61A476ME15L # 10V</field>
+        <field name="MPN-PREV">GRM21BR60J476ME01L</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_Samsung-Electro-Mechanics-CL31A476MPHNNNE_C96123.html</field>
+        <field name="URL-ALT">https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_TDK-C2012X5R1A476MTJ00E_C76636.html</field>
+        <field name="URL-ALT2">https://www2.mouser.com/ProductDetail/Murata/GRM21BR60J476ME15L?qs=Tw3AuTVwGeLlkNhaDtjM1w%3D%3D</field>
+        <field name="URL-PREV">https://www2.mouser.com/ProductDetail/?qs=u16ybLDytRYYQtTToF3RWA%3D%3D</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>6148D34D</tstamp>
+    </comp>
+    <comp ref="C15">
+      <value>10nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">0603B103K500NT</field>
+        <field name="Mouser">603-CC603KRX7R8BB103</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_FH-Guangdong-Fenghua-Advanced-Tech-0603B103K500NT_C57112.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>61B9B186</tstamp>
+    </comp>
+    <comp ref="H5">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_2.2mm_M2_Pad</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="DNP">DNP</field>
+      </fields>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>63467FFE</tstamp>
+    </comp>
+    <comp ref="C20">
+      <value>10nF 1kV 0805</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="MPN">C0805X103K501T</field>
+        <field name="MPN-ALT">C0805V103KCRACTU</field>
+        <field name="MPN-ALT2">TCC0805X7R103K501FT</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_IHHEC-HOLY-STONE-ENTERPRISE-CO-LTD-C0805X103K501T_C105950.html</field>
+        <field name="URL-ALT">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_KEMET-C0805V103KCRACTU_C2170011.html</field>
+        <field name="URL-ALT2">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_CCTC-TCC0805X7R103K501FT_C282729.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>641A275A</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>1M 500V 1206</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="MPN">HR1206J1M00P05Z</field>
+        <field name="MPN-ALT">KTR18EZPF1004</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_Ever-Ohms-Tech-HR1206J1M00P05Z_C175518.html</field>
+        <field name="URL-ALT">https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_ROHM-Semicon-KTR18EZPF1004_C253347.html</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/HDMI/" tstamps="/64CBE795/"/>
+      <tstamp>641A2763</tstamp>
+    </comp>
+    <comp ref="C21">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="Digikey">?</field>
+        <field name="Koncar">?</field>
+        <field name="MNF1_URL">www.yageo.com</field>
+        <field name="MPN">CC0603KRX7R9BB104</field>
+        <field name="Mouser">603-CC603KRX7R8BB104</field>
+        <field name="Side">TB</field>
+        <field name="URL">https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/pmod/" tstamps="/64DE57E5/"/>
+      <tstamp>634673D3</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>A2541HWR-2x6P (Pmod 2x6 F R)</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_2x06_P2.54mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <fields>
+        <field name="MPN">A2541HWR-2x6P</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_02x06_Odd_Even" description="Generic connector, double row, 02x06, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/pmod/" tstamps="/64DE57E5/"/>
+      <tstamp>63467144</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="650906-5" part="650906-5">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">650906-5</field>
+        <field name="Footprint">6509065</field>
+        <field name="Datasheet">https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&amp;DocNm=650906&amp;DocType=Customer+Drawing&amp;DocLang=English&amp;DocFormat=pdf&amp;PartCntxt=650906-5</field>
+        <field name="Description">DIN 41612 Connectors PLUG 120 POS R/A TYPE C</field>
+        <field name="Height">11.1</field>
+        <field name="Manufacturer_Name">TE Connectivity</field>
+        <field name="Manufacturer_Part_Number">650906-5</field>
+        <field name="Mouser Part Number">571-6509065</field>
+        <field name="Mouser Price/Stock">https://www.mouser.co.uk/ProductDetail/TE-Connectivity/650906-5?qs=uJX40y%252BSWqjhmPijvbrtJw%3D%3D</field>
+      </fields>
+      <pins>
+        <pin num="A1" name="A1" type="passive"/>
+        <pin num="A2" name="A2" type="passive"/>
+        <pin num="A3" name="A3" type="passive"/>
+        <pin num="A4" name="A4" type="passive"/>
+        <pin num="A5" name="A5" type="passive"/>
+        <pin num="A6" name="A6" type="passive"/>
+        <pin num="A7" name="A7" type="passive"/>
+        <pin num="A8" name="A8" type="passive"/>
+        <pin num="A9" name="A9" type="passive"/>
+        <pin num="A10" name="A10" type="passive"/>
+        <pin num="A11" name="A11" type="passive"/>
+        <pin num="A12" name="A12" type="passive"/>
+        <pin num="A13" name="A13" type="passive"/>
+        <pin num="A14" name="A14" type="passive"/>
+        <pin num="A15" name="A15" type="passive"/>
+        <pin num="A16" name="A16" type="passive"/>
+        <pin num="A17" name="A17" type="passive"/>
+        <pin num="A18" name="A18" type="passive"/>
+        <pin num="A19" name="A19" type="passive"/>
+        <pin num="A20" name="A20" type="passive"/>
+        <pin num="A21" name="A21" type="passive"/>
+        <pin num="A22" name="A22" type="passive"/>
+        <pin num="A23" name="A23" type="passive"/>
+        <pin num="A24" name="A24" type="passive"/>
+        <pin num="A25" name="A25" type="passive"/>
+        <pin num="A26" name="A26" type="passive"/>
+        <pin num="A27" name="A27" type="passive"/>
+        <pin num="A28" name="A28" type="passive"/>
+        <pin num="A29" name="A29" type="passive"/>
+        <pin num="A30" name="A30" type="passive"/>
+        <pin num="A31" name="A31" type="passive"/>
+        <pin num="A32" name="A32" type="passive"/>
+        <pin num="A33" name="A33" type="passive"/>
+        <pin num="A34" name="A34" type="passive"/>
+        <pin num="A35" name="A35" type="passive"/>
+        <pin num="A36" name="A36" type="passive"/>
+        <pin num="A37" name="A37" type="passive"/>
+        <pin num="A38" name="A38" type="passive"/>
+        <pin num="A39" name="A39" type="passive"/>
+        <pin num="A40" name="A40" type="passive"/>
+        <pin num="B1" name="B1" type="passive"/>
+        <pin num="B2" name="B2" type="passive"/>
+        <pin num="B3" name="B3" type="passive"/>
+        <pin num="B4" name="B4" type="passive"/>
+        <pin num="B5" name="B5" type="passive"/>
+        <pin num="B6" name="B6" type="passive"/>
+        <pin num="B7" name="B7" type="passive"/>
+        <pin num="B8" name="B8" type="passive"/>
+        <pin num="B9" name="B9" type="passive"/>
+        <pin num="B10" name="B10" type="passive"/>
+        <pin num="B11" name="B11" type="passive"/>
+        <pin num="B12" name="B12" type="passive"/>
+        <pin num="B13" name="B13" type="passive"/>
+        <pin num="B14" name="B14" type="passive"/>
+        <pin num="B15" name="B15" type="passive"/>
+        <pin num="B16" name="B16" type="passive"/>
+        <pin num="B17" name="B17" type="passive"/>
+        <pin num="B18" name="B18" type="passive"/>
+        <pin num="B19" name="B19" type="passive"/>
+        <pin num="B20" name="B20" type="passive"/>
+        <pin num="B21" name="B21" type="passive"/>
+        <pin num="B22" name="B22" type="passive"/>
+        <pin num="B23" name="B23" type="passive"/>
+        <pin num="B24" name="B24" type="passive"/>
+        <pin num="B25" name="B25" type="passive"/>
+        <pin num="B26" name="B26" type="passive"/>
+        <pin num="B27" name="B27" type="passive"/>
+        <pin num="B28" name="B28" type="passive"/>
+        <pin num="B29" name="B29" type="passive"/>
+        <pin num="B30" name="B30" type="passive"/>
+        <pin num="B31" name="B31" type="passive"/>
+        <pin num="B32" name="B32" type="passive"/>
+        <pin num="B33" name="B33" type="passive"/>
+        <pin num="B34" name="B34" type="passive"/>
+        <pin num="B35" name="B35" type="passive"/>
+        <pin num="B36" name="B36" type="passive"/>
+        <pin num="B37" name="B37" type="passive"/>
+        <pin num="B38" name="B38" type="passive"/>
+        <pin num="B39" name="B39" type="passive"/>
+        <pin num="B40" name="B40" type="passive"/>
+        <pin num="C1" name="C1" type="passive"/>
+        <pin num="C2" name="C2" type="passive"/>
+        <pin num="C3" name="C3" type="passive"/>
+        <pin num="C4" name="C4" type="passive"/>
+        <pin num="C5" name="C5" type="passive"/>
+        <pin num="C6" name="C6" type="passive"/>
+        <pin num="C7" name="C7" type="passive"/>
+        <pin num="C8" name="C8" type="passive"/>
+        <pin num="C9" name="C9" type="passive"/>
+        <pin num="C10" name="C10" type="passive"/>
+        <pin num="C11" name="C11" type="passive"/>
+        <pin num="C12" name="C12" type="passive"/>
+        <pin num="C13" name="C13" type="passive"/>
+        <pin num="C14" name="C14" type="passive"/>
+        <pin num="C15" name="C15" type="passive"/>
+        <pin num="C16" name="C16" type="passive"/>
+        <pin num="C17" name="C17" type="passive"/>
+        <pin num="C18" name="C18" type="passive"/>
+        <pin num="C19" name="C19" type="passive"/>
+        <pin num="C20" name="C20" type="passive"/>
+        <pin num="C21" name="C21" type="passive"/>
+        <pin num="C22" name="C22" type="passive"/>
+        <pin num="C23" name="C23" type="passive"/>
+        <pin num="C24" name="C24" type="passive"/>
+        <pin num="C25" name="C25" type="passive"/>
+        <pin num="C26" name="C26" type="passive"/>
+        <pin num="C27" name="C27" type="passive"/>
+        <pin num="C28" name="C28" type="passive"/>
+        <pin num="C29" name="C29" type="passive"/>
+        <pin num="C30" name="C30" type="passive"/>
+        <pin num="C31" name="C31" type="passive"/>
+        <pin num="C32" name="C32" type="passive"/>
+        <pin num="C33" name="C33" type="passive"/>
+        <pin num="C34" name="C34" type="passive"/>
+        <pin num="C35" name="C35" type="passive"/>
+        <pin num="C36" name="C36" type="passive"/>
+        <pin num="C37" name="C37" type="passive"/>
+        <pin num="C38" name="C38" type="passive"/>
+        <pin num="C39" name="C39" type="passive"/>
+        <pin num="C40" name="C40" type="passive"/>
+        <pin num="MH1" name="MH1" type="passive"/>
+        <pin num="MH2" name="MH2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="HDMI_A">
+      <description>HDMI type A connector</description>
+      <docs>https://en.wikipedia.org/wiki/HDMI</docs>
+      <footprints>
+        <fp>HDMI*A*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">HDMI_A</field>
+      </fields>
+      <pins>
+        <pin num="1" name="D2+" type="passive"/>
+        <pin num="2" name="D2S" type="power_in"/>
+        <pin num="3" name="D2-" type="passive"/>
+        <pin num="4" name="D1+" type="passive"/>
+        <pin num="5" name="D1S" type="power_in"/>
+        <pin num="6" name="D1-" type="passive"/>
+        <pin num="7" name="D0+" type="passive"/>
+        <pin num="8" name="D0S" type="power_in"/>
+        <pin num="9" name="D0-" type="passive"/>
+        <pin num="10" name="CK+" type="passive"/>
+        <pin num="11" name="CKS" type="power_in"/>
+        <pin num="12" name="CK-" type="passive"/>
+        <pin num="13" name="CEC" type="BiDi"/>
+        <pin num="14" name="UTILITY" type="passive"/>
+        <pin num="15" name="SCL" type="passive"/>
+        <pin num="16" name="SDA" type="BiDi"/>
+        <pin num="17" name="GND" type="power_in"/>
+        <pin num="18" name="+5V" type="power_in"/>
+        <pin num="19" name="HPD" type="passive"/>
+        <pin num="SH" name="SH" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_02x06_Odd_Even">
+      <description>Generic connector, double row, 02x06, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_02x06_Odd_Even</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_02x07_Odd_Even">
+      <description>Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_02x07_Odd_Even</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED_ALT">
+      <description>Light emitting diode, filled shape</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_ALT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole_Pad">
+      <description>Mounting Hole with connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*Pad*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole_Pad</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="SN74CB3T3245PWR" part="SN74CB3T3245PWR">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">SN74CB3T3245PWR</field>
+        <field name="Footprint">SOP65P640X120-20N</field>
+      </fields>
+      <pins>
+        <pin num="2" name="A1" type="BiDi"/>
+        <pin num="3" name="A2" type="BiDi"/>
+        <pin num="4" name="A3" type="BiDi"/>
+        <pin num="5" name="A4" type="BiDi"/>
+        <pin num="6" name="A5" type="BiDi"/>
+        <pin num="7" name="A6" type="BiDi"/>
+        <pin num="8" name="A7" type="BiDi"/>
+        <pin num="9" name="A8" type="BiDi"/>
+        <pin num="10" name="GND" type="power_in"/>
+        <pin num="11" name="B8" type="BiDi"/>
+        <pin num="12" name="B7" type="BiDi"/>
+        <pin num="13" name="B6" type="BiDi"/>
+        <pin num="14" name="B5" type="BiDi"/>
+        <pin num="15" name="B4" type="BiDi"/>
+        <pin num="16" name="B3" type="BiDi"/>
+        <pin num="17" name="B2" type="BiDi"/>
+        <pin num="18" name="B1" type="BiDi"/>
+        <pin num="19" name="~OE" type="input"/>
+        <pin num="20" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="TPD12S016PWR" part="TPD12S016PWR">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TPD12S016PWR</field>
+        <field name="Footprint">SOP65P640X120-24N</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">1.2 mm</field>
+        <field name="MANUFACTURER">Texas Instruments</field>
+        <field name="PARTREV">F</field>
+        <field name="STANDARD">IPC 7351B</field>
+      </fields>
+      <pins>
+        <pin num="1" name="CEC_A" type="BiDi"/>
+        <pin num="2" name="SCL_A" type="BiDi"/>
+        <pin num="3" name="SDA_A" type="BiDi"/>
+        <pin num="4" name="HPD_A" type="output"/>
+        <pin num="5" name="LS_OE" type="input"/>
+        <pin num="6" name="GND_6" type="power_in"/>
+        <pin num="7" name="CEC_B" type="BiDi"/>
+        <pin num="8" name="SCL_B" type="BiDi"/>
+        <pin num="9" name="SDA_B" type="BiDi"/>
+        <pin num="10" name="HPD_B" type="input"/>
+        <pin num="11" name="VCC5V" type="input"/>
+        <pin num="12" name="CT_HPD" type="input"/>
+        <pin num="13" name="5V_OUT" type="output"/>
+        <pin num="14" name="GND_14" type="power_in"/>
+        <pin num="15" name="CLK-" type="BiDi"/>
+        <pin num="16" name="CLK+" type="BiDi"/>
+        <pin num="17" name="D0-" type="BiDi"/>
+        <pin num="18" name="D0+" type="BiDi"/>
+        <pin num="19" name="GND_19" type="power_in"/>
+        <pin num="20" name="D1-" type="BiDi"/>
+        <pin num="21" name="D1+" type="BiDi"/>
+        <pin num="22" name="D2-" type="BiDi"/>
+        <pin num="23" name="D2+" type="BiDi"/>
+        <pin num="24" name="VCCA" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="ztex_AB" part="ZTEX_AB">
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">ZTEX_AB</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="passive"/>
+        <pin num="2" name="VIN" type="passive"/>
+        <pin num="3" name="GND" type="passive"/>
+        <pin num="4" name="GND" type="passive"/>
+        <pin num="5" name="K16~IO_25_15" type="passive"/>
+        <pin num="6" name="J18~IO_L23N_T3_FWE_B_15" type="passive"/>
+        <pin num="7" name="K15~IO_L24P_T3_RS1_15" type="passive"/>
+        <pin num="8" name="J17~IO_L23P_T3_FOE_B_15" type="passive"/>
+        <pin num="9" name="J15~IO_L24N_T3_RS0_15" type="passive"/>
+        <pin num="10" name="K13~IO_L17P_T2_A26_15" type="passive"/>
+        <pin num="11" name="H15~IO_L19N_T3_A21_VREF_15" type="passive"/>
+        <pin num="12" name="J13~IO_L17N_T2_A25_15" type="passive"/>
+        <pin num="13" name="J14~IO_L19P_T3_A22_15" type="passive"/>
+        <pin num="14" name="H14~IO_L15P_T2_DQS_15" type="passive"/>
+        <pin num="15" name="H17~IO_L18P_T2_A24_15" type="passive"/>
+        <pin num="16" name="G14~IO_L15N_T2_DQS_ADV_B_15" type="passive"/>
+        <pin num="17" name="G17~IO_L18N_T2_A23_15" type="passive"/>
+        <pin num="18" name="G16~IO_L13N_T2_MRCC_15" type="passive"/>
+        <pin num="19" name="G18~IO_L22P_T3_A17_15" type="passive"/>
+        <pin num="20" name="H16~IO_L13P_T2_MRCC_15" type="passive"/>
+        <pin num="21" name="F18~IO_L22N_T3_A16_15" type="passive"/>
+        <pin num="22" name="F16~IO_L14N_T2_SRCC_15" type="passive"/>
+        <pin num="23" name="E18~IO_L21P_T3_DQS_15" type="passive"/>
+        <pin num="24" name="F15~IO_L14P_T2_SRCC_15" type="passive"/>
+        <pin num="25" name="D18~IO_L21N_T3_DQS_A18_15" type="passive"/>
+        <pin num="26" name="E17~IO_L16P_T2_A28_15" type="passive"/>
+        <pin num="27" name="G13~IO_0_15" type="passive"/>
+        <pin num="28" name="D17~IO_L16N_T2_A27_15" type="passive"/>
+        <pin num="29" name="3.3V" type="passive"/>
+        <pin num="30" name="3.3V" type="passive"/>
+        <pin num="31" name="GND" type="passive"/>
+        <pin num="32" name="GND" type="passive"/>
+        <pin num="33" name="VCCO_AB" type="passive"/>
+        <pin num="34" name="VCCO_AB" type="passive"/>
+        <pin num="35" name="F13~IO_L5P_T0_AD9P_15" type="passive"/>
+        <pin num="36" name="F14~IO_L5N_T0_AD9N_15" type="passive"/>
+        <pin num="37" name="E16~IO_L11N_T1_SRCC_15" type="passive"/>
+        <pin num="38" name="E15~IO_L11P_T1_SRCC_15" type="passive"/>
+        <pin num="39" name="C17~IO_L20N_T3_A19_15" type="passive"/>
+        <pin num="40" name="C16~IO_L20P_T3_A20_15" type="passive"/>
+        <pin num="41" name="A18~IO_L10N_T1_AD11N_15" type="passive"/>
+        <pin num="42" name="B18~IO_L10P_T1_AD11P_15" type="passive"/>
+        <pin num="43" name="C15~IO_L12N_T1_MRCC_15" type="passive"/>
+        <pin num="44" name="D15~IO_L12P_T1_MRCC_15" type="passive"/>
+        <pin num="45" name="B17~IO_L7N_T1_AD2N_15" type="passive"/>
+        <pin num="46" name="B16~IO_L7P_T1_AD2P_15" type="passive"/>
+        <pin num="47" name="C14~IO_L1N_T0_AD0N_15" type="passive"/>
+        <pin num="48" name="D14~IO_L1P_T0_AD0P_15" type="passive"/>
+        <pin num="49" name="D13~IO_L6N_T0_VREF_15" type="passive"/>
+        <pin num="50" name="D12~IO_L6P_T0_15" type="passive"/>
+        <pin num="51" name="A16~IO_L8N_T1_AD10N_15" type="passive"/>
+        <pin num="52" name="A15~IO_L8P_T1_AD10P_15" type="passive"/>
+        <pin num="53" name="B14~IO_L2N_T0_AD8N_15" type="passive"/>
+        <pin num="54" name="B13~IO_L2P_T0_AD8P_15" type="passive"/>
+        <pin num="55" name="B12~IO_L3N_T0_DQS_AD1N_15" type="passive"/>
+        <pin num="56" name="C12~IO_L3P_T0_DQS_AD1P_15" type="passive"/>
+        <pin num="57" name="A14~IO_L9N_T1_DQS_AD3N_15" type="passive"/>
+        <pin num="58" name="A13~IO_L9P_T1_DQS_AD3P_15" type="passive"/>
+        <pin num="59" name="B11~IO_L4P_T0_15" type="passive"/>
+        <pin num="60" name="A11~IO_L4N_T0_15" type="passive"/>
+        <pin num="61" name="JTAG_TDI" type="passive"/>
+        <pin num="62" name="JTAG_TCK" type="passive"/>
+        <pin num="63" name="JTAG_VIO" type="passive"/>
+        <pin num="64" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="ztex_CD" part="ZTEX_CD">
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">ZTEX_CD</field>
+      </fields>
+      <pins>
+        <pin num="1" name="USB_5V" type="passive"/>
+        <pin num="2" name="RESET#" type="passive"/>
+        <pin num="3" name="GND" type="passive"/>
+        <pin num="4" name="GND" type="passive"/>
+        <pin num="5" name="U9~IO_L21P_T3_DQS_34" type="passive"/>
+        <pin num="6" name="V9~IO_L21N_T3_DQS_34" type="passive"/>
+        <pin num="7" name="U8~IO_25_34" type="passive"/>
+        <pin num="8" name="V7~IO_L20P_T3_34" type="passive"/>
+        <pin num="9" name="U7~IO_L22P_T3_34" type="passive"/>
+        <pin num="10" name="V6~IO_L20N_T3_34" type="passive"/>
+        <pin num="11" name="U6~IO_L22N_T3_34" type="passive"/>
+        <pin num="12" name="V5~IO_L10P_T1_34" type="passive"/>
+        <pin num="13" name="T8~IO_L24N_T3_34" type="passive"/>
+        <pin num="14" name="V4~IO_L10N_T1_34" type="passive"/>
+        <pin num="15" name="R8~IO_L24P_T3_34" type="passive"/>
+        <pin num="16" name="T5~IO_L12P_T1_MRCC_34" type="passive"/>
+        <pin num="17" name="R7~IO_L23P_T3_34" type="passive"/>
+        <pin num="18" name="T4~IO_L12N_T1_MRCC_34" type="passive"/>
+        <pin num="19" name="T6~IO_L23N_T3_34" type="passive"/>
+        <pin num="20" name="U4~IO_L8P_T1_34" type="passive"/>
+        <pin num="21" name="R6~IO_L19P_T3_34" type="passive"/>
+        <pin num="22" name="U3~IO_L8N_T1_34" type="passive"/>
+        <pin num="23" name="R5~IO_L19N_T3_VREF_34" type="passive"/>
+        <pin num="24" name="V1~IO_L7N_T1_34" type="passive"/>
+        <pin num="25" name="V2~IO_L9N_T1_DQS_34" type="passive"/>
+        <pin num="26" name="U1~IO_L7P_T1_34" type="passive"/>
+        <pin num="27" name="U2~IO_L9P_T1_DQS_34" type="passive"/>
+        <pin num="28" name="T3~IO_L11N_T1_SRCC_34" type="passive"/>
+        <pin num="29" name="K6~IO_0_34" type="passive"/>
+        <pin num="30" name="R3~IO_L11P_T1_SRCC_34" type="passive"/>
+        <pin num="31" name="VCCO_CD" type="passive"/>
+        <pin num="32" name="VCCO_CD" type="passive"/>
+        <pin num="33" name="GND" type="passive"/>
+        <pin num="34" name="GND" type="passive"/>
+        <pin num="35" name="3.3V" type="passive"/>
+        <pin num="36" name="3.3V" type="passive"/>
+        <pin num="37" name="N6~IO_L18N_T2_34" type="passive"/>
+        <pin num="38" name="P5~IO_L13N_T2_MRCC_34" type="passive"/>
+        <pin num="39" name="M6~IO_L18P_T2_34" type="passive"/>
+        <pin num="40" name="N5~IO_L13P_T2_MRCC_34" type="passive"/>
+        <pin num="41" name="L6~IO_L6P_T0_34" type="passive"/>
+        <pin num="42" name="P4~IO_L14P_T2_SRCC_34" type="passive"/>
+        <pin num="43" name="L5~IO_L6N_T0_VREF_34" type="passive"/>
+        <pin num="44" name="P3~IO_L14N_T2_SRCC_34" type="passive"/>
+        <pin num="45" name="N4~IO_L16N_T2_34" type="passive"/>
+        <pin num="46" name="T1~IO_L17N_T2_34" type="passive"/>
+        <pin num="47" name="M4~IO_L16P_T2_34" type="passive"/>
+        <pin num="48" name="R1~IO_L17P_T2_34" type="passive"/>
+        <pin num="49" name="M3~IO_L4P_T0_34" type="passive"/>
+        <pin num="50" name="R2~IO_L15N_T2_DQS_34" type="passive"/>
+        <pin num="51" name="M2~IO_L4N_T0_34" type="passive"/>
+        <pin num="52" name="P2~IO_L15P_T2_DQS_34" type="passive"/>
+        <pin num="53" name="K5~IO_L5P_T0_34" type="passive"/>
+        <pin num="54" name="N2~IO_L3P_T0_DQS_34" type="passive"/>
+        <pin num="55" name="L4~IO_L5N_T0_34" type="passive"/>
+        <pin num="56" name="N1~IO_L3N_T0_DQS_34" type="passive"/>
+        <pin num="57" name="L3~IO_L2N_T0_34" type="passive"/>
+        <pin num="58" name="M1~IO_L1N_T0_34" type="passive"/>
+        <pin num="59" name="K3~IO_L2P_T0_34" type="passive"/>
+        <pin num="60" name="L1~IO_L1P_T0_34" type="passive"/>
+        <pin num="61" name="JTAG_TDO" type="passive"/>
+        <pin num="62" name="JTAG_TMS" type="passive"/>
+        <pin num="63" name="GND" type="passive"/>
+        <pin num="64" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="650906-5">
+      <uri>/home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/650906-5.lib</uri>
+    </library>
+    <library logical="Connector">
+      <uri>/usr/share/kicad/library/Connector.lib</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>/usr/share/kicad/library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>/usr/share/kicad/library/Device.lib</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>/usr/share/kicad/library/Mechanical.lib</uri>
+    </library>
+    <library logical="SN74CB3T3245PWR">
+      <uri>/home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/SN74CB3T3245PWR.lib</uri>
+    </library>
+    <library logical="TPD12S016PWR">
+      <uri>/home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/TPD12S016PWR.lib</uri>
+    </library>
+    <library logical="ztex_AB">
+      <uri>/home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/ztex_AB.lib</uri>
+    </library>
+    <library logical="ztex_CD">
+      <uri>/home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/ztex_CD.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(H2-Pad1)">
+      <node ref="H2" pin="1"/>
+    </net>
+    <net code="2" name="Net-(H1-Pad1)">
+      <node ref="H1" pin="1"/>
+    </net>
+    <net code="3" name="GND">
+      <node ref="J2" pin="B16"/>
+      <node ref="J2" pin="A39"/>
+      <node ref="U11" pin="9"/>
+      <node ref="U11" pin="7"/>
+      <node ref="U11" pin="3"/>
+      <node ref="U11" pin="19"/>
+      <node ref="C14" pin="2"/>
+      <node ref="U11" pin="5"/>
+      <node ref="U11" pin="10"/>
+      <node ref="J2" pin="B34"/>
+      <node ref="J2" pin="C39"/>
+      <node ref="J2" pin="B39"/>
+      <node ref="J4" pin="9"/>
+      <node ref="J1" pin="13"/>
+      <node ref="U3" pin="10"/>
+      <node ref="U3" pin="19"/>
+      <node ref="U12" pin="6"/>
+      <node ref="C19" pin="2"/>
+      <node ref="C17" pin="2"/>
+      <node ref="C18" pin="2"/>
+      <node ref="C7" pin="2"/>
+      <node ref="J4" pin="10"/>
+      <node ref="C2" pin="2"/>
+      <node ref="D1" pin="1"/>
+      <node ref="C1" pin="2"/>
+      <node ref="JCD1" pin="63"/>
+      <node ref="JCD1" pin="34"/>
+      <node ref="JCD1" pin="33"/>
+      <node ref="JCD1" pin="3"/>
+      <node ref="C9" pin="2"/>
+      <node ref="J2" pin="B22"/>
+      <node ref="C21" pin="2"/>
+      <node ref="J2" pin="B28"/>
+      <node ref="U1" pin="19"/>
+      <node ref="C13" pin="2"/>
+      <node ref="U9" pin="10"/>
+      <node ref="U10" pin="10"/>
+      <node ref="J3" pin="11"/>
+      <node ref="U10" pin="19"/>
+      <node ref="U8" pin="19"/>
+      <node ref="U6" pin="19"/>
+      <node ref="U7" pin="19"/>
+      <node ref="C10" pin="2"/>
+      <node ref="U6" pin="10"/>
+      <node ref="J3" pin="5"/>
+      <node ref="U2" pin="19"/>
+      <node ref="C5" pin="2"/>
+      <node ref="U1" pin="10"/>
+      <node ref="J3" pin="8"/>
+      <node ref="U2" pin="10"/>
+      <node ref="U5" pin="10"/>
+      <node ref="U5" pin="19"/>
+      <node ref="U4" pin="10"/>
+      <node ref="C6" pin="2"/>
+      <node ref="U4" pin="19"/>
+      <node ref="C11" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="C8" pin="2"/>
+      <node ref="J3" pin="2"/>
+      <node ref="U7" pin="10"/>
+      <node ref="U9" pin="19"/>
+      <node ref="C12" pin="2"/>
+      <node ref="U8" pin="10"/>
+      <node ref="J3" pin="17"/>
+      <node ref="C20" pin="2"/>
+      <node ref="R2" pin="2"/>
+      <node ref="C16" pin="2"/>
+      <node ref="C15" pin="2"/>
+      <node ref="JAB1" pin="4"/>
+      <node ref="JAB1" pin="3"/>
+      <node ref="J1" pin="11"/>
+      <node ref="J1" pin="1"/>
+      <node ref="JCD1" pin="64"/>
+      <node ref="J1" pin="7"/>
+      <node ref="JAB1" pin="64"/>
+      <node ref="C3" pin="2"/>
+      <node ref="JAB1" pin="31"/>
+      <node ref="J1" pin="9"/>
+      <node ref="JCD1" pin="4"/>
+      <node ref="J1" pin="3"/>
+      <node ref="JAB1" pin="32"/>
+      <node ref="J1" pin="5"/>
+    </net>
+    <net code="4" name="+5V">
+      <node ref="J2" pin="B37"/>
+      <node ref="J2" pin="B19"/>
+      <node ref="JAB1" pin="1"/>
+      <node ref="J2" pin="A37"/>
+      <node ref="JAB1" pin="2"/>
+      <node ref="J2" pin="B31"/>
+      <node ref="J2" pin="B13"/>
+      <node ref="J2" pin="B25"/>
+      <node ref="U12" pin="11"/>
+      <node ref="C18" pin="1"/>
+      <node ref="J2" pin="C37"/>
+      <node ref="C3" pin="1"/>
+    </net>
+    <net code="5" name="D7_3V3">
+      <node ref="JAB1" pin="54"/>
+      <node ref="U5" pin="17"/>
+    </net>
+    <net code="6" name="D10_3V3">
+      <node ref="U2" pin="12"/>
+      <node ref="JAB1" pin="52"/>
+    </net>
+    <net code="7" name="D13_3V3">
+      <node ref="JAB1" pin="50"/>
+      <node ref="U2" pin="15"/>
+    </net>
+    <net code="8" name="D16_3V3">
+      <node ref="U2" pin="18"/>
+      <node ref="JAB1" pin="48"/>
+    </net>
+    <net code="9" name="D19_3V3">
+      <node ref="JAB1" pin="46"/>
+      <node ref="U1" pin="13"/>
+    </net>
+    <net code="10" name="D22_3V3">
+      <node ref="JAB1" pin="44"/>
+      <node ref="U1" pin="16"/>
+    </net>
+    <net code="11" name="D24_3V3">
+      <node ref="JAB1" pin="42"/>
+      <node ref="U1" pin="18"/>
+    </net>
+    <net code="12" name="D26_3V3">
+      <node ref="U6" pin="12"/>
+      <node ref="JAB1" pin="40"/>
+    </net>
+    <net code="13" name="D28_3V3">
+      <node ref="JAB1" pin="38"/>
+      <node ref="U6" pin="14"/>
+    </net>
+    <net code="14" name="D30_3V3">
+      <node ref="U6" pin="16"/>
+      <node ref="JAB1" pin="36"/>
+    </net>
+    <net code="15" name="D4_3V3">
+      <node ref="JAB1" pin="56"/>
+      <node ref="U5" pin="14"/>
+    </net>
+    <net code="16" name="A31_3V3">
+      <node ref="JAB1" pin="28"/>
+      <node ref="U6" pin="18"/>
+    </net>
+    <net code="17" name="A29_3V3">
+      <node ref="JAB1" pin="26"/>
+      <node ref="U7" pin="12"/>
+    </net>
+    <net code="18" name="A27_3V3">
+      <node ref="U7" pin="14"/>
+      <node ref="JAB1" pin="24"/>
+    </net>
+    <net code="19" name="A24_3V3">
+      <node ref="JAB1" pin="22"/>
+      <node ref="U7" pin="17"/>
+    </net>
+    <net code="20" name="CPUCLK_3V3">
+      <node ref="JAB1" pin="20"/>
+      <node ref="U10" pin="18"/>
+    </net>
+    <net code="21" name="A22_3V3">
+      <node ref="JAB1" pin="17"/>
+      <node ref="U8" pin="11"/>
+    </net>
+    <net code="22" name="A20_3V3">
+      <node ref="JAB1" pin="15"/>
+      <node ref="U8" pin="13"/>
+    </net>
+    <net code="23" name="A18_3V3">
+      <node ref="U8" pin="15"/>
+      <node ref="JAB1" pin="13"/>
+    </net>
+    <net code="24" name="A16_3V3">
+      <node ref="JAB1" pin="11"/>
+      <node ref="U8" pin="17"/>
+    </net>
+    <net code="25" name="A21_3V3">
+      <node ref="JAB1" pin="18"/>
+      <node ref="U8" pin="12"/>
+    </net>
+    <net code="26" name="A19_3V3">
+      <node ref="U8" pin="14"/>
+      <node ref="JAB1" pin="16"/>
+    </net>
+    <net code="27" name="A17_3V3">
+      <node ref="U8" pin="16"/>
+      <node ref="JAB1" pin="14"/>
+    </net>
+    <net code="28" name="A15_3V3">
+      <node ref="U8" pin="18"/>
+      <node ref="JAB1" pin="12"/>
+    </net>
+    <net code="29" name="A13_3V3">
+      <node ref="U9" pin="12"/>
+      <node ref="JAB1" pin="10"/>
+    </net>
+    <net code="30" name="A11_3V3">
+      <node ref="JAB1" pin="8"/>
+      <node ref="U9" pin="14"/>
+    </net>
+    <net code="31" name="~BERR_3V3">
+      <node ref="U4" pin="16"/>
+      <node ref="JAB1" pin="60"/>
+    </net>
+    <net code="32" name="A9_3V3">
+      <node ref="U9" pin="16"/>
+      <node ref="JAB1" pin="6"/>
+    </net>
+    <net code="33" name="D1_3V3">
+      <node ref="JAB1" pin="58"/>
+      <node ref="U5" pin="11"/>
+    </net>
+    <net code="34" name="A28_3V3">
+      <node ref="U7" pin="13"/>
+      <node ref="JAB1" pin="25"/>
+    </net>
+    <net code="35" name="A26_3V3">
+      <node ref="U7" pin="15"/>
+      <node ref="JAB1" pin="23"/>
+    </net>
+    <net code="36" name="A25_3V3">
+      <node ref="U7" pin="16"/>
+      <node ref="JAB1" pin="21"/>
+    </net>
+    <net code="37" name="A23_3V3">
+      <node ref="U7" pin="18"/>
+      <node ref="JAB1" pin="19"/>
+    </net>
+    <net code="38" name="A30_3V3">
+      <node ref="U7" pin="11"/>
+      <node ref="JAB1" pin="27"/>
+    </net>
+    <net code="39" name="D15_3V3">
+      <node ref="U2" pin="17"/>
+      <node ref="JAB1" pin="47"/>
+    </net>
+    <net code="40" name="A14_3V3">
+      <node ref="JAB1" pin="9"/>
+      <node ref="U9" pin="11"/>
+    </net>
+    <net code="41" name="A12_3V3">
+      <node ref="U9" pin="13"/>
+      <node ref="JAB1" pin="7"/>
+    </net>
+    <net code="42" name="/B2B/JTAG_VIO">
+      <node ref="JAB1" pin="63"/>
+    </net>
+    <net code="43" name="~RESET_3V3">
+      <node ref="JAB1" pin="59"/>
+      <node ref="U4" pin="15"/>
+    </net>
+    <net code="44" name="A10_3V3">
+      <node ref="U9" pin="15"/>
+      <node ref="JAB1" pin="5"/>
+    </net>
+    <net code="45" name="D0_3V3">
+      <node ref="U4" pin="18"/>
+      <node ref="JAB1" pin="57"/>
+    </net>
+    <net code="46" name="D3_3V3">
+      <node ref="JAB1" pin="55"/>
+      <node ref="U5" pin="13"/>
+    </net>
+    <net code="47" name="D6_3V3">
+      <node ref="U5" pin="16"/>
+      <node ref="JAB1" pin="53"/>
+    </net>
+    <net code="48" name="D9_3V3">
+      <node ref="JAB1" pin="51"/>
+      <node ref="U2" pin="11"/>
+    </net>
+    <net code="49" name="D12_3V3">
+      <node ref="JAB1" pin="49"/>
+      <node ref="U2" pin="14"/>
+    </net>
+    <net code="50" name="D18_3V3">
+      <node ref="U1" pin="12"/>
+      <node ref="JAB1" pin="45"/>
+    </net>
+    <net code="51" name="D21_3V3">
+      <node ref="U1" pin="15"/>
+      <node ref="JAB1" pin="43"/>
+    </net>
+    <net code="52" name="D23_3V3">
+      <node ref="JAB1" pin="41"/>
+      <node ref="U1" pin="17"/>
+    </net>
+    <net code="53" name="D25_3V3">
+      <node ref="U6" pin="11"/>
+      <node ref="JAB1" pin="39"/>
+    </net>
+    <net code="54" name="D27_3V3">
+      <node ref="U6" pin="13"/>
+      <node ref="JAB1" pin="37"/>
+    </net>
+    <net code="55" name="D29_3V3">
+      <node ref="JAB1" pin="35"/>
+      <node ref="U6" pin="15"/>
+    </net>
+    <net code="56" name="~IRQ1_3V3">
+      <node ref="U3" pin="11"/>
+      <node ref="JCD1" pin="60"/>
+    </net>
+    <net code="57" name="FPGA_JTAG_TDI">
+      <node ref="J1" pin="10"/>
+      <node ref="JAB1" pin="61"/>
+    </net>
+    <net code="58" name="HDMI_D2-">
+      <node ref="J3" pin="3"/>
+      <node ref="JCD1" pin="18"/>
+      <node ref="U12" pin="22"/>
+    </net>
+    <net code="59" name="HDMI_D2+">
+      <node ref="J3" pin="1"/>
+      <node ref="JCD1" pin="16"/>
+      <node ref="U12" pin="23"/>
+    </net>
+    <net code="60" name="A8_3V3">
+      <node ref="U9" pin="17"/>
+      <node ref="JCD1" pin="14"/>
+    </net>
+    <net code="61" name="A6_3V3">
+      <node ref="JCD1" pin="12"/>
+      <node ref="U10" pin="11"/>
+    </net>
+    <net code="62" name="A4_3V3">
+      <node ref="JCD1" pin="10"/>
+      <node ref="U10" pin="13"/>
+    </net>
+    <net code="63" name="A2_3V3">
+      <node ref="U10" pin="15"/>
+      <node ref="JCD1" pin="8"/>
+    </net>
+    <net code="64" name="Net-(J1-Pad12)">
+      <node ref="J1" pin="12"/>
+    </net>
+    <net code="65" name="A0_3V3">
+      <node ref="JCD1" pin="6"/>
+      <node ref="U10" pin="17"/>
+    </net>
+    <net code="66" name="~STERM_3V3">
+      <node ref="JCD1" pin="58"/>
+      <node ref="U3" pin="13"/>
+    </net>
+    <net code="67" name="~DSACK0_3V3">
+      <node ref="JCD1" pin="56"/>
+      <node ref="U3" pin="15"/>
+    </net>
+    <net code="68" name="SIZ1_3V3">
+      <node ref="U3" pin="17"/>
+      <node ref="JCD1" pin="54"/>
+    </net>
+    <net code="69" name="~AS_3V3">
+      <node ref="U4" pin="11"/>
+      <node ref="JCD1" pin="52"/>
+    </net>
+    <net code="70" name="FC1_3V3">
+      <node ref="JCD1" pin="50"/>
+      <node ref="U4" pin="13"/>
+    </net>
+    <net code="71" name="~HALT_3V3">
+      <node ref="JCD1" pin="48"/>
+      <node ref="U4" pin="17"/>
+    </net>
+    <net code="72" name="D5_3V3">
+      <node ref="U5" pin="15"/>
+      <node ref="JCD1" pin="46"/>
+    </net>
+    <net code="73" name="D11_3V3">
+      <node ref="U2" pin="13"/>
+      <node ref="JCD1" pin="44"/>
+    </net>
+    <net code="74" name="D17_3V3">
+      <node ref="U1" pin="11"/>
+      <node ref="JCD1" pin="42"/>
+    </net>
+    <net code="75" name="PMOD-910-">
+      <node ref="J4" pin="4"/>
+      <node ref="JCD1" pin="40"/>
+    </net>
+    <net code="76" name="FPGA_JTAG_TDO">
+      <node ref="J1" pin="8"/>
+      <node ref="JCD1" pin="61"/>
+    </net>
+    <net code="77" name="FPGA_JTAG_TCK">
+      <node ref="JAB1" pin="62"/>
+      <node ref="J1" pin="6"/>
+    </net>
+    <net code="78" name="FPGA_JTAG_TMS">
+      <node ref="J1" pin="4"/>
+      <node ref="JCD1" pin="62"/>
+    </net>
+    <net code="79" name="/B2B/JTAG_VIO">
+      <node ref="J1" pin="2"/>
+    </net>
+    <net code="80" name="Net-(J1-Pad14)">
+      <node ref="J1" pin="14"/>
+    </net>
+    <net code="81" name="FC2_3V3">
+      <node ref="U4" pin="12"/>
+      <node ref="JCD1" pin="51"/>
+    </net>
+    <net code="82" name="FC0_3V3">
+      <node ref="U4" pin="14"/>
+      <node ref="JCD1" pin="49"/>
+    </net>
+    <net code="83" name="D2_3V3">
+      <node ref="U5" pin="12"/>
+      <node ref="JCD1" pin="47"/>
+    </net>
+    <net code="84" name="D8_3V3">
+      <node ref="JCD1" pin="45"/>
+      <node ref="U5" pin="18"/>
+    </net>
+    <net code="85" name="D14_3V3">
+      <node ref="U2" pin="16"/>
+      <node ref="JCD1" pin="43"/>
+    </net>
+    <net code="86" name="D20_3V3">
+      <node ref="U1" pin="14"/>
+      <node ref="JCD1" pin="41"/>
+    </net>
+    <net code="87" name="PMOD-1112+">
+      <node ref="J4" pin="1"/>
+      <node ref="JCD1" pin="39"/>
+    </net>
+    <net code="88" name="PMOD-1112-">
+      <node ref="JCD1" pin="37"/>
+      <node ref="J4" pin="2"/>
+    </net>
+    <net code="89" name="SIZ0_3V3">
+      <node ref="JCD1" pin="53"/>
+      <node ref="U3" pin="18"/>
+    </net>
+    <net code="90" name="D31_3V3">
+      <node ref="U6" pin="17"/>
+      <node ref="JCD1" pin="29"/>
+    </net>
+    <net code="91" name="CACHE_3V3">
+      <node ref="JCD1" pin="27"/>
+      <node ref="U11" pin="12"/>
+    </net>
+    <net code="92" name="~CIOUT_3V3">
+      <node ref="JCD1" pin="25"/>
+      <node ref="U11" pin="14"/>
+    </net>
+    <net code="93" name="HDMI_CLK-">
+      <node ref="U12" pin="15"/>
+      <node ref="JCD1" pin="23"/>
+      <node ref="J3" pin="12"/>
+    </net>
+    <net code="94" name="HDMI_CLK+">
+      <node ref="J3" pin="10"/>
+      <node ref="U12" pin="16"/>
+      <node ref="JCD1" pin="21"/>
+    </net>
+    <net code="95" name="HDMI_D1-">
+      <node ref="J3" pin="6"/>
+      <node ref="U12" pin="20"/>
+      <node ref="JCD1" pin="19"/>
+    </net>
+    <net code="96" name="Net-(JCD1-Pad1)">
+      <node ref="JCD1" pin="1"/>
+    </net>
+    <net code="97" name="HDMI_D1+">
+      <node ref="J3" pin="4"/>
+      <node ref="JCD1" pin="17"/>
+      <node ref="U12" pin="21"/>
+    </net>
+    <net code="98" name="PMOD-910+">
+      <node ref="JCD1" pin="38"/>
+      <node ref="J4" pin="3"/>
+    </net>
+    <net code="99" name="PMOD-78-">
+      <node ref="JCD1" pin="30"/>
+      <node ref="J4" pin="6"/>
+    </net>
+    <net code="100" name="PMOD-78+">
+      <node ref="JCD1" pin="28"/>
+      <node ref="J4" pin="5"/>
+    </net>
+    <net code="101" name="PMOD-56-">
+      <node ref="JCD1" pin="26"/>
+      <node ref="J4" pin="8"/>
+    </net>
+    <net code="102" name="PMOD-56+">
+      <node ref="JCD1" pin="24"/>
+      <node ref="J4" pin="7"/>
+    </net>
+    <net code="103" name="HDMI_D0-">
+      <node ref="U12" pin="17"/>
+      <node ref="J3" pin="9"/>
+      <node ref="JCD1" pin="22"/>
+    </net>
+    <net code="104" name="HDMI_D0+">
+      <node ref="JCD1" pin="20"/>
+      <node ref="J3" pin="7"/>
+      <node ref="U12" pin="18"/>
+    </net>
+    <net code="105" name="Net-(JCD1-Pad2)">
+      <node ref="JCD1" pin="2"/>
+    </net>
+    <net code="106" name="~CBREQ_3V3">
+      <node ref="JCD1" pin="15"/>
+      <node ref="U11" pin="16"/>
+    </net>
+    <net code="107" name="~CBACK_3V3">
+      <node ref="JCD1" pin="13"/>
+      <node ref="U11" pin="18"/>
+    </net>
+    <net code="108" name="A7_3V3">
+      <node ref="JCD1" pin="11"/>
+      <node ref="U9" pin="18"/>
+    </net>
+    <net code="109" name="A5_3V3">
+      <node ref="JCD1" pin="9"/>
+      <node ref="U10" pin="12"/>
+    </net>
+    <net code="110" name="A3_3V3">
+      <node ref="U10" pin="14"/>
+      <node ref="JCD1" pin="7"/>
+    </net>
+    <net code="111" name="~DS_3V3">
+      <node ref="U3" pin="12"/>
+      <node ref="JCD1" pin="59"/>
+    </net>
+    <net code="112" name="A1_3V3">
+      <node ref="JCD1" pin="5"/>
+      <node ref="U10" pin="16"/>
+    </net>
+    <net code="113" name="~DSACK1_3V3">
+      <node ref="U3" pin="14"/>
+      <node ref="JCD1" pin="57"/>
+    </net>
+    <net code="114" name="~RW_3V3">
+      <node ref="U3" pin="16"/>
+      <node ref="JCD1" pin="55"/>
+    </net>
+    <net code="115" name="+3V3">
+      <node ref="JAB1" pin="33"/>
+      <node ref="JAB1" pin="29"/>
+      <node ref="C2" pin="1"/>
+      <node ref="U5" pin="20"/>
+      <node ref="JCD1" pin="32"/>
+      <node ref="JCD1" pin="36"/>
+      <node ref="C12" pin="1"/>
+      <node ref="JCD1" pin="35"/>
+      <node ref="C6" pin="1"/>
+      <node ref="C15" pin="1"/>
+      <node ref="C16" pin="1"/>
+      <node ref="JCD1" pin="31"/>
+      <node ref="C7" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="U4" pin="20"/>
+      <node ref="JAB1" pin="34"/>
+      <node ref="U7" pin="20"/>
+      <node ref="R1" pin="1"/>
+      <node ref="C17" pin="1"/>
+      <node ref="C11" pin="1"/>
+      <node ref="U9" pin="20"/>
+      <node ref="U12" pin="24"/>
+      <node ref="C10" pin="1"/>
+      <node ref="U1" pin="20"/>
+      <node ref="J4" pin="11"/>
+      <node ref="J4" pin="12"/>
+      <node ref="U11" pin="20"/>
+      <node ref="U2" pin="20"/>
+      <node ref="C14" pin="1"/>
+      <node ref="U6" pin="20"/>
+      <node ref="C13" pin="1"/>
+      <node ref="U3" pin="20"/>
+      <node ref="U8" pin="20"/>
+      <node ref="C9" pin="1"/>
+      <node ref="C21" pin="1"/>
+      <node ref="U12" pin="5"/>
+      <node ref="C8" pin="1"/>
+      <node ref="U10" pin="20"/>
+      <node ref="U12" pin="12"/>
+      <node ref="JAB1" pin="30"/>
+      <node ref="C4" pin="1"/>
+    </net>
+    <net code="116" name="Net-(D1-Pad2)">
+      <node ref="R1" pin="2"/>
+      <node ref="D1" pin="2"/>
+    </net>
+    <net code="117" name="~TM0A">
+      <node ref="J2" pin="C3"/>
+    </net>
+    <net code="118" name="ECLK">
+      <node ref="J2" pin="B38"/>
+    </net>
+    <net code="119" name="-5V">
+      <node ref="J2" pin="B40"/>
+    </net>
+    <net code="120" name="~PFW">
+      <node ref="J2" pin="C1"/>
+    </net>
+    <net code="121" name="~NUBUS">
+      <node ref="J2" pin="C2"/>
+    </net>
+    <net code="122" name="+12V">
+      <node ref="J2" pin="C40"/>
+    </net>
+    <net code="123" name="C16M">
+      <node ref="J2" pin="C38"/>
+    </net>
+    <net code="124" name="Net-(J2-PadMH1)">
+      <node ref="J2" pin="MH1"/>
+    </net>
+    <net code="125" name="Net-(J2-PadMH2)">
+      <node ref="J2" pin="MH2"/>
+    </net>
+    <net code="126" name="-12V">
+      <node ref="J2" pin="A40"/>
+    </net>
+    <net code="127" name="Net-(U11-Pad11)">
+      <node ref="U11" pin="11"/>
+    </net>
+    <net code="129" name="~RBV">
+      <node ref="J2" pin="A1"/>
+    </net>
+    <net code="130" name="~FPU">
+      <node ref="J2" pin="A2"/>
+    </net>
+    <net code="131" name="~BUSLOCk">
+      <node ref="J2" pin="A3"/>
+    </net>
+    <net code="132" name="~IRQ3">
+      <node ref="J2" pin="A4"/>
+    </net>
+    <net code="133" name="A29">
+      <node ref="J2" pin="A26"/>
+      <node ref="U7" pin="8"/>
+    </net>
+    <net code="134" name="~CBACK">
+      <node ref="U11" pin="2"/>
+      <node ref="J2" pin="B7"/>
+    </net>
+    <net code="135" name="~CBREQ">
+      <node ref="U11" pin="4"/>
+      <node ref="J2" pin="C7"/>
+    </net>
+    <net code="136" name="Net-(U11-Pad17)">
+      <node ref="U11" pin="17"/>
+    </net>
+    <net code="137" name="Net-(U11-Pad15)">
+      <node ref="U11" pin="15"/>
+    </net>
+    <net code="138" name="~CIOUT">
+      <node ref="J2" pin="A6"/>
+      <node ref="U11" pin="6"/>
+    </net>
+    <net code="139" name="CACHE">
+      <node ref="J2" pin="B2"/>
+      <node ref="U11" pin="8"/>
+    </net>
+    <net code="140" name="Net-(U11-Pad13)">
+      <node ref="U11" pin="13"/>
+    </net>
+    <net code="141" name="C40M">
+      <node ref="J2" pin="B1"/>
+    </net>
+    <net code="142" name="~TM1A">
+      <node ref="J2" pin="B3"/>
+    </net>
+    <net code="143" name="~IRQ2">
+      <node ref="J2" pin="B4"/>
+    </net>
+    <net code="144" name="~BG">
+      <node ref="J2" pin="B10"/>
+    </net>
+    <net code="145" name="IPL0">
+      <node ref="J2" pin="C5"/>
+    </net>
+    <net code="146" name="~BR">
+      <node ref="J2" pin="C10"/>
+    </net>
+    <net code="147" name="IPL1">
+      <node ref="J2" pin="B5"/>
+    </net>
+    <net code="148" name="~BGACK">
+      <node ref="J2" pin="A10"/>
+    </net>
+    <net code="149" name="RMC">
+      <node ref="J2" pin="C6"/>
+    </net>
+    <net code="150" name="IPL2">
+      <node ref="J2" pin="A5"/>
+    </net>
+    <net code="151" name="~IRQ1">
+      <node ref="U3" pin="9"/>
+      <node ref="J2" pin="C4"/>
+    </net>
+    <net code="152" name="SIZ0">
+      <node ref="U3" pin="2"/>
+      <node ref="J2" pin="B9"/>
+    </net>
+    <net code="153" name="SIZ1">
+      <node ref="U3" pin="3"/>
+      <node ref="J2" pin="A9"/>
+    </net>
+    <net code="154" name="~RW">
+      <node ref="U3" pin="4"/>
+      <node ref="J2" pin="C8"/>
+    </net>
+    <net code="155" name="~DSACK0">
+      <node ref="U3" pin="5"/>
+      <node ref="J2" pin="B8"/>
+    </net>
+    <net code="156" name="~DSACK1">
+      <node ref="U3" pin="6"/>
+      <node ref="J2" pin="A8"/>
+    </net>
+    <net code="157" name="~STERM">
+      <node ref="J2" pin="A7"/>
+      <node ref="U3" pin="7"/>
+    </net>
+    <net code="158" name="~DS">
+      <node ref="U3" pin="8"/>
+      <node ref="J2" pin="B6"/>
+    </net>
+    <net code="159" name="D6">
+      <node ref="U5" pin="4"/>
+      <node ref="J2" pin="B15"/>
+    </net>
+    <net code="160" name="D5">
+      <node ref="U5" pin="5"/>
+      <node ref="J2" pin="A15"/>
+    </net>
+    <net code="161" name="D4">
+      <node ref="J2" pin="C14"/>
+      <node ref="U5" pin="6"/>
+    </net>
+    <net code="162" name="D3">
+      <node ref="J2" pin="B14"/>
+      <node ref="U5" pin="7"/>
+    </net>
+    <net code="163" name="D2">
+      <node ref="U5" pin="8"/>
+      <node ref="J2" pin="A14"/>
+    </net>
+    <net code="164" name="D1">
+      <node ref="J2" pin="C13"/>
+      <node ref="U5" pin="9"/>
+    </net>
+    <net code="165" name="D7">
+      <node ref="J2" pin="C15"/>
+      <node ref="U5" pin="3"/>
+    </net>
+    <net code="166" name="FC1">
+      <node ref="U4" pin="7"/>
+      <node ref="J2" pin="B11"/>
+    </net>
+    <net code="167" name="D0">
+      <node ref="U4" pin="2"/>
+      <node ref="J2" pin="A13"/>
+    </net>
+    <net code="168" name="~HALT">
+      <node ref="U4" pin="3"/>
+      <node ref="J2" pin="C12"/>
+    </net>
+    <net code="169" name="~BERR">
+      <node ref="J2" pin="B12"/>
+      <node ref="U4" pin="4"/>
+    </net>
+    <net code="170" name="~RESET">
+      <node ref="J2" pin="A12"/>
+      <node ref="U4" pin="5"/>
+    </net>
+    <net code="171" name="FC0">
+      <node ref="J2" pin="C11"/>
+      <node ref="U4" pin="6"/>
+    </net>
+    <net code="172" name="FC2">
+      <node ref="J2" pin="A11"/>
+      <node ref="U4" pin="8"/>
+    </net>
+    <net code="173" name="~AS">
+      <node ref="J2" pin="C9"/>
+      <node ref="U4" pin="9"/>
+    </net>
+    <net code="174" name="D8">
+      <node ref="U5" pin="2"/>
+      <node ref="J2" pin="A16"/>
+    </net>
+    <net code="175" name="A20">
+      <node ref="U8" pin="7"/>
+      <node ref="J2" pin="B29"/>
+    </net>
+    <net code="176" name="A21">
+      <node ref="J2" pin="A29"/>
+      <node ref="U8" pin="8"/>
+    </net>
+    <net code="177" name="A22">
+      <node ref="J2" pin="C28"/>
+      <node ref="U8" pin="9"/>
+    </net>
+    <net code="178" name="A19">
+      <node ref="U8" pin="6"/>
+      <node ref="J2" pin="C29"/>
+    </net>
+    <net code="179" name="A7">
+      <node ref="J2" pin="A34"/>
+      <node ref="U9" pin="2"/>
+    </net>
+    <net code="180" name="A8">
+      <node ref="J2" pin="C33"/>
+      <node ref="U9" pin="3"/>
+    </net>
+    <net code="181" name="A9">
+      <node ref="J2" pin="B33"/>
+      <node ref="U9" pin="4"/>
+    </net>
+    <net code="182" name="A10">
+      <node ref="J2" pin="A33"/>
+      <node ref="U9" pin="5"/>
+    </net>
+    <net code="183" name="A27">
+      <node ref="U7" pin="6"/>
+      <node ref="J2" pin="C26"/>
+    </net>
+    <net code="184" name="A28">
+      <node ref="J2" pin="B26"/>
+      <node ref="U7" pin="7"/>
+    </net>
+    <net code="185" name="A30">
+      <node ref="U7" pin="9"/>
+      <node ref="J2" pin="C25"/>
+    </net>
+    <net code="186" name="A15">
+      <node ref="J2" pin="A31"/>
+      <node ref="U8" pin="2"/>
+    </net>
+    <net code="187" name="A16">
+      <node ref="U8" pin="3"/>
+      <node ref="J2" pin="C30"/>
+    </net>
+    <net code="188" name="A17">
+      <node ref="J2" pin="B30"/>
+      <node ref="U8" pin="4"/>
+    </net>
+    <net code="189" name="A18">
+      <node ref="U8" pin="5"/>
+      <node ref="J2" pin="A30"/>
+    </net>
+    <net code="190" name="A5">
+      <node ref="U10" pin="8"/>
+      <node ref="J2" pin="A35"/>
+    </net>
+    <net code="191" name="CPUCLK">
+      <node ref="J2" pin="A38"/>
+      <node ref="U10" pin="2"/>
+    </net>
+    <net code="192" name="A0">
+      <node ref="J2" pin="C36"/>
+      <node ref="U10" pin="3"/>
+    </net>
+    <net code="193" name="A1">
+      <node ref="J2" pin="B36"/>
+      <node ref="U10" pin="4"/>
+    </net>
+    <net code="194" name="A2">
+      <node ref="J2" pin="A36"/>
+      <node ref="U10" pin="5"/>
+    </net>
+    <net code="195" name="A3">
+      <node ref="U10" pin="6"/>
+      <node ref="J2" pin="C35"/>
+    </net>
+    <net code="196" name="A4">
+      <node ref="J2" pin="B35"/>
+      <node ref="U10" pin="7"/>
+    </net>
+    <net code="197" name="A6">
+      <node ref="J2" pin="C34"/>
+      <node ref="U10" pin="9"/>
+    </net>
+    <net code="198" name="A11">
+      <node ref="U9" pin="6"/>
+      <node ref="J2" pin="C32"/>
+    </net>
+    <net code="199" name="A12">
+      <node ref="J2" pin="B32"/>
+      <node ref="U9" pin="7"/>
+    </net>
+    <net code="200" name="A13">
+      <node ref="U9" pin="8"/>
+      <node ref="J2" pin="A32"/>
+    </net>
+    <net code="201" name="A14">
+      <node ref="J2" pin="C31"/>
+      <node ref="U9" pin="9"/>
+    </net>
+    <net code="202" name="D24">
+      <node ref="J2" pin="A22"/>
+      <node ref="U1" pin="2"/>
+    </net>
+    <net code="203" name="D23">
+      <node ref="J2" pin="C21"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="204" name="D22">
+      <node ref="U1" pin="4"/>
+      <node ref="J2" pin="B21"/>
+    </net>
+    <net code="205" name="D21">
+      <node ref="J2" pin="A21"/>
+      <node ref="U1" pin="5"/>
+    </net>
+    <net code="206" name="D20">
+      <node ref="U1" pin="6"/>
+      <node ref="J2" pin="C20"/>
+    </net>
+    <net code="207" name="D19">
+      <node ref="J2" pin="B20"/>
+      <node ref="U1" pin="7"/>
+    </net>
+    <net code="208" name="D18">
+      <node ref="J2" pin="A20"/>
+      <node ref="U1" pin="8"/>
+    </net>
+    <net code="209" name="D17">
+      <node ref="J2" pin="C19"/>
+      <node ref="U1" pin="9"/>
+    </net>
+    <net code="210" name="D16">
+      <node ref="J2" pin="A19"/>
+      <node ref="U2" pin="2"/>
+    </net>
+    <net code="211" name="D15">
+      <node ref="U2" pin="3"/>
+      <node ref="J2" pin="C18"/>
+    </net>
+    <net code="212" name="D14">
+      <node ref="U2" pin="4"/>
+      <node ref="J2" pin="B18"/>
+    </net>
+    <net code="213" name="D13">
+      <node ref="U2" pin="5"/>
+      <node ref="J2" pin="A18"/>
+    </net>
+    <net code="214" name="D12">
+      <node ref="J2" pin="C17"/>
+      <node ref="U2" pin="6"/>
+    </net>
+    <net code="215" name="D11">
+      <node ref="J2" pin="B17"/>
+      <node ref="U2" pin="7"/>
+    </net>
+    <net code="216" name="D10">
+      <node ref="U2" pin="8"/>
+      <node ref="J2" pin="A17"/>
+    </net>
+    <net code="217" name="D9">
+      <node ref="U2" pin="9"/>
+      <node ref="J2" pin="C16"/>
+    </net>
+    <net code="218" name="D26">
+      <node ref="J2" pin="A23"/>
+      <node ref="U6" pin="8"/>
+    </net>
+    <net code="219" name="D25">
+      <node ref="J2" pin="C22"/>
+      <node ref="U6" pin="9"/>
+    </net>
+    <net code="220" name="A23">
+      <node ref="U7" pin="2"/>
+      <node ref="J2" pin="A28"/>
+    </net>
+    <net code="221" name="A24">
+      <node ref="U7" pin="3"/>
+      <node ref="J2" pin="C27"/>
+    </net>
+    <net code="222" name="A25">
+      <node ref="U7" pin="4"/>
+      <node ref="J2" pin="B27"/>
+    </net>
+    <net code="223" name="A26">
+      <node ref="U7" pin="5"/>
+      <node ref="J2" pin="A27"/>
+    </net>
+    <net code="224" name="D28">
+      <node ref="U6" pin="6"/>
+      <node ref="J2" pin="C23"/>
+    </net>
+    <net code="225" name="D27">
+      <node ref="U6" pin="7"/>
+      <node ref="J2" pin="B23"/>
+    </net>
+    <net code="226" name="D29">
+      <node ref="J2" pin="A24"/>
+      <node ref="U6" pin="5"/>
+    </net>
+    <net code="227" name="D30">
+      <node ref="U6" pin="4"/>
+      <node ref="J2" pin="B24"/>
+    </net>
+    <net code="228" name="D31">
+      <node ref="J2" pin="C24"/>
+      <node ref="U6" pin="3"/>
+    </net>
+    <net code="229" name="A31">
+      <node ref="J2" pin="A25"/>
+      <node ref="U6" pin="2"/>
+    </net>
+    <net code="230" name="/HDMI/cec_b">
+      <node ref="J3" pin="13"/>
+      <node ref="U12" pin="7"/>
+    </net>
+    <net code="231" name="Net-(J3-Pad14)">
+      <node ref="J3" pin="14"/>
+    </net>
+    <net code="232" name="/HDMI/scl_b">
+      <node ref="J3" pin="15"/>
+      <node ref="U12" pin="8"/>
+    </net>
+    <net code="233" name="/HDMI/HDMI_5V">
+      <node ref="J3" pin="18"/>
+      <node ref="C19" pin="1"/>
+    </net>
+    <net code="234" name="SHIELD">
+      <node ref="R2" pin="1"/>
+      <node ref="H5" pin="1"/>
+      <node ref="J3" pin="SH"/>
+      <node ref="C20" pin="1"/>
+    </net>
+    <net code="235" name="Net-(U12-Pad19)">
+      <node ref="U12" pin="19"/>
+    </net>
+    <net code="236" name="Net-(U12-Pad14)">
+      <node ref="U12" pin="14"/>
+    </net>
+    <net code="237" name="HDMI_CEC_A">
+      <node ref="U12" pin="1"/>
+    </net>
+    <net code="238" name="HDMI_HPD_A">
+      <node ref="U12" pin="4"/>
+    </net>
+    <net code="239" name="/HDMI/hpd_b">
+      <node ref="J3" pin="19"/>
+      <node ref="U12" pin="10"/>
+    </net>
+    <net code="240" name="HDMI_SCL_A">
+      <node ref="U12" pin="2"/>
+    </net>
+    <net code="241" name="HDMI_SDA_A">
+      <node ref="U12" pin="3"/>
+    </net>
+    <net code="242" name="/HDMI/sda_b">
+      <node ref="U12" pin="9"/>
+      <node ref="J3" pin="16"/>
+    </net>
+    <net code="243" name="/HDMI/HDMI_5V">
+      <node ref="U12" pin="13"/>
+    </net>
+  </nets>
+</export>

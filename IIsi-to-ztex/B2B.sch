@@ -505,19 +505,19 @@ Text GLabel 9900 3750 2    50   Input ~ 0
 SIZ1_3V3
 Text GLabel 7400 3750 0    50   Input ~ 0
 SIZ0_3V3
-Text GLabel 9900 3450 2    50   Input ~ 0
-~HALT_3V3
 Text GLabel 1600 3950 0    50   Input ~ 0
+~HALT_3V3
+Text GLabel 9900 3450 2    50   Input ~ 0
 D0_3V3
 Text GLabel 4100 4050 2    50   Input ~ 0
 ~BERR_3V3
-Text GLabel 1600 4050 0    50   Input ~ 0
+Text GLabel 7400 3550 0    50   Input ~ 0
 ~RESET_3V3
 Text GLabel 9900 3550 2    50   Input ~ 0
 FC1_3V3
 Text GLabel 7400 3650 0    50   Input ~ 0
 FC2_3V3
-Text GLabel 7400 3550 0    50   Input ~ 0
+Text GLabel 1600 4050 0    50   Input ~ 0
 FC0_3V3
 Text GLabel 9900 3650 2    50   Input ~ 0
 ~AS_3V3

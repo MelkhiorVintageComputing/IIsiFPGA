@@ -1193,7 +1193,7 @@ Text GLabel 5675 3625 2    50   Input ~ 0
 A30
 Text GLabel 2475 1750 2    50   Input ~ 0
 ~IRQ1
-Text GLabel 1075 3400 0    50   Input ~ 0
+Text GLabel 7900 2325 2    50   Input ~ 0
 ~HALT
 Text GLabel -1500 1300 0    50   Input ~ 0
 RMC
@@ -1345,7 +1345,7 @@ Text GLabel 1075 3500 0    50   Input ~ 0
 ~BERR
 Text GLabel 1075 1450 0    50   Input ~ 0
 SIZ0
-Text GLabel 1075 3600 0    50   Input ~ 0
+Text GLabel 2475 3300 2    50   Input ~ 0
 ~RESET
 Text GLabel 4250 1775 0    50   Input ~ 0
 D29
@@ -1421,20 +1421,20 @@ Text GLabel 2475 2050 2    50   Input ~ 0
 ~STERM_3V3
 Text GLabel 2475 2150 2    50   Input ~ 0
 ~DS_3V3
-Text GLabel 1075 3900 0    50   Input ~ 0
+Text GLabel 6900 2150 0    50   Input ~ 0
 ~HALT_3V3
 Text GLabel 1075 3800 0    50   Input ~ 0
 D0_3V3
 Text GLabel 1075 4000 0    50   Input ~ 0
 ~BERR_3V3
-Text GLabel 1075 4100 0    50   Input ~ 0
+Text GLabel 2475 3800 2    50   Input ~ 0
 ~RESET_3V3
 Connection ~ 2475 2900
 Text GLabel 2475 3400 2    50   Input ~ 0
 FC1
 Text GLabel 2475 3500 2    50   Input ~ 0
 FC2
-Text GLabel 2475 3300 2    50   Input ~ 0
+Text GLabel 1075 3600 0    50   Input ~ 0
 FC0
 Text GLabel 2475 3600 2    50   Input ~ 0
 ~AS
@@ -1466,7 +1466,7 @@ Text GLabel 2475 3900 2    50   Input ~ 0
 FC1_3V3
 Text GLabel 2475 4000 2    50   Input ~ 0
 FC2_3V3
-Text GLabel 2475 3800 2    50   Input ~ 0
+Text GLabel 1075 4100 0    50   Input ~ 0
 FC0_3V3
 Text GLabel 2475 4100 2    50   Input ~ 0
 ~AS_3V3
@@ -1622,7 +1622,7 @@ Text Notes 2675 3425 0    50   ~ 0
  1kΩ pull-up
 Text Notes 2675 3525 0    50   ~ 0
  1kΩ pull-up
-Text Notes 225  3425 0    50   ~ 0
+Text Notes 8125 2350 0    50   ~ 0
  1kΩ pull-up
 Text Notes 225  3625 0    50   ~ 0
  1kΩ pull-up
@@ -2048,4 +2048,121 @@ Text Notes -475 2975 0    50   ~ 0
 PMod alternate
 Text Notes 250  4300 0    50   ~ 0
 PMod alternate
+$Comp
+L power:+3V3 #PWR0135
+U 1 1 645A41EC
+P 6900 1825
+F 0 "#PWR0135" H 6900 1675 50  0001 C CNN
+F 1 "+3V3" V 6915 1953 50  0000 L CNN
+F 2 "" H 6900 1825 50  0001 C CNN
+F 3 "" H 6900 1825 50  0001 C CNN
+	1    6900 1825
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 645A41FA
+P 6750 1825
+AR Path="/618F532C/645A41FA" Ref="C?"  Part="1" 
+AR Path="/618E8C75/645A41FA" Ref="C?"  Part="1" 
+AR Path="/631F3844/645A41FA" Ref="C?"  Part="1" 
+AR Path="/631EF9BC/645A41FA" Ref="C?"  Part="1" 
+AR Path="/6432B33E/645A41FA" Ref="C23"  Part="1" 
+F 0 "C23" H 6775 1925 50  0000 L CNN
+F 1 "100nF" H 6775 1725 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 6788 1675 50  0001 C CNN
+F 3 "" H 6750 1825 50  0000 C CNN
+F 4 "www.yageo.com" H 6750 1825 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 6750 1825 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 6750 1825 50  0001 C CNN "Mouser"
+F 7 "?" H 6750 1825 50  0001 C CNN "Digikey"
+F 8 "?" H 6750 1825 50  0001 C CNN "LCSC"
+F 9 "?" H 6750 1825 50  0001 C CNN "Koncar"
+F 10 "TB" H 6750 1825 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 6750 1825 50  0001 C CNN "URL"
+	1    6750 1825
+	0    -1   1    0   
+$EndComp
+$Comp
+L power:GND #PWR0197
+U 1 1 645A4200
+P 6600 1825
+F 0 "#PWR0197" H 6600 1575 50  0001 C CNN
+F 1 "GND" H 6605 1652 50  0000 C CNN
+F 2 "" H 6600 1825 50  0001 C CNN
+F 3 "" H 6600 1825 50  0001 C CNN
+	1    6600 1825
+	0    1    -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0198
+U 1 1 645AF459
+P 7900 2525
+F 0 "#PWR0198" H 7900 2275 50  0001 C CNN
+F 1 "GND" H 7905 2352 50  0000 C CNN
+F 2 "" H 7900 2525 50  0001 C CNN
+F 3 "" H 7900 2525 50  0001 C CNN
+	1    7900 2525
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0199
+U 1 1 645B0FE4
+P 6900 2325
+F 0 "#PWR0199" H 6900 2075 50  0001 C CNN
+F 1 "GND" H 6905 2152 50  0000 C CNN
+F 2 "" H 6900 2325 50  0001 C CNN
+F 3 "" H 6900 2325 50  0001 C CNN
+	1    6900 2325
+	0    1    1    0   
+$EndComp
+$Comp
+L SN74LV1T125DCKR:SN74LV1T125DCKR U14
+U 1 1 645B87B7
+P 7400 2225
+F 0 "U14" H 7400 2892 50  0000 C CNN
+F 1 "SN74LV1T125DCKR" H 7400 2801 50  0000 C CNN
+F 2 "For_SeeedStudio:SOT65P210X110-5N" H 7400 2225 50  0001 L BNN
+F 3 "" H 7400 2225 50  0001 L BNN
+F 4 "IPC-7351B" H 7400 2225 50  0001 L BNN "STANDARD"
+F 5 "1.1mm" H 7400 2225 50  0001 L BNN "MAXIMUM_PACKAGE_HEIGHT"
+F 6 "Texas Instruments" H 7400 2225 50  0001 L BNN "MANUFACTURER"
+F 7 "A" H 7400 2225 50  0001 L BNN "PARTREV"
+F 8 "SN74LV1T125DCKR" H 7400 2225 50  0001 C CNN "MPN"
+	1    7400 2225
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R11
+U 1 1 645D4516
+P 6750 2025
+F 0 "R11" V 6543 2025 50  0000 C CNN
+F 1 "10k" V 6634 2025 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 6680 2025 50  0001 C CNN
+F 3 "~" H 6750 2025 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 6750 2025 50  0001 C CNN "MPN"
+	1    6750 2025
+	0    1    1    0   
+$EndComp
+Connection ~ 6900 1825
+Wire Wire Line
+	6600 2025 6600 1825
+Connection ~ 6600 1825
+Wire Wire Line
+	6900 2150 6900 2025
+Connection ~ 6900 2025
+Text Notes 6375 1450 0    50   ~ 0
+The pull-down on OE will force Y (/HALT) to A, so to low.\nThis will prevent the '030 to do anything until we initialized\nand raised /HALT_3V3 (OE) to high, this forcing Y to Z and letting the\nmotherboard pull-up do its job 
+$Comp
+L power:GND #PWR?
+U 1 1 646E2198
+P 1075 3400
+F 0 "#PWR?" H 1075 3150 50  0001 C CNN
+F 1 "GND" H 1080 3227 50  0000 C CNN
+F 2 "" H 1075 3400 50  0001 C CNN
+F 3 "" H 1075 3400 50  0001 C CNN
+	1    1075 3400
+	0    1    1    0   
+$EndComp
+NoConn ~ 1075 3900
 $EndSCHEMATC

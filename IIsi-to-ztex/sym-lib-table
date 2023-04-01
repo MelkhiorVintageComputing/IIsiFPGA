@@ -8,4 +8,5 @@
   (lib (name ztex_AB)(type Legacy)(uri ${KIPRJMOD}/ztex_AB.lib)(options "")(descr ""))
   (lib (name ztex_CD)(type Legacy)(uri ${KIPRJMOD}/ztex_CD.lib)(options "")(descr ""))
   (lib (name TPD12S016PWR)(type Legacy)(uri ${KIPRJMOD}/TPD12S016PWR.lib)(options "")(descr ""))
+  (lib (name SN74LV1T125DCKR)(type Legacy)(uri ${KIPRJMOD}/SN74LV1T125DCKR.lib)(options "")(descr ""))
 )

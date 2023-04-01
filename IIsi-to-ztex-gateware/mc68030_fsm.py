@@ -17,7 +17,7 @@ class MC68030_SYNC_FSM(Module):
         RW_n = platform.request("rw_3v3_n") #  direction of bus transfer with respect to the main processor, I [three-state, high read, write low]
         DS_n = platform.request("ds_3v3_n") # data strobe, I[O]
         BERR_n = platform.request("berr_3v3_n") # bus error, [I]O
-        HALT_n = platform.request("halt_3v3_n") # Signal indicating that main processor should suspend all bus activity, O
+        #HALT_n = platform.request("halt_3v3_n") # Signal indicating that main processor should suspend all bus activity, O
         SIZ_n = platform.request("siz_3v3") # 2 # in conjunction with processor’s dynamic bus sizing capabilities to indicate number of bytes remaining to be transferred during current bus cycle, I [three-state]
 
         FC = platform.request("fc_3v3") # 3 # Function code used to identify address space of current bus cycle, I[O]

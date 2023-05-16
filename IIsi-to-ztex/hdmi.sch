@@ -432,4 +432,34 @@ Wire Wire Line
 Connection ~ 8500 4500
 Wire Wire Line
 	4000 3650 4000 3900
+$Comp
+L Device:C C?
+U 1 1 64993225
+P 2250 850
+AR Path="/5F679B53/64993225" Ref="C?"  Part="1" 
+AR Path="/5F6B165A/64993225" Ref="C?"  Part="1" 
+AR Path="/612D28DD/64993225" Ref="C?"  Part="1" 
+AR Path="/61B62C00/64993225" Ref="C?"  Part="1" 
+AR Path="/64CBE795/64993225" Ref="C24"  Part="1" 
+F 0 "C24" H 2275 950 50  0000 L CNN
+F 1 "100nF" H 2275 750 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 2288 700 50  0001 C CNN
+F 3 "" H 2250 850 50  0000 C CNN
+F 4 "www.yageo.com" H 2250 850 50  0001 C CNN "MNF1_URL"
+F 5 "CC0603KRX7R9BB104" H 2250 850 50  0001 C CNN "MPN"
+F 6 "603-CC603KRX7R8BB104" H 2250 850 50  0001 C CNN "Mouser"
+F 7 "?" H 2250 850 50  0001 C CNN "Digikey"
+F 8 "" H 2250 850 50  0001 C CNN "LCSC"
+F 9 "?" H 2250 850 50  0001 C CNN "Koncar"
+F 10 "TB" H 2250 850 50  0001 C CNN "Side"
+F 11 "https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_YAGEO-CC0603KRX7R9BB104_C14663.html" H 2250 850 50  0001 C CNN "URL"
+	1    2250 850 
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2400 1100 2400 850 
+Connection ~ 2400 1100
+Wire Wire Line
+	2100 1100 2100 850 
+Connection ~ 2100 1100
 $EndSCHEMATC

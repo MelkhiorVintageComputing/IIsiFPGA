@@ -1,4 +1,4 @@
-## Footprint report - date Sat Apr  1 16:07:32 2023
+## Footprint report - date Tue May 16 13:38:26 2023
 ## Created by Pcbnew version kicad 5.1.9+dfsg1-1~bpo10+1
 ## Unit = mm, Angle = deg.
 
@@ -8,6 +8,78 @@ $BOARD
 upper_left_corner 35.751667 -25.057500
 lower_right_corner 239.184525 174.192501
 $EndBOARD
+
+$MODULE "S1"
+reference "S1"
+value "SSAJ110100"
+footprint "For_SeeedStudio:SW_SSAJ110100"
+attribut smd
+position 195.000000 54.500000  orientation 180.00
+layer front
+$PAD "None"
+Shape Circle Layer both
+position  1.500000  0.000000  size  0.800000  0.800000  orientation 0.00
+drill  0.800000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "None"
+Shape Circle Layer both
+position -1.500000  0.000000  size  0.800000  0.800000  orientation 0.00
+drill  0.800000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "S2"
+Shape Rect Layer front
+position -3.000000  0.075000  size  0.900000  0.700000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "S1"
+Shape Rect Layer front
+position  3.000000  0.075000  size  0.900000  0.700000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "1"
+Shape Rect Layer front
+position -1.000000 -1.280000  size  0.600000  0.510000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "C"
+Shape Rect Layer front
+position  0.000000 -1.280000  size  0.600000  0.510000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "2"
+Shape Rect Layer front
+position  1.000000 -1.280000  size  0.600000  0.510000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$EndMODULE  S1
+
+$MODULE "C24"
+reference "C24"
+value "100nF"
+footprint "Capacitor_SMD:C_0603_1608Metric"
+attribut smd
+position 141.830000 63.880000  orientation 180.00
+layer front
+$PAD "2"
+Shape Roundrect Layer front
+position  0.775000  0.000000  size  0.900000  0.950000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$PAD "1"
+Shape Roundrect Layer front
+position -0.775000  0.000000  size  0.900000  0.950000  orientation 0.00
+drill  0.000000
+shape_offset  0.000000  0.000000
+$EndPAD
+$EndMODULE  C24
 
 $MODULE "R11"
 reference "R11"
@@ -387,39 +459,12 @@ shape_offset  0.000000  0.000000
 $EndPAD
 $EndMODULE  U13
 
-$MODULE "SW1"
-reference "SW1"
-value "SW_SPDT"
-footprint "For_SeeedStudio:CJS-1201B"
-attribut smd
-position 193.000000 71.000000  orientation 0.00
-layer front
-$PAD "3"
-Shape Rect Layer front
-position  1.750000  1.950000  size  1.000000  1.300000  orientation 0.00
-drill  0.000000
-shape_offset  0.000000  0.000000
-$EndPAD
-$PAD "2"
-Shape Rect Layer front
-position  0.000000 -1.950000  size  1.000000  1.300000  orientation 0.00
-drill  0.000000
-shape_offset  0.000000  0.000000
-$EndPAD
-$PAD "1"
-Shape Rect Layer front
-position -1.750000  1.950000  size  1.000000  1.300000  orientation 0.00
-drill  0.000000
-shape_offset  0.000000  0.000000
-$EndPAD
-$EndMODULE  SW1
-
 $MODULE "R15"
 reference "R15"
 value "10k"
 footprint "Resistor_SMD:R_0603_1608Metric"
 attribut smd
-position 198.000000 72.125000  orientation 270.00
+position 196.000000 58.500000  orientation 90.00
 layer front
 $PAD "2"
 Shape Roundrect Layer front
@@ -440,7 +485,7 @@ reference "R14"
 value "10k"
 footprint "Resistor_SMD:R_0603_1608Metric"
 attribut smd
-position 188.000000 72.125000  orientation 270.00
+position 194.000000 58.500000  orientation 90.00
 layer front
 $PAD "2"
 Shape Roundrect Layer front

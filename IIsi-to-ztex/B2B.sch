@@ -726,4 +726,12 @@ Text GLabel 10525 3050 2    50   Input ~ 0
 C16M_3V3
 Wire Wire Line
 	9900 2550 10525 2550
+Text GLabel 10525 2250 2    50   Input ~ 0
+~IRQ3_3V3
+Text GLabel 10525 2350 2    50   Input ~ 0
+~IRQ2_3V3
+Wire Wire Line
+	9900 2350 10525 2350
+Wire Wire Line
+	10525 2250 9900 2250
 $EndSCHEMATC

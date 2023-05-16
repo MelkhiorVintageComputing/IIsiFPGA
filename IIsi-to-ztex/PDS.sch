@@ -1017,6 +1017,7 @@ F 10 "" H 10500 425 50  0001 L CNN "Arrow Part Number"
 F 11 "" H 10500 325 50  0001 L CNN "Arrow Price/Stock"
 F 12 "650906-5" H 9650 1125 50  0001 C CNN "MPN"
 F 13 "https://www.lcsc.com/product-detail/Mezzanine-Connectors-Board-to-Board_TE-Connectivity-650906-5_C3652939.html" H 9650 1125 50  0001 C CNN "URL"
+F 14 "DNP" H 9650 1125 50  0001 C CNN "DNP"
 	1    9650 1125
 	1    0    0    -1  
 $EndComp
@@ -1277,7 +1278,7 @@ Text GLabel -3500 2950 2    50   Input Italic 0
 ECLK
 Text GLabel -3550 2950 0    50   Input Italic 0
 VIACLK
-Text GLabel -1500 5725 0    50   Input Italic 0
+Text GLabel -1500 6125 0    50   Input Italic 0
 ~PFW
 Text GLabel 6375 -1250 0    50   Input ~ 0
 ~CBACK
@@ -1369,9 +1370,9 @@ Text GLabel 4275 7000 0    50   Input ~ 0
 A7
 Text GLabel 4275 7300 0    50   Input ~ 0
 A10
-Text GLabel -1475 5325 0    50   Input ~ 0
+Text GLabel -1475 5725 0    50   Input ~ 0
 ~IRQ2
-Text GLabel -1475 5175 0    50   Input ~ 0
+Text GLabel -1475 5575 0    50   Input ~ 0
 ~IRQ3
 Text GLabel -1475 3625 0    50   Input Italic 0
 ~TM1A
@@ -1394,17 +1395,17 @@ Text Notes -1725 2825 0    50   ~ 0
 Text Notes -1725 3375 0    50   ~ 0
 Unused inputs to VIA2\n(~PDS.BR~, ~PDS.BG~ on IIfx)
 Text Notes -1725 4100 0    50   ~ 0
-We won't do stand-alone FPU\n(~PDS.MASTER~ on IIfx, RSVD on PDS)
+We won't do stand-alone FPU ?\n(~PDS.MASTER~ on IIfx, RSVD on PDS)
 Text Notes -1700 4625 0    50   ~ 0
 Access to IIsi internal video\n(GND on IIfx, RSVD on PDS)
-Text Notes -1725 5075 0    50   ~ 0
+Text Notes -1725 5475 0    50   ~ 0
 Extra IRQ\n(IRQ15 and RSVD on IIfx)
 Text Notes -3875 2825 0    50   ~ 0
 VIACLK on IIsi, ECLK on PDS, RSVD on IIfx\nECLK and VIACLK seem to be the same
-Text Notes -1725 5600 0    50   ~ 0
+Text Notes -1725 6000 0    50   ~ 0
 power failure
 Text Notes -3875 3400 0    50   ~ 0
-Not weel documented... 40 MHZ clock on IIsi?\n(ECS on IIfx, RSVD on PDS)
+Not well documented... 40 MHZ clock on IIsi?\n(ECS on IIfx, RSVD on PDS)
 Text GLabel 1075 2150 0    50   Input ~ 0
 ~RW_3V3
 Text GLabel 1075 2250 0    50   Input ~ 0
@@ -1687,18 +1688,6 @@ read-modify-write
 Text Notes -1475 4250 0    39   ~ 0
 /FPU might be re-creatable from FC|0-2] & A[13-19]\nsee section 10.3 in the 68881/68882 UM
 $Comp
-L Switch:SW_SPDT SW1
-U 1 1 646843DE
-P 11850 -825
-F 0 "SW1" H 11850 -540 50  0000 C CNN
-F 1 "SW_SPDT" H 11850 -631 50  0000 C CNN
-F 2 "For_SeeedStudio:CJS-1201B" H 11850 -825 50  0001 C CNN
-F 3 "~" H 11850 -825 50  0001 C CNN
-F 4 "CJS-1201TB" H 11850 -825 50  0001 C CNN "MPN"
-	1    11850 -825
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR0127
 U 1 1 6468D0EA
 P 10675 -1625
@@ -1771,7 +1760,7 @@ F 3 "" H 10375 -225 50  0001 C CNN
 $EndComp
 Text GLabel 8975 -1425 0    50   Input ~ 0
 ~MASTER_OE
-Text GLabel 11650 -825 0    50   Input ~ 0
+Text GLabel 12050 -825 2    50   Input ~ 0
 ~MASTER_OE
 Text GLabel 10375 -1225 2    50   Input ~ 0
 ~BR
@@ -1787,31 +1776,7 @@ Text GLabel 8975 -725 0    50   Input ~ 0
 ~BGACK_3V3
 Text GLabel 10375 -425 2    50   Input ~ 0
 ~FPU_3V3
-$Comp
-L power:GND #PWR0138
-U 1 1 646A7A85
-P 10375 -1125
-F 0 "#PWR0138" H 10375 -1375 50  0001 C CNN
-F 1 "GND" H 10380 -1298 50  0000 C CNN
-F 2 "" H 10375 -1125 50  0001 C CNN
-F 3 "" H 10375 -1125 50  0001 C CNN
-	1    10375 -1125
-	0    -1   -1   0   
-$EndComp
-$Comp
-L power:GND #PWR0142
-U 1 1 646A7E11
-P 8975 -1125
-F 0 "#PWR0142" H 8975 -1375 50  0001 C CNN
-F 1 "GND" H 8980 -1298 50  0000 C CNN
-F 2 "" H 8975 -1125 50  0001 C CNN
-F 3 "" H 8975 -1125 50  0001 C CNN
-	1    8975 -1125
-	0    1    1    0   
-$EndComp
 NoConn ~ 8975 -425
-NoConn ~ 8975 -625
-NoConn ~ 10375 -625
 $Comp
 L Device:R R14
 U 1 1 646B5C31
@@ -2021,17 +1986,6 @@ Wire Notes Line
 	-1750 4325 -1750 3925
 Text GLabel 10375 -1025 2    50   Input ~ 0
 C16M
-$Comp
-L power:GND #PWR0146
-U 1 1 6478CB98
-P 8975 -925
-F 0 "#PWR0146" H 8975 -1175 50  0001 C CNN
-F 1 "GND" H 8980 -1098 50  0000 C CNN
-F 2 "" H 8975 -925 50  0001 C CNN
-F 3 "" H 8975 -925 50  0001 C CNN
-	1    8975 -925
-	0    1    1    0   
-$EndComp
 Text GLabel 10375 -525 2    50   Input ~ 0
 C16M_3V3
 Wire Notes Line
@@ -2154,10 +2108,10 @@ Connection ~ 6900 2025
 Text Notes 6375 1450 0    50   ~ 0
 The pull-down on OE will force Y (/HALT) to A, so to low.\nThis will prevent the '030 to do anything until we initialized\nand raised /HALT_3V3 (OE) to high, this forcing Y to Z and letting the\nmotherboard pull-up do its job 
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0138
 U 1 1 646E2198
 P 1075 3400
-F 0 "#PWR?" H 1075 3150 50  0001 C CNN
+F 0 "#PWR0138" H 1075 3150 50  0001 C CNN
 F 1 "GND" H 1080 3227 50  0000 C CNN
 F 2 "" H 1075 3400 50  0001 C CNN
 F 3 "" H 1075 3400 50  0001 C CNN
@@ -2165,4 +2119,51 @@ F 3 "" H 1075 3400 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 NoConn ~ 1075 3900
+Wire Notes Line
+	-1750 5325 -1750 5825
+Wire Notes Line
+	-1750 5825 -725 5825
+Wire Notes Line
+	-725 5825 -725 5325
+Wire Notes Line
+	-725 5325 -1750 5325
+Text GLabel 10375 -1125 2    50   Input ~ 0
+~IRQ3
+Text GLabel 8975 -625 0    50   Input ~ 0
+~IRQ2_3V3
+Text GLabel 10375 -625 2    50   Input ~ 0
+~IRQ3_3V3
+$Comp
+L power:GND #PWR0142
+U 1 1 646A7E11
+P 8975 -925
+F 0 "#PWR0142" H 8975 -1175 50  0001 C CNN
+F 1 "GND" H 8980 -1098 50  0000 C CNN
+F 2 "" H 8975 -925 50  0001 C CNN
+F 3 "" H 8975 -925 50  0001 C CNN
+	1    8975 -925
+	0    1    1    0   
+$EndComp
+Text GLabel 8975 -1125 0    50   Input ~ 0
+~IRQ2
+Text Notes -700 5825 0    50   ~ 0
+PMod alternate
+Text Notes -2150 4975 0    50   Italic 0
+Used for some cache signals (DCDMF3 p361) as well...\nHopefully not needed if the cache is filtering by addresses?
+$Comp
+L SSAJ110100:SSAJ110100 S1
+U 1 1 644C618A
+P 11950 -825
+F 0 "S1" H 11927 -1139 50  0000 C CNN
+F 1 "SSAJ110100" H 11927 -1048 50  0000 C CNN
+F 2 "For_SeeedStudio:SW_SSAJ110100" H 11950 -825 50  0001 L BNN
+F 3 "" H 11950 -825 50  0001 L BNN
+F 4 "0.9 mm" H 11950 -825 50  0001 L BNN "MAXIMUM_PACKAGE_HEIGHT"
+F 5 "ALPS" H 11950 -825 50  0001 L BNN "MANUFACTURER"
+F 6 "SSAJ110100" H 11950 -825 50  0001 L BNN "MPN"
+	1    11950 -825
+	-1   0    0    1   
+$EndComp
+Text Notes 8650 -2050 0    50   ~ 0
+When ~MASTER_OE~ is low, this is enabled and various signals for Master & the extra clock (primary clock on IIfx) are available to the FPGA.\nWhen ~MASTER_OE~ is high, this is high-Z and the PMod can be used instead
 $EndSCHEMATC

@@ -65,4 +65,6 @@ U 64DE57E5
 F0 "pmod" 50
 F1 "pmod.sch" 50
 $EndSheet
+NoConn ~ 5775 1525
+NoConn ~ 5775 1250
 $EndSCHEMATC

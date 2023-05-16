@@ -110,6 +110,8 @@ class _CRG(Module):
         self.submodules.idelayctrl = S7IDELAYCTRL(self.cd_idelay)
         num_adv = num_adv + 1
         num_clk = 0
+
+        self.locked = locked = Signal()
         
         if (goblin):
             self.submodules.video_pll = video_pll = S7MMCM(speedgrade=platform.speedgrade)
@@ -127,6 +129,11 @@ class _CRG(Module):
             platform.add_false_path_constraints(self.cd_sys.clk, video_pll.clkin)
             num_adv = num_adv + 1
             num_clk = 0
+
+            self.comb += [ locked.eq(video_pll.locked & pll_idelay.locked & pll.locked) ]
+        else:
+            self.comb += [ locked.eq(pll_idelay.locked & pll.locked) ]
+            
             
         
 class IIsiFPGA(SoCCore):
@@ -278,10 +285,12 @@ class IIsiFPGA(SoCCore):
         # This is in the 'native' ClockDomain that is never reset
         # not needed, FPGA initializes fast enough, works on cold boots
         #hold_reset_ctr = Signal(30, reset=960000000)
-        hold_reset_ctr = Signal(5, reset=31)
+        hold_reset_ctr = Signal(3, reset=7)
         self.sync.native += If(hold_reset_ctr>0, hold_reset_ctr.eq(hold_reset_ctr - 1))
         hold_reset = Signal()
-        self.comb += hold_reset.eq(~(hold_reset_ctr == 0)) ### FIXME: DO SOMETHING WITH THAT
+        self.comb += hold_reset.eq(~(hold_reset_ctr == 0))
+        halt_n = platform.request("halt_3v3_n")
+        self.comb += [ halt_n.eq(~hold_reset & self.crg.locked) ] # release the 68030 only when everything's fine
         #pad_nubus_oe = platform.request("nubus_oe")
         #self.comb += pad_nubus_oe.eq(hold_reset)
         #pad_user_led_0 = platform.request("user_led", 0)

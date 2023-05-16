@@ -86,6 +86,7 @@ module mc68030_tb ();
    assign pds_fc       = (tst_procwrite | tst_procread) ? tst_fc : 'bZ;
    assign tst_stermn   = pds_stermn;
    assign tst_dsack    = pds_dsack;
+   assign tst_haltn    = pds_haltn;
    
     
    initial begin
@@ -106,16 +107,21 @@ module mc68030_tb ();
       #100;      
       tst_resetn <= 1;
 
-      #2000;  // wait for sysclk to have started, and sysreset to have enabled everything
-        tst_resetn <= 1;
+      @ (posedge pds_haltn);  // wait for sysclk to have started, and sysreset to have enabled everything
+      @ (posedge pds_cpuclk);
+      
+      write_word_sync(TEST_ADDR+ 0, TEST_DATA             );
+      write_word_sync(TEST_ADDR+ 4, TEST_DATA ^ 'hFFFFFFFF);
+      @ (posedge pds_cpuclk);
+      write_word_sync(TEST_ADDR+ 8, TEST_DATA ^ 'hF0F0F0F0);
+      write_word_sync(TEST_ADDR+12, TEST_DATA ^ 'h0F0F0F0F);
       @ (posedge pds_cpuclk);
       @ (posedge pds_cpuclk);
+      read_word_sync(TEST_ADDR+ 0);
+      read_word_sync(TEST_ADDR+ 4);
       @ (posedge pds_cpuclk);
-
-      write_word_sync(TEST_ADDR+0, TEST_DATA);
-      @ (posedge pds_cpuclk);
-      @ (posedge pds_cpuclk);
-      read_word_sync(TEST_ADDR+0);
+      read_word_sync(TEST_ADDR+ 8);
+      read_word_sync(TEST_ADDR+12);
       
       
       @ (posedge pds_cpuclk);

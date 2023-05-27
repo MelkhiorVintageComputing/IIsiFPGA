@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 5
+Sheet 1 6
 Title ""
 Date ""
 Rev ""
@@ -67,4 +67,10 @@ F1 "pmod.sch" 50
 $EndSheet
 NoConn ~ 5775 1525
 NoConn ~ 5775 1250
+$Sheet
+S 1025 2725 1375 650 
+U 64849023
+F0 "cache sram" 50
+F1 "cache_sram.sch" 50
+$EndSheet
 $EndSCHEMATC

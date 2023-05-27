@@ -9,4 +9,5 @@
   (lib (name ztex_CD)(type Legacy)(uri ${KIPRJMOD}/ztex_CD.lib)(options "")(descr ""))
   (lib (name TPD12S016PWR)(type Legacy)(uri ${KIPRJMOD}/TPD12S016PWR.lib)(options "")(descr ""))
   (lib (name SN74LV1T125DCKR)(type Legacy)(uri ${KIPRJMOD}/SN74LV1T125DCKR.lib)(options "")(descr ""))
+  (lib (name IS61LV256AL-10TLI)(type Legacy)(uri ${KIPRJMOD}/IS61LV256AL-10TLI.lib)(options "")(descr ""))
 )

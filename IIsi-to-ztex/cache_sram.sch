@@ -1,0 +1,814 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 6 6
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:GND #PWR?
+U 1 1 64740740
+P 2725 2025
+AR Path="/6432B233/64740740" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/64740740" Ref="#PWR0146"  Part="1" 
+AR Path="/6479341A/64740740" Ref="#PWR0146"  Part="1" 
+AR Path="/64849023/64740740" Ref="#PWR0146"  Part="1" 
+F 0 "#PWR0146" H 2725 1775 50  0001 C CNN
+F 1 "GND" H 2730 1852 50  0000 C CNN
+F 2 "" H 2725 2025 50  0001 C CNN
+F 3 "" H 2725 2025 50  0001 C CNN
+	1    2725 2025
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 6474120D
+P 1075 2225
+AR Path="/6432B233/6474120D" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/6474120D" Ref="#PWR0200"  Part="1" 
+AR Path="/6479341A/6474120D" Ref="#PWR0200"  Part="1" 
+AR Path="/64849023/6474120D" Ref="#PWR0200"  Part="1" 
+F 0 "#PWR0200" H 1075 1975 50  0001 C CNN
+F 1 "GND" H 1080 2052 50  0000 C CNN
+F 2 "" H 1075 2225 50  0001 C CNN
+F 3 "" H 1075 2225 50  0001 C CNN
+	1    1075 2225
+	1    0    0    -1  
+$EndComp
+Text GLabel 2725 2625 2    50   Input ~ 0
+A4_3V3
+Text GLabel 1625 2525 0    50   Input ~ 0
+A6_3V3
+Text GLabel 1625 2625 0    50   Input ~ 0
+A5_3V3
+Text GLabel 1625 2225 0    50   Input ~ 0
+A9_3V3
+Text GLabel 1625 2325 0    50   Input ~ 0
+A8_3V3
+Text GLabel 1625 2425 0    50   Input ~ 0
+A7_3V3
+Text GLabel 1625 1625 0    50   Input ~ 0
+A10_3V3
+Text GLabel 2725 1325 2    50   Input ~ 0
+A12_3V3
+Text GLabel 1625 2125 0    50   Input ~ 0
+A14_3V3
+Text GLabel 1625 1425 0    50   Input ~ 0
+A13_3V3
+Text GLabel 1625 2025 0    50   Input ~ 0
+A16_3V3
+Text GLabel 1625 1725 0    50   Input ~ 0
+A15_3V3
+Text GLabel 1625 1325 0    50   Input ~ 0
+SRAM_~OE
+Text GLabel 1625 1825 0    50   Input ~ 0
+SRAM_B0_~WE
+Text GLabel 5925 1825 0    50   Input ~ 0
+SRAM_B2_~WE
+Text GLabel 8100 1850 0    50   Input ~ 0
+SRAM_B3_~WE
+Text GLabel 4875 1525 2    50   Input ~ 0
+D8_3V3
+Text GLabel 4875 1625 2    50   Input ~ 0
+D9_3V3
+Text GLabel 4875 1725 2    50   Input ~ 0
+D10_3V3
+Text GLabel 4875 1825 2    50   Input ~ 0
+D11_3V3
+Text GLabel 4875 1925 2    50   Input ~ 0
+D12_3V3
+Text GLabel 4875 2125 2    50   Input ~ 0
+D13_3V3
+Text GLabel 4875 2225 2    50   Input ~ 0
+D14_3V3
+Text GLabel 4875 2325 2    50   Input ~ 0
+D15_3V3
+Text GLabel 7025 1525 2    50   Input ~ 0
+D16_3V3
+Text GLabel 7025 1625 2    50   Input ~ 0
+D17_3V3
+Text GLabel 7025 1725 2    50   Input ~ 0
+D18_3V3
+Text GLabel 7025 1825 2    50   Input ~ 0
+D19_3V3
+Text GLabel 7025 1925 2    50   Input ~ 0
+D20_3V3
+Text GLabel 7025 2125 2    50   Input ~ 0
+D21_3V3
+Text GLabel 7025 2225 2    50   Input ~ 0
+D22_3V3
+Text GLabel 7025 2325 2    50   Input ~ 0
+D23_3V3
+Text GLabel 9200 1550 2    50   Input ~ 0
+D24_3V3
+Text GLabel 9200 1650 2    50   Input ~ 0
+D25_3V3
+Text GLabel 9200 1750 2    50   Input ~ 0
+D26_3V3
+Text GLabel 9200 1850 2    50   Input ~ 0
+D27_3V3
+Text GLabel 9200 1950 2    50   Input ~ 0
+D28_3V3
+Text GLabel 9200 2150 2    50   Input ~ 0
+D29_3V3
+Text GLabel 9200 2250 2    50   Input ~ 0
+D30_3V3
+Text GLabel 9200 2350 2    50   Input ~ 0
+D31_3V3
+Text GLabel 2725 2425 2    50   Input ~ 0
+SRAM_A2
+Text GLabel 2725 2525 2    50   Input ~ 0
+SRAM_A3
+Text GLabel 2725 1425 2    50   Input ~ 0
+CACHE_~CE
+$Comp
+L Device:C C?
+U 1 1 6471DC85
+P 1075 2075
+AR Path="/618F532C/6471DC85" Ref="C?"  Part="1" 
+AR Path="/618E8C75/6471DC85" Ref="C?"  Part="1" 
+AR Path="/631F3844/6471DC85" Ref="C?"  Part="1" 
+AR Path="/6432B233/6471DC85" Ref="C?"  Part="1" 
+AR Path="/64739EAA/6471DC85" Ref="C?"  Part="1" 
+AR Path="/6479341A/6471DC85" Ref="C29"  Part="1" 
+AR Path="/64849023/6471DC85" Ref="C25"  Part="1" 
+F 0 "C25" H 1100 2175 50  0000 L CNN
+F 1 "100nF" H 1100 1975 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 1113 1925 50  0001 C CNN
+F 3 "" H 1075 2075 50  0000 C CNN
+F 4 "" H 1075 2075 50  0001 C CNN "MNF1_URL"
+F 5 "CL05B104KO5NNNC" H 1075 2075 50  0001 C CNN "MPN"
+F 6 "" H 1075 2075 50  0001 C CNN "Mouser"
+F 7 "?" H 1075 2075 50  0001 C CNN "Digikey"
+F 8 "" H 1075 2075 50  0001 C CNN "LCSC"
+F 9 "?" H 1075 2075 50  0001 C CNN "Koncar"
+F 10 "TB" H 1075 2075 50  0001 C CNN "Side"
+F 11 "" H 1075 2075 50  0001 C CNN "URL"
+	1    1075 2075
+	1    0    0    -1  
+$EndComp
+Text GLabel 1475 3350 0    50   Input ~ 0
+SRAM_~OE
+$Comp
+L Device:R R?
+U 1 1 6481B83D
+P 1625 3350
+AR Path="/6432B33E/6481B83D" Ref="R?"  Part="1" 
+AR Path="/6479341A/6481B83D" Ref="R12"  Part="1" 
+AR Path="/64849023/6481B83D" Ref="R12"  Part="1" 
+F 0 "R12" V 1418 3350 50  0000 C CNN
+F 1 "10k" V 1509 3350 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 1555 3350 50  0001 C CNN
+F 3 "~" H 1625 3350 50  0001 C CNN
+F 4 "0402WGF1002TCE" V 1625 3350 50  0001 C CNN "MPN"
+	1    1625 3350
+	0    1    1    0   
+$EndComp
+Text GLabel 3775 1825 0    50   Input ~ 0
+SRAM_B1_~WE
+Text GLabel 1625 1525 0    50   Input ~ 0
+A11_3V3
+Wire Wire Line
+	1075 1925 1625 1925
+$Comp
+L power:+3V3 #PWR0205
+U 1 1 6489BEC6
+P 1075 1925
+F 0 "#PWR0205" H 1075 1775 50  0001 C CNN
+F 1 "+3V3" H 1090 2098 50  0000 C CNN
+F 2 "" H 1075 1925 50  0001 C CNN
+F 3 "" H 1075 1925 50  0001 C CNN
+	1    1075 1925
+	1    0    0    -1  
+$EndComp
+Connection ~ 1075 1925
+$Comp
+L power:GND #PWR?
+U 1 1 648A5A3D
+P 4875 2025
+AR Path="/6432B233/648A5A3D" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/648A5A3D" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/648A5A3D" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/648A5A3D" Ref="#PWR0206"  Part="1" 
+F 0 "#PWR0206" H 4875 1775 50  0001 C CNN
+F 1 "GND" H 4880 1852 50  0000 C CNN
+F 2 "" H 4875 2025 50  0001 C CNN
+F 3 "" H 4875 2025 50  0001 C CNN
+	1    4875 2025
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 648A5A43
+P 3225 2225
+AR Path="/6432B233/648A5A43" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/648A5A43" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/648A5A43" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/648A5A43" Ref="#PWR0207"  Part="1" 
+F 0 "#PWR0207" H 3225 1975 50  0001 C CNN
+F 1 "GND" H 3230 2052 50  0000 C CNN
+F 2 "" H 3225 2225 50  0001 C CNN
+F 3 "" H 3225 2225 50  0001 C CNN
+	1    3225 2225
+	1    0    0    -1  
+$EndComp
+Text GLabel 4875 2625 2    50   Input ~ 0
+A4_3V3
+Text GLabel 3775 2525 0    50   Input ~ 0
+A6_3V3
+Text GLabel 3775 2625 0    50   Input ~ 0
+A5_3V3
+Text GLabel 3775 2225 0    50   Input ~ 0
+A9_3V3
+Text GLabel 3775 2325 0    50   Input ~ 0
+A8_3V3
+Text GLabel 3775 2425 0    50   Input ~ 0
+A7_3V3
+Text GLabel 3775 1625 0    50   Input ~ 0
+A10_3V3
+Text GLabel 4875 1325 2    50   Input ~ 0
+A12_3V3
+Text GLabel 3775 2125 0    50   Input ~ 0
+A14_3V3
+Text GLabel 3775 1425 0    50   Input ~ 0
+A13_3V3
+Text GLabel 3775 2025 0    50   Input ~ 0
+A16_3V3
+Text GLabel 3775 1725 0    50   Input ~ 0
+A15_3V3
+Text GLabel 3775 1325 0    50   Input ~ 0
+SRAM_~OE
+Text GLabel 4875 2425 2    50   Input ~ 0
+SRAM_A2
+Text GLabel 4875 2525 2    50   Input ~ 0
+SRAM_A3
+Text GLabel 4875 1425 2    50   Input ~ 0
+CACHE_~CE
+$Comp
+L Device:C C?
+U 1 1 648A5A62
+P 3225 2075
+AR Path="/618F532C/648A5A62" Ref="C?"  Part="1" 
+AR Path="/618E8C75/648A5A62" Ref="C?"  Part="1" 
+AR Path="/631F3844/648A5A62" Ref="C?"  Part="1" 
+AR Path="/6432B233/648A5A62" Ref="C?"  Part="1" 
+AR Path="/64739EAA/648A5A62" Ref="C?"  Part="1" 
+AR Path="/6479341A/648A5A62" Ref="C?"  Part="1" 
+AR Path="/64849023/648A5A62" Ref="C26"  Part="1" 
+F 0 "C26" H 3250 2175 50  0000 L CNN
+F 1 "100nF" H 3250 1975 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 3263 1925 50  0001 C CNN
+F 3 "" H 3225 2075 50  0000 C CNN
+F 4 "" H 3225 2075 50  0001 C CNN "MNF1_URL"
+F 5 "CL05B104KO5NNNC" H 3225 2075 50  0001 C CNN "MPN"
+F 6 "" H 3225 2075 50  0001 C CNN "Mouser"
+F 7 "?" H 3225 2075 50  0001 C CNN "Digikey"
+F 8 "" H 3225 2075 50  0001 C CNN "LCSC"
+F 9 "?" H 3225 2075 50  0001 C CNN "Koncar"
+F 10 "TB" H 3225 2075 50  0001 C CNN "Side"
+F 11 "" H 3225 2075 50  0001 C CNN "URL"
+	1    3225 2075
+	1    0    0    -1  
+$EndComp
+$Comp
+L IS61LV256AL-10TLI:IS61LV256AL-10TLI IC2
+U 1 1 648A5A70
+P 3775 1325
+F 0 "IC2" H 4325 1590 50  0000 C CNN
+F 1 "IS61LV256AL-10TLI" H 4325 1499 50  0000 C CNN
+F 2 "IS61LV256AL10TLI" H 4725 1425 50  0001 L CNN
+F 3 "http://www.issi.com/WW/pdf/61LV256AL.pdf" H 4725 1325 50  0001 L CNN
+F 4 "SRAM 256K 32Kx8 10ns Async SRAM 3.3v" H 4725 1225 50  0001 L CNN "Description"
+F 5 "1.2" H 4725 1125 50  0001 L CNN "Height"
+F 6 "Integrated Silicon Solution Inc." H 4725 1025 50  0001 L CNN "Manufacturer_Name"
+F 7 "IS61LV256AL-10TLI" H 4725 925 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "870-IS61LV256AL10TLI" H 4725 825 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/ISSI/IS61LV256AL-10TLI?qs=AG1tZYOK7s62lfPD8V5A8g%3D%3D" H 4725 725 50  0001 L CNN "Mouser Price/Stock"
+F 10 "IS61LV256AL-10TLI" H 4725 625 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/is61lv256al-10tli/integrated-silicon-solution-inc" H 4725 525 50  0001 L CNN "Arrow Price/Stock"
+F 12 "IS61LV256AL-10TLI" H 3775 1325 50  0001 C CNN "MPN"
+	1    3775 1325
+	1    0    0    -1  
+$EndComp
+Text GLabel 3775 1525 0    50   Input ~ 0
+A11_3V3
+Wire Wire Line
+	3225 1925 3775 1925
+$Comp
+L power:+3V3 #PWR0208
+U 1 1 648A5A78
+P 3225 1925
+F 0 "#PWR0208" H 3225 1775 50  0001 C CNN
+F 1 "+3V3" H 3240 2098 50  0000 C CNN
+F 2 "" H 3225 1925 50  0001 C CNN
+F 3 "" H 3225 1925 50  0001 C CNN
+	1    3225 1925
+	1    0    0    -1  
+$EndComp
+Connection ~ 3225 1925
+$Comp
+L power:GND #PWR?
+U 1 1 648A7312
+P 7025 2025
+AR Path="/6432B233/648A7312" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/648A7312" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/648A7312" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/648A7312" Ref="#PWR0209"  Part="1" 
+F 0 "#PWR0209" H 7025 1775 50  0001 C CNN
+F 1 "GND" H 7030 1852 50  0000 C CNN
+F 2 "" H 7025 2025 50  0001 C CNN
+F 3 "" H 7025 2025 50  0001 C CNN
+	1    7025 2025
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 648A7318
+P 5375 2225
+AR Path="/6432B233/648A7318" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/648A7318" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/648A7318" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/648A7318" Ref="#PWR0210"  Part="1" 
+F 0 "#PWR0210" H 5375 1975 50  0001 C CNN
+F 1 "GND" H 5380 2052 50  0000 C CNN
+F 2 "" H 5375 2225 50  0001 C CNN
+F 3 "" H 5375 2225 50  0001 C CNN
+	1    5375 2225
+	1    0    0    -1  
+$EndComp
+Text GLabel 7025 2625 2    50   Input ~ 0
+A4_3V3
+Text GLabel 5925 2525 0    50   Input ~ 0
+A6_3V3
+Text GLabel 5925 2625 0    50   Input ~ 0
+A5_3V3
+Text GLabel 5925 2225 0    50   Input ~ 0
+A9_3V3
+Text GLabel 5925 2325 0    50   Input ~ 0
+A8_3V3
+Text GLabel 5925 2425 0    50   Input ~ 0
+A7_3V3
+Text GLabel 5925 1625 0    50   Input ~ 0
+A10_3V3
+Text GLabel 7025 1325 2    50   Input ~ 0
+A12_3V3
+Text GLabel 5925 2125 0    50   Input ~ 0
+A14_3V3
+Text GLabel 5925 1425 0    50   Input ~ 0
+A13_3V3
+Text GLabel 5925 2025 0    50   Input ~ 0
+A16_3V3
+Text GLabel 5925 1725 0    50   Input ~ 0
+A15_3V3
+Text GLabel 5925 1325 0    50   Input ~ 0
+SRAM_~OE
+Text GLabel 7025 2425 2    50   Input ~ 0
+SRAM_A2
+Text GLabel 7025 2525 2    50   Input ~ 0
+SRAM_A3
+Text GLabel 7025 1425 2    50   Input ~ 0
+CACHE_~CE
+$Comp
+L Device:C C?
+U 1 1 648A7337
+P 5375 2075
+AR Path="/618F532C/648A7337" Ref="C?"  Part="1" 
+AR Path="/618E8C75/648A7337" Ref="C?"  Part="1" 
+AR Path="/631F3844/648A7337" Ref="C?"  Part="1" 
+AR Path="/6432B233/648A7337" Ref="C?"  Part="1" 
+AR Path="/64739EAA/648A7337" Ref="C?"  Part="1" 
+AR Path="/6479341A/648A7337" Ref="C?"  Part="1" 
+AR Path="/64849023/648A7337" Ref="C27"  Part="1" 
+F 0 "C27" H 5400 2175 50  0000 L CNN
+F 1 "100nF" H 5400 1975 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 5413 1925 50  0001 C CNN
+F 3 "" H 5375 2075 50  0000 C CNN
+F 4 "" H 5375 2075 50  0001 C CNN "MNF1_URL"
+F 5 "CL05B104KO5NNNC" H 5375 2075 50  0001 C CNN "MPN"
+F 6 "" H 5375 2075 50  0001 C CNN "Mouser"
+F 7 "?" H 5375 2075 50  0001 C CNN "Digikey"
+F 8 "" H 5375 2075 50  0001 C CNN "LCSC"
+F 9 "?" H 5375 2075 50  0001 C CNN "Koncar"
+F 10 "TB" H 5375 2075 50  0001 C CNN "Side"
+F 11 "" H 5375 2075 50  0001 C CNN "URL"
+	1    5375 2075
+	1    0    0    -1  
+$EndComp
+$Comp
+L IS61LV256AL-10TLI:IS61LV256AL-10TLI IC3
+U 1 1 648A7345
+P 5925 1325
+F 0 "IC3" H 6475 1590 50  0000 C CNN
+F 1 "IS61LV256AL-10TLI" H 6475 1499 50  0000 C CNN
+F 2 "IS61LV256AL10TLI" H 6875 1425 50  0001 L CNN
+F 3 "http://www.issi.com/WW/pdf/61LV256AL.pdf" H 6875 1325 50  0001 L CNN
+F 4 "SRAM 256K 32Kx8 10ns Async SRAM 3.3v" H 6875 1225 50  0001 L CNN "Description"
+F 5 "1.2" H 6875 1125 50  0001 L CNN "Height"
+F 6 "Integrated Silicon Solution Inc." H 6875 1025 50  0001 L CNN "Manufacturer_Name"
+F 7 "IS61LV256AL-10TLI" H 6875 925 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "870-IS61LV256AL10TLI" H 6875 825 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/ISSI/IS61LV256AL-10TLI?qs=AG1tZYOK7s62lfPD8V5A8g%3D%3D" H 6875 725 50  0001 L CNN "Mouser Price/Stock"
+F 10 "IS61LV256AL-10TLI" H 6875 625 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/is61lv256al-10tli/integrated-silicon-solution-inc" H 6875 525 50  0001 L CNN "Arrow Price/Stock"
+F 12 "IS61LV256AL-10TLI" H 5925 1325 50  0001 C CNN "MPN"
+	1    5925 1325
+	1    0    0    -1  
+$EndComp
+Text GLabel 5925 1525 0    50   Input ~ 0
+A11_3V3
+Wire Wire Line
+	5375 1925 5925 1925
+$Comp
+L power:+3V3 #PWR0211
+U 1 1 648A734D
+P 5375 1925
+F 0 "#PWR0211" H 5375 1775 50  0001 C CNN
+F 1 "+3V3" H 5390 2098 50  0000 C CNN
+F 2 "" H 5375 1925 50  0001 C CNN
+F 3 "" H 5375 1925 50  0001 C CNN
+	1    5375 1925
+	1    0    0    -1  
+$EndComp
+Connection ~ 5375 1925
+$Comp
+L power:GND #PWR?
+U 1 1 648AB106
+P 9200 2050
+AR Path="/6432B233/648AB106" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/648AB106" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/648AB106" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/648AB106" Ref="#PWR0212"  Part="1" 
+F 0 "#PWR0212" H 9200 1800 50  0001 C CNN
+F 1 "GND" H 9205 1877 50  0000 C CNN
+F 2 "" H 9200 2050 50  0001 C CNN
+F 3 "" H 9200 2050 50  0001 C CNN
+	1    9200 2050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 648AB10C
+P 7550 2250
+AR Path="/6432B233/648AB10C" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/648AB10C" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/648AB10C" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/648AB10C" Ref="#PWR0213"  Part="1" 
+F 0 "#PWR0213" H 7550 2000 50  0001 C CNN
+F 1 "GND" H 7555 2077 50  0000 C CNN
+F 2 "" H 7550 2250 50  0001 C CNN
+F 3 "" H 7550 2250 50  0001 C CNN
+	1    7550 2250
+	1    0    0    -1  
+$EndComp
+Text GLabel 9200 2650 2    50   Input ~ 0
+A4_3V3
+Text GLabel 8100 2550 0    50   Input ~ 0
+A6_3V3
+Text GLabel 8100 2650 0    50   Input ~ 0
+A5_3V3
+Text GLabel 8100 2250 0    50   Input ~ 0
+A9_3V3
+Text GLabel 8100 2350 0    50   Input ~ 0
+A8_3V3
+Text GLabel 8100 2450 0    50   Input ~ 0
+A7_3V3
+Text GLabel 8100 1650 0    50   Input ~ 0
+A10_3V3
+Text GLabel 9200 1350 2    50   Input ~ 0
+A12_3V3
+Text GLabel 8100 2150 0    50   Input ~ 0
+A14_3V3
+Text GLabel 8100 1450 0    50   Input ~ 0
+A13_3V3
+Text GLabel 8100 2050 0    50   Input ~ 0
+A16_3V3
+Text GLabel 8100 1750 0    50   Input ~ 0
+A15_3V3
+Text GLabel 8100 1350 0    50   Input ~ 0
+SRAM_~OE
+Text GLabel 9200 2450 2    50   Input ~ 0
+SRAM_A2
+Text GLabel 9200 2550 2    50   Input ~ 0
+SRAM_A3
+Text GLabel 9200 1450 2    50   Input ~ 0
+CACHE_~CE
+$Comp
+L Device:C C?
+U 1 1 648AB12B
+P 7550 2100
+AR Path="/618F532C/648AB12B" Ref="C?"  Part="1" 
+AR Path="/618E8C75/648AB12B" Ref="C?"  Part="1" 
+AR Path="/631F3844/648AB12B" Ref="C?"  Part="1" 
+AR Path="/6432B233/648AB12B" Ref="C?"  Part="1" 
+AR Path="/64739EAA/648AB12B" Ref="C?"  Part="1" 
+AR Path="/6479341A/648AB12B" Ref="C?"  Part="1" 
+AR Path="/64849023/648AB12B" Ref="C28"  Part="1" 
+F 0 "C28" H 7575 2200 50  0000 L CNN
+F 1 "100nF" H 7575 2000 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 7588 1950 50  0001 C CNN
+F 3 "" H 7550 2100 50  0000 C CNN
+F 4 "" H 7550 2100 50  0001 C CNN "MNF1_URL"
+F 5 "CL05B104KO5NNNC" H 7550 2100 50  0001 C CNN "MPN"
+F 6 "" H 7550 2100 50  0001 C CNN "Mouser"
+F 7 "?" H 7550 2100 50  0001 C CNN "Digikey"
+F 8 "" H 7550 2100 50  0001 C CNN "LCSC"
+F 9 "?" H 7550 2100 50  0001 C CNN "Koncar"
+F 10 "TB" H 7550 2100 50  0001 C CNN "Side"
+F 11 "" H 7550 2100 50  0001 C CNN "URL"
+	1    7550 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L IS61LV256AL-10TLI:IS61LV256AL-10TLI IC4
+U 1 1 648AB139
+P 8100 1350
+F 0 "IC4" H 8650 1615 50  0000 C CNN
+F 1 "IS61LV256AL-10TLI" H 8650 1524 50  0000 C CNN
+F 2 "IS61LV256AL10TLI" H 9050 1450 50  0001 L CNN
+F 3 "http://www.issi.com/WW/pdf/61LV256AL.pdf" H 9050 1350 50  0001 L CNN
+F 4 "SRAM 256K 32Kx8 10ns Async SRAM 3.3v" H 9050 1250 50  0001 L CNN "Description"
+F 5 "1.2" H 9050 1150 50  0001 L CNN "Height"
+F 6 "Integrated Silicon Solution Inc." H 9050 1050 50  0001 L CNN "Manufacturer_Name"
+F 7 "IS61LV256AL-10TLI" H 9050 950 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "870-IS61LV256AL10TLI" H 9050 850 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/ISSI/IS61LV256AL-10TLI?qs=AG1tZYOK7s62lfPD8V5A8g%3D%3D" H 9050 750 50  0001 L CNN "Mouser Price/Stock"
+F 10 "IS61LV256AL-10TLI" H 9050 650 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/is61lv256al-10tli/integrated-silicon-solution-inc" H 9050 550 50  0001 L CNN "Arrow Price/Stock"
+F 12 "IS61LV256AL-10TLI" H 8100 1350 50  0001 C CNN "MPN"
+	1    8100 1350
+	1    0    0    -1  
+$EndComp
+Text GLabel 8100 1550 0    50   Input ~ 0
+A11_3V3
+Wire Wire Line
+	7550 1950 8100 1950
+$Comp
+L power:+3V3 #PWR0214
+U 1 1 648AB141
+P 7550 1950
+F 0 "#PWR0214" H 7550 1800 50  0001 C CNN
+F 1 "+3V3" H 7565 2123 50  0000 C CNN
+F 2 "" H 7550 1950 50  0001 C CNN
+F 3 "" H 7550 1950 50  0001 C CNN
+	1    7550 1950
+	1    0    0    -1  
+$EndComp
+Connection ~ 7550 1950
+Text GLabel 2725 1625 2    50   Input ~ 0
+D1_3V3
+Text GLabel 2725 1925 2    50   Input ~ 0
+D4_3V3
+Text GLabel 2725 1525 2    50   Input ~ 0
+D0_3V3
+Text GLabel 2725 2125 2    50   Input ~ 0
+D5_3V3
+Text GLabel 2725 2225 2    50   Input ~ 0
+D6_3V3
+Text GLabel 2725 2325 2    50   Input ~ 0
+D7_3V3
+$Comp
+L IS61LV256AL-10TLI:IS61LV256AL-10TLI IC1
+U 1 1 64853EA5
+P 1625 1325
+F 0 "IC1" H 2175 1590 50  0000 C CNN
+F 1 "IS61LV256AL-10TLI" H 2175 1499 50  0000 C CNN
+F 2 "IS61LV256AL10TLI" H 2575 1425 50  0001 L CNN
+F 3 "http://www.issi.com/WW/pdf/61LV256AL.pdf" H 2575 1325 50  0001 L CNN
+F 4 "SRAM 256K 32Kx8 10ns Async SRAM 3.3v" H 2575 1225 50  0001 L CNN "Description"
+F 5 "1.2" H 2575 1125 50  0001 L CNN "Height"
+F 6 "Integrated Silicon Solution Inc." H 2575 1025 50  0001 L CNN "Manufacturer_Name"
+F 7 "IS61LV256AL-10TLI" H 2575 925 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "870-IS61LV256AL10TLI" H 2575 825 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/ISSI/IS61LV256AL-10TLI?qs=AG1tZYOK7s62lfPD8V5A8g%3D%3D" H 2575 725 50  0001 L CNN "Mouser Price/Stock"
+F 10 "IS61LV256AL-10TLI" H 2575 625 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/is61lv256al-10tli/integrated-silicon-solution-inc" H 2575 525 50  0001 L CNN "Arrow Price/Stock"
+F 12 "IS61LV256AL-10TLI" H 1625 1325 50  0001 C CNN "MPN"
+	1    1625 1325
+	1    0    0    -1  
+$EndComp
+Text GLabel 2725 1825 2    50   Input ~ 0
+D3_3V3
+Text GLabel 2725 1725 2    50   Input ~ 0
+D2_3V3
+$Comp
+L power:+3V3 #PWR0142
+U 1 1 64AC6E26
+P 1775 3350
+F 0 "#PWR0142" H 1775 3200 50  0001 C CNN
+F 1 "+3V3" H 1790 3523 50  0000 C CNN
+F 2 "" H 1775 3350 50  0001 C CNN
+F 3 "" H 1775 3350 50  0001 C CNN
+	1    1775 3350
+	1    0    0    -1  
+$EndComp
+Text GLabel 3050 3250 0    50   Input ~ 0
+SRAM_B0_~WE
+Text GLabel 3050 3375 0    50   Input ~ 0
+SRAM_B1_~WE
+Text GLabel 3050 3500 0    50   Input ~ 0
+SRAM_B2_~WE
+Text GLabel 3050 3625 0    50   Input ~ 0
+SRAM_B3_~WE
+$Comp
+L Device:R R?
+U 1 1 64AE003A
+P 3200 3250
+AR Path="/6432B33E/64AE003A" Ref="R?"  Part="1" 
+AR Path="/6479341A/64AE003A" Ref="R?"  Part="1" 
+AR Path="/64849023/64AE003A" Ref="R13"  Part="1" 
+F 0 "R13" V 2993 3250 50  0000 C CNN
+F 1 "10k" V 3084 3250 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 3130 3250 50  0001 C CNN
+F 3 "~" H 3200 3250 50  0001 C CNN
+F 4 "0402WGF1002TCE" V 3200 3250 50  0001 C CNN "MPN"
+	1    3200 3250
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0201
+U 1 1 64AE0040
+P 3350 3250
+F 0 "#PWR0201" H 3350 3100 50  0001 C CNN
+F 1 "+3V3" H 3365 3423 50  0000 C CNN
+F 2 "" H 3350 3250 50  0001 C CNN
+F 3 "" H 3350 3250 50  0001 C CNN
+	1    3350 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 64AE062D
+P 3200 3375
+AR Path="/6432B33E/64AE062D" Ref="R?"  Part="1" 
+AR Path="/6479341A/64AE062D" Ref="R?"  Part="1" 
+AR Path="/64849023/64AE062D" Ref="R16"  Part="1" 
+F 0 "R16" V 2993 3375 50  0000 C CNN
+F 1 "10k" V 3084 3375 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 3130 3375 50  0001 C CNN
+F 3 "~" H 3200 3375 50  0001 C CNN
+F 4 "0402WGF1002TCE" V 3200 3375 50  0001 C CNN "MPN"
+	1    3200 3375
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0202
+U 1 1 64AE0633
+P 3350 3375
+F 0 "#PWR0202" H 3350 3225 50  0001 C CNN
+F 1 "+3V3" H 3365 3548 50  0000 C CNN
+F 2 "" H 3350 3375 50  0001 C CNN
+F 3 "" H 3350 3375 50  0001 C CNN
+	1    3350 3375
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 64AE0B11
+P 3200 3500
+AR Path="/6432B33E/64AE0B11" Ref="R?"  Part="1" 
+AR Path="/6479341A/64AE0B11" Ref="R?"  Part="1" 
+AR Path="/64849023/64AE0B11" Ref="R17"  Part="1" 
+F 0 "R17" V 2993 3500 50  0000 C CNN
+F 1 "10k" V 3084 3500 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 3130 3500 50  0001 C CNN
+F 3 "~" H 3200 3500 50  0001 C CNN
+F 4 "0402WGF1002TCE" V 3200 3500 50  0001 C CNN "MPN"
+	1    3200 3500
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0203
+U 1 1 64AE0B17
+P 3350 3500
+F 0 "#PWR0203" H 3350 3350 50  0001 C CNN
+F 1 "+3V3" H 3365 3673 50  0000 C CNN
+F 2 "" H 3350 3500 50  0001 C CNN
+F 3 "" H 3350 3500 50  0001 C CNN
+	1    3350 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 64AE0FBE
+P 3200 3625
+AR Path="/6432B33E/64AE0FBE" Ref="R?"  Part="1" 
+AR Path="/6479341A/64AE0FBE" Ref="R?"  Part="1" 
+AR Path="/64849023/64AE0FBE" Ref="R18"  Part="1" 
+F 0 "R18" V 2993 3625 50  0000 C CNN
+F 1 "10k" V 3084 3625 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 3130 3625 50  0001 C CNN
+F 3 "~" H 3200 3625 50  0001 C CNN
+F 4 "0402WGF1002TCE" V 3200 3625 50  0001 C CNN "MPN"
+	1    3200 3625
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3V3 #PWR0204
+U 1 1 64AE0FC4
+P 3350 3625
+F 0 "#PWR0204" H 3350 3475 50  0001 C CNN
+F 1 "+3V3" H 3365 3798 50  0000 C CNN
+F 2 "" H 3350 3625 50  0001 C CNN
+F 3 "" H 3350 3625 50  0001 C CNN
+	1    3350 3625
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 64B08D1F
+P 550 3425
+AR Path="/6432B233/64B08D1F" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/64B08D1F" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/64B08D1F" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/64B08D1F" Ref="#PWR0217"  Part="1" 
+F 0 "#PWR0217" H 550 3175 50  0001 C CNN
+F 1 "GND" H 555 3252 50  0000 C CNN
+F 2 "" H 550 3425 50  0001 C CNN
+F 3 "" H 550 3425 50  0001 C CNN
+	1    550  3425
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 64B08D26
+P 550 3275
+AR Path="/618F532C/64B08D26" Ref="C?"  Part="1" 
+AR Path="/618E8C75/64B08D26" Ref="C?"  Part="1" 
+AR Path="/631F3844/64B08D26" Ref="C?"  Part="1" 
+AR Path="/6432B233/64B08D26" Ref="C?"  Part="1" 
+AR Path="/64739EAA/64B08D26" Ref="C?"  Part="1" 
+AR Path="/6479341A/64B08D26" Ref="C?"  Part="1" 
+AR Path="/64849023/64B08D26" Ref="C30"  Part="1" 
+F 0 "C30" H 575 3375 50  0000 L CNN
+F 1 "1uF" H 575 3175 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 588 3125 50  0001 C CNN
+F 3 "" H 550 3275 50  0000 C CNN
+F 4 "CL05A105KA5NQNC" H 550 3275 50  0001 C CNN "MPN"
+	1    550  3275
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0218
+U 1 1 64B08D2C
+P 550 3125
+F 0 "#PWR0218" H 550 2975 50  0001 C CNN
+F 1 "+3V3" H 565 3298 50  0000 C CNN
+F 2 "" H 550 3125 50  0001 C CNN
+F 3 "" H 550 3125 50  0001 C CNN
+	1    550  3125
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0216
+U 1 1 64AF4392
+P 775 3125
+F 0 "#PWR0216" H 775 2975 50  0001 C CNN
+F 1 "+3V3" H 790 3298 50  0000 C CNN
+F 2 "" H 775 3125 50  0001 C CNN
+F 3 "" H 775 3125 50  0001 C CNN
+	1    775  3125
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 64AF438B
+P 775 3275
+AR Path="/618F532C/64AF438B" Ref="C?"  Part="1" 
+AR Path="/618E8C75/64AF438B" Ref="C?"  Part="1" 
+AR Path="/631F3844/64AF438B" Ref="C?"  Part="1" 
+AR Path="/6432B233/64AF438B" Ref="C?"  Part="1" 
+AR Path="/64739EAA/64AF438B" Ref="C?"  Part="1" 
+AR Path="/6479341A/64AF438B" Ref="C?"  Part="1" 
+AR Path="/64849023/64AF438B" Ref="C29"  Part="1" 
+F 0 "C29" H 800 3375 50  0000 L CNN
+F 1 "1uF" H 800 3175 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 813 3125 50  0001 C CNN
+F 3 "" H 775 3275 50  0000 C CNN
+F 4 "CL05A105KA5NQNC" H 775 3275 50  0001 C CNN "MPN"
+	1    775  3275
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 64AF437D
+P 775 3425
+AR Path="/6432B233/64AF437D" Ref="#PWR?"  Part="1" 
+AR Path="/64739EAA/64AF437D" Ref="#PWR?"  Part="1" 
+AR Path="/6479341A/64AF437D" Ref="#PWR?"  Part="1" 
+AR Path="/64849023/64AF437D" Ref="#PWR0215"  Part="1" 
+F 0 "#PWR0215" H 775 3175 50  0001 C CNN
+F 1 "GND" H 780 3252 50  0000 C CNN
+F 2 "" H 775 3425 50  0001 C CNN
+F 3 "" H 775 3425 50  0001 C CNN
+	1    775  3425
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

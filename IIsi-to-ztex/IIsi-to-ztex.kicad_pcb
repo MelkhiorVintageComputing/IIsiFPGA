@@ -8610,7 +8610,7 @@
   (zone (net 3) (net_name +5V) (layer In2.Cu) (tstamp 64293ABB) (hatch edge 0.508)
     (connect_pads (clearance 0.384))
     (min_thickness 0.254)
-    (fill (arc_segments 32) (thermal_gap 0.384) (thermal_bridge_width 0.508))
+    (fill yes (arc_segments 32) (thermal_gap 0.384) (thermal_bridge_width 0.508))
     (polygon
       (pts
         (xy 116.46 149) (xy 111.5 149) (xy 111.5 89) (xy 116.46 89)
@@ -8700,7 +8700,7 @@
   (zone (net 1) (net_name GND) (layer In1.Cu) (tstamp 64293AAF) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
-    (fill (arc_segments 32) (thermal_gap 0.254) (thermal_bridge_width 0.508))
+    (fill yes (arc_segments 32) (thermal_gap 0.254) (thermal_bridge_width 0.508))
     (polygon
       (pts
         (xy 214 152) (xy 95 152.38) (xy 95 32) (xy 214 32)
@@ -11480,7 +11480,7 @@
   (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 64293AAC) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
-    (fill (arc_segments 32) (thermal_gap 0.254) (thermal_bridge_width 0.508))
+    (fill yes (arc_segments 32) (thermal_gap 0.254) (thermal_bridge_width 0.508))
     (polygon
       (pts
         (xy 214 152) (xy 95 152.38) (xy 95 32) (xy 214 32)
@@ -14614,7 +14614,7 @@
   (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 647578E4) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
-    (fill (arc_segments 32) (thermal_gap 0.254) (thermal_bridge_width 0.508))
+    (fill yes (arc_segments 32) (thermal_gap 0.254) (thermal_bridge_width 0.508))
     (polygon
       (pts
         (xy 214 152) (xy 95 152.38) (xy 95 32) (xy 214 32)
@@ -16979,7 +16979,7 @@
   (zone (net 2) (net_name +3V3) (layer In2.Cu) (tstamp 0) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.254)
-    (fill (arc_segments 32) (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (arc_segments 32) (thermal_gap 0.508) (thermal_bridge_width 0.508))
     (polygon
       (pts
         (xy 214 152) (xy 111.5 152.25) (xy 111.5 149.5) (xy 117 149.5) (xy 117 88.5)

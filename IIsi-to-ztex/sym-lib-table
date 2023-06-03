@@ -9,4 +9,7 @@
   (lib (name ztex_CD)(type Legacy)(uri ${KIPRJMOD}/ztex_CD.lib)(options "")(descr ""))
   (lib (name TPD12S016PWR)(type Legacy)(uri ${KIPRJMOD}/TPD12S016PWR.lib)(options "")(descr ""))
   (lib (name SN74LV1T125DCKR)(type Legacy)(uri ${KIPRJMOD}/SN74LV1T125DCKR.lib)(options "")(descr ""))
+  (lib (name IIsi-to-ztex-rescue)(type Legacy)(uri ${KIPRJMOD}/IIsi-to-ztex-rescue.lib)(options "")(descr ""))
+  (lib (name 650906-5)(type Legacy)(uri ${KIPRJMOD}/650906-5.lib)(options "")(descr ""))
+  (lib (name SSAJ110100)(type Legacy)(uri ${KIPRJMOD}/SSAJ110100.lib)(options "")(descr ""))
 )

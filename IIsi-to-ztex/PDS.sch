@@ -1776,7 +1776,6 @@ Text GLabel 8975 -725 0    50   Input ~ 0
 ~BGACK_3V3
 Text GLabel 10375 -425 2    50   Input ~ 0
 ~FPU_3V3
-NoConn ~ 8975 -425
 $Comp
 L Device:R R14
 U 1 1 646B5C31
@@ -2133,17 +2132,6 @@ Text GLabel 8975 -625 0    50   Input ~ 0
 ~IRQ2_3V3
 Text GLabel 10375 -625 2    50   Input ~ 0
 ~IRQ3_3V3
-$Comp
-L power:GND #PWR0142
-U 1 1 646A7E11
-P 8975 -925
-F 0 "#PWR0142" H 8975 -1175 50  0001 C CNN
-F 1 "GND" H 8980 -1098 50  0000 C CNN
-F 2 "" H 8975 -925 50  0001 C CNN
-F 3 "" H 8975 -925 50  0001 C CNN
-	1    8975 -925
-	0    1    1    0   
-$EndComp
 Text GLabel 8975 -1125 0    50   Input ~ 0
 ~IRQ2
 Text Notes -700 5825 0    50   ~ 0
@@ -2166,4 +2154,10 @@ F 6 "SSAJ110100" H 11950 -825 50  0001 L BNN "MPN"
 $EndComp
 Text Notes 8650 -2050 0    50   ~ 0
 When ~MASTER_OE~ is low, this is enabled and various signals for Master & the extra clock (primary clock on IIfx) are available to the FPGA.\nWhen ~MASTER_OE~ is high, this is high-Z and the PMod can be used instead
+Text Notes -1400 4800 0    50   ~ 0
+PMod alternate
+Text GLabel 8975 -925 0    50   Input Italic 0
+~RBV
+Text GLabel 8975 -425 0    50   Input Italic 0
+~RBV_3V3
 $EndSCHEMATC

@@ -1,5 +1,5 @@
-Drill report for /home/dolbeau/MAC/IIsiFPGA/IIsi-to-ztex/IIsi-to-ztex.kicad_pcb
-Created on Tue May 16 13:37:34 2023
+Drill report for /Users/dolbeau/IIsiFPGA/IIsi-to-ztex/IIsi-to-ztex.kicad_pcb
+Created on Samedi 03 juin 2023 à 09:30:08
 
 Copper Layer Stackup:
     =============================================================
@@ -12,22 +12,23 @@ Copper Layer Stackup:
 Drill file 'IIsi-to-ztex-PTH.drl' contains
     plated through holes:
     =============================================================
-    T1  0.40mm  0.016"  (107 holes)
-    T2  0.90mm  0.035"  (14 holes)
-    T3  1.00mm  0.039"  (12 holes)
-    T4  1.07mm  0.042"  (120 holes)
-    T5  1.14mm  0.045"  (128 holes)
-    T6  1.30mm  0.051"  (4 holes)
-    T7  2.20mm  0.087"  (1 hole)
-    T8  2.89mm  0.114"  (2 holes)
-    T9  5.00mm  0.197"  (2 holes)
+    T1  0,30mm  0,012"  (22 holes)
+    T2  0,40mm  0,016"  (86 holes)
+    T3  0,90mm  0,035"  (14 holes)
+    T4  1,00mm  0,039"  (12 holes)
+    T5  1,07mm  0,042"  (120 holes)
+    T6  1,14mm  0,045"  (128 holes)
+    T7  1,30mm  0,051"  (4 holes)
+    T8  2,20mm  0,087"  (1 hole)
+    T9  2,89mm  0,114"  (2 holes)
+    T10  5,00mm  0,197"  (2 holes)
 
-    Total plated holes count 390
+    Total plated holes count 391
 
 
 Drill file 'IIsi-to-ztex-NPTH.drl' contains
     unplated through holes:
     =============================================================
-    T1  0.80mm  0.031"  (2 holes)
+    T1  0,80mm  0,031"  (2 holes)
 
     Total unplated holes count 2

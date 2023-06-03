@@ -712,7 +712,7 @@ Text GLabel 6750 2950 0    50   Input ~ 0
 ~BG_3V3
 Text GLabel 6750 3050 0    50   Input ~ 0
 ~BR_3V3
-Text GLabel 10525 2550 2    50   Input ~ 0
+Text GLabel 10525 2450 2    50   Input ~ 0
 ~FPU_3V3
 Wire Wire Line
 	10525 2950 9900 2950
@@ -734,4 +734,8 @@ Wire Wire Line
 	9900 2350 10525 2350
 Wire Wire Line
 	10525 2250 9900 2250
+Text GLabel 10525 2550 2    50   Input Italic 0
+~RBV_3V3
+Wire Wire Line
+	10525 2450 9900 2450
 $EndSCHEMATC

@@ -1,5 +1,5 @@
-## Footprint report - date Tue May 16 13:38:26 2023
-## Created by Pcbnew version kicad 5.1.9+dfsg1-1~bpo10+1
+## Footprint report - date Saturday, June 03, 2023 at 09:31:01 AM
+## Created by Pcbnew version kicad (5.1.9-0-10_14)
 ## Unit = mm, Angle = deg.
 
 $BeginDESCRIPTION
@@ -506,7 +506,7 @@ reference "C22"
 value "100nF"
 footprint "Capacitor_SMD:C_0603_1608Metric"
 attribut smd
-position 154.750000 90.250000  orientation 180.00
+position 154.750000 89.380000  orientation 180.00
 layer front
 $PAD "2"
 Shape Roundrect Layer front
@@ -2927,7 +2927,7 @@ reference "C2"
 value "100nF"
 footprint "Capacitor_SMD:C_0603_1608Metric"
 attribut smd
-position 154.115000 87.710000  orientation 0.00
+position 154.115000 87.000000  orientation 0.00
 layer front
 $PAD "2"
 Shape Roundrect Layer front
@@ -2948,7 +2948,7 @@ reference "C1"
 value "100nF"
 footprint "Capacitor_SMD:C_0603_1608Metric"
 attribut smd
-position 151.575000 108.000000  orientation 0.00
+position 151.575000 108.500000  orientation 0.00
 layer front
 $PAD "2"
 Shape Roundrect Layer front

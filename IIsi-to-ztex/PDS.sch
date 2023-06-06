@@ -1613,8 +1613,6 @@ Text Notes 175  1775 0    50   ~ 0
  1kΩ pull-up
 Text Notes 2825 1475 0    50   ~ 0
  1kΩ pull-up
-Text Notes 2825 1575 0    50   ~ 0
- 1kΩ pull-up (not on SE/30)
 Text Notes 2825 1675 0    50   ~ 0
  1kΩ pull-up
 Text Notes 2675 3325 0    50   ~ 0
@@ -1627,7 +1625,7 @@ Text Notes 8125 2350 0    50   ~ 0
  1kΩ pull-up
 Text Notes 225  3625 0    50   ~ 0
  1kΩ pull-up
-Text Notes 150  2175 0    50   ~ 0
+Text Notes 175  1650 0    50   ~ 0
  1kΩ pull-up
 Text Notes 2625 3625 0    50   ~ 0
  1kΩ pull-up
@@ -2160,4 +2158,102 @@ Text GLabel 8975 -925 0    50   Input Italic 0
 ~RBV
 Text GLabel 8975 -425 0    50   Input Italic 0
 ~RBV_3V3
+Text GLabel 7125 3125 2    50   Input ~ 0
+CACHE_3V3
+$Comp
+L Device:R R12
+U 1 1 64A08964
+P 6975 3125
+F 0 "R12" V 6768 3125 50  0000 C CNN
+F 1 "10k" V 6859 3125 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 6905 3125 50  0001 C CNN
+F 3 "~" H 6975 3125 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 6975 3125 50  0001 C CNN "MPN"
+	1    6975 3125
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0142
+U 1 1 64A0740C
+P 6825 3125
+F 0 "#PWR0142" H 6825 2875 50  0001 C CNN
+F 1 "GND" H 6830 2952 50  0000 C CNN
+F 2 "" H 6825 3125 50  0001 C CNN
+F 3 "" H 6825 3125 50  0001 C CNN
+	1    6825 3125
+	0    1    1    0   
+$EndComp
+Text Notes 2825 1575 0    50   ~ 0
+ 1kΩ pull-up (not on SE/30)
+Text Notes 10500 -1200 0    50   ~ 0
+ 1kΩ pull-up
+Text Notes 8150 -1200 0    50   ~ 0
+ 1kΩ pull-up
+Text GLabel 7175 3800 0    50   Input ~ 0
+~IRQ2
+Text GLabel 7175 3925 0    50   Input ~ 0
+~IRQ3
+$Comp
+L Device:R R13
+U 1 1 64AB2C77
+P 7325 3600
+F 0 "R13" V 7118 3600 50  0000 C CNN
+F 1 "10k" V 7209 3600 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 7255 3600 50  0001 C CNN
+F 3 "~" H 7325 3600 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 7325 3600 50  0001 C CNN "MPN"
+	1    7325 3600
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R16
+U 1 1 64AB32C6
+P 7325 3800
+F 0 "R16" V 7118 3800 50  0000 C CNN
+F 1 "10k" V 7209 3800 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 7255 3800 50  0001 C CNN
+F 3 "~" H 7325 3800 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 7325 3800 50  0001 C CNN "MPN"
+	1    7325 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R17
+U 1 1 64AB3785
+P 7325 3925
+F 0 "R17" V 7118 3925 50  0000 C CNN
+F 1 "10k" V 7209 3925 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 7255 3925 50  0001 C CNN
+F 3 "~" H 7325 3925 50  0001 C CNN
+F 4 "0603WAF1002T5E" V 7325 3925 50  0001 C CNN "MPN"
+	1    7325 3925
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7475 3925 7475 3800
+$Comp
+L power:+5V #PWR0146
+U 1 1 64AB7123
+P 7475 3800
+F 0 "#PWR0146" H 7475 3650 50  0001 C CNN
+F 1 "+5V" H 7490 3973 50  0000 C CNN
+F 2 "" H 7475 3800 50  0001 C CNN
+F 3 "" H 7475 3800 50  0001 C CNN
+	1    7475 3800
+	1    0    0    -1  
+$EndComp
+Connection ~ 7475 3800
+Text GLabel 7175 3600 0    50   Input ~ 0
+~IRQ1_3V3
+$Comp
+L power:+3V3 #PWR?
+U 1 1 64AE14D2
+P 7475 3600
+F 0 "#PWR?" H 7475 3450 50  0001 C CNN
+F 1 "+3V3" H 7490 3773 50  0000 C CNN
+F 2 "" H 7475 3600 50  0001 C CNN
+F 3 "" H 7475 3600 50  0001 C CNN
+	1    7475 3600
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

@@ -1,5 +1,5 @@
-### Module positions - created on Saturday, June 03, 2023 at 10:50:33 AM ###
-### Printed by Pcbnew version kicad (5.1.9-0-10_14)
+### Module positions - created on Tue Jun  6 11:00:20 2023 ###
+### Printed by Pcbnew version kicad 5.1.9+dfsg1-1~bpo10+1
 ## Unit = mm, Angle = deg.
 ## Side : top
 # Ref     Val                           Package                                                 PosX       PosY       Rot  Side
@@ -45,8 +45,12 @@ R8        22                            R_0402_1005Metric                       
 R9        22                            R_0402_1005Metric                                    66.0000    74.0000  270.0000  top
 R10       22                            R_0402_1005Metric                                    71.0000    74.0000  270.0000  top
 R11       10k                           R_0603_1608Metric                                    87.6100    24.2500   90.0000  top
+R12       10k                           R_0603_1608Metric                                    56.5000    50.2750  180.0000  top
+R13       10k                           R_0603_1608Metric                                    90.8036    62.7500  180.0000  top
 R14       10k                           R_0603_1608Metric                                    94.0000    91.5000   90.0000  top
 R15       10k                           R_0603_1608Metric                                    96.0000    91.5000   90.0000  top
+R16       10k                           R_0603_1608Metric                                    54.2500    55.5000    0.0000  top
+R17       10k                           R_0603_1608Metric                                    54.2500    57.5000    0.0000  top
 S1        SSAJ110100                    SW_SSAJ110100                                        95.0000    95.5000  180.0000  top
 U1        SN74CB3T3245PWR               SOP65P640X120-20N                                    59.4600    20.0000   90.0000  top
 U2        SN74CB3T3245PWR               SOP65P640X120-20N                                    70.4600    20.0000   90.0000  top

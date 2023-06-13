@@ -24,13 +24,13 @@ class MC68030_SYNC_FSM(Module):
         # RESET_n = platform.request("RESET_n") # Bidirectional signal that initiates system reset
         # RMC = platform.request("RMC") #  identifies current bus cycle as part of indivisible read-modify-write operation, three-state
         DSACK_n = platform.request("dsack_3v3_n") # 2 # Data transfer acknowledge, I[O]
-        # CBREQ_n = platform.request("CBREQ_n") # CPU burst reuqest, I ?
-        # CBACK_n = platform.request("CBACK_n") # CPU burst ack, w/ STERM, IO ?
+        CBREQ_n = platform.request("cbreq_3v3_n") # CPU burst reuqest, I ?
+        CBACK_n = platform.request("cback_3v3_n") # CPU burst ack, w/ STERM, IO ?
         STERM_n = platform.request("sterm_3v3_n") # indicates termination of a transfer using the MC68030 synchronous cycle, [I]O
         # in this version STERM is negated by the driver
 
         AS_n = platform.request("as_3v3_n") # address strobe, I [three-state]
-        # CIOUT_n = platform.request("CIOUT_n") # cache inhibit out (from cpu), I
+        CIOUT_n = platform.request("ciout_3v3_n") # cache inhibit out (from cpu), I
 
         # BR_n = platform.request("BR_n") # bus request, I
         # CPU_BG_n = platform.request("CPU_BG_n") # processor bus grant, I ?
@@ -43,7 +43,7 @@ class MC68030_SYNC_FSM(Module):
         ## ECS_n not in PDS slot (external cycle start) # is on IIfx
 
          # not 68030
-        # CACHE = platform.request("CACHE")
+        CACHE = platform.request("cache_3v3")
         # CLK16M not connected
         # CPU_CLK = platform.request("CPU_CLK") # handled in CRG
         # CPU_DISABLE_n = platform.request("CPU_DISABLE_n") # Disables the MC68030 CPU (and MC68882 FPU, if installed) on the main logic board. This signal is used by a PDS card that replaces the main processor.
@@ -66,7 +66,7 @@ class MC68030_SYNC_FSM(Module):
 	
         #card_select = Signal()
         # we don't have 24-bits mode, FC3 is assumed to be 1
-        #self.comb += card_select.eq(A[31] & (~FC[0] | ~FC[1] | ~FC[2])) # high-order address bit set & not in CPU space
+        #self.comb += card_select.eq(A[31] & (~FC[0] | ~FC[1] | ~FC[2])) # high-order address bit set & not in CPU spac
 
         A_i = Signal(32)
         #A_o = Signal(32)
@@ -90,6 +90,18 @@ class MC68030_SYNC_FSM(Module):
         #DSACK_oe = Signal(reset = 0)
         #self.specials += Tristate(DSACK_n, DSACK_o_n, DSACK_oe, DSACK_i_n)
         
+        CBREQ_i_n = Signal(1)
+        #CBREQ_o_n = Signal(1, reset = 1)
+        #CBREQ_oe = Signal(reset = 0)
+        #self.specials += Tristate(CBREQ_n, CBREQ_o_n, CBREQ_oe, CBREQ_i_n)
+        self.comb += [ CBREQ_i_n.eq(CBREQ_n) ]
+        
+        #CBACK_i_n = Signal(1)
+        CBACK_o_n = Signal(1, reset = 1)
+        #CBACK_oe = Signal(reset = 0)
+        #self.specials += Tristate(CBACK_n, CBACK_o_n, CBACK_oe, CBACK_i_n)
+        self.comb += [ CBACK_n.eq(CBACK_o_n) ]
+        
         #STERM_i_n = Signal(1)
         STERM_o_n = Signal(1, reset = 1)
         #STERM_oe = Signal(reset = 0)
@@ -108,11 +120,23 @@ class MC68030_SYNC_FSM(Module):
         #self.specials += Tristate(CPU_AS_n, AS_o_n, AS_oe, AS_i_n)
         self.comb += [ AS_i_n.eq(AS_n) ]
         
+        CIOUT_i_n = Signal(1)
+        #CIOUT_o_n = Signal(1, reset = 1)
+        #CIOUT_oe = Signal(reset = 0)
+        #self.specials += Tristate(CIOUT_n, CIOUT_o_n, CIOUT_oe, CIOUT_i_n)
+        self.comb += [ CIOUT_i_n.eq(CIOUT_n) ]
+        
         DS_i_n = Signal()
         #DS_o_n = Signal()
         #DS_oe = Signal(reset = 0)
         #self.specials += Tristate(DS_n, DS_o_n, DS_oe, DS_i_n)
         self.comb += [ DS_i_n.eq(DS_n) ]
+        
+        #CACHE_i = Signal(1)
+        CACHE_o = Signal(1, reset = 0)
+        #CACHE_oe = Signal(reset = 0)
+        #self.specials += Tristate(CACHE, CACHE_o, CACHE_oe, CACHE_i)
+        self.comb += [ CACHE.eq(CACHE_o) ]
 
         my_space = Signal()
         self.comb += [ my_space.eq((A_i[24:32] == 0xf9) & (~FC[0] | ~FC[1] | ~FC[2])) ] # checkme

@@ -83,7 +83,7 @@ _pds_pds_v1_0 = [
                                    "V4  J18 K16 J17 K15 K13 J15 J13 "
                                    "H15 H14 J14 G14 H17 G16 G17 G18 "
                                    "F16 F18 E18 F15 D18 E17 G13 D17 "), IOStandard("lvttl")),
-    ("D_3v3",              0, Pins("R1 A13 M4  B12 C12 T1  B14 B13 "
+    ("D_3v3",              0, Pins("R1  A13 M4  B12 C12 T1  B14 B13 "
                                    "N4  A16 A15 P3  D13 D12 L5  C14 "
                                    "D14 P4  B17 B16 L6  C15 D15 A18 "
                                    "B18 C17 C16 E16 E15 F13 F14 K6  "), IOStandard("lvttl")),
@@ -106,11 +106,15 @@ _pds_pds_v1_0 = [
 ]
 
 _pds_pdsmaster_v1_0 = [
-    ("fpu_3v3_n",          0, Pins("R3"), IOStandard("lvttl")),
+    ("fpu_3v3_n",          0, Pins("T3"), IOStandard("lvttl")),
     ("bg_3v3_n",           0, Pins("N6"), IOStandard("lvttl")),
     ("br_3v3_n",           0, Pins("M6"), IOStandard("lvttl")),
     ("bgack_3v3_n",        0, Pins("P5"), IOStandard("lvttl")),
     ("c16m_3v3_n",         0, Pins("N5"), IOStandard("lvttl")),
+    ("irq2_3v3_n",         0, Pins("U1"), IOStandard("lvttl")),
+    ("irq3_3v3_n",         0, Pins("V1"), IOStandard("lvttl")),
+    ("rbv_3v3_n",          0, Pins("R3"), IOStandard("lvttl")),
+
 ]
 
 # Connectors ---------------------------------------------------------------------------------------

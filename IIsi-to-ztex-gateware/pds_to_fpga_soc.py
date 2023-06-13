@@ -240,7 +240,7 @@ class IIsiFPGA(SoCCore):
 
         # notsimul to signify we're making a real bitstream
         # notsimul == False only to produce a verilog implementation to simulate the bus side of things
-        notsimul = False
+        notsimul = True
         if (notsimul):
             avail_sdram = 0
             self.submodules.ddrphy = s7ddrphy.A7DDRPHY(platform.request("ddram"),

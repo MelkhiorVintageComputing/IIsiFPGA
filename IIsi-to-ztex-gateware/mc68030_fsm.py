@@ -187,8 +187,72 @@ class MC68030_SYNC_FSM(Module):
                       wb_write.cyc.eq(1),
                       wb_write.stb.eq(1),
                       wb_write.we.eq(1),
-                      # assumes SIZ & A_i[0:2] are both 0 (longword, aligned), checkme
-                      wb_write.sel.eq(0xF),
+                      Case(SIZ_i_n, { # CHECKME, also endianness for SEL below
+                          0x0: [ # long word
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0xF),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0xE),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0xC),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                          0x1: [ # byte
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0x1),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0x2),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0x4),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                          0x2: [ # word
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0x3),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0x6),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0xC),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                          0x3: [ # 3-bytes
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0x7),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0xE),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0xC),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                      }),
                       wb_write.adr.eq(Cat(A_latch[2:24], Signal(8, reset = 0x00))),
                       wb_write.dat_w.eq(D_i), # data available this cycle (and later)
                       STERM_o_n.eq(1), # wait

@@ -187,18 +187,24 @@ class MC68030_SYNC_FSM(Module):
         # address rewriting (mem)
         mem_processed_ad = Signal(32)
         self.comb += [
-            #mem_processed_ad[0:27].eq(A_i[0:27]),
-            #mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
-            mem_processed_ad[0:28].eq(A_i[0:28]),
-            mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
+            mem_processed_ad[0:27].eq(A_i[0:27]),
+            mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
+        ]
+
+        # address rewriting (superslot)
+        superslot_processed_ad = Signal(32)
+        self.comb += [
+            superslot_processed_ad[0:28].eq(A_i[0:28]),
+            superslot_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
         ]
 
         # selection logic
         my_slot_space = Signal()
         self.comb += [ my_slot_space.eq((A_i[24:32] == 0xf9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ]
         my_mem_space = Signal()
-        #self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x08 >> 3 == 0x01
-        self.comb += [ my_mem_space.eq((A_i[28:32] == 0x9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x90 >> 4 == 0x9
+        self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x08 >> 3 == 0x01
+        my_superslot_space = Signal()
+        self.comb += [ my_superslot_space.eq((A_i[28:32] == 0x9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x90 >> 4 == 0x9
         my_device_space = Signal()
 
         # more selection logic
@@ -208,10 +214,12 @@ class MC68030_SYNC_FSM(Module):
                processed_ad.eq(slot_processed_ad),
             ).Elif(my_mem_space,
                    processed_ad.eq(mem_processed_ad),
+            ).Elif(my_superslot_space,
+                   processed_ad.eq(superslot_processed_ad),
             ).Else(
                 processed_ad.eq(0),
             ),
-            my_device_space.eq(my_slot_space | my_mem_space),
+            my_device_space.eq(my_slot_space | my_mem_space | my_superslot_space),
         ]
 
         self.submodules.slave_fsm = slave_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
@@ -272,7 +280,7 @@ class MC68030_SYNC_FSM(Module):
                       wb_write.we.eq(1),
                       Case(SIZ_i, { # CHECKME, also endianness for SEL below
                           0x0: [ # long word
-                              Case(A_latch[0:1], {
+                              Case(A_latch[0:2], {
                                   0x0: [
                                       wb_write.sel.eq(0xF),
                                   ],
@@ -288,7 +296,7 @@ class MC68030_SYNC_FSM(Module):
                               }),
                           ],
                           0x1: [ # byte
-                              Case(A_latch[0:1], {
+                              Case(A_latch[0:2], {
                                   0x0: [
                                       wb_write.sel.eq(0x1),
                                   ],
@@ -304,7 +312,7 @@ class MC68030_SYNC_FSM(Module):
                               }),
                           ],
                           0x2: [ # word
-                              Case(A_latch[0:1], {
+                              Case(A_latch[0:2], {
                                   0x0: [
                                       wb_write.sel.eq(0x3),
                                   ],
@@ -320,7 +328,7 @@ class MC68030_SYNC_FSM(Module):
                               }),
                           ],
                           0x3: [ # 3-bytes
-                              Case(A_latch[0:1], {
+                              Case(A_latch[0:2], {
                                   0x0: [
                                       wb_write.sel.eq(0x7),
                                   ],

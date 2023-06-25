@@ -14,7 +14,7 @@ from litex.soc.interconnect import wishbone
 from litex.soc.cores.clock import *
 from litex.soc.cores.led import LedChaser
 import ztex213_pds
-#import nubus_to_fpga_export
+import nubus_to_fpga_export
 
 from litedram.modules import MT41J128M16
 from litedram.phy import s7ddrphy
@@ -71,8 +71,11 @@ class _CRG(Module):
             assert(false)
         self.cd_cpu.clk = clk_cpu
         rst_cpu_n = platform.request("reset_3v3_n")
-        self.comb += self.cd_cpu.rst.eq(~rst_cpu_n)
+        #####################################################self.comb += self.cd_cpu.rst.eq(~rst_cpu_n)
         platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports clk_3v3_n]") # fixme: pretend it's 25 MHz for now
+        
+        #led = platform.request("user_led", 0)
+        #self.comb += [ led.eq(~rst_cpu_n) ]
 
         num_adv = 0
         num_clk = 0
@@ -226,7 +229,7 @@ class IIsiFPGA(SoCCore):
                     platform.add_platform_command(fix_line)
 
         rom_file = "rom_{}.bin".format(version.replace(".", "_"))
-        rom_data = soc_core.get_mem_data(filename_or_regions=rom_file, endianness="little") # "big"
+        rom_data = soc_core.get_mem_data(filename_or_regions=rom_file, endianness="little")
         # rom = Array(rom_data)
         #print("\n****************************************\n")
         #for i in range(len(rom)):
@@ -286,11 +289,17 @@ class IIsiFPGA(SoCCore):
         # not needed, FPGA initializes fast enough, works on cold boots
         #hold_reset_ctr = Signal(30, reset=960000000)
         hold_reset_ctr = Signal(3, reset=7)
-        self.sync.native += If(hold_reset_ctr>0, hold_reset_ctr.eq(hold_reset_ctr - 1))
+        #hold_reset_ctr = Signal(30, reset=96000000) #two seconds
+        self.sync.native += If((hold_reset_ctr>0), hold_reset_ctr.eq(hold_reset_ctr - 1))
         hold_reset = Signal()
-        self.comb += hold_reset.eq(~(hold_reset_ctr == 0))
+        self.comb += hold_reset.eq(~(hold_reset_ctr == 0) & self.crg.locked)
         halt_n = platform.request("halt_3v3_n")
-        self.comb += [ halt_n.eq(~hold_reset & self.crg.locked) ] # release the 68030 only when everything's fine
+        #self.comb += [ halt_n.eq(~hold_reset) ] # release the 68030 only when everything's fine
+        self.comb += [ halt_n.eq(1) ]
+
+        #led = platform.request("led0") # pmod56- / irq2, external led for now
+        #self.comb += [ led.eq(halt_n) ]
+        
         #pad_nubus_oe = platform.request("nubus_oe")
         #self.comb += pad_nubus_oe.eq(hold_reset)
         #pad_user_led_0 = platform.request("user_led", 0)
@@ -379,12 +388,12 @@ def main():
     # should be split per-device (and without base) to still work if we have identical devices in different configurations on multiple boards
     # now it is split
 
-    #csr_contents_dict = nubus_to_fpga_export.get_csr_header_split(
-    #    regions   = soc.csr_regions,
-    #    constants = soc.constants,
-    #    csr_base  = soc.mem_regions['csr'].origin)
-    #for name in csr_contents_dict.keys():
-    #    write_to_file(os.path.join("iisifpga_csr_{}.h".format(name)), csr_contents_dict[name])
+    csr_contents_dict = nubus_to_fpga_export.get_csr_header_split(
+        regions   = soc.csr_regions,
+        constants = soc.constants,
+        csr_base  = soc.mem_regions['csr'].origin)
+    for name in csr_contents_dict.keys():
+        write_to_file(os.path.join("iisifpga_csr_{}.h".format(name)), csr_contents_dict[name])
     
 if __name__ == "__main__":
     main()

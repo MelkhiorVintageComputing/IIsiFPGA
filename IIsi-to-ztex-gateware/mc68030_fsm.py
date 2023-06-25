@@ -173,167 +173,183 @@ class MC68030_SYNC_FSM(Module):
         #self.specials += Tristate(CACHE, CACHE_o, CACHE_oe, CACHE_i)
         self.comb += [ CACHE.eq(CACHE_o) ]
 
-        # address rewriting
-        processed_ad = Signal(32)
+        # address rewriting (slot)
+        slot_processed_ad = Signal(32)
         self.comb += [
-            processed_ad[0:23].eq(A_i[0:23]),
+            slot_processed_ad[0:23].eq(A_i[0:23]),
             If(~A_i[23], # first 8 MiB of slot space: remap to last 8 Mib of SDRAM
-               processed_ad[23:32].eq(Cat(Signal(1, reset=1), Signal(8, reset = 0x8f))), # 0x8f8...
+               slot_processed_ad[23:32].eq(Cat(Signal(1, reset=1), Signal(8, reset = 0x8f))), # 0x8f8...
             ).Else( # second 8 MiB: direct access
-                processed_ad[23:32].eq((Cat(Signal(1, reset=1), Signal(8, reset = 0xf0)))), # 24 bits, a.k.a 22 bits of words
+                slot_processed_ad[23:32].eq((Cat(Signal(1, reset=1), Signal(8, reset = 0xf0)))), # 24 bits, a.k.a 22 bits of words
             )
         ]
 
-        my_space = Signal()
-        self.comb += [ my_space.eq((A_i[24:32] == 0xf9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # checkme
-        #self.comb += [ my_space.eq(0) ]
+        # address rewriting (mem)
+        mem_processed_ad = Signal(32)
+        self.comb += [
+            #mem_processed_ad[0:27].eq(A_i[0:27]),
+            #mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
+            mem_processed_ad[0:28].eq(A_i[0:28]),
+            mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
+        ]
 
-        if (False):
-            led = platform.request("user_led", 0)
+        # selection logic
+        my_slot_space = Signal()
+        self.comb += [ my_slot_space.eq((A_i[24:32] == 0xf9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ]
+        my_mem_space = Signal()
+        #self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x08 >> 3 == 0x01
+        self.comb += [ my_mem_space.eq((A_i[28:32] == 0x9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x90 >> 4 == 0x9
+        my_device_space = Signal()
 
-            self.comb += [
-                led.eq(CIOUT_i_n ^ AS_i_n ^ SIZ_i[0] ^ SIZ_i[1] ^ CBREQ_i_n ^ DS_i_n ^ RW_i_n ^ FC_i[0] ^ FC_i[1] ^ FC_i[2]
-                        ^ D_i[0] ^ D_i[1] ^ D_i[2] ^ D_i[3] ^ D_i[4] ^ D_i[5] ^ D_i[6] ^ D_i[7] ^ D_i[8] ^ D_i[9] ^ D_i[10] ^ D_i[11] ^ D_i[12] ^ D_i[13] ^ D_i[14] ^ D_i[15] ^ D_i[16] ^ D_i[17] ^ D_i[18] ^ D_i[19] ^ D_i[20] ^ D_i[21] ^ D_i[22] ^ D_i[23] ^ D_i[24] ^ D_i[25] ^ D_i[26] ^ D_i[27] ^ D_i[28] ^ D_i[29] ^ D_i[30] ^ D_i[31]
-                        ^ A_i[0] ^ A_i[1] ^ A_i[2] ^ A_i[3] ^ A_i[4] ^ A_i[5] ^ A_i[6] ^ A_i[7] ^ A_i[8] ^ A_i[9] ^ A_i[10] ^ A_i[11] ^ A_i[12] ^ A_i[13] ^ A_i[14] ^ A_i[15] ^ A_i[16] ^ A_i[17] ^ A_i[18] ^ A_i[19] ^ A_i[20] ^ A_i[21] ^ A_i[22] ^ A_i[23] ^ A_i[24] ^ A_i[25] ^ A_i[26] ^ A_i[27] ^ A_i[28] ^ A_i[29] ^ A_i[30] ^ A_i[31]
-                ),
-            ]
-        else:
-            self.submodules.slave_fsm = slave_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
+        # more selection logic
+        processed_ad = Signal(32)
+        self.comb += [
+            If(my_slot_space,
+               processed_ad.eq(slot_processed_ad),
+            ).Elif(my_mem_space,
+                   processed_ad.eq(mem_processed_ad),
+            ).Else(
+                processed_ad.eq(0),
+            ),
+            my_device_space.eq(my_slot_space | my_mem_space),
+        ]
+
+        self.submodules.slave_fsm = slave_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
             
-            led = platform.request("user_led", 0)
-            self.comb += [ led.eq(~slave_fsm.ongoing("Idle")), ]
-            
-            slave_fsm.act("Reset",
-                          NextState("Idle")
-            )
-            slave_fsm.act("Idle",
-                          STERM_oe.eq(0),
-                          D_oe.eq(0),
-                          If((my_space & ~AS_i_n & RW_i_n), # Read
-                             wb_read.cyc.eq(1),
-                             wb_read.stb.eq(1),
-                             wb_read.we.eq(0),
-                             wb_read.sel.eq(0xf), # always read 32-bits for cache
-                             wb_read.adr.eq(processed_ad[2:32]),
+        led = platform.request("user_led", 0)
+        self.comb += [ led.eq(~slave_fsm.ongoing("Idle")), ]
+        
+        slave_fsm.act("Reset",
+                      NextState("Idle")
+        )
+        slave_fsm.act("Idle",
+                      STERM_oe.eq(0),
+                      D_oe.eq(0),
+                      If((my_device_space & ~AS_i_n & RW_i_n), # Read
+                         wb_read.cyc.eq(1),
+                         wb_read.stb.eq(1),
+                         wb_read.we.eq(0),
+                         wb_read.sel.eq(0xf), # always read 32-bits for cache
+                         wb_read.adr.eq(processed_ad[2:32]),
+                         NextValue(A_latch, processed_ad),
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(1), # insert delay
+                         NextState("Read"),
+                      ).Elif((my_device_space & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
                              NextValue(A_latch, processed_ad),
                              STERM_oe.eq(1), # enable STERM
                              STERM_o_n.eq(1), # insert delay
-                             NextState("Read"),
-                          ).Elif((my_space & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
-                                 NextValue(A_latch, processed_ad),
-                                 STERM_oe.eq(1), # enable STERM
-                                 STERM_o_n.eq(1), # insert delay
-                                 NextState("Write"),
-                          )
-            )
-            slave_fsm.act("Read",
-                          wb_read.cyc.eq(1),
-                          wb_read.stb.eq(1),
-                          wb_read.we.eq(0),
-                          wb_read.sel.eq(0xf),
-                          wb_read.adr.eq(A_latch[2:32]),
-                          STERM_oe.eq(1), # enable STERM
-                          STERM_o_n.eq(1), # insert delay
-                          If(wb_read.ack,
-                             NextValue(D_latch, wb_read.dat_r),
-                             D_oe.eq(1),
-                             D_rev_o.eq(wb_read.dat_r),
-                             STERM_oe.eq(1), # enable STERM
-                             STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
-                             NextState("FinishRead"),
-                          )
-            )
-            slave_fsm.act("FinishRead",
-                          D_oe.eq(1), # keep data one more cycle
-                          D_rev_o.eq(D_latch),
-                          STERM_oe.eq(1), # enable STERM
-                          STERM_o_n.eq(0), # ACK finished after 1 cycle
-                          NextState("Idle"),
-            )
-            slave_fsm.act("Write",
-                          wb_write.cyc.eq(1),
-                          wb_write.stb.eq(1),
-                          wb_write.we.eq(1),
-                          Case(SIZ_i, { # CHECKME, also endianness for SEL below
-                              0x0: [ # long word
-                                  Case(A_latch[0:1], {
-                                      0x0: [
-                                          wb_write.sel.eq(0xF),
-                                      ],
-                                      0x1: [
-                                          wb_write.sel.eq(0xE),
-                                      ],
-                                      0x2: [
-                                          wb_write.sel.eq(0xC),
-                                      ],
-                                      0x3: [
-                                          wb_write.sel.eq(0x8),
-                                      ],
-                                  }),
-                              ],
-                              0x1: [ # byte
-                                  Case(A_latch[0:1], {
-                                      0x0: [
-                                          wb_write.sel.eq(0x1),
-                                      ],
-                                      0x1: [
-                                          wb_write.sel.eq(0x2),
-                                      ],
-                                      0x2: [
-                                          wb_write.sel.eq(0x4),
-                                      ],
-                                      0x3: [
-                                          wb_write.sel.eq(0x8),
-                                      ],
-                                  }),
-                              ],
-                              0x2: [ # word
-                                  Case(A_latch[0:1], {
-                                      0x0: [
-                                          wb_write.sel.eq(0x3),
-                                      ],
-                                      0x1: [
-                                          wb_write.sel.eq(0x6),
-                                      ],
-                                      0x2: [
-                                          wb_write.sel.eq(0xC),
-                                      ],
-                                      0x3: [
-                                          wb_write.sel.eq(0x8),
-                                      ],
-                                  }),
-                              ],
-                              0x3: [ # 3-bytes
-                                  Case(A_latch[0:1], {
-                                      0x0: [
-                                          wb_write.sel.eq(0x7),
-                                      ],
-                                      0x1: [
-                                          wb_write.sel.eq(0xE),
-                                      ],
-                                      0x2: [
-                                          wb_write.sel.eq(0xC),
-                                      ],
-                                      0x3: [
-                                          wb_write.sel.eq(0x8),
-                                      ],
-                                  }),
-                              ],
-                          }),
-                          wb_write.adr.eq(A_latch[2:32]),
-                          wb_write.dat_w.eq(D_rev_i), # data available this cycle (and later)
-                          STERM_oe.eq(1), # enable STERM
-                          STERM_o_n.eq(1), # wait
-                          If(wb_write.ack,
-                             STERM_oe.eq(1), # enable STERM
-                             STERM_o_n.eq(0),
-                             NextState("FinishWrite"),
-                          )
-            )
-            slave_fsm.act("FinishWrite", # unnecessary ?
-                          STERM_oe.eq(1), # enable STERM
-                          STERM_o_n.eq(1), # finish ACK after one cycle
-                          NextState("Idle"),
-            )
-
+                             NextState("Write"),
+                      )
+        )
+        slave_fsm.act("Read",
+                      wb_read.cyc.eq(1),
+                      wb_read.stb.eq(1),
+                      wb_read.we.eq(0),
+                      wb_read.sel.eq(0xf),
+                      wb_read.adr.eq(A_latch[2:32]),
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # insert delay
+                      If(wb_read.ack,
+                         NextValue(D_latch, wb_read.dat_r),
+                         D_oe.eq(1),
+                         D_rev_o.eq(wb_read.dat_r),
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                         NextState("FinishRead"),
+                      )
+        )
+        slave_fsm.act("FinishRead",
+                      D_oe.eq(1), # keep data one more cycle
+                      D_rev_o.eq(D_latch),
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(0), # ACK finished after 1 cycle
+                      NextState("Idle"),
+        )
+        slave_fsm.act("Write",
+                      wb_write.cyc.eq(1),
+                      wb_write.stb.eq(1),
+                      wb_write.we.eq(1),
+                      Case(SIZ_i, { # CHECKME, also endianness for SEL below
+                          0x0: [ # long word
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0xF),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0xE),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0xC),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                          0x1: [ # byte
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0x1),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0x2),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0x4),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                          0x2: [ # word
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0x3),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0x6),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0xC),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                          0x3: [ # 3-bytes
+                              Case(A_latch[0:1], {
+                                  0x0: [
+                                      wb_write.sel.eq(0x7),
+                                  ],
+                                  0x1: [
+                                      wb_write.sel.eq(0xE),
+                                  ],
+                                  0x2: [
+                                      wb_write.sel.eq(0xC),
+                                  ],
+                                  0x3: [
+                                      wb_write.sel.eq(0x8),
+                                  ],
+                              }),
+                          ],
+                      }),
+                      wb_write.adr.eq(A_latch[2:32]),
+                      wb_write.dat_w.eq(D_rev_i), # data available this cycle (and later)
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # wait
+                      If(wb_write.ack,
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(0),
+                         NextState("FinishWrite"),
+                      )
+        )
+        slave_fsm.act("FinishWrite", # unnecessary ?
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # finish ACK after one cycle
+                      NextState("Idle"),
+        )
+        
         # 

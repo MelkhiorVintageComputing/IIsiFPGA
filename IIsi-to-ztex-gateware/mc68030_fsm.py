@@ -222,6 +222,26 @@ class MC68030_SYNC_FSM(Module):
             my_device_space.eq(my_slot_space | my_mem_space | my_superslot_space),
         ]
 
+        # write FIFO to speed up bus turnaround on CPU side
+        write_fifo_layout = [
+            ("adr", 32),
+            ("data", 32),
+            ("sel", 4),
+        ]
+        self.submodules.write_fifo = write_fifo = ClockDomainsRenamer({"read": "sys", "write": "cpu"})(AsyncFIFOBuffered(width=layout_len(write_fifo_layout), depth=16))
+        write_fifo_dout = Record(write_fifo_layout)
+        self.comb += write_fifo_dout.raw_bits().eq(write_fifo.dout)
+        write_fifo_din = Record(write_fifo_layout)
+        self.comb += write_fifo.din.eq(write_fifo_din.raw_bits())
+        # for storing SEL
+        current_sel = Signal(4)
+
+        ### back-pressure from sys to cpu clock domain
+        ##self.submodules.write_fifo_readable_sync = BusSynchronizer(width = 1, idomain = "sys", odomain = "cpu")
+        ##write_fifo_readable_in_cpu = Signal()
+        ##self.comb += self.write_fifo_readable_sync.i.eq(self.write_fifo.readable)
+        ##self.comb += write_fifo_readable_in_cpu.eq(self.write_fifo_readable_sync.o)
+
         self.submodules.slave_fsm = slave_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
             
         led = platform.request("user_led", 0)
@@ -234,19 +254,87 @@ class MC68030_SYNC_FSM(Module):
                       STERM_oe.eq(0),
                       D_oe.eq(0),
                       If((my_device_space & ~AS_i_n & RW_i_n), # Read
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(1), # insert delay
+                         #If(~write_fifo_readable_in_cpu, # previous write(s) done
                          wb_read.cyc.eq(1),
                          wb_read.stb.eq(1),
                          wb_read.we.eq(0),
                          wb_read.sel.eq(0xf), # always read 32-bits for cache
                          wb_read.adr.eq(processed_ad[2:32]),
                          NextValue(A_latch, processed_ad),
-                         STERM_oe.eq(1), # enable STERM
-                         STERM_o_n.eq(1), # insert delay
                          NextState("Read"),
+                         #),
                       ).Elif((my_device_space & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
-                             NextValue(A_latch, processed_ad),
                              STERM_oe.eq(1), # enable STERM
                              STERM_o_n.eq(1), # insert delay
+                             NextValue(A_latch, processed_ad),
+                             Case(SIZ_i, { # CHECKME, also endianness for SEL below
+                                 0x0: [ # long word
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0xF),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0xE),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0xC),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x8),
+                                         ],
+                                     }),
+                                 ],
+                                 0x1: [ # byte
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0x1),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0x2),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0x4),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x8),
+                                         ],
+                                     }),
+                                 ],
+                                 0x2: [ # word
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0x3),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0x6),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0xC),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x8),
+                                         ],
+                                     }),
+                                 ],
+                                 0x3: [ # 3-bytes
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0x7),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0xE),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0xC),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x8),
+                                         ],
+                                     }),
+                                 ],
+                             }),
                              NextState("Write"),
                       )
         )
@@ -275,82 +363,12 @@ class MC68030_SYNC_FSM(Module):
                       NextState("Idle"),
         )
         slave_fsm.act("Write",
-                      wb_write.cyc.eq(1),
-                      wb_write.stb.eq(1),
-                      wb_write.we.eq(1),
-                      Case(SIZ_i, { # CHECKME, also endianness for SEL below
-                          0x0: [ # long word
-                              Case(A_latch[0:2], {
-                                  0x0: [
-                                      wb_write.sel.eq(0xF),
-                                  ],
-                                  0x1: [
-                                      wb_write.sel.eq(0xE),
-                                  ],
-                                  0x2: [
-                                      wb_write.sel.eq(0xC),
-                                  ],
-                                  0x3: [
-                                      wb_write.sel.eq(0x8),
-                                  ],
-                              }),
-                          ],
-                          0x1: [ # byte
-                              Case(A_latch[0:2], {
-                                  0x0: [
-                                      wb_write.sel.eq(0x1),
-                                  ],
-                                  0x1: [
-                                      wb_write.sel.eq(0x2),
-                                  ],
-                                  0x2: [
-                                      wb_write.sel.eq(0x4),
-                                  ],
-                                  0x3: [
-                                      wb_write.sel.eq(0x8),
-                                  ],
-                              }),
-                          ],
-                          0x2: [ # word
-                              Case(A_latch[0:2], {
-                                  0x0: [
-                                      wb_write.sel.eq(0x3),
-                                  ],
-                                  0x1: [
-                                      wb_write.sel.eq(0x6),
-                                  ],
-                                  0x2: [
-                                      wb_write.sel.eq(0xC),
-                                  ],
-                                  0x3: [
-                                      wb_write.sel.eq(0x8),
-                                  ],
-                              }),
-                          ],
-                          0x3: [ # 3-bytes
-                              Case(A_latch[0:2], {
-                                  0x0: [
-                                      wb_write.sel.eq(0x7),
-                                  ],
-                                  0x1: [
-                                      wb_write.sel.eq(0xE),
-                                  ],
-                                  0x2: [
-                                      wb_write.sel.eq(0xC),
-                                  ],
-                                  0x3: [
-                                      wb_write.sel.eq(0x8),
-                                  ],
-                              }),
-                          ],
-                      }),
-                      wb_write.adr.eq(A_latch[2:32]),
-                      wb_write.dat_w.eq(D_rev_i), # data available this cycle (and later)
                       STERM_oe.eq(1), # enable STERM
                       STERM_o_n.eq(1), # wait
-                      If(wb_write.ack,
+                      If(write_fifo.writable,
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(0),
+                         write_fifo.we.eq(1),
                          NextState("FinishWrite"),
                       )
         )
@@ -359,5 +377,20 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(1), # finish ACK after one cycle
                       NextState("Idle"),
         )
+        
+        # connect the write FIFO inputs
+        self.comb += [ write_fifo_din.adr.eq(A_latch), # recorded
+                       write_fifo_din.data.eq(D_rev_i), # live
+                       write_fifo_din.sel.eq(current_sel), # recorded
+        ]
+        # deal with emptying the Write FIFO to the write WB
+        self.comb += [ wb_write.cyc.eq(write_fifo.readable),
+                       wb_write.stb.eq(write_fifo.readable),
+                       wb_write.we.eq(1),
+                       wb_write.adr.eq(write_fifo_dout.adr[2:32]),
+                       wb_write.dat_w.eq(write_fifo_dout.data),
+                       wb_write.sel.eq(write_fifo_dout.sel),
+                       write_fifo.re.eq(wb_write.ack),
+        ]
         
         # 

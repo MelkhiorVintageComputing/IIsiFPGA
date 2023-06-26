@@ -318,14 +318,15 @@ class IIsiFPGA(SoCCore):
         self.bus.add_master(name="PDSBridgeToWishbone", master=wishbone_master_sys)
         
         wishbone_writemaster_sys = wishbone.Interface(data_width=self.bus.data_width)
-        self.submodules.wishbone_writemaster_pds = WishboneDomainCrossingMaster(platform=self.platform, slave=wishbone_writemaster_sys, cd_master="cpu", cd_slave="sys")
+        #self.submodules.wishbone_writemaster_pds = WishboneDomainCrossingMaster(platform=self.platform, slave=wishbone_writemaster_sys, cd_master="cpu", cd_slave="sys")
         self.bus.add_master(name="PDSBridgeToWishbone_Write", master=wishbone_writemaster_sys)
         
         print(f"Adding the PDS bridge")
         import mc68030_fsm
         self.submodules.mc68030busbridge = mc68030_fsm.MC68030_SYNC_FSM(soc=self,
                                                                         wb_read=self.wishbone_master_pds,
-                                                                        wb_write=self.wishbone_writemaster_pds, # somewhat redundant to use two interface, but we'll be moving to FIFO eventually
+                                                                        #wb_write=self.wishbone_writemaster_pds,
+                                                                        wb_write=wishbone_writemaster_sys,
                                                                         cd_cpu="cpu")
         if (goblin):
             if (not use_goblin_alt):

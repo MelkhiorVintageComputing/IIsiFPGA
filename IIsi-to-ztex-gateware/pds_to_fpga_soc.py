@@ -71,7 +71,7 @@ class _CRG(Module):
             assert(false)
         self.cd_cpu.clk = clk_cpu
         rst_cpu_n = platform.request("reset_3v3_n")
-        #####################################################self.comb += self.cd_cpu.rst.eq(~rst_cpu_n)
+        self.comb += self.cd_cpu.rst.eq(~rst_cpu_n)
         platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports clk_3v3_n]") # fixme: pretend it's 25 MHz for now
         
         #led = platform.request("user_led", 0)
@@ -256,9 +256,9 @@ class IIsiFPGA(SoCCore):
                            l2_cache_size = 0,
             )
             avail_sdram = self.bus.regions["main_ram"].size
-            #from sdram_init import DDR3FBInit
-            #self.submodules.sdram_init = DDR3FBInit(sys_clk_freq=sys_clk_freq, bitslip=1, delay=25)
-            #self.bus.add_master(name="DDR3Init", master=self.sdram_init.bus)
+            from sdram_init import DDR3FBInit
+            self.submodules.sdram_init = DDR3FBInit(sys_clk_freq=sys_clk_freq, bitslip=1, delay=25)
+            self.bus.add_master(name="DDR3Init", master=self.sdram_init.bus)
         else:
             avail_sdram = 256 * 1024 * 1024
             #self.add_ram("ram", origin=0x8f800000, size=2**16, mode="rw")
@@ -291,11 +291,13 @@ class IIsiFPGA(SoCCore):
         hold_reset_ctr = Signal(3, reset=7)
         #hold_reset_ctr = Signal(30, reset=96000000) #two seconds
         self.sync.native += If((hold_reset_ctr>0), hold_reset_ctr.eq(hold_reset_ctr - 1))
+        ###good_to_go = Signal()
+        ###self.comb += [ good_to_go.eq((hold_reset_ctr == 0) & self.crg.locked & self.sdram_init.done) ]
         hold_reset = Signal()
-        self.comb += hold_reset.eq(~(hold_reset_ctr == 0) & self.crg.locked)
+        self.comb += [ hold_reset.eq(~(hold_reset_ctr == 0) | ~self.crg.locked | ~self.sdram_init.done) ]
         halt_n = platform.request("halt_3v3_n")
-        #self.comb += [ halt_n.eq(~hold_reset) ] # release the 68030 only when everything's fine
-        self.comb += [ halt_n.eq(1) ]
+        self.comb += [ halt_n.eq(~hold_reset) ] # release the 68030 only when everything's fine
+        #self.comb += [ halt_n.eq(1) ] # release the 68030 only when everything's fine
 
         #led = platform.request("led0") # pmod56- / irq2, external led for now
         #self.comb += [ led.eq(halt_n) ]

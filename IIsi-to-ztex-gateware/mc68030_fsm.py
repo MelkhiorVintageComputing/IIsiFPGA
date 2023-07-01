@@ -276,7 +276,6 @@ class MC68030_SYNC_FSM(Module):
         ## self.dram_native_r.rdata.data <-
         burst_counter = Signal(2)
         burst_buffer = Signal(128)
-
         
         led = platform.request("user_led", 0)
         saw_cbreq = Signal()
@@ -288,14 +287,14 @@ class MC68030_SYNC_FSM(Module):
         slave_fsm.act("Idle",
                       STERM_oe.eq(0),
                       D_oe.eq(0),
-                      If((my_mem_space | my_superslot_space) & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
+                      If(my_mem_space & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
                          CBACK_oe.eq(1),
                          CBACK_o_n.eq(1),
+                         dram_native_r.cmd.valid.eq(1),
+                         NextValue(burst_counter, processed_ad[2:4]),
                          If(dram_native_r.cmd.ready, # interface available
-                            burst_counter.eq(processed_ad[2:4]),
-                            dram_native_r.cmd.valid.eq(1),
                             NextState("BurstReadWait"),
                          ),
                          NextValue(saw_cbreq, 1), ###############################"
@@ -443,20 +442,20 @@ class MC68030_SYNC_FSM(Module):
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
                       D_oe.eq(1),
+                      dram_native_r.rdata.ready.eq(1),
+                      Case(burst_counter, {
+                          0x0: [D_rev_o.eq(dram_native_r.rdata.data[ 0: 32]), ],
+                          0x1: [D_rev_o.eq(dram_native_r.rdata.data[32: 64]), ],
+                          0x2: [D_rev_o.eq(dram_native_r.rdata.data[64: 96]), ],
+                          0x3: [D_rev_o.eq(dram_native_r.rdata.data[96:128]), ],
+                      }),
+                      NextValue(burst_buffer, dram_native_r.rdata.data),
                       If(dram_native_r.rdata.valid,
-                         dram_native_r.rdata.ready.eq(1),
-                         NextValue(burst_buffer, dram_native_r.rdata.data),
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                          CBACK_oe.eq(1), # burst
                          CBACK_o_n.eq(0), # burst cycle 0
                          NextValue(burst_counter, burst_counter + 1),
-                         Case(burst_counter, {
-                             0x0: [D_rev_o.eq(dram_native_r.rdata.data[ 0: 32]), ],
-                             0x1: [D_rev_o.eq(dram_native_r.rdata.data[32: 64]), ],
-                             0x2: [D_rev_o.eq(dram_native_r.rdata.data[64: 96]), ],
-                             0x3: [D_rev_o.eq(dram_native_r.rdata.data[96:128]), ],
-                         }),
                          NextState("Burst1"),
                       ),
         )
@@ -465,6 +464,7 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(0), # burst cycle 1
+                      D_oe.eq(1),
                       NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
                           0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
@@ -479,6 +479,7 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(0), # burst cycle 2
+                      D_oe.eq(1),
                       NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
                           0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
@@ -493,6 +494,7 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(1), # burst cycle 3, last one, no CBACK
+                      D_oe.eq(1),
                       #NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
                           0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],

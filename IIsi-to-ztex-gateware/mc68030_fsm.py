@@ -7,7 +7,7 @@ import litex
 from litex.soc.interconnect import wishbone
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, cd_cpu="cpu"):
+    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu"):
 
         platform = soc.platform
         
@@ -213,6 +213,7 @@ class MC68030_SYNC_FSM(Module):
         my_superslot_space = Signal()
         self.comb += [ my_superslot_space.eq((A_i[28:32] == 0x9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x90 >> 4 == 0x9
         my_device_space = Signal()
+        self.comb += [ CACHE_o.eq(my_mem_space), ]
 
         # more selection logic
         processed_ad = Signal(32)
@@ -255,14 +256,31 @@ class MC68030_SYNC_FSM(Module):
         #led = platform.request("user_led", 0)
         #self.comb += [ led.eq(~slave_fsm.ongoing("Idle")), ]
 
-        led = platform.request("user_led", 0)
-        my_mem_space_reg = Signal()
-        self.sync.cpu += [
-            If(my_mem_space & ~AS_i_n,
-               my_mem_space_reg.eq(1),
-            ),
+        #led = platform.request("user_led", 0)
+        #my_mem_space_reg = Signal()
+        #self.sync.cpu += [
+        #    If(my_mem_space & ~AS_i_n,
+        #       my_mem_space_reg.eq(1),
+        #    ),
+        #]
+        #self.comb += [ led.eq(my_mem_space_reg), ]
+
+        ### dram_native_r
+        self.comb += [
+            dram_native_r.cmd.we.eq(0), # never write
+            dram_native_r.cmd.addr.eq(mem_processed_ad[4:]), # assume 128 bits (16 bytes)
         ]
-        self.comb += [ led.eq(my_mem_space_reg), ]
+        ## dram_native_r.cmd.valid ->
+        ## dram_native_r.cmd.ready <-
+        ## dram_native_r.rdata.valid <-
+        ## self.dram_native_r.rdata.data <-
+        burst_counter = Signal(2)
+        burst_buffer = Signal(128)
+
+        
+        led = platform.request("user_led", 0)
+        saw_cbreq = Signal()
+        self.comb += [ led.eq(saw_cbreq), ] 
         
         slave_fsm.act("Reset",
                       NextState("Idle")
@@ -270,7 +288,18 @@ class MC68030_SYNC_FSM(Module):
         slave_fsm.act("Idle",
                       STERM_oe.eq(0),
                       D_oe.eq(0),
-                      If((my_device_space & ~AS_i_n & RW_i_n), # Read
+                      If((my_mem_space | my_superslot_space) & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(1), # insert delay
+                         CBACK_oe.eq(1),
+                         CBACK_o_n.eq(1),
+                         If(dram_native_r.cmd.ready, # interface available
+                            burst_counter.eq(processed_ad[2:4]),
+                            dram_native_r.cmd.valid.eq(1),
+                            NextState("BurstReadWait"),
+                         ),
+                         NextValue(saw_cbreq, 1), ###############################"
+                      ).Elif((my_device_space & ~AS_i_n & RW_i_n), # Read
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
                          CBACK_oe.eq(1),
@@ -384,7 +413,7 @@ class MC68030_SYNC_FSM(Module):
                       D_oe.eq(1), # keep data one more cycle
                       D_rev_o.eq(D_latch),
                       STERM_oe.eq(1), # enable STERM
-                      STERM_o_n.eq(0), # ACK finished after 1 cycle
+                      STERM_o_n.eq(1), # ACK finished after 1 cycle
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
                       NextState("Idle"),
@@ -408,6 +437,86 @@ class MC68030_SYNC_FSM(Module):
                       CBACK_o_n.eq(1),
                       NextState("Idle"),
         )
+        slave_fsm.act("BurstReadWait",
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # finish ACK after one cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(1),
+                      D_oe.eq(1),
+                      If(dram_native_r.rdata.valid,
+                         dram_native_r.rdata.ready.eq(1),
+                         NextValue(burst_buffer, dram_native_r.rdata.data),
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                         CBACK_oe.eq(1), # burst
+                         CBACK_o_n.eq(0), # burst cycle 0
+                         NextValue(burst_counter, burst_counter + 1),
+                         Case(burst_counter, {
+                             0x0: [D_rev_o.eq(dram_native_r.rdata.data[ 0: 32]), ],
+                             0x1: [D_rev_o.eq(dram_native_r.rdata.data[32: 64]), ],
+                             0x2: [D_rev_o.eq(dram_native_r.rdata.data[64: 96]), ],
+                             0x3: [D_rev_o.eq(dram_native_r.rdata.data[96:128]), ],
+                         }),
+                         NextState("Burst1"),
+                      ),
+        )
+        slave_fsm.act("Burst1",
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                      CBACK_oe.eq(1), # burst
+                      CBACK_o_n.eq(0), # burst cycle 1
+                      NextValue(burst_counter, burst_counter + 1),
+                      Case(burst_counter, {
+                          0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
+                          0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
+                          0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
+                          0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
+                      }),
+                      NextState("Burst2"),
+        )
+        slave_fsm.act("Burst2",
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                      CBACK_oe.eq(1), # burst
+                      CBACK_o_n.eq(0), # burst cycle 2
+                      NextValue(burst_counter, burst_counter + 1),
+                      Case(burst_counter, {
+                          0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
+                          0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
+                          0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
+                          0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
+                      }),
+                      NextState("Burst3"),
+        )
+        slave_fsm.act("Burst3",
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                      CBACK_oe.eq(1), # burst
+                      CBACK_o_n.eq(1), # burst cycle 3, last one, no CBACK
+                      #NextValue(burst_counter, burst_counter + 1),
+                      Case(burst_counter, {
+                          0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
+                          0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
+                          0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
+                          0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
+                      }),
+                      NextState("FinishBurstRead"),
+        )
+        slave_fsm.act("FinishBurstRead",
+                      D_oe.eq(1), # keep data one more cycle
+                      Case(burst_counter, {
+                          0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
+                          0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
+                          0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
+                          0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
+                      }),
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # ACK finished after 1 cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(1),
+                      NextState("Idle"),
+        )
+                      
         
         # connect the write FIFO inputs
         self.comb += [ write_fifo_din.adr.eq(A_latch), # recorded

@@ -329,6 +329,7 @@ class IIsiFPGA(SoCCore):
                                                                         wb_read=self.wishbone_master_pds,
                                                                         #wb_write=self.wishbone_writemaster_pds,
                                                                         wb_write=wishbone_writemaster_sys,
+                                                                        dram_native_r=self.sdram.crossbar.get_port(mode="read", data_width=128, clock_domain="cpu"),
                                                                         cd_cpu="cpu")
         if (goblin):
             if (not use_goblin_alt):

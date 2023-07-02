@@ -268,7 +268,7 @@ class MC68030_SYNC_FSM(Module):
         ### dram_native_r
         self.comb += [
             dram_native_r.cmd.we.eq(0), # never write
-            dram_native_r.cmd.addr.eq(mem_processed_ad[4:]), # assume 128 bits (16 bytes)
+            dram_native_r.cmd.addr.eq(processed_ad[4:]), # assume 128 bits (16 bytes)
         ]
         ## dram_native_r.cmd.valid ->
         ## dram_native_r.cmd.ready <-
@@ -443,24 +443,19 @@ class MC68030_SYNC_FSM(Module):
                       CBACK_o_n.eq(1),
                       D_oe.eq(1),
                       dram_native_r.rdata.ready.eq(1),
-                      Case(burst_counter, {
-                          0x0: [D_rev_o.eq(dram_native_r.rdata.data[ 0: 32]), ],
-                          0x1: [D_rev_o.eq(dram_native_r.rdata.data[32: 64]), ],
-                          0x2: [D_rev_o.eq(dram_native_r.rdata.data[64: 96]), ],
-                          0x3: [D_rev_o.eq(dram_native_r.rdata.data[96:128]), ],
-                      }),
+                      D_rev_o.eq(0), # too early for the CPU to get
                       NextValue(burst_buffer, dram_native_r.rdata.data),
                       If(dram_native_r.rdata.valid,
-                         STERM_oe.eq(1), # enable STERM
+                         STERM_oe.eq(1), # enable STERM for B0
                          STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                          CBACK_oe.eq(1), # burst
                          CBACK_o_n.eq(0), # burst cycle 0
-                         NextValue(burst_counter, burst_counter + 1),
-                         NextState("Burst1"),
+                         #NextValue(burst_counter, burst_counter + 1),
+                         NextState("Burst0"),
                       ),
         )
-        slave_fsm.act("Burst1",
-                      STERM_oe.eq(1), # enable STERM
+        slave_fsm.act("Burst0",
+                      STERM_oe.eq(1), # enable STERM for B1
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(0), # burst cycle 1
@@ -472,13 +467,28 @@ class MC68030_SYNC_FSM(Module):
                           0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
                           0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
                       }),
-                      NextState("Burst2"),
+                      NextState("Burst1"),
         )
-        slave_fsm.act("Burst2",
-                      STERM_oe.eq(1), # enable STERM
+        slave_fsm.act("Burst1",
+                      STERM_oe.eq(1), # enable STERM for B2
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(0), # burst cycle 2
+                      D_oe.eq(1),
+                      NextValue(burst_counter, burst_counter + 1),
+                      Case(burst_counter, {
+                          0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
+                          0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
+                          0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
+                          0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
+                      }),
+                      NextState("Burst2"),
+        )
+        slave_fsm.act("Burst2",
+                      STERM_oe.eq(1), # enable STERM for B3
+                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                      CBACK_oe.eq(1), # burst
+                      CBACK_o_n.eq(1), # not on burst cycle 3
                       D_oe.eq(1),
                       NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
@@ -491,9 +501,9 @@ class MC68030_SYNC_FSM(Module):
         )
         slave_fsm.act("Burst3",
                       STERM_oe.eq(1), # enable STERM
-                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                      STERM_o_n.eq(1), # done
                       CBACK_oe.eq(1), # burst
-                      CBACK_o_n.eq(1), # burst cycle 3, last one, no CBACK
+                      CBACK_o_n.eq(1), # done
                       D_oe.eq(1),
                       #NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
@@ -502,22 +512,26 @@ class MC68030_SYNC_FSM(Module):
                           0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
                           0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
                       }),
-                      NextState("FinishBurstRead"),
-        )
-        slave_fsm.act("FinishBurstRead",
-                      D_oe.eq(1), # keep data one more cycle
-                      Case(burst_counter, {
-                          0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
-                          0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
-                          0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
-                          0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
-                      }),
-                      STERM_oe.eq(1), # enable STERM
-                      STERM_o_n.eq(1), # ACK finished after 1 cycle
-                      CBACK_oe.eq(1),
-                      CBACK_o_n.eq(1),
+                      #NextState("FinishBurstRead"),
                       NextState("Idle"),
+                      NextValue(saw_cbreq, 0), ###############################"
         )
+        #slave_fsm.act("FinishBurstRead",
+        #              D_oe.eq(1), # keep data one more cycle
+        #              #Case(burst_counter, {
+        #              #    0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
+        #              #    0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
+        #              #    0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
+        #              #    0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
+        #              #}),
+        #              D_rev_o.eq(Cat(burst_counter, Signal(14, reset = 0), Signal(16, reset = 0xFF04))),
+        #              STERM_oe.eq(1), # enable STERM
+        #              STERM_o_n.eq(1), # ACK finished after 1 cycle
+        #              CBACK_oe.eq(1),
+        #              CBACK_o_n.eq(1),
+        #              NextState("Idle"),
+        #              NextValue(saw_cbreq, 0), ###############################"
+        #)
                       
         
         # connect the write FIFO inputs

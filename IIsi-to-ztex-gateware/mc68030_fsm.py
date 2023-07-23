@@ -187,10 +187,10 @@ class MC68030_SYNC_FSM(Module):
         # address rewriting (mem)
         mem_processed_ad = Signal(32)
         self.comb += [
-            mem_processed_ad[23:27].eq(A_i[23:27]),
-            mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
-            #mem_processed_ad[23:28].eq(A_i[23:28]),
-            #mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
+            #mem_processed_ad[23:27].eq(A_i[23:27]),
+            #mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
+            mem_processed_ad[23:28].eq(A_i[23:28]),
+            mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
             ##mem_processed_ad[23:26].eq(A_i[23:26]),
             ##mem_processed_ad[26:32].eq(Signal(6, reset=0x20)), # 0x80 >> 2 == 0x20
         ]
@@ -213,9 +213,9 @@ class MC68030_SYNC_FSM(Module):
         self.comb += [ my_slot_space.eq((A_i[24:32] == 0xf9)) ] # fixme: abstract slot $9
         
         my_mem_space = Signal()
-        self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01)) ] # 0x08 >> 3 == 0x01
+        #self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01)) ] # 0x08 >> 3 == 0x01
         ####self.comb += [ my_mem_space.eq((A_i[27:32] == 0x04) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x20 >> 3 == 0x04
-        #self.comb += [ my_mem_space.eq((A_i[28:32] == 0x2)) ] # 0x20 >> 4 == 0x2
+        self.comb += [ my_mem_space.eq((A_i[28:32] == 0x2)) ] # 0x20 >> 4 == 0x2
         ###self.comb += [ my_mem_space.eq((A_i[26:32] == 0x1) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x04 >> 2 == 0x1
         
         my_superslot_space = Signal()

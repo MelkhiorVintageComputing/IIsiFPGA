@@ -72,7 +72,7 @@ class _CRG(Module):
         self.cd_cpu.clk = clk_cpu
         rst_cpu_n = platform.request("reset_3v3_n")
         self.comb += self.cd_cpu.rst.eq(~rst_cpu_n)
-        platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports clk_3v3_n]") # fixme: pretend it's 25 MHz for now
+        platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports cpuclk_3v3_n]") # fixme: pretend it's 25 MHz for now
         
         #led = platform.request("user_led", 0)
         #self.comb += [ led.eq(~rst_cpu_n) ]
@@ -322,6 +322,15 @@ class IIsiFPGA(SoCCore):
         wishbone_writemaster_sys = wishbone.Interface(data_width=self.bus.data_width)
         #self.submodules.wishbone_writemaster_pds = WishboneDomainCrossingMaster(platform=self.platform, slave=wishbone_writemaster_sys, cd_master="cpu", cd_slave="sys")
         self.bus.add_master(name="PDSBridgeToWishbone_Write", master=wishbone_writemaster_sys)
+
+        if (False):
+            wb_forziscreen = wishbone.Interface(data_width=self.bus.data_width)
+            from VintageBusFPGA_Common.Ziscreen import Ziscreen
+            self.submodules.ziscreen_fifo = ClockDomainsRenamer({"read": "sys", "write": "cpu"})(AsyncFIFOBuffered(width=32, depth=1024))
+            self.submodules.ziscreen = Ziscreen(platform=platform, wb=wb_forziscreen, fifo=self.ziscreen_fifo)
+            self.bus.add_master(name="instscreentrace", master=wb_forziscreen)
+        else:    
+            self.ziscreen_fifo = None
         
         print(f"Adding the PDS bridge")
         import mc68030_fsm
@@ -330,7 +339,8 @@ class IIsiFPGA(SoCCore):
                                                                         #wb_write=self.wishbone_writemaster_pds,
                                                                         wb_write=wishbone_writemaster_sys,
                                                                         dram_native_r=self.sdram.crossbar.get_port(mode="read", data_width=128, clock_domain="cpu"),
-                                                                        cd_cpu="cpu")
+                                                                        cd_cpu="cpu",
+                                                                        trace_inst_fifo=self.ziscreen_fifo)
         if (goblin):
             if (not use_goblin_alt):
                 self.submodules.videophy = VideoS7HDMIPHY(platform.request("hdmi"), clock_domain="hdmi")
@@ -361,6 +371,16 @@ class IIsiFPGA(SoCCore):
                 assert(rounded_goblin_rom_len <= 2**16)
                 self.add_ram("goblin_accel_rom", origin=self.mem_map["goblin_accel_rom"], size=rounded_goblin_rom_len, contents=goblin_rom_data, mode="r")
                 self.add_ram("goblin_accel_ram", origin=self.mem_map["goblin_accel_ram"], size=2**12, mode="rw")
+
+        #from VintageBusFPGA_Common.Zled import Zled
+        #self.submodules.zled = Zled(platform=platform)
+
+        if (True):
+            wb_forzscreen = wishbone.Interface(data_width=self.bus.data_width)
+            from VintageBusFPGA_Common.Zscreen import Zscreen
+            self.submodules.zscreen = Zscreen(platform=platform, wb=wb_forzscreen)
+            self.bus.add_master(name="screentrace", master=wb_forzscreen)
+            
         
 def main():
     parser = argparse.ArgumentParser(description="IIsiFPGA")

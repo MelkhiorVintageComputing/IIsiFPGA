@@ -7,7 +7,7 @@ import litex
 from litex.soc.interconnect import wishbone
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu"):
+    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None):
 
         platform = soc.platform
         
@@ -177,7 +177,6 @@ class MC68030_SYNC_FSM(Module):
         # address rewriting (slot)
         slot_processed_ad = Signal(32)
         self.comb += [
-            #slot_processed_ad[0:23].eq(A_i[0:23]),
             If(~A_i[23], # first 8 MiB of slot space: remap to last 8 Mib of SDRAM
                slot_processed_ad[23:32].eq(Cat(Signal(1, reset=1), Signal(8, reset = 0x8f))), # 0x8f8...
             ).Else( # second 8 MiB: direct access
@@ -188,32 +187,52 @@ class MC68030_SYNC_FSM(Module):
         # address rewriting (mem)
         mem_processed_ad = Signal(32)
         self.comb += [
-            #mem_processed_ad[ 0:23].eq(A_i[ 0:23]),
-            #mem_processed_ad[23:27].eq(A_i[23:27]),
-            #mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
-            mem_processed_ad[23:28].eq(A_i[23:28]),
-            mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
+            mem_processed_ad[23:27].eq(A_i[23:27]),
+            mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
+            #mem_processed_ad[23:28].eq(A_i[23:28]),
+            #mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
+            ##mem_processed_ad[23:26].eq(A_i[23:26]),
+            ##mem_processed_ad[26:32].eq(Signal(6, reset=0x20)), # 0x80 >> 2 == 0x20
         ]
 
         # address rewriting (superslot)
         superslot_processed_ad = Signal(32)
         self.comb += [
-            #superslot_processed_ad[ 0:23].eq(A_i[ 0:23]),
             superslot_processed_ad[23:28].eq(A_i[23:28]),
             superslot_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
         ]
 
+        # CPU cycle space (FC = 0x7)
+        cpu_mgt_cycle = Signal()
+        self.comb += [
+            cpu_mgt_cycle.eq(FC_i[0] & FC_i[1] & FC_i[2]),
+        ]
+
         # selection logic
         my_slot_space = Signal()
-        self.comb += [ my_slot_space.eq((A_i[24:32] == 0xf9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ]
+        self.comb += [ my_slot_space.eq((A_i[24:32] == 0xf9)) ] # fixme: abstract slot $9
+        
         my_mem_space = Signal()
-        ###self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x08 >> 3 == 0x01
-        #self.comb += [ my_mem_space.eq((A_i[27:32] == 0x04) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x20 >> 3 == 0x04
-        self.comb += [ my_mem_space.eq((A_i[28:32] == 0x2) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x20 >> 4 == 0x2
+        self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01)) ] # 0x08 >> 3 == 0x01
+        ####self.comb += [ my_mem_space.eq((A_i[27:32] == 0x04) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x20 >> 3 == 0x04
+        #self.comb += [ my_mem_space.eq((A_i[28:32] == 0x2)) ] # 0x20 >> 4 == 0x2
+        ###self.comb += [ my_mem_space.eq((A_i[26:32] == 0x1) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x04 >> 2 == 0x1
+        
         my_superslot_space = Signal()
-        self.comb += [ my_superslot_space.eq((A_i[28:32] == 0x9) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x90 >> 4 == 0x9
+        self.comb += [ my_superslot_space.eq((A_i[28:32] == 0x9)) ] # 0x90 >> 4 == 0x9 # fixme: abstract slot $9
+        
         my_device_space = Signal()
-        self.comb += [ CACHE_o.eq(my_mem_space), ]
+        
+        # force the MDU not to anwser when we deal with it
+        self.comb += [ CACHE_o.eq(0), ]
+        #self.comb += [ CACHE_o.eq(my_mem_space & ~cpu_mgt_cycle), ]
+        #platform.add_platform_command("set_max_delay -from [get_ports A_3v3] -to [get_ports cache_3v3] 10")
+        #platform.add_platform_command("set_max_delay -from [get_ports fc_3v3] -to [get_ports cache_3v3] 10")
+        ##self.comb += [ CACHE_o.eq(my_mem_space), ]
+        ##platform.add_platform_command("set_max_delay -from [get_ports A_3v3] -to [get_ports cache_3v3] 10")
+        ###self.comb += [ CACHE_o.eq(~((A_i[26:32] == 0x0) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2]))), ] # disable for bank A, enable for everything else
+        ####self.comb += [ CACHE_o.eq(A_i[29:32] != 0x0), ]
+        ####platform.add_platform_command("set_max_delay -from [get_ports A_3v3] -to [get_ports cache_3v3] 10")
 
         # more selection logic
         processed_ad = Signal(32)
@@ -245,11 +264,11 @@ class MC68030_SYNC_FSM(Module):
         # for storing SEL
         current_sel = Signal(4)
 
-        ### back-pressure from sys to cpu clock domain
-        ##self.submodules.write_fifo_readable_sync = BusSynchronizer(width = 1, idomain = "sys", odomain = "cpu")
-        ##write_fifo_readable_in_cpu = Signal()
-        ##self.comb += self.write_fifo_readable_sync.i.eq(self.write_fifo.readable)
-        ##self.comb += write_fifo_readable_in_cpu.eq(self.write_fifo_readable_sync.o)
+        # back-pressure from sys to cpu clock domain
+        self.submodules.write_fifo_readable_sync = BusSynchronizer(width = 1, idomain = "sys", odomain = "cpu")
+        write_fifo_readable_in_cpu = Signal()
+        self.comb += self.write_fifo_readable_sync.i.eq(self.write_fifo.readable)
+        self.comb += write_fifo_readable_in_cpu.eq(self.write_fifo_readable_sync.o)
 
         self.submodules.slave_fsm = slave_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
             
@@ -277,9 +296,44 @@ class MC68030_SYNC_FSM(Module):
         burst_counter = Signal(2)
         burst_buffer = Signal(128)
         
-        led = platform.request("user_led", 0)
-        saw_cbreq = Signal()
-        self.comb += [ led.eq(saw_cbreq), ] 
+        #led = platform.request("user_led", 0)
+        #saw_cbreq = Signal()
+        #self.comb += [ led.eq(saw_cbreq), ]
+
+        if (trace_inst_fifo != None):
+            trace_enabled = Signal()
+            self.sync += [
+                #If(~AS_i_n & RW_i_n & (A_i[8:32] == 0x408416), # vicinity of call to ispmmu
+                #   trace_enabled.eq(1)
+                #),
+                If(~AS_i_n & RW_i_n & (A_i[24:32] == 0x20),
+                   trace_enabled.eq(1)
+                ),
+            ]
+            self.comb += [
+                trace_inst_fifo.din[ 0: 8].eq(A_i[24:32]),
+                trace_inst_fifo.din[ 8:16].eq(A_i[16:24]),
+                trace_inst_fifo.din[16:24].eq(A_i[ 8:16]),
+                trace_inst_fifo.din[24:32].eq(A_i[ 0: 8]),
+            ]
+            self.submodules.trace_fsm = trace_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
+            trace_fsm.act("Reset",
+                          trace_inst_fifo.we.eq(0),
+                          NextState("Idle")
+            )
+            trace_fsm.act("Idle",
+                          #If(trace_enabled & ~AS_i_n & RW_i_n & (A_i[20:32] == 0x408), # read from ROM
+                          If(trace_enabled & ~AS_i_n & (A_i[24:32] == 0x20), # read or write to my_mem
+                             trace_inst_fifo.we.eq(1),
+                             NextState("Wait"),
+                          )
+            )
+            trace_fsm.act("Wait",
+                          trace_inst_fifo.we.eq(0),
+                          If(AS_i_n,
+                             NextState("Idle"),
+                          )
+            )
         
         slave_fsm.act("Reset",
                       NextState("Idle")
@@ -287,36 +341,48 @@ class MC68030_SYNC_FSM(Module):
         slave_fsm.act("Idle",
                       STERM_oe.eq(0),
                       D_oe.eq(0),
-                      If(my_mem_space & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
+                      If(my_mem_space & ~cpu_mgt_cycle & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
                          CBACK_oe.eq(1),
                          CBACK_o_n.eq(1),
-                         dram_native_r.cmd.valid.eq(1),
+                         BERR_oe.eq(1),
+                         BERR_o_n.eq(1),
                          NextValue(burst_counter, processed_ad[2:4]),
-                         If(dram_native_r.cmd.ready, # interface available
-                            NextState("BurstReadWait"),
+                         If(~write_fifo_readable_in_cpu, # previous write(s) done
+                            dram_native_r.cmd.valid.eq(1),
+                            If(dram_native_r.cmd.ready, # interface available
+                               NextState("BurstReadWait"),
+                            ),
                          ),
-                         NextValue(saw_cbreq, 1), ###############################"
-                      ).Elif((my_device_space & ~AS_i_n & RW_i_n), # Read
+                         ##NextValue(saw_cbreq, 1), ###############################"
+                      ).Elif((my_device_space & ~cpu_mgt_cycle & ~AS_i_n & RW_i_n), # Read
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
                          CBACK_oe.eq(1),
                          CBACK_o_n.eq(1),
-                         #If(~write_fifo_readable_in_cpu, # previous write(s) done
-                         wb_read.cyc.eq(1),
-                         wb_read.stb.eq(1),
-                         wb_read.we.eq(0),
-                         wb_read.sel.eq(0xf), # always read 32-bits for cache
-                         wb_read.adr.eq(processed_ad[2:32]),
-                         NextValue(A_latch, processed_ad),
-                         NextState("Read"),
-                         #),
-                      ).Elif((my_device_space & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
+                         BERR_oe.eq(1),
+                         BERR_o_n.eq(1),
+                         If(~write_fifo_readable_in_cpu, # previous write(s) done
+                            wb_read.cyc.eq(1),
+                            wb_read.stb.eq(1),
+                            wb_read.we.eq(0),
+                            wb_read.sel.eq(0xf), # always read 32-bits for cache
+                            wb_read.adr.eq(processed_ad[2:32]),
+                            NextValue(A_latch, processed_ad),
+                            NextState("Read"),
+                         ),
+                      ).Elif((my_device_space & ~cpu_mgt_cycle & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
+                             # we detect ~AS_i_n at the beginning of S2.
+                             # theoretically, we could have asserted /STERM already...
+                             # but there's just no time to do it properly
+                             # unless not waiting for /AS
                              STERM_oe.eq(1), # enable STERM
-                             STERM_o_n.eq(1), # insert delay
+                             STERM_o_n.eq(1),
                              CBACK_oe.eq(1),
                              CBACK_o_n.eq(1),
+                             BERR_oe.eq(1),
+                             BERR_o_n.eq(1),
                              NextValue(A_latch, processed_ad),
                              Case(SIZ_i, { # CHECKME, also endianness for SEL below
                                  0x0: [ # long word
@@ -384,7 +450,10 @@ class MC68030_SYNC_FSM(Module):
                                      }),
                                  ],
                              }),
-                             NextState("Write"),
+                             If(write_fifo.writable,
+                                STERM_o_n.eq(0), # assert /STERM immediately (we already have a wait state)
+                                NextState("FinishWrite"),
+                             ),
                       )
         )
         slave_fsm.act("Read",
@@ -397,6 +466,8 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(1), # insert delay
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       If(wb_read.ack,
                          NextValue(D_latch, wb_read.dat_r),
                          D_oe.eq(1),
@@ -415,25 +486,18 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(1), # ACK finished after 1 cycle
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       NextState("Idle"),
-        )
-        slave_fsm.act("Write",
-                      STERM_oe.eq(1), # enable STERM
-                      STERM_o_n.eq(1), # wait
-                      CBACK_oe.eq(1),
-                      CBACK_o_n.eq(1),
-                      If(write_fifo.writable,
-                         STERM_oe.eq(1), # enable STERM
-                         STERM_o_n.eq(0),
-                         write_fifo.we.eq(1),
-                         NextState("FinishWrite"),
-                      )
         )
         slave_fsm.act("FinishWrite", # unnecessary ?
                       STERM_oe.eq(1), # enable STERM
                       STERM_o_n.eq(1), # finish ACK after one cycle
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
+                      write_fifo.we.eq(1),
                       NextState("Idle"),
         )
         slave_fsm.act("BurstReadWait",
@@ -441,6 +505,8 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(1), # finish ACK after one cycle
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       D_oe.eq(1),
                       dram_native_r.rdata.ready.eq(1),
                       D_rev_o.eq(0), # too early for the CPU to get
@@ -459,6 +525,8 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(0), # burst cycle 1
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       D_oe.eq(1),
                       NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
@@ -474,6 +542,8 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(0), # burst cycle 2
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       D_oe.eq(1),
                       NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
@@ -489,6 +559,8 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(1), # not on burst cycle 3
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       D_oe.eq(1),
                       NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
@@ -504,6 +576,8 @@ class MC68030_SYNC_FSM(Module):
                       STERM_o_n.eq(1), # done
                       CBACK_oe.eq(1), # burst
                       CBACK_o_n.eq(1), # done
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
                       D_oe.eq(1),
                       #NextValue(burst_counter, burst_counter + 1),
                       Case(burst_counter, {
@@ -514,7 +588,7 @@ class MC68030_SYNC_FSM(Module):
                       }),
                       #NextState("FinishBurstRead"),
                       NextState("Idle"),
-                      NextValue(saw_cbreq, 0), ###############################"
+                      ##NextValue(saw_cbreq, 0), ###############################"
         )
         #slave_fsm.act("FinishBurstRead",
         #              D_oe.eq(1), # keep data one more cycle
@@ -529,6 +603,8 @@ class MC68030_SYNC_FSM(Module):
         #              STERM_o_n.eq(1), # ACK finished after 1 cycle
         #              CBACK_oe.eq(1),
         #              CBACK_o_n.eq(1),
+        #              BERR_oe.eq(1),
+        #              BERR_o_n.eq(1),
         #              NextState("Idle"),
         #              NextValue(saw_cbreq, 0), ###############################"
         #)
@@ -549,4 +625,27 @@ class MC68030_SYNC_FSM(Module):
                        write_fifo.re.eq(wb_write.ack),
         ]
         
-        # 
+        #
+
+        
+        if (True):
+            led0 = platform.request("user_led", 0)
+            led1 = platform.request("user_led", 1)
+            led2 = platform.request("user_led", 2)
+            led3 = platform.request("user_led", 3)
+            led4 = platform.request("user_led", 4)
+            led5 = platform.request("user_led", 5)
+            led6 = platform.request("user_led", 6)
+            led7 = platform.request("user_led", 7)
+
+            self.comb += [
+                led0.eq(~slave_fsm.ongoing("Idle")),
+                led1.eq(~AS_i_n),
+                led2.eq(~RW_i_n),
+                led3.eq(~CBREQ_i_n ),
+                
+                led4.eq(my_slot_space),
+                led5.eq(my_superslot_space),
+                led6.eq(my_mem_space),
+                led7.eq(cpu_mgt_cycle),
+            ]

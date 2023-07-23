@@ -72,8 +72,16 @@ _pds_io_v1_0 = [
         #Subsignal("scl",     Pins(""), IOStandard("LVCMOS33")),
         #Subsignal("cec",     Pins(""), IOStandard("LVCMOS33")),
     ),
-    ("user_led", 0, Pins("U1"),  IOStandard("lvcmos33")), # pretend LED0, pmod #55
-    ("user_led", 1, Pins("V1"),  IOStandard("lvcmos33")), # pretend LED1, pmod #6
+    #("user_led", 0, Pins("U1"),  IOStandard("lvcmos33")), # pretend LED0, pmod #55
+    #("user_led", 1, Pins("V1"),  IOStandard("lvcmos33")), # pretend LED1, pmod #6
+    ("user_led", 1, Pins("N6"),  IOStandard("lvcmos33")), # pretend LED0, pmod #11
+    ("user_led", 0, Pins("M6"),  IOStandard("lvcmos33")), # pretend LED1, pmod #12
+    ("user_led", 3, Pins("N5"),  IOStandard("lvcmos33")), # pretend LED0, pmod #9
+    ("user_led", 2, Pins("P5"),  IOStandard("lvcmos33")), # pretend LED1, pmod #10
+    ("user_led", 5, Pins("R3"),  IOStandard("lvcmos33")), # pretend LED0, pmod #7
+    ("user_led", 4, Pins("T3"),  IOStandard("lvcmos33")), # pretend LED1, pmod #8
+    ("user_led", 7, Pins("U1"),  IOStandard("lvcmos33")), # pretend LED0, pmod #5
+    ("user_led", 6, Pins("V1"),  IOStandard("lvcmos33")), # pretend LED1, pmod #6
     ]
 
 # PDS

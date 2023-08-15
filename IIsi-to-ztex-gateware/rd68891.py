@@ -88,11 +88,11 @@ class rd68891(Module):
         #self.cir_operaddr  = operaddr  = Signal(32) # $1C  R/W *
         
         # 16-bits granularity
-        #response_re = reg_re[1]
-        #command_we = reg_we[4]
-        #operand_re = reg_re[8]
-        #operand_we = reg_we[8]
-        # delay by 1 cycle, otherwise it seems the actual registers aren't ready when the storbe arrives
+        ##response_re = reg_re[1]
+        ##command_we = reg_we[4]
+        ##operand_re = reg_re[8]
+        ##operand_we = reg_we[8]
+        # delay by 1 cycle, otherwise it seems the actual registers aren't ready when the strobe arrives
         response_re = Signal()
         command_we = Signal()
         operand_re = Signal()
@@ -213,7 +213,7 @@ class rd68891(Module):
         self.comb += If(~alllast,
                         pattern0.eq(Cat(aes_out[0][16:24], aes_out[0][ 8:16], aes_out[0][ 8:16], aes_out[0][ 0: 8])),
                      ).Else(
-                        pattern0.eq(Cat(aes_out[0][8:16], Signal(24, reset = 0))), # FIXME
+                        pattern0.eq(Cat(Signal(24, reset = 0), aes_out[0][8:16])),
                      )
         out0 = Signal(32)
         self.comb += out0.eq(rs1 ^ pattern0)
@@ -232,7 +232,7 @@ class rd68891(Module):
         self.comb += If(~alllast,
                         pattern1.eq(Cat(aes_out[0][ 8:16], aes_out[0][ 8:16], aes_out[0][ 0: 8], aes_out[0][16:24])),
                      ).Else(
-                            pattern1.eq(Cat(Signal(8, reset = 0), aes_out[0][8:16], Signal(16, reset = 0))), # FIXME
+                            pattern1.eq(Cat(Signal(16, reset = 0), aes_out[0][8:16], Signal(8, reset = 0))),
                      )
         out1 = Signal(32)
         self.comb += out1.eq(rs1 ^ pattern1)
@@ -247,7 +247,7 @@ class rd68891(Module):
         self.comb += If(~alllast,
                         pattern2.eq(Cat(aes_out[0][ 8:16], aes_out[0][ 0: 8], aes_out[0][16:24], aes_out[0][ 8:16])),
                      ).Else(
-                            pattern2.eq(Cat(Signal(16, reset = 0), aes_out[0][8:16], Signal(8, reset = 0))), # FIXME
+                            pattern2.eq(Cat(Signal(8, reset = 0), aes_out[0][8:16], Signal(16, reset = 0))),
                      )
         out2 = Signal(32)
         self.comb += out2.eq(rs1 ^ pattern2)
@@ -262,7 +262,7 @@ class rd68891(Module):
         self.comb += If(~alllast,
                         pattern3.eq(Cat(aes_out[0][ 0: 8], aes_out[0][16:24], aes_out[0][ 8:16], aes_out[0][ 8:16])),
                      ).Else(
-                            pattern3.eq(Cat(Signal(24, reset = 0), aes_out[0][8:16])), # FIXME
+                            pattern3.eq(Cat(aes_out[0][8:16], Signal(24, reset = 0))),
                      )
         out3 = Signal(32)
         self.comb += out3.eq(rs1 ^ pattern3)

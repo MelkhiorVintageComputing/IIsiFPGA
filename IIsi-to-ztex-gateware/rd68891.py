@@ -203,7 +203,7 @@ class rd68891(Module):
                        If(operand_we,
                           NextValue(rs1, operand),
                           #aes_in[0].eq(operand[0:8]),
-                          aes_in[0].eq(rs2[(rs2_idx+0)[0:2]][ 0: 8]),
+                          aes_in[0].eq(rs2[(rs2_idx+0)[0:2]][24:32]),
                           NextState("Compute1"), # FIXME everywhere: encode vs. decode
                        ),
                        # FIXME: illegal stuff
@@ -211,15 +211,15 @@ class rd68891(Module):
         
         pattern0 = Signal(32)
         self.comb += If(~alllast,
-                        pattern0.eq(Cat(aes_out[0][0:16], aes_out[0][8:24])), # FIXME everywhere: endianess!
+                        pattern0.eq(Cat(aes_out[0][16:24], aes_out[0][ 8:16], aes_out[0][ 8:16], aes_out[0][ 0: 8])),
                      ).Else(
-                        pattern0.eq(Cat(aes_out[0][8:16], Signal(24, reset = 0))),
+                        pattern0.eq(Cat(aes_out[0][8:16], Signal(24, reset = 0))), # FIXME
                      )
         out0 = Signal(32)
         self.comb += out0.eq(rs1 ^ pattern0)
         krypto_fsm.act("Compute1",
                        NextValue(rs1, out0),
-                       aes_in[0].eq(rs2[(rs2_idx+1)[0:2]][ 8:16]),
+                       aes_in[0].eq(rs2[(rs2_idx+1)[0:2]][16:24]),
                        NextState("Compute2"),
 
                        ##NextValue(operand, out0),
@@ -230,39 +230,39 @@ class rd68891(Module):
         
         pattern1 = Signal(32)
         self.comb += If(~alllast,
-                        pattern1.eq(Cat(aes_out[0][16:24], aes_out[0][0:16], aes_out[0][8:16])),
+                        pattern1.eq(Cat(aes_out[0][ 8:16], aes_out[0][ 8:16], aes_out[0][ 0: 8], aes_out[0][16:24])),
                      ).Else(
-                            pattern1.eq(Cat(Signal(8, reset = 0), aes_out[0][8:16], Signal(16, reset = 0))),
+                            pattern1.eq(Cat(Signal(8, reset = 0), aes_out[0][8:16], Signal(16, reset = 0))), # FIXME
                      )
         out1 = Signal(32)
         self.comb += out1.eq(rs1 ^ pattern1)
         krypto_fsm.act("Compute2",
                        NextValue(rs1, out1),
-                       aes_in[0].eq(rs2[(rs2_idx+2)[0:2]][16:24]),
+                       aes_in[0].eq(rs2[(rs2_idx+2)[0:2]][ 8:16]),
                        NextState("Compute3"),
                        # FIXME: illegal stuff
         )
         
         pattern2 = Signal(32)
         self.comb += If(~alllast,
-                        pattern2.eq(Cat(aes_out[0][8:24], aes_out[0][0:16])),
+                        pattern2.eq(Cat(aes_out[0][ 8:16], aes_out[0][ 0: 8], aes_out[0][16:24], aes_out[0][ 8:16])),
                      ).Else(
-                            pattern2.eq(Cat(Signal(16, reset = 0), aes_out[0][8:16], Signal(8, reset = 0))),
+                            pattern2.eq(Cat(Signal(16, reset = 0), aes_out[0][8:16], Signal(8, reset = 0))), # FIXME
                      )
         out2 = Signal(32)
         self.comb += out2.eq(rs1 ^ pattern2)
         krypto_fsm.act("Compute3",
                        NextValue(rs1, out2),
-                       aes_in[0].eq(rs2[(rs2_idx+3)[0:2]][24:32]),
+                       aes_in[0].eq(rs2[(rs2_idx+3)[0:2]][ 0: 8]),
                        NextState("Compute4"),
                        # FIXME: illegal stuff
         )
         
         pattern3 = Signal(32)
         self.comb += If(~alllast,
-                        pattern3.eq(Cat(aes_out[0][8:16], aes_out[0][8:24], aes_out[0][0:8])),
+                        pattern3.eq(Cat(aes_out[0][ 0: 8], aes_out[0][16:24], aes_out[0][ 8:16], aes_out[0][ 8:16])),
                      ).Else(
-                            pattern3.eq(Cat(Signal(24, reset = 0), aes_out[0][8:16])),
+                            pattern3.eq(Cat(Signal(24, reset = 0), aes_out[0][8:16])), # FIXME
                      )
         out3 = Signal(32)
         self.comb += out3.eq(rs1 ^ pattern3)

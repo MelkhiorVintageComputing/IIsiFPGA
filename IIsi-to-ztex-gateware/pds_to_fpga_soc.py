@@ -323,7 +323,7 @@ class IIsiFPGA(SoCCore):
         #self.submodules.wishbone_writemaster_pds = WishboneDomainCrossingMaster(platform=self.platform, slave=wishbone_writemaster_sys, cd_master="cpu", cd_slave="sys")
         self.bus.add_master(name="PDSBridgeToWishbone_Write", master=wishbone_writemaster_sys)
 
-        if (False):
+        if (True):
             wb_forziscreen = wishbone.Interface(data_width=self.bus.data_width)
             from VintageBusFPGA_Common.Ziscreen import Ziscreen
             self.submodules.ziscreen_fifo = ClockDomainsRenamer({"read": "sys", "write": "cpu"})(AsyncFIFOBuffered(width=32, depth=1024))
@@ -375,7 +375,7 @@ class IIsiFPGA(SoCCore):
         #from VintageBusFPGA_Common.Zled import Zled
         #self.submodules.zled = Zled(platform=platform)
 
-        if (True):
+        if (False):
             wb_forzscreen = wishbone.Interface(data_width=self.bus.data_width)
             from VintageBusFPGA_Common.Zscreen import Zscreen
             self.submodules.zscreen = Zscreen(platform=platform, wb=wb_forzscreen)

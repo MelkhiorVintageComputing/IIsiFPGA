@@ -10,6 +10,8 @@ class MC68030_SYNC_FSM(Module):
     def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None):
 
         platform = soc.platform
+
+        sync_cpu = getattr(self.sync, cd_cpu)
         
         # 68030
         A = platform.request("A_3v3") # 32 # address, I[O]
@@ -245,7 +247,7 @@ class MC68030_SYNC_FSM(Module):
             ).Elif(my_superslot_space,
                    processed_ad[23:32].eq(superslot_processed_ad[23:32]),
             ).Else(
-                processed_ad[23:32].eq(0),
+                processed_ad[23:32].eq(A_i[23:32]),
             ),
             my_device_space.eq(my_slot_space | my_mem_space | my_superslot_space),
         ]
@@ -277,7 +279,7 @@ class MC68030_SYNC_FSM(Module):
 
         #led = platform.request("user_led", 0)
         #my_mem_space_reg = Signal()
-        #self.sync.cpu += [
+        #sync_cpu += [
         #    If(my_mem_space & ~AS_i_n,
         #       my_mem_space_reg.eq(1),
         #    ),
@@ -299,48 +301,13 @@ class MC68030_SYNC_FSM(Module):
         #led = platform.request("user_led", 0)
         #saw_cbreq = Signal()
         #self.comb += [ led.eq(saw_cbreq), ]
-
-        if (trace_inst_fifo != None):
-            trace_enabled = Signal()
-            self.sync += [
-                #If(~AS_i_n & RW_i_n & (A_i[8:32] == 0x408416), # vicinity of call to ispmmu
-                #   trace_enabled.eq(1)
-                #),
-                If(~AS_i_n & RW_i_n & (A_i[24:32] == 0x20),
-                   trace_enabled.eq(1)
-                ),
-            ]
-            self.comb += [
-                trace_inst_fifo.din[ 0: 8].eq(A_i[24:32]),
-                trace_inst_fifo.din[ 8:16].eq(A_i[16:24]),
-                trace_inst_fifo.din[16:24].eq(A_i[ 8:16]),
-                trace_inst_fifo.din[24:32].eq(A_i[ 0: 8]),
-            ]
-            self.submodules.trace_fsm = trace_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
-            trace_fsm.act("Reset",
-                          trace_inst_fifo.we.eq(0),
-                          NextState("Idle")
-            )
-            trace_fsm.act("Idle",
-                          #If(trace_enabled & ~AS_i_n & RW_i_n & (A_i[20:32] == 0x408), # read from ROM
-                          If(trace_enabled & ~AS_i_n & (A_i[24:32] == 0x20), # read or write to my_mem
-                             trace_inst_fifo.we.eq(1),
-                             NextState("Wait"),
-                          )
-            )
-            trace_fsm.act("Wait",
-                          trace_inst_fifo.we.eq(0),
-                          If(AS_i_n,
-                             NextState("Idle"),
-                          )
-            )
         
         slave_fsm.act("Reset",
                       NextState("Idle")
         )
         slave_fsm.act("Idle",
-                      STERM_oe.eq(0),
-                      D_oe.eq(0),
+                      #STERM_oe.eq(0),
+                      #D_oe.eq(0),
                       If(my_mem_space & ~cpu_mgt_cycle & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
@@ -384,7 +351,7 @@ class MC68030_SYNC_FSM(Module):
                              BERR_oe.eq(1),
                              BERR_o_n.eq(1),
                              NextValue(A_latch, processed_ad),
-                             Case(SIZ_i, { # CHECKME, also endianness for SEL below
+                             Case(SIZ_i, {
                                  0x0: [ # long word
                                      Case(processed_ad[0:2], {
                                          0x0: [
@@ -497,7 +464,7 @@ class MC68030_SYNC_FSM(Module):
                       CBACK_o_n.eq(1),
                       BERR_oe.eq(1),
                       BERR_o_n.eq(1),
-                      write_fifo.we.eq(1),
+                      write_fifo.we.eq(1), # we only strobe the FIFO here, all other connections are comb
                       NextState("Idle"),
         )
         slave_fsm.act("BurstReadWait",
@@ -626,9 +593,266 @@ class MC68030_SYNC_FSM(Module):
         ]
         
         #
+        
+        self.submodules.copro_fsm = copro_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
+        
+        
+        from rd68891 import rd68891
+        self.submodules.copro = rd68891(cd_krypto = cd_cpu)
+        
+        regs = self.copro.regs
+        reg_re = self.copro.reg_re
+        reg_we = self.copro.reg_we
+
+        do_long = Signal()
+        
+        my_copro_space = Signal()
+        self.comb += [
+                      my_copro_space.eq((A_i[16:20] == 0x02) & # coprocessor space
+                                        (A_i[13:16] == 0x6) # coprocessor id 0x110
+                                        ),
+        ]
+        
+        copro_fsm.act("Reset",
+                      NextState("Idle")
+        )
+        copro_fsm.act("Idle",
+                      If((my_copro_space & cpu_mgt_cycle & ~AS_i_n & RW_i_n), # Read
+                         STERM_oe.eq(1), # enable STERM
+                         STERM_o_n.eq(1), # insert delay
+                         CBACK_oe.eq(1),
+                         CBACK_o_n.eq(1),
+                         BERR_oe.eq(1),
+                         BERR_o_n.eq(1),
+                         NextValue(A_latch, processed_ad),
+                         NextState("Read"),
+                         NextValue(do_long, ~SIZ[1]), # only word or long
+                      ).Elif((my_copro_space & cpu_mgt_cycle & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
+                             # we detect ~AS_i_n at the beginning of S2.
+                             # theoretically, we could have asserted /STERM already...
+                             # but there's just no time to do it properly
+                             # unless not waiting for /AS
+                             STERM_oe.eq(1), # enable STERM
+                             STERM_o_n.eq(0), # assert /STERM immediately (we already have a wait state)
+                             CBACK_oe.eq(1),
+                             CBACK_o_n.eq(1),
+                             BERR_oe.eq(1),
+                             BERR_o_n.eq(1),
+                             NextValue(A_latch, processed_ad),
+                             Case(SIZ_i, { # IMPROVEME: duplicate code, CHECKME: endianess
+                                 0x0: [ # long word
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0xF),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0x7),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0x3),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x1),
+                                         ],
+                                     }),
+                                 ],
+                                 0x1: [ # byte # shouldn't happen
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0x8),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0x4),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0x2),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x1),
+                                         ],
+                                     }),
+                                 ],
+                                 0x2: [ # word
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0xC),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0x6),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0x3),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x1),
+                                         ],
+                                     }),
+                                 ],
+                                  0x3: [ # 3-bytes # shouldn't happen
+                                     Case(processed_ad[0:2], {
+                                         0x0: [
+                                             NextValue(current_sel, 0xE),
+                                         ],
+                                         0x1: [
+                                             NextValue(current_sel, 0x7),
+                                         ],
+                                         0x2: [
+                                             NextValue(current_sel, 0x3),
+                                         ],
+                                         0x3: [
+                                             NextValue(current_sel, 0x1),
+                                         ],
+                                     }),
+                                 ],
+                             }),
+                             NextState("FinishWrite"),
+                      )
+        )
+        copro_fsm.act("Read",
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
+                      #NextValue(D_latch, regs[A_latch[2:5]]),
+                      #D_rev_o.eq(regs[A_latch[2:5]]),
+                      NextValue(D_latch, Cat(regs[A_latch[2:5]][24:32], regs[A_latch[2:5]][16:24], regs[A_latch[2:5]][ 8:16], regs[A_latch[2:5]][ 0: 8])),
+                      D_rev_o.eq(        Cat(regs[A_latch[2:5]][24:32], regs[A_latch[2:5]][16:24], regs[A_latch[2:5]][ 8:16], regs[A_latch[2:5]][ 0: 8])),
+                      D_oe.eq(1),
+                      reg_re[Cat(~A_latch[1], A_latch[2:5])].eq(1), # one cycle strobe for 16-bits half
+                      If(do_long,
+                         reg_re[Cat(Signal(1, reset = 0), A_latch[2:5])].eq(1), # one cycle strobe for 32-bits word as well
+                      ),
+                      NextState("FinishRead"),
+        )
+        copro_fsm.act("FinishRead",
+                      D_oe.eq(1), # keep data one more cycle
+                      D_rev_o.eq(D_latch),
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # ACK finished after 1 cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
+                      NextState("Idle"),
+        )
+        copro_fsm.act("FinishWrite", # unnecessary ?
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # finish ACK after one cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
+                      If(current_sel[0], # CHECKME: endianness
+                         NextValue(regs[A_latch[2:5]][ 0: 8], D_rev_i[24:32]),
+                         reg_we[Cat(Signal(1, reset = 0), A_latch[2:5])].eq(1),
+                         ),
+                      If(current_sel[1], # CHECKME: endianness
+                         NextValue(regs[A_latch[2:5]][ 8:16], D_rev_i[16:24]),
+                         reg_we[Cat(Signal(1, reset = 0), A_latch[2:5])].eq(1),
+                         ),
+                      If(current_sel[2], # CHECKME: endianness
+                         NextValue(regs[A_latch[2:5]][16:24], D_rev_i[ 8:16]),
+                         reg_we[Cat(Signal(1, reset = 1), A_latch[2:5])].eq(1),
+                         ),
+                      If(current_sel[3], # CHECKME: endianness
+                         NextValue(regs[A_latch[2:5]][24:32], D_rev_i[ 0: 8]),
+                         reg_we[Cat(Signal(1, reset = 1), A_latch[2:5])].eq(1),
+                         ),
+                      NextState("Idle"),
+        )
 
         
         if (True):
+            led0 = platform.request("user_led", 0)
+            led1 = platform.request("user_led", 1)
+            led2 = platform.request("user_led", 2)
+            led3 = platform.request("user_led", 3)
+            led4 = platform.request("user_led", 4)
+            led5 = platform.request("user_led", 5)
+            led6 = platform.request("user_led", 6)
+            led7 = platform.request("user_led", 7)
+
+            seen_myself = Signal()
+            sync_cpu += [
+                If(my_copro_space & cpu_mgt_cycle,
+                   seen_myself.eq(1)),
+            ]
+
+            seen_command_we = Signal()
+            seen_response_re = Signal()
+            seen_operand_re = Signal()
+            seen_operand_we = Signal()
+            sync_cpu += [
+                If(reg_we[4],
+                   seen_command_we.eq(1),
+                ),
+                If(reg_re[1],
+                   seen_response_re.eq(1),
+                ),
+                If(reg_re[8],
+                   seen_operand_re.eq(1),
+                ),
+                If(reg_we[8],
+                   seen_operand_we.eq(1),
+                ),
+            ]
+
+            seen_read = Signal()
+            seen_write = Signal()
+            sync_cpu += [
+                If(copro_fsm.ongoing("FinishRead"),
+                   seen_read.eq(1),
+                ),
+                If(copro_fsm.ongoing("FinishWrite"),
+                   seen_write.eq(1),
+                ),
+            ]
+
+            #access_ctr = Signal(4)
+            #sync_cpu += [
+            #    If(copro_fsm.ongoing("FinishRead") | copro_fsm.ongoing("FinishWrite"),
+            #       access_ctr.eq(access_ctr + 1),
+            #    ),
+            #]
+            
+            self.comb += [
+                #led0.eq(~copro_fsm.ongoing("Idle")),
+                led0.eq(~self.copro.krypto_fsm.ongoing("Idle")),
+                #led2.eq(self.copro.krypto_fsm.ongoing("WaitReadResponse1")),
+                #led3.eq(self.copro.krypto_fsm.ongoing("GetData")),
+                #led2.eq(seen_read),
+                #led3.eq(seen_write),
+                led1.eq(seen_operand_re),
+                led2.eq(seen_operand_we),
+                led3.eq(seen_response_re),
+                
+                #led4.eq(seen_myself),
+                #led5.eq(my_copro_space & cpu_mgt_cycle),
+                #led6.eq(my_copro_space),
+                #led7.eq(cpu_mgt_cycle),
+                #led4.eq(self.copro.krypto_fsm.ongoing("WaitReadResponse2")),
+                #led5.eq(self.copro.krypto_fsm.ongoing("GetReg")),
+                #led6.eq(self.copro.krypto_fsm.ongoing("Compute1")),
+                #led7.eq(self.copro.krypto_fsm.ongoing("Compute2")),
+                led4.eq(self.copro.krypto_fsm.ongoing("Temporary")),
+                led5.eq(self.copro.krypto_fsm.ongoing("GetReg")),
+                led6.eq(self.copro.krypto_fsm.ongoing("Compute1") | self.copro.krypto_fsm.ongoing("Compute2") | self.copro.krypto_fsm.ongoing("Compute3") | self.copro.krypto_fsm.ongoing("Compute4")),
+                led7.eq(self.copro.krypto_fsm.ongoing("WaitReadOperand")),
+                #led4.eq(self.copro.krypto_fsm.ongoing("Temporary")),
+                #led5.eq(0),
+                #led6.eq(self.copro.operand_idx[0]),
+                #led7.eq(self.copro.operand_idx[1]),
+                #led4.eq(regs[2][16:32] == 0x7000),
+                #led5.eq(regs[2][16:32] == 0x0070), # !!!!
+                #led6.eq(regs[2][16:32] != 0x0000),
+                #led7.eq(regs[2][ 0:16] != 0x0000)
+                #led6.eq(seen_command_we),
+                #led7.eq(seen_response_re),
+            ]
+        
+        if (False):
             led0 = platform.request("user_led", 0)
             led1 = platform.request("user_led", 1)
             led2 = platform.request("user_led", 2)
@@ -649,3 +873,53 @@ class MC68030_SYNC_FSM(Module):
                 led6.eq(my_mem_space),
                 led7.eq(cpu_mgt_cycle),
             ]
+
+
+        if (trace_inst_fifo != None):
+            #trace_enabled = Signal()
+            #sync_cpu += [
+            #    #If(~AS_i_n & RW_i_n & (A_i[8:32] == 0x408416), # vicinity of call to ispmmu
+            #    #   trace_enabled.eq(1)
+            #    #),
+            #    If(~AS_i_n & RW_i_n & (A_i[24:32] == 0x20),
+            #       trace_enabled.eq(1)
+            #    ),
+            #]
+            #self.comb += [
+            #    trace_inst_fifo.din[ 0: 8].eq(A_i[24:32]),
+            #    trace_inst_fifo.din[ 8:16].eq(A_i[16:24]),
+            #    trace_inst_fifo.din[16:24].eq(A_i[ 8:16]),
+            #    trace_inst_fifo.din[24:32].eq(A_i[ 0: 8]),
+            #]
+            #self.comb += [
+            #    trace_inst_fifo.din.eq(D_rev_i),
+            #]
+            self.submodules.trace_fsm = trace_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
+            trace_fsm.act("Reset",
+                          trace_inst_fifo.we.eq(0),
+                          NextState("Idle")
+            )
+            trace_fsm.act("Idle",
+                          #If(trace_enabled & ~AS_i_n & RW_i_n & (A_i[20:32] == 0x408), # read from ROM
+                          #If(trace_enabled & ~AS_i_n & (A_i[24:32] == 0x20), # read or write to my_mem
+                          If(my_copro_space & cpu_mgt_cycle & ~AS_i_n,
+                             trace_inst_fifo.we.eq(1),
+                             trace_inst_fifo.din[ 0: 8].eq(A_i[24:32]),
+                             trace_inst_fifo.din[ 8:16].eq(A_i[16:24]),
+                             trace_inst_fifo.din[16:24].eq(A_i[ 8:16]),
+                             trace_inst_fifo.din[24:32].eq(A_i[ 0: 8]),
+                             #NextState("Wait"),
+                             NextState("Delay"),
+                          )
+            )
+            trace_fsm.act("Delay",
+                          trace_inst_fifo.we.eq(1),
+                          trace_inst_fifo.din.eq(D_rev_i),
+                          NextState("Wait"),
+            )
+            trace_fsm.act("Wait",
+                          trace_inst_fifo.we.eq(0),
+                          #If(AS_i_n,
+                             NextState("Idle"),
+                          #)
+            )

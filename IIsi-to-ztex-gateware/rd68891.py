@@ -160,8 +160,13 @@ class rd68891(Module):
                           NextValue(alllast, command[14]),
                           NextValue(rs2_idx, command[12:14]),
                           NextValue(regnum, command[0:3]),
-                          NextValue(response, RESP_EA_TRANSFER),
-                          NextState("WaitReadResponse1"),
+                          If(command[11], # SKIP
+                             NextValue(response, RESP_SEND_REG | command[0:3]),
+                             NextState("WaitReadResponse2"),
+                          ).Else(
+                              NextValue(response, RESP_EA_TRANSFER),
+                              NextState("WaitReadResponse1"),
+                          ),
                           ###NextValue(response, RESP_IDLE),
                           ###NextState("Temporary"),
                           ##NextValue(response, RESP_ONGOING),
@@ -202,7 +207,6 @@ class rd68891(Module):
         krypto_fsm.act("GetReg",
                        If(operand_we,
                           NextValue(rs1, operand),
-                          #aes_in[0].eq(operand[0:8]),
                           aes_in[0].eq(rs2[(rs2_idx+0)[0:2]][24:32]),
                           NextState("Compute1"), # FIXME everywhere: encode vs. decode
                        ),

@@ -1,139 +1,29 @@
 from migen import *
 from migen.genlib.fifo import *
 
+from copro import *
 
-def null_primitive(CA = 0, PC = 0, IA = 0, PF = 0, TF = 0):
-    val = 0x0800
-    val = val | (CA << 15)
-    val = val | (PC << 14)
-    val = val | (IA <<  8)
-    val = val | (PF <<  1)
-    val = val | (TF <<  0)
-    return val
-
-def ea_transfer_primitive(CA = 0, PC = 0, DR = 0, Valid = None, Length = None):
-    assert(Valid != None)
-    assert(Length != None)
-    val = 0x1000
-    val = val | (CA << 15)
-    val = val | (PC << 14)
-    val = val | (DR << 13)
-    val = val | (Valid << 8) # 3 bits
-    val = val | (Length << 0) # 8 bits
-    return val
-
-def transfer_singlereg_primitive(CA = 0, PC = 0, DR = 0, DA = 0, Register = 0):
-    val = 0x0C00
-    val = val | (CA << 15)
-    val = val | (PC << 14)
-    val = val | (DR << 13)
-    val = val | (DA <<  3)
-    val = val | (Register << 0) # 3 bits
-    return val
-
-class rd68891(Module):
+class rd68891(Copro):
     def __init__(self, cd_krypto = "cpu"):
-
-        # RESP_IDLE = 0x0802
+        
+        super().__init__(cd_copro = cd_krypto)
+    
         RESP_IDLE = null_primitive(PF = 1)
-        print(f"RESP_IDLE is \${RESP_IDLE:x}")
-        # RESP_ONGOING = 0x8900
         RESP_ONGOING = null_primitive(CA = 1, IA = 1)
-        print(f"RESP_ONGOING is \${RESP_ONGOING:x}")
-        # RESP_EA_TRANSFER = 0x9610
         RESP_EA_TRANSFER = ea_transfer_primitive(CA = 1, Valid = 6, Length = 16)
-        print(f"RESP_EA_TRANSFER is \${RESP_EA_TRANSFER:x}")
-        # RESP_SEND_REG = 0x8C00
         RESP_SEND_REG = transfer_singlereg_primitive(CA = 1)
-        print(f"RESP_SEND_REG is \${RESP_SEND_REG:x}")
-        # RESP_RECV_REG = 0x2C00
         RESP_RECV_REG = transfer_singlereg_primitive(DR = 1)
-        print(f"RESP_RECV_REG is \${RESP_RECV_REG:x}")
 
         krypto_sync = getattr(self.sync, cd_krypto)
         
-        # register bank (32 bits) and aliases (16 or 32 bits)
-        self.regs = Array(Signal(32) for x in range(0,8))
-        response  = self.regs[0][16:32]
-        control   = self.regs[0][ 0:16]
-        save      = self.regs[1][16:32]
-        restore   = self.regs[1][ 0:16]
-        operation = self.regs[2][16:32]
-        command   = self.regs[2][ 0:16]
-        rsvd0     = self.regs[3][16:32]
-        condition = self.regs[3][ 0:16]
-        operand   = self.regs[4]
-        regselect = self.regs[5][16:32]
-        rsvd1     = self.regs[5][ 0:16]
-        instaddr  = self.regs[6]
-        operaddr  = self.regs[7]
+        response  = self.response
+        command   = self.command
+        operand   = self.operand
         
-        # read/write strobe (16 bits granularity)
-        self.reg_re = reg_re = Array(Signal(1) for x in range(0,16))
-        self.reg_we = reg_we = Array(Signal(1) for x in range(0,16))
-        
-        
-        #self.cir_response  = response  = Signal(16, reset = RESP_IDLE) # $00  R
-        #self.cir_control   = control   = Signal(16) # $02  W
-        #self.cir_save      = save      = Signal(16) # $04  R
-        #self.cir_restore   = restore   = Signal(16) # $06  R/W
-        #self.cir_operation = operation = Signal(16) # $08  R/W, W ??? *
-        #self.cir_command   = command   = Signal(16) # $0A  W
-        #self.cir_rsvd0     = rsvd0     = Signal(16) # $0C  --
-        #self.cir_condition = condition = Signal(16) # $0E  W
-        #self.cir_operand   = operand   = Signal(32) # $10  R/W
-        #self.cir_regselect = regselect = Signal(16) # $14  R (upper only)
-        #self.cir_rsvd1     = rsvd1     = Signal(16) # $16  --
-        #self.cir_instaddr  = instaddr  = Signal(32) # $18  W
-        #self.cir_operaddr  = operaddr  = Signal(32) # $1C  R/W *
-        
-        # 16-bits granularity
-        ##response_re = reg_re[1]
-        ##command_we = reg_we[4]
-        ##operand_re = reg_re[8]
-        ##operand_we = reg_we[8]
-        # delay by 1 cycle, otherwise it seems the actual registers aren't ready when the strobe arrives
-        response_re = Signal()
-        command_we = Signal()
-        operand_re = Signal()
-        operand_we = Signal()
-        krypto_sync += [
-            If(reg_re[1],
-               response_re.eq(1),
-            ).Else(
-                response_re.eq(0),
-            ),
-            If(reg_re[8],
-               operand_re.eq(1),
-            ).Else(
-                operand_re.eq(0),
-            ),
-            If(reg_we[4],
-               command_we.eq(1),
-            ).Else(
-                command_we.eq(0),
-            ),
-            If(reg_we[8],
-               operand_we.eq(1),
-            ).Else(
-                operand_we.eq(0),
-            ),
-        ]
-        
-        #self.cir_response_re  = response_re  = Signal(1)
-        ## self.cir_control_we   = control_we   = Signal(1)
-        ## self.cir_save_re      = save_re      = Signal(1)
-        ## self.cir_restore_re   = restore_re   = Signal(1)
-        ## self.cir_restore_we   = restore_we   = Signal(1)
-        ## self.cir_operation_we = operation_we = Signal(1)
-        #self.cir_command_we   = command_we   = Signal(1)
-        ## self.cir_condition_we = condition_we = Signal(1)
-        #self.cir_operand_re   = operand_re   = Signal(1)
-        #self.cir_operand_we   = operand_we   = Signal(1)
-        ## self.cir_regselect_re = regselect_re = Signal(1)
-        ## self.cir_instaddr_we  = instaddr_we  = Signal(1)
-        ## self.cir_operaddr_re  = operaddr_re  = Signal(1)
-        ## self.cir_operaddr_we  = operaddr_we  = Signal(1)
+        response_re = self.response_re
+        command_we  = self.command_we
+        operand_re  = self.operand_re
+        operand_we  = self.operand_we
         
         ####
         
@@ -167,10 +57,6 @@ class rd68891(Module):
                               NextValue(response, RESP_EA_TRANSFER),
                               NextState("WaitReadResponse1"),
                           ),
-                          ###NextValue(response, RESP_IDLE),
-                          ###NextState("Temporary"),
-                          ##NextValue(response, RESP_ONGOING),
-                          ##NextState("Temporary"),
                        ),
         )
         krypto_fsm.act("WaitReadResponse1",
@@ -184,12 +70,6 @@ class rd68891(Module):
         krypto_fsm.act("GetData",
                        If(operand_we,
                           NextValue(operand_idx, operand_idx + 1),
-                          #Case(operand_idx, {
-                          #     0x0: [ NextValue(rs2[0], operand),],
-                          #     0x1: [ NextValue(rs2[1], operand),],
-                          #     0x2: [ NextValue(rs2[2], operand),],
-                          #     0x3: [ NextValue(rs2[3], operand),],
-                          #}),
                           NextValue(rs2[operand_idx], operand),
                           If((operand_idx == 0x3),
                              NextState("WaitReadResponse2"),

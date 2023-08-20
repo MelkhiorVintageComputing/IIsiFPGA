@@ -20,7 +20,7 @@ class rd68883(Copro):
         operand_we  = self.operand_we
 
         # FP registers from '881/'882
-        self.regs_fp = regs_fp = Array(Signal(81) for x in range(8))
+        self.regs_fp = regs_fp = Array(Signal(81, reset = (0x08DEAD0000BEEF0000000 | x)) for x in range(8))
         regs_fpcr = Signal(32)
         regs_fpsr = Signal(32)
         regs_fpiar = Signal(32)
@@ -78,26 +78,26 @@ class rd68883(Copro):
         ]
 
         fp32_layout = [
-            ( "sign", 1),
-            ( "exponent", 8),
             ( "mantissa", 23),
+            ( "exponent", 8),
+            ( "sign", 1),
         ]
         fp64_layout = [
-            ( "sign", 1),
-            ( "exponent", 11),
             ( "mantissa", 52),
+            ( "exponent", 11),
+            ( "sign", 1),
         ]
         fp80_layout = [
-            ( "sign", 1),
-            ( "exponent", 15),
-            ( "zero", 16),
-            ( "leading1", 1),
             ( "mantissa", 63),
+            ( "leading1", 1),
+            ( "zero", 16),
+            ( "exponent", 15),
+            ( "sign", 1),
         ]
         fp79_layout = [
-            ( "sign", 1),
-            ( "exponent", 15),
             ( "mantissa", 63),
+            ( "exponent", 15),
+            ( "sign", 1),
         ]
 
         operand_to_fp32 = Record(fp32_layout)
@@ -111,6 +111,11 @@ class rd68883(Copro):
             operand_to_fp79.sign.eq(operand_to_fp80.sign),
             operand_to_fp79.exponent.eq(operand_to_fp80.exponent),
             operand_to_fp79.mantissa.eq(operand_to_fp80.mantissa),
+        ]
+        self.comb += [
+            conv_32_81_in.eq(operand_to_fp32.raw_bits()),
+            conv_79_81_in.eq(operand_to_fp79.raw_bits()), # FIXME: ignoring leading 1
+            conv_64_81_in.eq(operand_to_fp64.raw_bits()),
         ]
 
         fp80_to_operand = Record(fp80_layout)
@@ -194,15 +199,12 @@ class rd68883(Copro):
                              Case(data_type, {
                                  0x1: [
                                      compute_fifo_din.operand.eq(conv_32_81_out),
-                                     conv_32_81_in.eq(operand_to_fp32.raw_bits()),
                                  ],
                                  0x2: [
                                      compute_fifo_din.operand.eq(conv_79_81_out),
-                                     conv_79_81_in.eq(operand_to_fp79.raw_bits()), # FIXME: ignoring leading 1
                                  ],
                                  0x5: [
                                      compute_fifo_din.operand.eq(conv_64_81_out),
-                                     conv_64_81_in.eq(operand_to_fp64.raw_bits()),
                                  ],
                              }),
                           ),
@@ -224,20 +226,20 @@ class rd68883(Copro):
                        NextState("Idle"),
         )
         fpu_compute_fsm.act("Idle",
-                       If(compute_fifo.re,
+                       If(compute_fifo.readable,
                           If(compute_fifo_dout.regormem,
-                             NextValue(operand0, compute_fifo_din.operand),
+                             NextValue(operand0, compute_fifo_dout.operand),
                           ).Else(
-                             NextValue(operand0, regs_fp[compute_fifo_din.regin]),
+                             NextValue(operand0, regs_fp[compute_fifo_dout.regin]),
                           ),
-                          NextValue(operand1, regs_fp[compute_fifo_din.regout]),
+                          NextValue(operand1, regs_fp[compute_fifo_dout.regout]),
                           NextState("Compute"),
                        ),
         )
         fpu_compute_fsm.act("Compute",
                             Case(compute_fifo_dout.opcode, {
                                 0x00: [ # FPMove
-                                    NextValue(regs_fp[compute_fifo_din.regout], operand0),
+                                    NextValue(regs_fp[compute_fifo_dout.regout], operand0),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
@@ -261,7 +263,7 @@ class rd68883(Copro):
         fpu_compute_fsm.act("Wait",
                             NextValue(delay, delay - 1),
                             If(delay == 0,
-                               NextValue(regs_fp[compute_fifo_din.regout], out_pipelines[pip_idx]),
+                               NextValue(regs_fp[compute_fifo_dout.regout], out_pipelines[pip_idx]),
                                compute_fifo.re.eq(1),
                                NextState("Idle"),
                             ),
@@ -317,38 +319,88 @@ class rd68883(Copro):
                        ),
         )
         fpu_fptomem_fsm.act("WaitCompute",
-                            If(~compute_fifo.re, # FIFO empty, let's go
-                               conv_81_all_in.eq(regs_fp[reg_idx]),
-                               Case(data_type, {
-                                   0x1: [
-                                       # FIXME FP32
-                                       NextValue(op_cycle,0),
-                                   ],
-                                   0x2: [
-                                       NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
-                                       fp79_to_operand.eq(conv_81_79_out),
-                                       NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
-                                       NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
-                                       NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
-                                       NextValue(op_cycle,2),
-                                   ],
-                                   0x5: [
-                                       # FIXME FP64
-                                       NextValue(op_cycle,1),
-                                   ],
-                               }),
-                               NextState("WaitData"),
+                            If(~compute_fifo.readable, # FIFO empty, let's go
+                               #conv_81_all_in.eq(regs_fp[reg_idx]),
+                               NextValue(conv_81_all_in, regs_fp[reg_idx]),
+                               #Case(data_type, {
+                               #    0x1: [
+                               #        # FIXME FP32
+                               #        #NextValue(op_cycle,0),
+                               #    ],
+                               #    0x2: [
+                               #        #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
+                               #        fp79_to_operand.eq(conv_81_79_out),
+                               #        #NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
+                               #        #NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
+                               #        #NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
+                               #        #NextValue(op_cycle,2),
+                               #    ],
+                               #    0x5: [
+                               #        # FIXME FP64
+                               #        #NextValue(op_cycle,1),
+                               #    ],
+                               #}),
+                               #NextState("WaitReadResponse1"),
+                               NextState("SetupData"),
                             ),
+                       # FIXME: illegal stuff
+        )
+        fpu_fptomem_fsm.act("SetupData",
+                            Case(data_type, {
+                                0x1: [
+                                    # FIXME FP32
+                                    NextValue(op_cycle,0),
+                                ],
+                                0x2: [
+                                    #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
+                                    #fp79_to_operand.eq(conv_81_79_out),
+                                    #NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
+                                    #NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
+                                    #NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
+                                    NextValue(fp79_to_operand.raw_bits(), conv_81_79_out),
+                                    NextValue(op_cycle,2),
+                                ],
+                                0x5: [
+                                    # FIXME FP64
+                                    NextValue(op_cycle,1),
+                                ],
+                            }),
+                            #NextState("WaitReadResponse1"),
+                            NextState("StartData"),
+                            # FIXME: illegal stuff
+        )
+        fpu_fptomem_fsm.act("StartData",
+                            Case(data_type, {
+                                0x1: [
+                                    # FIXME FP32
+                                ],
+                                0x2: [
+                                    NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
+                                    NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
+                                    NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
+                                    NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
+                                ],
+                                0x5: [
+                                    # FIXME FP64
+                                ],
+                            }),
+                            NextState("WaitReadResponse1"),
+        )
+        fpu_fptomem_fsm.act("WaitReadResponse1",
+                       If(response_re,
+                          NextValue(response, null_primitive(CA=0,IA=1)), # ongoing
+                          NextState("WaitData"),
+                       ),
+                       # FIXME: illegal stuff
         )
         fpu_fptomem_fsm.act("WaitData",
-                            If(response_re,
+                            If(operand_re,
                                NextValue(op_cycle, op_cycle - 1),
                                If(op_cycle == 0,
                                   NextValue(response, null_primitive(PF = 1)),
                                   NextState("Idle"),
                                ).Else(
                                    NextValue(operand, operands[op_cycle]),
-                                   NextValue(response, null_primitive(CA=0, IA=1)),
                                )
                             ),
         )

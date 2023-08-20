@@ -132,6 +132,8 @@ class rd68883(Copro):
             compute_fifo.din.eq(compute_fifo_din.raw_bits()),
         ]
 
+        const_table = Array(Signal(80, reset = 0) for x in range(64))
+
         # **********************************************************************************
         ### General, Mem-to-FP FSM (opclass 010)
         self.submodules.fpu_memtofp_fsm = fpu_memtofp_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
@@ -139,7 +141,7 @@ class rd68883(Copro):
                        NextState("Idle"),
         )
         fpu_memtofp_fsm.act("Idle",
-                       If(command_we & (opclass == 2), # 'b010
+                       If(command_we & (opclass == 2),
                           NextValue(data_type, rx),
                           NextValue(reg_idx, ry),
                           NextValue(opcode, extension),
@@ -147,38 +149,51 @@ class rd68883(Copro):
                               # long word integer
                               0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=4)),
                                      NextValue(op_cycle,0),
+                                     NextState("WaitReadResponse1"),
                               ],
                               # FP32
                               0x1: [ NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=0,Valid=Valid_Data,Length=4)),
                                      NextValue(op_cycle,0),
+                                     NextState("WaitReadResponse1"),
                               ],
                               # FP80
                               0x2: [ NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=0,Valid=Valid_Memory,Length=12)),
                                      NextValue(op_cycle,2),
+                                     NextState("WaitReadResponse1"),
                               ],
                               # pack real, static k
                               0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Memory,Length=12)),
                                      NextValue(op_cycle,2),
+                                     NextState("WaitReadResponse1"),
                               ], # might need static k ?
                               # word integer
                               0x4: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Memory,Length=2)),
                                      NextValue(op_cycle,0),
+                                     NextState("WaitReadResponse1"),
                               ],
                               # FP64:
                               0x5: [ NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=0,Valid=Valid_Memory,Length=8)),
                                      NextValue(op_cycle,1),
+                                     NextState("WaitReadResponse1"),
                               ],
                               # byte integer
                               0x6: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Memory,Length=1)),
                                      NextValue(op_cycle,0),
+                                     NextState("WaitReadResponse1"),
                               ],
-                              # pack real,dynamic k
-                              0x7: [ NextValue(response, null_primitive(PF=1)), # FIXME
-                                     NextValue(op_cycle,0),
+                              # not regular stuff, movecr
+                              0x7: [ 
+                                  compute_fifo_din.regin.eq(0),
+                                  compute_fifo_din.regout.eq(ry),
+                                  compute_fifo_din.regormem.eq(1),
+                                  compute_fifo_din.opcode.eq(0x0), # use FMove
+                                  compute_fifo.we.eq(1),
+                                  compute_fifo_din.operand.eq(Cat(const_table[extension[0:6]][0:63], const_table[extension[0:6]][64:80], Signal(2, reset = 0x1))),
+                                  NextValue(response, null_primitive(PF=1)), # IDLE
+                                  NextState("Idle"),
                               ]
                           }),
-                          NextState("WaitReadResponse1"),
-                       ),
+                       )
         )
 
         fpu_memtofp_fsm.act("WaitReadResponse1",
@@ -490,3 +505,29 @@ class rd68883(Copro):
                                   o_R = out_pipelines[2],)
         platform.add_source("FPDiv_15_63_Freq100_uid2.vhdl", "vhdl")
 
+
+        ############ sonst table
+        self.comb += [
+            const_table[0x00].eq(0x4000c90fdaa22168c235), # Pi      
+            const_table[0x0b].eq(0x3ffd9a209a84fbcff798), # Log10(2)
+            const_table[0x0c].eq(0x4000adf85458a2bb4a9a), # e       
+            const_table[0x0d].eq(0x3fffb8aa3b295c17f0bc), # Log2(e) 
+            const_table[0x0e].eq(0x3ffdde5bd8a937287195), # Log10(e)
+            const_table[0x0f].eq(0x00000000000000000000), # Zero    
+            const_table[0x30].eq(0x3ffeb17217f7d1cf79ac), # ln(2)   
+            const_table[0x31].eq(0x4000935d8dddaaa8ac17), # ln(10)  
+            const_table[0x32].eq(0x3fff8000000000000000), # 10^0    
+            const_table[0x33].eq(0x4002a000000000000000), # 10^1    
+            const_table[0x34].eq(0x4005c800000000000000), # 10^2    
+            const_table[0x35].eq(0x400c9c40000000000000), # 10^4    
+            const_table[0x36].eq(0x4019bebc200000000000), # 10^8    
+            const_table[0x37].eq(0x40348e1bc9bf04000000), # 10^16   
+            const_table[0x38].eq(0x40699dc5ada82b70b59e), # 10^32   
+            const_table[0x39].eq(0x40d3c2781f49ffcfa6d5), # 10^64   
+            const_table[0x3a].eq(0x41a893ba47c980e98ce0), # 10^128  
+            const_table[0x3b].eq(0x4351aa7eebfb9df9de8e), # 10^256  
+            const_table[0x3c].eq(0x46a3e319a0aea60e91c7), # 10^512  
+            const_table[0x3d].eq(0x4d48c976758681750c17), # 10^1024 
+            const_table[0x3e].eq(0x5a929e8b3b5dc53d5de5), # 10^2048 
+            const_table[0x3f].eq(0x7525c46052028a20979b), # 10^4096 
+        ]

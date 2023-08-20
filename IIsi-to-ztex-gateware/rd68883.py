@@ -48,7 +48,6 @@ class rd68883(Copro):
         operands = Array(Signal(32) for x in range(3))
         reg_idx = Signal(3)
         opcode = Signal(7)
-        decoded_operand = Signal(81)
 
         # conversion
         # in
@@ -404,3 +403,33 @@ class rd68883(Copro):
                                )
                             ),
         )
+
+
+
+
+
+        self.submodules.fpu_fptofp_fsm = fpu_fptofp_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+
+        fpu_fptofp_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_fptofp_fsm.act("Idle",
+                       If(command_we & (opclass == 0), # 'b000
+                          NextValue(reg_idx, ry),
+                          NextValue(opcode, extension),
+                          NextValue(response, null_primitive(CA=1,IA=1)), # ongoing
+
+                          compute_fifo_din.regin.eq(rx),
+                          compute_fifo_din.regout.eq(ry),
+                          compute_fifo_din.regormem.eq(0),
+                          compute_fifo_din.opcode.eq(extension),
+                          compute_fifo.we.eq(1),
+                          compute_fifo_din.operand.eq(0),
+                          NextState("Done"),
+                       ),
+        )
+        fpu_fptofp_fsm.act("Done",
+                           NextValue(response, null_primitive(PF=1)), # done
+                           NextState("Idle"),
+        )
+

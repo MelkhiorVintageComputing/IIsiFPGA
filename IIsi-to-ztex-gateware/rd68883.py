@@ -368,7 +368,7 @@ class rd68883(Copro):
         delay = Signal(8)
 
         ## pipelines output frol the FloPoCo compute blocks
-        out_pipelines = Array(Signal(81) for x in range(2))
+        out_pipelines = Array(Signal(81) for x in range(3))
         pip_idx = Signal(3)
 
         self.submodules.fpu_compute_fsm = fpu_compute_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
@@ -389,21 +389,45 @@ class rd68883(Copro):
         )
         fpu_compute_fsm.act("Compute",
                             Case(compute_fifo_dout.opcode, {
-                                0x00: [ # FPMove
+                                # no extra compute
+                                0x00: [ # FMove
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
-                                0x22: [ # FPAdd
-                                    NextValue(delay, 1),
+                                0x18: [ # FAbs
+                                    NextValue(regs_fp[compute_fifo_dout.regout], operand0 & ~(1 << 78)),
+                                    compute_fifo.re.eq(1),
+                                    NextState("Idle"),
+                                ],
+                                0x1A: [ # FNeg
+                                    NextValue(regs_fp[compute_fifo_dout.regout], operand0 ^ (1 << 78)),
+                                    compute_fifo.re.eq(1),
+                                    NextState("Idle"),
+                                ],
+                                # dedicated compute pipelines
+                                0x20: [ # FDiv
+                                    NextValue(delay, 7),
+                                    NextValue(pip_idx, 2),
+                                    NextState("Wait"),
+                                ],
+                                0x22: [ # FAdd
+                                    NextValue(delay, 1), # pipeline latency - 1, is that OK ?
                                     NextValue(pip_idx, 0),
                                     NextState("Wait"),
                                 ],
-                                0x23: [ # FPMul
+                                0x23: [ # FMul
                                     NextValue(delay, 1),
                                     NextValue(pip_idx, 1),
                                     NextState("Wait"),
                                 ],
+                                0x28: [ # FSub
+                                    NextValue(operand0, operand0 ^ (1 << 78)), # invert sign bit
+                                    NextValue(delay, 2), # we're updating the operand, so one more cycle
+                                    NextValue(pip_idx, 0),
+                                    NextState("Wait"),
+                                ],
+                                # TBD
                                 "default": [ # oups
                                     NextValue(delay, 1),
                                     NextValue(pip_idx, 0),
@@ -458,3 +482,11 @@ class rd68883(Copro):
                                   i_Y = operand1,
                                   o_R = out_pipelines[1],)
         platform.add_source("FPMult_15_63_uid2_Freq300_uid3.vhdl", "vhdl")
+
+        self.specials += Instance("FPDiv_15_63_Freq100_uid2",
+                                  i_clk = ClockSignal(cd_fpu),
+                                  i_X = operand1, # backward
+                                  i_Y = operand0,
+                                  o_R = out_pipelines[2],)
+        platform.add_source("FPDiv_15_63_Freq100_uid2.vhdl", "vhdl")
+

@@ -34,6 +34,7 @@ from VintageBusFPGA_Common.goblin_accel import *
 # Wishbone stuff
 from VintageBusFPGA_Common.cdc_wb import WishboneDomainCrossingMaster
 from VintageBusFPGA_Common.fpga_blk_dma import *
+from VintageBusFPGA_Common.MacPeriphSoC import *
 
 # CRG ----------------------------------------------------------------------------------------------
 class _CRG(Module):
@@ -139,80 +140,29 @@ class _CRG(Module):
             
             
         
-class IIsiFPGA(SoCCore):
-    def __init__(self, variant, version, sys_clk_freq, goblin, goblin_res, **kwargs):
+class IIsiFPGA(MacPeriphSoC):
+    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, rd68891, rd68883, **kwargs):
         print(f"Building IIsiFPGA for board version {version}")
-        
-        kwargs["cpu_type"] = "None"
-        kwargs["integrated_sram_size"] = 0
-        kwargs["with_uart"] = False
-        kwargs["with_timer"] = False
-        
-        self.sys_clk_freq = sys_clk_freq
     
         self.platform = platform = ztex213_pds.Platform(variant = variant, version = version)
 
         use_goblin_alt = True
-        if (not use_goblin_alt):
-            from VintageBusFPGA_Common.goblin_fb import goblin_rounded_size, Goblin
-        else:
-            from VintageBusFPGA_Common.goblin_alt_fb import goblin_rounded_size, GoblinAlt
 
-        if (goblin):
-            hres = int(goblin_res.split("@")[0].split("x")[0])
-            vres = int(goblin_res.split("@")[0].split("x")[1])
-            goblin_fb_size = goblin_rounded_size(hres, vres)
-            print(f"Reserving {goblin_fb_size} bytes ({goblin_fb_size//1048576} MiB) for the goblin")
-        else:
-            hres = 0
-            vres = 0
-            goblin_fb_size = 0
-            # litex.soc.cores.video.video_timings.update(goblin_timings)
+        hdmi = True
         
-        SoCCore.__init__(self,
-                         platform=platform,
-                         sys_clk_freq=sys_clk_freq,
-                         clk_freq=sys_clk_freq,
-                         csr_paging=0x800, #  default is 0x800
-                         bus_interconnect = "crossbar",
-                         **kwargs)
+        MacPeriphSoC.__init__(self,
+                              platform=platform,
+                              sys_clk_freq=sys_clk_freq,
+                              csr_paging=0x800, #  default is 0x800
+                              bus_interconnect = "crossbar",
+                              goblin = goblin,
+                              hdmi = hdmi,
+                              goblin_res = goblin_res,
+                              use_goblin_alt = use_goblin_alt,
+                              **kwargs)
 
-        # Quoting the doc:
-        # * Separate address spaces are reserved for processor access to cards in NuBus slots. For a
-        # * device in NuBus slot number s, the address space in 32-bit mode begins at address
-        # * $Fs00 0000 and continues through the highest address, $FsFF FFFF (where s is a constant in
-        # * the range $9 through $E for the Macintosh II, the Macintosh IIx, and the Macintosh IIfx;
-        # * $A through $E for the Macintosh Quadra 900; $9 through $B for the Macintosh IIcx;
-        # * $C through $E for the Macintosh IIci; $D and $E for the Macintosh Quadra 700; and
-        # * $9 for the Macintosh IIsi).
-        # the Q650 is $C through $E like the IIci, $E is the one with the PDS.
-        # So at best we get 16 MiB in 32-bits mode, unless using "super slot space"
-        # in 24 bits it's only one megabyte,  $s0 0000 through $sF FFFF
-        # they are translated: '$s0 0000-$sF FFFF' to '$Fs00 0000-$Fs0F FFFF' (for s in range $9 through $E)
-        # let's assume we have 32-bits mode, this can be requested in the DeclROM apparently
-        # PDS pseudo-slot same as NuBus, but we will always be $9 in IIsi
-        self.wb_mem_map = wb_mem_map = {
-            # master to map the NuBus access to RAM
-            "master":            0x00000000, # to 0x3FFFFFFF
-            "main_ram":          0x80000000, # not directly reachable from NuBus
-            "video_framebuffer": 0x80000000 + 0x10000000 - goblin_fb_size, # Updated later
-            # map everything in slot 0, remapped from the real slot in NuBus2Wishbone
-            "goblin_mem":        0xF0000000, # up to 8 MiB of FB memory
-            #"END OF FIRST MB" :  0xF00FFFFF,
-            #"END OF 8 MB":       0xF07FFFFF,
-            "goblin_bt" :        0xF0900000, # BT for goblin (regs)
-            "goblin_accel" :     0xF0901000, # accel for goblin (regs)
-            "goblin_accel_ram" : 0xF0902000, # accel for goblin (scratch ram)
-            "stat"             : 0xF0903000, # stat
-            "goblin_accel_rom" : 0xF0910000, # accel for goblin (rom)
-            "goblin_audio_ram" : 0xF0920000, # audio for goblin (RAM buffers)
-            "csr" :              0xF0A00000, # CSR
-            "pingmaster":        0xF0B00000,
-            "ethmac":            0xF0C00000,
-            "rom":               0xF0FF8000, # ROM at the end (32 KiB of it ATM)
-            #"END OF SLOT SPACE": 0xF0FFFFFF,
-        }
-        self.mem_map.update(wb_mem_map)
+        self.mem_map.update(self.wb_mem_map)
+        
         self.submodules.crg = _CRG(platform=platform, version=version, sys_clk_freq=sys_clk_freq, goblin=goblin, pix_clk=litex.soc.cores.video.video_timings[goblin_res]["pix_clk"])
 
         ## add our custom timings after the clocks have been defined
@@ -228,58 +178,15 @@ class IIsiFPGA(SoCCore):
                     #print(fix_line)
                     platform.add_platform_command(fix_line)
 
-        rom_file = "rom_{}.bin".format(version.replace(".", "_"))
-        rom_data = soc_core.get_mem_data(filename_or_regions=rom_file, endianness="little")
-        # rom = Array(rom_data)
-        #print("\n****************************************\n")
-        #for i in range(len(rom)):
-        #    print(hex(rom[i]))
-        #print("\n****************************************\n")
-        self.add_ram("rom", origin=self.mem_map["rom"], size=2**15, contents=rom_data, mode="r") ## 32 KiB, must match mmap
-
-        #from wb_test import WA2D
-        #self.submodules.wa2d = WA2D(self.platform)
-        #self.bus.add_slave("WA2D", self.wa2d.bus, SoCRegion(origin=0x00C00000, size=0x00400000, cached=False))
-
-        # notsimul to signify we're making a real bitstream
-        # notsimul == False only to produce a verilog implementation to simulate the bus side of things
-        notsimul = True
-        if (notsimul):
-            avail_sdram = 0
-            self.submodules.ddrphy = s7ddrphy.A7DDRPHY(platform.request("ddram"),
-                                                       memtype        = "DDR3",
-                                                       nphases        = 4,
-                                                       sys_clk_freq   = sys_clk_freq)
-            self.add_sdram("sdram",
-                           phy           = self.ddrphy,
-                           module        = MT41J128M16(sys_clk_freq, "1:4"),
-                           l2_cache_size = 0,
-            )
-            avail_sdram = self.bus.regions["main_ram"].size
-            from sdram_init import DDR3FBInit
-            self.submodules.sdram_init = DDR3FBInit(sys_clk_freq=sys_clk_freq, bitslip=1, delay=25)
-            self.bus.add_master(name="DDR3Init", master=self.sdram_init.bus)
-        else:
-            avail_sdram = 256 * 1024 * 1024
-            #self.add_ram("ram", origin=0x8f800000, size=2**16, mode="rw")
-            self.add_ram("ram", origin=0x00000000, size=2**16, mode="rw")
-
-        if (not notsimul): # otherwise we have no CSRs and litex doesn't like that
-            self.submodules.leds = ClockDomainsRenamer("cpu")(LedChaser(
-                pads         = platform.request_all("user_led"),
-                sys_clk_freq = 25e6))
-            self.add_csr("leds")
-
-        base_fb = self.wb_mem_map["main_ram"] + avail_sdram - 1048576 # placeholder
+        MacPeriphSoC.mac_add_declrom(self, version = version, flash = False, config_flash = config_flash)
+        
+        MacPeriphSoC.mac_add_sdram(self,
+                                   hwinit = True,
+                                   sdram_dfii_base = 0xf0a02000 ,
+                                   ddrphy_base = 0xf0a01000 ) # FIXME: can we get the appropriate value here ??? or are they only available after finalize ???
+        
         if (goblin):
-            if (avail_sdram >= goblin_fb_size):
-                avail_sdram = avail_sdram - goblin_fb_size
-                base_fb = self.wb_mem_map["main_ram"] + avail_sdram
-                self.wb_mem_map["video_framebuffer"] = base_fb
-                print(f"FrameBuffer base_fb @ {base_fb:x}")
-            else:
-                print("***** ERROR ***** Can't have a FrameBuffer without main ram\n")
-                assert(False)
+            MacPeriphSoC.mac_add_goblin_prelim(self)
     
         # don't enable anything on the NuBus side for XX seconds after power up
         # this avoids FPGA initialization messing with the cold boot process
@@ -340,47 +247,17 @@ class IIsiFPGA(SoCCore):
                                                                         wb_write=wishbone_writemaster_sys,
                                                                         dram_native_r=self.sdram.crossbar.get_port(mode="read", data_width=128, clock_domain="cpu"),
                                                                         cd_cpu="cpu",
-                                                                        trace_inst_fifo=self.ziscreen_fifo)
+                                                                        trace_inst_fifo=self.ziscreen_fifo,
+                                                                        rd68891 = rd68891,
+                                                                        rd68883 = rd68883)
         if (goblin):
-            if (not use_goblin_alt):
-                self.submodules.videophy = VideoS7HDMIPHY(platform.request("hdmi"), clock_domain="hdmi")
-                self.submodules.goblin = Goblin(soc=self, phy=self.videophy, timings=goblin_res, clock_domain="hdmi", irq_line=fb_irq, endian="little", hwcursor=False, truecolor=True) # clock_domain for the HDMI side, goblin is running in cd_sys
-            else:
-                # GoblinAlt contains its own PHY
-                self.submodules.goblin = GoblinAlt(soc=self, timings=goblin_res, clock_domain="hdmi", irq_line=fb_irq, endian="little", hwcursor=False, truecolor=True)
-                # it also has a bus master so that the audio bit can fetch data from Wishbone
-                self.bus.add_master(name="GoblinAudio", master=self.goblin.goblin_audio.busmaster)
-                self.add_ram("goblin_audio_ram", origin=self.mem_map["goblin_audio_ram"], size=2**13, mode="rw") # 8 KiB buffer, planned as 2*4KiB
-                self.comb += [ audio_irq.eq(self.goblin.goblin_audio.irq), ]
-                
-            self.bus.add_slave("goblin_bt", self.goblin.bus, SoCRegion(origin=self.mem_map.get("goblin_bt", None), size=0x1000, cached=False))
-            #pad_user_led_0 = platform.request("user_led", 0)
-            #pad_user_led_1 = platform.request("user_led", 1)
-            #self.comb += pad_user_led_0.eq(self.goblin.video_framebuffer.underflow)
-            #self.comb += pad_user_led_1.eq(self.goblin.video_framebuffer.fb_dma.enable)
-            if (True):
-                self.submodules.goblin_accel = GoblinAccelNuBus(soc = self)
-                self.bus.add_slave("goblin_accel", self.goblin_accel.bus, SoCRegion(origin=self.mem_map.get("goblin_accel", None), size=0x1000, cached=False))
-                self.bus.add_master(name="goblin_accel_r5_i", master=self.goblin_accel.ibus)
-                self.bus.add_master(name="goblin_accel_r5_d", master=self.goblin_accel.dbus)
-                goblin_rom_file = "VintageBusFPGA_Common/blit_goblin_nubus.raw"
-                goblin_rom_data = soc_core.get_mem_data(filename_or_regions=goblin_rom_file, endianness="little")
-                goblin_rom_len = 4*len(goblin_rom_data);
-                rounded_goblin_rom_len = 2**log2_int(goblin_rom_len, False)
-                print(f"GOBLIN ROM is {goblin_rom_len} bytes, using {rounded_goblin_rom_len}")
-                assert(rounded_goblin_rom_len <= 2**16)
-                self.add_ram("goblin_accel_rom", origin=self.mem_map["goblin_accel_rom"], size=rounded_goblin_rom_len, contents=goblin_rom_data, mode="r")
-                self.add_ram("goblin_accel_ram", origin=self.mem_map["goblin_accel_ram"], size=2**12, mode="rw")
-
-        #from VintageBusFPGA_Common.Zled import Zled
-        #self.submodules.zled = Zled(platform=platform)
+            MacPeriphSoC.mac_add_goblin(self, use_goblin_alt = use_goblin_alt, hdmi = hdmi, goblin_res = goblin_res, goblin_irq = fb_irq, audio_irq = audio_irq)
 
         if (False):
             wb_forzscreen = wishbone.Interface(data_width=self.bus.data_width)
             from VintageBusFPGA_Common.Zscreen import Zscreen
             self.submodules.zscreen = Zscreen(platform=platform, wb=wb_forzscreen)
             self.bus.add_master(name="screentrace", master=wb_forzscreen)
-            
         
 def main():
     parser = argparse.ArgumentParser(description="IIsiFPGA")
@@ -388,8 +265,11 @@ def main():
     parser.add_argument("--variant", default="ztex2.13a", help="ZTex board variant (default ztex2.13a)")
     parser.add_argument("--version", default="V1.0", help="IIsiFPGA board version (default V1.0)")
     parser.add_argument("--sys-clk-freq", default=100e6, help="IIsiFPGA system clock (default 100e6 = 100 MHz)")
+    parser.add_argument("--config-flash", action="store_true", help="Configure the ROM to the internal Flash used for FPGA config")
     parser.add_argument("--goblin", action="store_true", help="add a goblin framebuffer")
     parser.add_argument("--goblin-res", default="640x480@60Hz", help="Specify the goblin resolution")
+    parser.add_argument("--rd68891", action="store_true", help="Add a RD68891 coprocessor (unfinished)")
+    parser.add_argument("--rd68883", action="store_true", help="Add a RD68883 coprocessor (barely started)")
     builder_args(parser)
     vivado_build_args(parser)
     args = parser.parse_args()
@@ -398,8 +278,12 @@ def main():
                    variant=args.variant,
                    version=args.version,
                    sys_clk_freq=int(float(args.sys_clk_freq)),
+                   config_flash=args.config_flash,
                    goblin=args.goblin,
-                   goblin_res=args.goblin_res)
+                   goblin_res=args.goblin_res,
+                   rd68891=args.rd68891,
+                   rd68883=args.rd68883,
+    )
 
     version_for_filename = args.version.replace(".", "_")
 

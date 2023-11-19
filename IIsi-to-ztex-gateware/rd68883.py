@@ -404,28 +404,56 @@ class rd68883(Copro):
         )
         fpu_compute_fsm.act("Compute",
                             Case(compute_fifo_dout.opcode, {
-                                # no extra compute
-                                0x00: [ # FMove
+                                0x00: [ # FMove # no extra compute
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
+                                # 0x01: FInt
+                                # 0x02: FSinh
+                                # 0x03: FIntrRZ
+                                # 0x04: FSqrt
+                                # 0x05: --
+                                # 0x06: FLognP1
+                                # 0x07: --
+                                # 0x08: FEtoxM1 [exp]
+                                # 0x09: FTanh
+                                # 0x0A: FAtan
+                                # 0x0B: --
+                                # 0x0C: FAsin
+                                # 0x0D: FAtanh
+                                # 0x0E: FSin
+                                # 0x0F: FTan
+                                # 0x10: FEtox [exp]
+                                # 0x11: FTwotox
+                                # 0x12: FTentox
+                                # 0x13: --
+                                # 0x14: FLogn
+                                # 0x15: FLog10
+                                # 0x16: FLog2
+                                # 0x17: --
                                 0x18: [ # FAbs
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0 & ~(1 << 78)),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
+                                # 0x19: FCosh
                                 0x1A: [ # FNeg
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0 ^ (1 << 78)),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
-                                # dedicated compute pipelines
+                                # 0x1B: --
+                                # 0x1C: FAcos
+                                # 0x1D: FCos
+                                # 0x1E: FGetExp
+                                # 0x1F: FGetMan
                                 0x20: [ # FDiv
                                     NextValue(delay, 7),
                                     NextValue(pip_idx, 2),
                                     NextState("Wait"),
                                 ],
+                                # 0x21: FMod
                                 0x22: [ # FAdd
                                     NextValue(delay, 1), # pipeline latency - 1, is that OK ?
                                     NextValue(pip_idx, 0),
@@ -436,13 +464,23 @@ class rd68883(Copro):
                                     NextValue(pip_idx, 1),
                                     NextState("Wait"),
                                 ],
+                                # 0x24: FSglDiv
+                                # 0x25: FRem
+                                # 0x26: FScale
+                                # 0x27: FSglMul
                                 0x28: [ # FSub
                                     NextValue(operand0, operand0 ^ (1 << 78)), # invert sign bit
                                     NextValue(delay, 2), # we're updating the operand, so one more cycle
                                     NextValue(pip_idx, 0),
                                     NextState("Wait"),
                                 ],
-                                # TBD
+                                # 0x29: --
+                                # 0x30 - 0x37 (!): FSinCos
+                                # 0x38: FCmp
+                                # 0x39: --
+                                # 0x3A: FTst
+                                # 0x3B - 0x3F: --
+                                # 0x40 - 0x7F: undefined
                                 "default": [ # oups
                                     NextValue(delay, 1),
                                     NextValue(pip_idx, 0),

@@ -7,7 +7,11 @@ import litex
 from litex.soc.interconnect import wishbone
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None):
+    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False):
+
+        if (rd68891 and rd68883):
+            print("Only one copro supported for now")
+            assert(False)
 
         platform = soc.platform
 
@@ -594,16 +598,16 @@ class MC68030_SYNC_FSM(Module):
         
         #
 
-        copro = True
+        copro = rd68891 or rd68883
 
         if (copro):
             self.submodules.copro_fsm = copro_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
             
-            if (False):
+            if (rd68891):
                 from rd68891 import rd68891
                 self.submodules.copro = rd68891(cd_krypto = cd_cpu)
                 copro_id_val = 0x6 # coprocessor id 0x110
-            else:
+            elif(rd68883):
                 from rd68883 import rd68883
                 self.submodules.copro = rd68883(platform = platform, cd_fpu = cd_cpu)
                 copro_id_val = 0x7 # coprocessor id 0x111 (full 'working' version would be 0x001)
@@ -770,7 +774,8 @@ class MC68030_SYNC_FSM(Module):
                           ),
                           NextState("Idle"),
             )
-                
+
+            ############################ DEBUG
                 
             if (True):
                 led0 = platform.request("user_led", 0)
@@ -825,26 +830,27 @@ class MC68030_SYNC_FSM(Module):
                 #    ),
                 #]
 
-                seen_compute = Signal()
-                sync_cpu += [
-                    If(~self.copro.fpu_compute_fsm.ongoing("Idle") & ~self.copro.fpu_compute_fsm.ongoing("Reset"),
-                       seen_compute.eq(1),
-                    ),
-                ]
-
-                seen_frommem = Signal()
-                sync_cpu += [
-                    If(~self.copro.fpu_memtofp_fsm.ongoing("Idle") & ~self.copro.fpu_memtofp_fsm.ongoing("Reset"),
-                       seen_frommem.eq(1),
-                    ),
-                ]
-
-                seen_tomem = Signal()
-                sync_cpu += [
-                    If(~self.copro.fpu_fptomem_fsm.ongoing("Idle") & ~self.copro.fpu_fptomem_fsm.ongoing("Reset"),
-                       seen_tomem.eq(1),
-                    ),
-                ]
+                if (False):
+                    seen_compute = Signal()
+                    sync_cpu += [
+                        If(~self.copro.fpu_compute_fsm.ongoing("Idle") & ~self.copro.fpu_compute_fsm.ongoing("Reset"),
+                           seen_compute.eq(1),
+                        ),
+                    ]
+                    
+                    seen_frommem = Signal()
+                    sync_cpu += [
+                        If(~self.copro.fpu_memtofp_fsm.ongoing("Idle") & ~self.copro.fpu_memtofp_fsm.ongoing("Reset"),
+                           seen_frommem.eq(1),
+                        ),
+                    ]
+                    
+                    seen_tomem = Signal()
+                    sync_cpu += [
+                        If(~self.copro.fpu_fptomem_fsm.ongoing("Idle") & ~self.copro.fpu_fptomem_fsm.ongoing("Reset"),
+                           seen_tomem.eq(1),
+                        ),
+                    ]
                 
                 self.comb += [
                     #led0.eq(~copro_fsm.ongoing("Idle")),
@@ -880,9 +886,12 @@ class MC68030_SYNC_FSM(Module):
                     #led6.eq(seen_command_we),
                     #led7.eq(seen_response_re),
                     
-                    led0.eq(~self.copro.fpu_memtofp_fsm.ongoing("Idle")),
-                    led1.eq(~self.copro.fpu_compute_fsm.ongoing("Idle")),
-                    led2.eq(~self.copro.fpu_fptomem_fsm.ongoing("Idle")),
+                    led0.eq(0),
+                    led1.eq(0),
+                    led2.eq(0),
+                    #led0.eq(~self.copro.fpu_memtofp_fsm.ongoing("Idle")),
+                    #led1.eq(~self.copro.fpu_compute_fsm.ongoing("Idle")),
+                    #led2.eq(~self.copro.fpu_fptomem_fsm.ongoing("Idle")),
                     #led3.eq(seen_command_we),
                     #led4.eq(seen_response_re),
                     #led3.eq(seen_compute),
@@ -890,9 +899,12 @@ class MC68030_SYNC_FSM(Module):
                     #led5.eq(seen_frommem),
                     led3.eq(0),
                     led4.eq(0),
-                    led5.eq(self.copro.regs_fp[0] == 0),
-                    led6.eq(self.copro.regs_fp[0][80]), # 
-                    led7.eq(self.copro.regs_fp[0][79]), # 
+                    led5.eq(0),
+                    led6.eq(0), # 
+                    led7.eq(0), # 
+                    #led5.eq(self.copro.regs_fp[0] == 0),
+                    #led6.eq(self.copro.regs_fp[0][80]), # 
+                    #led7.eq(self.copro.regs_fp[0][79]), # 
                 ]
         
         if (False):
@@ -907,14 +919,21 @@ class MC68030_SYNC_FSM(Module):
 
             self.comb += [
                 led0.eq(~slave_fsm.ongoing("Idle")),
-                led1.eq(~AS_i_n),
-                led2.eq(~RW_i_n),
-                led3.eq(~CBREQ_i_n ),
+                led1.eq(0),
+                led2.eq(0),
+                led3.eq(0),
+                #led1.eq(~AS_i_n),
+                #led2.eq(~RW_i_n),
+                #led3.eq(~CBREQ_i_n ),
                 
-                led4.eq(my_slot_space),
-                led5.eq(my_superslot_space),
-                led6.eq(my_mem_space),
-                led7.eq(cpu_mgt_cycle),
+                led4.eq(0),
+                led5.eq(0),
+                led6.eq(0),
+                led7.eq(0),
+                #led4.eq(my_slot_space),
+                #led5.eq(my_superslot_space),
+                #led6.eq(my_mem_space),
+                #led7.eq(cpu_mgt_cycle),
             ]
 
 

@@ -598,7 +598,7 @@ class MC68030_SYNC_FSM(Module):
         
         #
 
-        copro = rd68891 or rd68883
+        copro = (rd68891 or rd68883)
 
         if (copro):
             self.submodules.copro_fsm = copro_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
@@ -775,7 +775,7 @@ class MC68030_SYNC_FSM(Module):
                           NextState("Idle"),
             )
 
-            ############################ DEBUG
+            ## copro debug
                 
             if (True):
                 led0 = platform.request("user_led", 0)
@@ -853,15 +853,15 @@ class MC68030_SYNC_FSM(Module):
                     ]
                 
                 self.comb += [
-                    #led0.eq(~copro_fsm.ongoing("Idle")),
+                    led0.eq(~copro_fsm.ongoing("Idle")),
                     #led0.eq(~self.copro.krypto_fsm.ongoing("Idle")),
                     #led2.eq(self.copro.krypto_fsm.ongoing("WaitReadResponse1")),
                     #led3.eq(self.copro.krypto_fsm.ongoing("GetData")),
                     #led2.eq(seen_read),
                     #led3.eq(seen_write),
-                    #led1.eq(seen_operand_re),
-                    #led2.eq(seen_operand_we),
-                    #led3.eq(seen_response_re),
+                    led1.eq(seen_operand_re),
+                    led2.eq(seen_operand_we),
+                    led3.eq(seen_response_re),
                     
                     #led4.eq(seen_myself),
                     #led5.eq(my_copro_space & cpu_mgt_cycle),
@@ -886,9 +886,6 @@ class MC68030_SYNC_FSM(Module):
                     #led6.eq(seen_command_we),
                     #led7.eq(seen_response_re),
                     
-                    led0.eq(0),
-                    led1.eq(0),
-                    led2.eq(0),
                     #led0.eq(~self.copro.fpu_memtofp_fsm.ongoing("Idle")),
                     #led1.eq(~self.copro.fpu_compute_fsm.ongoing("Idle")),
                     #led2.eq(~self.copro.fpu_fptomem_fsm.ongoing("Idle")),
@@ -897,15 +894,80 @@ class MC68030_SYNC_FSM(Module):
                     #led3.eq(seen_compute),
                     #led4.eq(seen_tomem),
                     #led5.eq(seen_frommem),
-                    led3.eq(0),
-                    led4.eq(0),
-                    led5.eq(0),
-                    led6.eq(0), # 
-                    led7.eq(0), # 
                     #led5.eq(self.copro.regs_fp[0] == 0),
                     #led6.eq(self.copro.regs_fp[0][80]), # 
                     #led7.eq(self.copro.regs_fp[0][79]), # 
+                    
+                    #led0.eq(0),
+                    #led1.eq(0),
+                    #led2.eq(0),
+                    #led3.eq(0),
+                    led4.eq(0),
+                    led5.eq(0),
+                    led6.eq(0), 
+                    led7.eq(0),
                 ]
+
+        ############################ DEBUG
+
+        # cycle time logic analyzer
+        if (False):
+            buffer_addr_bits = 25 # 32 MiWords or 128 MiB, 'cause we can!
+            buffer_data_bits = 16 # probably overkill ?
+            addr_bits = 8
+            addr_bak = Signal(addr_bits)
+            
+            check_adr_ctr = Signal(buffer_addr_bits)
+            latency = Signal(buffer_data_bits)
+            read_or_write = Signal()
+            
+            self.submodules.write_fifo_check_latency  = write_fifo_check_latency =  ClockDomainsRenamer({"read": "sys",  "write": cd_cpu})(AsyncFIFOBuffered(width=(buffer_data_bits+1+buffer_addr_bits), depth=8))
+            from litex.soc.interconnect import wishbone
+            wishbone_check = wishbone.Interface(data_width=soc.bus.data_width)
+            soc.bus.add_master(name="PDSBridgeToWishbone_Check_Write", master=wishbone_check)
+            # deal with emptying the Write FIFO to the write WB
+            self.comb += [ wishbone_check.cyc.eq(write_fifo_check_latency.readable),
+                           wishbone_check.stb.eq(write_fifo_check_latency.readable),
+                           wishbone_check.we.eq(1),
+                           wishbone_check.adr.eq(Signal(30, reset = 0x20000000) | write_fifo_check_latency.dout[buffer_data_bits+1:buffer_data_bits+1+buffer_addr_bits]),
+                           #wishbone_check.dat_w.eq(write_fifo_check_latency.dout[0:buffer_data_bits] | Cat(Signal(31, reset = 0), write_fifo_check_latency.dout[buffer_data_bits:buffer_data_bits+1])),
+                           wishbone_check.dat_w.eq(Cat(write_fifo_check_latency.dout[0:buffer_data_bits], # %buffer_data_bits
+                                                       Signal(32-(buffer_data_bits+addr_bits+1), reset = 0),
+                                                       addr_bak, # %addr_bits
+                                                       write_fifo_check_latency.dout[buffer_data_bits:buffer_data_bits+1])), # %1
+                           wishbone_check.sel.eq(0xF),
+                           write_fifo_check_latency.re.eq(wishbone_check.ack),
+                           write_fifo_check_latency.din.eq(Cat(latency, read_or_write, check_adr_ctr)),
+            ]
+            record = Signal()
+            do_write = Signal()
+            timeout = Signal(10) # so we don't overload the wishbone
+            sync_cpu += [
+                If(timeout,
+                   timeout.eq(timeout - 1),
+                ),
+                If(do_write,
+                   do_write.eq(0),
+                ),
+                If(~AS_i_n & (A_i[28:32] == 0xF) & (timeout == 0) & ~record, # start with address in memory range
+                   latency.eq(0),
+                   record.eq(1),
+                   read_or_write.eq(RW_i_n),
+                   addr_bak.eq(A_i[32-addr_bits:32]),
+                ).Else(
+                    latency.eq(latency + 1),
+                ),
+                If((~STERM_i_n) & record, # only work if sync memory controller (IIsi) or other sync device
+                   record.eq(0),
+                   do_write.eq(1),
+                   check_adr_ctr.eq(check_adr_ctr + 1),
+                   timeout.eq(1023),
+                ),
+            ]
+            self.comb += [
+                write_fifo_check_latency.we.eq(do_write),
+                #led7.eq(record),
+            ]
         
         if (False):
             led0 = platform.request("user_led", 0)

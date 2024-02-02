@@ -230,7 +230,7 @@ class IIsiFPGA(MacPeriphSoC):
         #self.submodules.wishbone_writemaster_pds = WishboneDomainCrossingMaster(platform=self.platform, slave=wishbone_writemaster_sys, cd_master="cpu", cd_slave="sys")
         self.bus.add_master(name="PDSBridgeToWishbone_Write", master=wishbone_writemaster_sys)
 
-        if (True):
+        if (False):
             wb_forziscreen = wishbone.Interface(data_width=self.bus.data_width)
             from VintageBusFPGA_Common.Ziscreen import Ziscreen
             self.submodules.ziscreen_fifo = ClockDomainsRenamer({"read": "sys", "write": "cpu"})(AsyncFIFOBuffered(width=32, depth=1024))

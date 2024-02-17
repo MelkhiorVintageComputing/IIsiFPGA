@@ -14,6 +14,7 @@ from litex.soc.interconnect import wishbone
 from litex.soc.cores.clock import *
 from litex.soc.cores.led import LedChaser
 import ztex213_pds
+import trenz0710_pds
 import nubus_to_fpga_export
 
 from litedram.modules import MT41J128M16
@@ -37,7 +38,7 @@ from VintageBusFPGA_Common.fpga_blk_dma import *
 from VintageBusFPGA_Common.MacPeriphSoC import *
 
 # CRG ----------------------------------------------------------------------------------------------
-class _CRG(Module):
+class _CRG(Module, AutoCSR):
     def __init__(self, platform, version, sys_clk_freq,
                  goblin=False,
                  pix_clk=0):
@@ -53,18 +54,39 @@ class _CRG(Module):
             
 
         # # #
-        clk48 = platform.request("clk48")
-        ###### explanations from betrusted-io/betrusted-soc/betrusted_soc.py
-        # Note: below feature cannot be used because Litex appends this *after* platform commands! This causes the generated
-        # clock derived constraints immediately below to fail, because .xdc file is parsed in-order, and the main clock needs
-        # to be created before the derived clocks. Instead, we use the line afterwards.
-        platform.add_platform_command("create_clock -name clk48 -period 20.8333 [get_nets clk48]")
-        # The above constraint must strictly proceed the below create_generated_clock constraints in the .XDC file
-        # This allows PLLs/MMCMEs to be placed anywhere and reference the input clock
-        self.clk48_bufg = Signal()
-        self.specials += Instance("BUFG", i_I=clk48, o_O=self.clk48_bufg)
-        self.comb += self.cd_native.clk.eq(self.clk48_bufg)                
-        #self.cd_native.clk = clk48
+        board_clk_freq=0.0
+        board_clk = None
+        clk54 = None
+        self.board_clk_bufg = Signal()
+        if (version == "V1.0"):
+            board_clk = platform.request("clk48")
+            board_clk_freq = 48e6
+            ###### explanations from betrusted-io/betrusted-soc/betrusted_soc.py
+            # Note: below feature cannot be used because Litex appends this *after* platform commands! This causes the generated
+            # clock derived constraints immediately below to fail, because .xdc file is parsed in-order, and the main clock needs
+            # to be created before the derived clocks. Instead, we use the line afterwards.
+            platform.add_platform_command("create_clock -name clk48 -period 20.8333 [get_nets clk48]")
+            # The above constraint must strictly proceed the below create_generated_clock constraints in the .XDC file
+            # This allows PLLs/MMCMEs to be placed anywhere and reference the input clock
+            self.specials += Instance("BUFG", i_I=board_clk, o_O=self.board_clk_bufg)
+            self.comb += self.cd_native.clk.eq(self.board_clk_bufg)                
+            #self.cd_native.clk = board_clk
+        elif (version == "V2.0"):
+            board_clk = platform.request("clk100")
+            board_clk_freq = 100e6
+            platform.add_platform_command("create_clock -name clk100 -period 10.0 [get_nets clk100]")
+            self.specials += Instance("BUFG", i_I=board_clk, o_O=self.board_clk_bufg)
+            self.comb += self.cd_native.clk.eq(self.board_clk_bufg)
+
+            ##### V2.0 extra clock for B34
+            self.clock_domains.cd_bank34      = ClockDomain()
+            clk54 = platform.request("clk54")
+            platform.add_platform_command("create_clock -name clk54 -period 18.51851851851851851 [get_nets clk54]")
+            self.clk54_bufg = Signal()
+            self.specials += Instance("BUFG", i_I=clk54, o_O=self.clk54_bufg)
+            self.comb += self.cd_bank34.clk.eq(self.clk54_bufg)
+        else:
+             assert(False)   
         
         clk_cpu = platform.request("cpuclk_3v3_n")
         if (clk_cpu is None):
@@ -82,8 +104,8 @@ class _CRG(Module):
         num_clk = 0
 
         self.submodules.pll = pll = S7MMCM(speedgrade=platform.speedgrade)
-        #pll.register_clkin(clk48, 48e6)
-        pll.register_clkin(self.clk48_bufg, 48e6)
+        #pll.register_clkin(board_clk, board_clk_freq)
+        pll.register_clkin(self.board_clk_bufg, board_clk_freq)
         pll.create_clkout(self.cd_sys,       sys_clk_freq)
         platform.add_platform_command("create_generated_clock -name sysclk [get_pins {{{{MMCME2_ADV/CLKOUT{}}}}}]".format(num_clk))
         num_clk = num_clk + 1
@@ -95,8 +117,8 @@ class _CRG(Module):
         num_clk = num_clk + 1
             
         self.comb += pll.reset.eq(~rst_cpu_n) # | ~por_done 
-        platform.add_false_path_constraints(clk48, self.cd_cpu.clk) # FIXME?
-        platform.add_false_path_constraints(self.cd_cpu.clk, clk48) # FIXME?
+        platform.add_false_path_constraints(board_clk, self.cd_cpu.clk) # FIXME?
+        platform.add_false_path_constraints(self.cd_cpu.clk, board_clk) # FIXME?
         #platform.add_false_path_constraints(self.cd_sys.clk, self.cd_cpu.clk)
         #platform.add_false_path_constraints(self.cd_cpu.clk, self.cd_sys.clk)
         ##platform.add_false_path_constraints(self.cd_native.clk, self.cd_sys.clk)
@@ -105,8 +127,8 @@ class _CRG(Module):
         num_clk = 0
 
         self.submodules.pll_idelay = pll_idelay = S7MMCM(speedgrade=platform.speedgrade)
-        #pll_idelay.register_clkin(clk48, 48e6)
-        pll_idelay.register_clkin(self.clk48_bufg, 48e6)
+        #pll_idelay.register_clkin(board_clk, board_clk_freq)
+        pll_idelay.register_clkin(self.board_clk_bufg, board_clk_freq)
         pll_idelay.create_clkout(self.cd_idelay, 200e6, margin = 0)
         platform.add_platform_command("create_generated_clock -name idelayclk [get_pins {{{{MMCME2_ADV_{}/CLKOUT{}}}}}]".format(num_adv, num_clk))
         num_clk = num_clk + 1
@@ -119,7 +141,14 @@ class _CRG(Module):
         
         if (goblin):
             self.submodules.video_pll = video_pll = S7MMCM(speedgrade=platform.speedgrade)
-            video_pll.register_clkin(self.clk48_bufg, 48e6)
+            if (clk54 is None):
+                # no 54 MHz clock, drive hdmi from the main clock
+                video_pll.register_clkin(self.board_clk_bufg, board_clk_freq)
+            else:
+                # drive hdmi from the 54 MHz clock, easier to generate e.g. 148.5 MHz
+                video_pll.register_clkin(self.clk54_bufg, 54e6)
+                platform.add_false_path_constraints(self.cd_bank34.clk, board_clk) # FIXME?
+                platform.add_false_path_constraints(self.cd_bank34.clk, self.cd_cpu.clk) # FIXME?
 
             video_pll.create_clkout(self.cd_hdmi,   pix_clk, margin = 0.005)
             video_pll.create_clkout(self.cd_hdmi5x, 5*pix_clk, margin = 0.005)
@@ -127,6 +156,7 @@ class _CRG(Module):
             num_clk = num_clk + 1
             platform.add_platform_command("create_generated_clock -name hdmi5x_clk [get_pins {{{{MMCME2_ADV_{}/CLKOUT{}}}}}]".format(num_adv, num_clk))
             num_clk = num_clk + 1
+            video_pll.expose_drp()
                 
             self.comb += video_pll.reset.eq(~rst_cpu_n)
             #platform.add_false_path_constraints(self.cd_sys.clk, self.cd_vga.clk)
@@ -141,12 +171,16 @@ class _CRG(Module):
             
         
 class IIsiFPGA(MacPeriphSoC):
-    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, rd68891, rd68883, **kwargs):
+    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, **kwargs):
         print(f"Building IIsiFPGA for board version {version}")
-    
-        self.platform = platform = ztex213_pds.Platform(variant = variant, version = version)
 
-        use_goblin_alt = True
+        platform = None
+        if (version == "V1.0"):
+            platform = ztex213_pds.Platform(variant = variant, version = version)
+        elif (version == "V2.0"):
+            platform = trenz0710_pds.Platform(variant = variant, version = version)
+            
+        self.platform = platform
 
         hdmi = True
         
@@ -182,8 +216,9 @@ class IIsiFPGA(MacPeriphSoC):
         
         MacPeriphSoC.mac_add_sdram(self,
                                    hwinit = True,
-                                   sdram_dfii_base = 0xf0a02000 ,
-                                   ddrphy_base = 0xf0a01000 ) # FIXME: can we get the appropriate value here ??? or are they only available after finalize ???
+                                   sdram_dfii_base = 0xf0a02800,
+                                   ddrphy_base = 0xf0a01800,
+                                   version = version) # FIXME: can we get the appropriate value here ??? or are they only available after finalize ???
         
         if (goblin):
             MacPeriphSoC.mac_add_goblin_prelim(self)
@@ -262,17 +297,43 @@ class IIsiFPGA(MacPeriphSoC):
 def main():
     parser = argparse.ArgumentParser(description="IIsiFPGA")
     parser.add_argument("--build", action="store_true", help="Build bitstream")
-    parser.add_argument("--variant", default="ztex2.13a", help="ZTex board variant (default ztex2.13a)")
+    parser.add_argument("--variant", default="ztex2.13a", help="ZTex/Trenz board variant (default ztex2.13a)")
     parser.add_argument("--version", default="V1.0", help="IIsiFPGA board version (default V1.0)")
     parser.add_argument("--sys-clk-freq", default=100e6, help="IIsiFPGA system clock (default 100e6 = 100 MHz)")
     parser.add_argument("--config-flash", action="store_true", help="Configure the ROM to the internal Flash used for FPGA config")
     parser.add_argument("--goblin", action="store_true", help="add a goblin framebuffer")
-    parser.add_argument("--goblin-res", default="640x480@60Hz", help="Specify the goblin resolution")
+    parser.add_argument("--goblin-res", default="1920x1080@60Hz", help="Specify the goblin resolution")
+    parser.add_argument("--goblin-alt", action="store_true", help="Use alternate HDMI Phy with Audio support (requires Full HD resolution)")
     parser.add_argument("--rd68891", action="store_true", help="Add a RD68891 coprocessor (unfinished)")
     parser.add_argument("--rd68883", action="store_true", help="Add a RD68883 coprocessor (barely started)")
     builder_args(parser)
     vivado_build_args(parser)
     args = parser.parse_args()
+
+    if (args.goblin_alt and (args.goblin_res != "1920x1080@60Hz")):
+        print(" ***** ERROR ***** : Goblin Alt PHY currently only supports Full HD\n");
+        assert(False)
+
+    if (True):
+        f = open("decl_rom_config.mak","w+")
+        hres = int(args.goblin_res.split("@")[0].split("x")[0])
+        vres = int(args.goblin_res.split("@")[0].split("x")[1])
+        f.write("TARGET=IISIFPGA\n")
+        f.write("FEATURES+= -DIISIFPGA")
+        # f.write(" -DENABLE_RAMDSK") # only NuBusFPGA for now
+        if (args.goblin_alt):
+            f.write(" -DENABLE_HDMIAUDIO") # no audio in litex-style not-hdmi phy
+        else:
+            f.write(" -DENABLE_HDMI_ALT_CHANGE");
+            if (args.version == "V1.0"):
+                f.write(" -DENABLE_HDMI_ALT_CHANGE_48MHZ");
+            elif (args.version == "V2.0"):
+                f.write(" -DENABLE_HDMI_ALT_CHANGE_54MHZ");
+                
+        f.write("\n");
+        f.write(f"HRES={hres}\n");
+        f.write(f"VRES={vres}\n");
+        f.close()
     
     soc = IIsiFPGA(**soc_core_argdict(args),
                    variant=args.variant,
@@ -281,6 +342,7 @@ def main():
                    config_flash=args.config_flash,
                    goblin=args.goblin,
                    goblin_res=args.goblin_res,
+                   use_goblin_alt=args.goblin_alt,
                    rd68891=args.rd68891,
                    rd68883=args.rd68883,
     )

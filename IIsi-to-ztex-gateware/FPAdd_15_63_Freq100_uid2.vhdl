@@ -83,7 +83,7 @@ end architecture;
 -- All rights reserved 
 -- Authors: Bogdan Pasca, Florent de Dinechin (2008-2016)
 --------------------------------------------------------------------------------
--- Pipeline depth: 0 cycles
+-- Pipeline depth: 1 cycles
 -- Clock period (ns): 10
 -- Target frequency (MHz): 100
 -- Input signals: X Y Cin
@@ -212,7 +212,7 @@ end architecture;
 -- All rights reserved 
 -- Authors: Bogdan Pasca, Florent de Dinechin (2008-2016)
 --------------------------------------------------------------------------------
--- Pipeline depth: 0 cycles
+-- Pipeline depth: 2 cycles
 -- Clock period (ns): 10
 -- Target frequency (MHz): 100
 -- Input signals: X Y Cin

@@ -202,14 +202,12 @@ entity DSPBlock_24x17_Freq300_uid9 is
 end entity;
 
 architecture arch of DSPBlock_24x17_Freq300_uid9 is
-signal Mint :  std_logic_vector(40 downto 0);
+signal Mfull :  std_logic_vector(40 downto 0);
 signal M :  std_logic_vector(40 downto 0);
-signal Rtmp :  std_logic_vector(40 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(40 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(40 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -240,14 +238,12 @@ entity DSPBlock_24x17_Freq300_uid11 is
 end entity;
 
 architecture arch of DSPBlock_24x17_Freq300_uid11 is
-signal Mint :  std_logic_vector(40 downto 0);
+signal Mfull :  std_logic_vector(40 downto 0);
 signal M :  std_logic_vector(40 downto 0);
-signal Rtmp :  std_logic_vector(40 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(40 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(40 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -278,14 +274,12 @@ entity DSPBlock_24x17_Freq300_uid13 is
 end entity;
 
 architecture arch of DSPBlock_24x17_Freq300_uid13 is
-signal Mint :  std_logic_vector(40 downto 0);
+signal Mfull :  std_logic_vector(40 downto 0);
 signal M :  std_logic_vector(40 downto 0);
-signal Rtmp :  std_logic_vector(40 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(40 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(40 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -316,14 +310,12 @@ entity DSPBlock_24x17_Freq300_uid15 is
 end entity;
 
 architecture arch of DSPBlock_24x17_Freq300_uid15 is
-signal Mint :  std_logic_vector(40 downto 0);
+signal Mfull :  std_logic_vector(40 downto 0);
 signal M :  std_logic_vector(40 downto 0);
-signal Rtmp :  std_logic_vector(40 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(40 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(40 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -354,14 +346,12 @@ entity DSPBlock_24x17_Freq300_uid17 is
 end entity;
 
 architecture arch of DSPBlock_24x17_Freq300_uid17 is
-signal Mint :  std_logic_vector(40 downto 0);
+signal Mfull :  std_logic_vector(40 downto 0);
 signal M :  std_logic_vector(40 downto 0);
-signal Rtmp :  std_logic_vector(40 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(40 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(40 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -392,14 +382,12 @@ entity DSPBlock_24x17_Freq300_uid19 is
 end entity;
 
 architecture arch of DSPBlock_24x17_Freq300_uid19 is
-signal Mint :  std_logic_vector(40 downto 0);
+signal Mfull :  std_logic_vector(40 downto 0);
 signal M :  std_logic_vector(40 downto 0);
-signal Rtmp :  std_logic_vector(40 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(40 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(40 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -430,14 +418,12 @@ entity DSPBlock_16x17_Freq300_uid21 is
 end entity;
 
 architecture arch of DSPBlock_16x17_Freq300_uid21 is
-signal Mint :  std_logic_vector(32 downto 0);
+signal Mfull :  std_logic_vector(32 downto 0);
 signal M :  std_logic_vector(32 downto 0);
-signal Rtmp :  std_logic_vector(32 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(32 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(32 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -468,14 +454,12 @@ entity DSPBlock_16x24_Freq300_uid23 is
 end entity;
 
 architecture arch of DSPBlock_16x24_Freq300_uid23 is
-signal Mint :  std_logic_vector(39 downto 0);
+signal Mfull :  std_logic_vector(39 downto 0);
 signal M :  std_logic_vector(39 downto 0);
-signal Rtmp :  std_logic_vector(39 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(39 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(39 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -506,14 +490,12 @@ entity DSPBlock_24x13_Freq300_uid25 is
 end entity;
 
 architecture arch of DSPBlock_24x13_Freq300_uid25 is
-signal Mint :  std_logic_vector(36 downto 0);
+signal Mfull :  std_logic_vector(36 downto 0);
 signal M :  std_logic_vector(36 downto 0);
-signal Rtmp :  std_logic_vector(36 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(36 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(36 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -544,14 +526,12 @@ entity DSPBlock_24x13_Freq300_uid27 is
 end entity;
 
 architecture arch of DSPBlock_24x13_Freq300_uid27 is
-signal Mint :  std_logic_vector(36 downto 0);
+signal Mfull :  std_logic_vector(36 downto 0);
 signal M :  std_logic_vector(36 downto 0);
-signal Rtmp :  std_logic_vector(36 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(36 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(36 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -582,14 +562,12 @@ entity DSPBlock_16x23_Freq300_uid29 is
 end entity;
 
 architecture arch of DSPBlock_16x23_Freq300_uid29 is
-signal Mint :  std_logic_vector(38 downto 0);
+signal Mfull :  std_logic_vector(38 downto 0);
 signal M :  std_logic_vector(38 downto 0);
-signal Rtmp :  std_logic_vector(38 downto 0);
 begin
-   Mint <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
-   M <= Mint(38 downto 0);
-   Rtmp <= M;
-   R <= Rtmp;
+   Mfull <= std_logic_vector(unsigned(X) * unsigned(Y)); -- multiplier
+   M <= Mfull(38 downto 0);
+   R <= M;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -599,7 +577,7 @@ end architecture;
 -- All rights reserved 
 -- Authors: Bogdan Pasca, Florent de Dinechin (2008-2016)
 --------------------------------------------------------------------------------
--- Pipeline depth: 1 cycles
+-- Pipeline depth: 2 cycles
 -- Clock period (ns): 3.33333
 -- Target frequency (MHz): 300
 -- Input signals: X Y Cin
@@ -625,7 +603,7 @@ architecture arch of IntAdder_106_Freq300_uid392 is
 signal Rtmp :  std_logic_vector(105 downto 0);
 signal X_d1 :  std_logic_vector(105 downto 0);
 signal Y_d1 :  std_logic_vector(105 downto 0);
-signal Cin_d1 :  std_logic;
+signal Cin_d1, Cin_d2 :  std_logic;
 begin
    process(clk)
       begin
@@ -633,20 +611,21 @@ begin
             X_d1 <=  X;
             Y_d1 <=  Y;
             Cin_d1 <=  Cin;
+            Cin_d2 <=  Cin_d1;
          end if;
       end process;
-   Rtmp <= X_d1 + Y_d1 + Cin_d1;
+   Rtmp <= X_d1 + Y_d1 + Cin_d2;
    R <= Rtmp;
 end architecture;
 
 --------------------------------------------------------------------------------
---                         IntMultiplier_Freq300_uid5
+--                    IntMultiplier_64x64_128_Freq300_uid5
 -- VHDL generated for Kintex7 @ 300MHz
 -- This operator is part of the Infinite Virtual Library FloPoCoLib
 -- All rights reserved 
--- Authors: Martin Kumm, Florent de Dinechin, Kinga Illyes, Bogdan Popa, Bogdan Pasca, 2012
+-- Authors: Martin Kumm, Florent de Dinechin, Kinga Illyes, Bogdan Popa, Bogdan Pasca, 2012-
 --------------------------------------------------------------------------------
--- Pipeline depth: 1 cycles
+-- Pipeline depth: 2 cycles
 -- Clock period (ns): 3.33333
 -- Target frequency (MHz): 300
 -- Input signals: X Y
@@ -659,14 +638,14 @@ library std;
 use std.textio.all;
 library work;
 
-entity IntMultiplier_Freq300_uid5 is
+entity IntMultiplier_64x64_128_Freq300_uid5 is
     port (clk : in std_logic;
           X : in  std_logic_vector(63 downto 0);
           Y : in  std_logic_vector(63 downto 0);
           R : out  std_logic_vector(127 downto 0)   );
 end entity;
 
-architecture arch of IntMultiplier_Freq300_uid5 is
+architecture arch of IntMultiplier_64x64_128_Freq300_uid5 is
    component DSPBlock_24x17_Freq300_uid9 is
       port ( clk : in std_logic;
              X : in  std_logic_vector(23 downto 0);
@@ -780,23 +759,23 @@ signal tile_0_X :  std_logic_vector(23 downto 0);
 signal tile_0_Y :  std_logic_vector(16 downto 0);
 signal tile_0_output :  std_logic_vector(40 downto 0);
 signal tile_0_filtered_output :  unsigned(40-0 downto 0);
-signal bh7_w0_0 :  std_logic;
-signal bh7_w1_0 :  std_logic;
-signal bh7_w2_0 :  std_logic;
-signal bh7_w3_0 :  std_logic;
-signal bh7_w4_0 :  std_logic;
-signal bh7_w5_0 :  std_logic;
-signal bh7_w6_0 :  std_logic;
-signal bh7_w7_0 :  std_logic;
-signal bh7_w8_0 :  std_logic;
-signal bh7_w9_0 :  std_logic;
-signal bh7_w10_0 :  std_logic;
-signal bh7_w11_0 :  std_logic;
-signal bh7_w12_0 :  std_logic;
-signal bh7_w13_0 :  std_logic;
-signal bh7_w14_0 :  std_logic;
-signal bh7_w15_0 :  std_logic;
-signal bh7_w16_0 :  std_logic;
+signal bh7_w0_0, bh7_w0_0_d1 :  std_logic;
+signal bh7_w1_0, bh7_w1_0_d1 :  std_logic;
+signal bh7_w2_0, bh7_w2_0_d1 :  std_logic;
+signal bh7_w3_0, bh7_w3_0_d1 :  std_logic;
+signal bh7_w4_0, bh7_w4_0_d1 :  std_logic;
+signal bh7_w5_0, bh7_w5_0_d1 :  std_logic;
+signal bh7_w6_0, bh7_w6_0_d1 :  std_logic;
+signal bh7_w7_0, bh7_w7_0_d1 :  std_logic;
+signal bh7_w8_0, bh7_w8_0_d1 :  std_logic;
+signal bh7_w9_0, bh7_w9_0_d1 :  std_logic;
+signal bh7_w10_0, bh7_w10_0_d1 :  std_logic;
+signal bh7_w11_0, bh7_w11_0_d1 :  std_logic;
+signal bh7_w12_0, bh7_w12_0_d1 :  std_logic;
+signal bh7_w13_0, bh7_w13_0_d1 :  std_logic;
+signal bh7_w14_0, bh7_w14_0_d1 :  std_logic;
+signal bh7_w15_0, bh7_w15_0_d1 :  std_logic;
+signal bh7_w16_0, bh7_w16_0_d1 :  std_logic;
 signal bh7_w17_0 :  std_logic;
 signal bh7_w18_0 :  std_logic;
 signal bh7_w19_0 :  std_logic;
@@ -871,15 +850,15 @@ signal tile_2_Y :  std_logic_vector(16 downto 0);
 signal tile_2_output :  std_logic_vector(40 downto 0);
 signal tile_2_filtered_output :  unsigned(40-0 downto 0);
 signal bh7_w24_2 :  std_logic;
-signal bh7_w25_2 :  std_logic;
+signal bh7_w25_2, bh7_w25_2_d1 :  std_logic;
 signal bh7_w26_2 :  std_logic;
-signal bh7_w27_2 :  std_logic;
+signal bh7_w27_2, bh7_w27_2_d1 :  std_logic;
 signal bh7_w28_2 :  std_logic;
-signal bh7_w29_2 :  std_logic;
+signal bh7_w29_2, bh7_w29_2_d1 :  std_logic;
 signal bh7_w30_2 :  std_logic;
-signal bh7_w31_2 :  std_logic;
+signal bh7_w31_2, bh7_w31_2_d1 :  std_logic;
 signal bh7_w32_2 :  std_logic;
-signal bh7_w33_2 :  std_logic;
+signal bh7_w33_2, bh7_w33_2_d1 :  std_logic;
 signal bh7_w34_2 :  std_logic;
 signal bh7_w35_2 :  std_logic;
 signal bh7_w36_2 :  std_logic;
@@ -1050,9 +1029,9 @@ signal tile_6_X :  std_logic_vector(15 downto 0);
 signal tile_6_Y :  std_logic_vector(16 downto 0);
 signal tile_6_output :  std_logic_vector(32 downto 0);
 signal tile_6_filtered_output :  unsigned(32-0 downto 0);
-signal bh7_w48_4 :  std_logic;
+signal bh7_w48_4, bh7_w48_4_d1 :  std_logic;
 signal bh7_w49_4 :  std_logic;
-signal bh7_w50_4 :  std_logic;
+signal bh7_w50_4, bh7_w50_4_d1 :  std_logic;
 signal bh7_w51_4 :  std_logic;
 signal bh7_w52_4 :  std_logic;
 signal bh7_w53_4 :  std_logic;
@@ -1178,7 +1157,7 @@ signal bh7_w77_5 :  std_logic;
 signal bh7_w78_5 :  std_logic;
 signal bh7_w79_5 :  std_logic;
 signal bh7_w80_5 :  std_logic;
-signal bh7_w81_4 :  std_logic;
+signal bh7_w81_4, bh7_w81_4_d1 :  std_logic;
 signal bh7_w82_3 :  std_logic;
 signal bh7_w83_3 :  std_logic;
 signal bh7_w84_3 :  std_logic;
@@ -1223,11 +1202,11 @@ signal bh7_w95_3 :  std_logic;
 signal bh7_w96_3 :  std_logic;
 signal bh7_w97_3 :  std_logic;
 signal bh7_w98_3 :  std_logic;
-signal bh7_w99_2 :  std_logic;
+signal bh7_w99_2, bh7_w99_2_d1 :  std_logic;
 signal bh7_w100_2 :  std_logic;
-signal bh7_w101_2 :  std_logic;
+signal bh7_w101_2, bh7_w101_2_d1 :  std_logic;
 signal bh7_w102_2 :  std_logic;
-signal bh7_w103_2 :  std_logic;
+signal bh7_w103_2, bh7_w103_2_d1 :  std_logic;
 signal bh7_w104_2 :  std_logic;
 signal bh7_w105_1 :  std_logic;
 signal bh7_w106_1 :  std_logic;
@@ -1236,518 +1215,518 @@ signal bh7_w108_1 :  std_logic;
 signal bh7_w109_1 :  std_logic;
 signal bh7_w110_1 :  std_logic;
 signal bh7_w111_1 :  std_logic;
-signal bh7_w112_0 :  std_logic;
+signal bh7_w112_0, bh7_w112_0_d1 :  std_logic;
 signal bh7_w113_0 :  std_logic;
-signal bh7_w114_0 :  std_logic;
+signal bh7_w114_0, bh7_w114_0_d1 :  std_logic;
 signal bh7_w115_0 :  std_logic;
-signal bh7_w116_0 :  std_logic;
-signal bh7_w117_0 :  std_logic;
-signal bh7_w118_0 :  std_logic;
-signal bh7_w119_0 :  std_logic;
-signal bh7_w120_0 :  std_logic;
-signal bh7_w121_0 :  std_logic;
-signal bh7_w122_0 :  std_logic;
-signal bh7_w123_0 :  std_logic;
-signal bh7_w124_0 :  std_logic;
-signal bh7_w125_0 :  std_logic;
-signal bh7_w126_0 :  std_logic;
-signal bh7_w127_0 :  std_logic;
+signal bh7_w116_0, bh7_w116_0_d1 :  std_logic;
+signal bh7_w117_0, bh7_w117_0_d1 :  std_logic;
+signal bh7_w118_0, bh7_w118_0_d1 :  std_logic;
+signal bh7_w119_0, bh7_w119_0_d1 :  std_logic;
+signal bh7_w120_0, bh7_w120_0_d1 :  std_logic;
+signal bh7_w121_0, bh7_w121_0_d1 :  std_logic;
+signal bh7_w122_0, bh7_w122_0_d1 :  std_logic;
+signal bh7_w123_0, bh7_w123_0_d1 :  std_logic;
+signal bh7_w124_0, bh7_w124_0_d1 :  std_logic;
+signal bh7_w125_0, bh7_w125_0_d1 :  std_logic;
+signal bh7_w126_0, bh7_w126_0_d1 :  std_logic;
+signal bh7_w127_0, bh7_w127_0_d1 :  std_logic;
 signal Compressor_23_3_Freq300_uid32_bh7_uid33_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid33_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid33_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w17_2 :  std_logic;
 signal bh7_w18_2 :  std_logic;
 signal bh7_w19_2 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34, Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid35_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid35_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid35_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w19_3 :  std_logic;
 signal bh7_w20_2 :  std_logic;
 signal bh7_w21_2 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36, Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid37_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid37_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid37_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w21_3 :  std_logic;
 signal bh7_w22_2 :  std_logic;
 signal bh7_w23_2 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38, Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid41_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid41_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w23_3 :  std_logic;
 signal bh7_w24_3 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42, Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid43_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid43_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid43_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w24_4 :  std_logic;
 signal bh7_w25_3 :  std_logic;
 signal bh7_w26_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44, Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid45_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid45_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid45_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w26_4 :  std_logic;
 signal bh7_w27_3 :  std_logic;
 signal bh7_w28_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46, Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid47_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid47_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid47_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w28_4 :  std_logic;
 signal bh7_w29_3 :  std_logic;
 signal bh7_w30_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48, Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid49_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid49_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid49_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w30_4 :  std_logic;
 signal bh7_w31_3 :  std_logic;
 signal bh7_w32_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50, Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid51_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid51_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid51_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w32_4 :  std_logic;
 signal bh7_w33_3 :  std_logic;
 signal bh7_w34_4 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52, Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid55_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid55_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid55_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w34_5 :  std_logic;
 signal bh7_w35_4 :  std_logic;
 signal bh7_w36_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56, Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid57_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid57_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w35_5 :  std_logic;
 signal bh7_w36_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58, Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid59_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid59_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid59_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w36_6 :  std_logic;
 signal bh7_w37_4 :  std_logic;
 signal bh7_w38_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60, Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid61_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid61_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w37_5 :  std_logic;
 signal bh7_w38_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62, Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid63_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid63_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid63_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w38_6 :  std_logic;
 signal bh7_w39_4 :  std_logic;
 signal bh7_w40_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64, Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid65_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid65_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w39_5 :  std_logic;
 signal bh7_w40_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66, Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid67_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid67_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid67_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w40_6 :  std_logic;
 signal bh7_w41_4 :  std_logic;
 signal bh7_w42_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68, Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid69_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid69_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w41_5 :  std_logic;
 signal bh7_w42_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70, Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid71_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid71_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid71_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w42_6 :  std_logic;
 signal bh7_w43_4 :  std_logic;
 signal bh7_w44_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72, Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid73_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid73_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w43_5 :  std_logic;
 signal bh7_w44_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74, Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid75_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid75_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid75_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w44_6 :  std_logic;
 signal bh7_w45_4 :  std_logic;
 signal bh7_w46_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76, Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid77_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid77_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w45_5 :  std_logic;
 signal bh7_w46_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78, Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid79_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid79_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid79_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w46_6 :  std_logic;
 signal bh7_w47_4 :  std_logic;
 signal bh7_w48_5 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80, Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid81_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid81_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w47_5 :  std_logic;
 signal bh7_w48_6 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82, Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid83_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid83_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid83_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w48_7 :  std_logic;
 signal bh7_w49_5 :  std_logic;
 signal bh7_w50_5 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84, Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid85_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid85_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid85_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w49_6 :  std_logic;
 signal bh7_w50_6 :  std_logic;
 signal bh7_w51_6 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86, Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid87_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid87_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w50_7 :  std_logic;
 signal bh7_w51_7 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88, Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid91_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid91_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w51_8 :  std_logic;
 signal bh7_w52_6 :  std_logic;
 signal bh7_w53_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92, Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid93_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid93_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w52_7 :  std_logic;
 signal bh7_w53_7 :  std_logic;
 signal bh7_w54_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94, Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid95_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid95_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w53_8 :  std_logic;
 signal bh7_w54_7 :  std_logic;
 signal bh7_w55_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96, Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid97_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid97_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w54_8 :  std_logic;
 signal bh7_w55_7 :  std_logic;
 signal bh7_w56_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98, Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid99_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid99_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w55_8 :  std_logic;
 signal bh7_w56_7 :  std_logic;
 signal bh7_w57_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100, Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid101_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid101_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w56_8 :  std_logic;
 signal bh7_w57_7 :  std_logic;
 signal bh7_w58_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102, Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid103_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid103_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w57_8 :  std_logic;
 signal bh7_w58_7 :  std_logic;
 signal bh7_w59_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104, Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid105_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid105_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w58_8 :  std_logic;
 signal bh7_w59_7 :  std_logic;
 signal bh7_w60_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106, Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid107_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid107_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w59_8 :  std_logic;
 signal bh7_w60_7 :  std_logic;
 signal bh7_w61_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108, Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid109_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid109_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w60_8 :  std_logic;
 signal bh7_w61_7 :  std_logic;
 signal bh7_w62_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110, Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid111_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid111_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w61_8 :  std_logic;
 signal bh7_w62_7 :  std_logic;
 signal bh7_w63_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112, Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid113_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid113_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w62_8 :  std_logic;
 signal bh7_w63_7 :  std_logic;
 signal bh7_w64_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114, Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid115_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid115_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w63_8 :  std_logic;
 signal bh7_w64_7 :  std_logic;
 signal bh7_w65_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116, Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid117_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid117_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w64_8 :  std_logic;
 signal bh7_w65_7 :  std_logic;
 signal bh7_w66_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118, Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid119_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid119_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w65_8 :  std_logic;
 signal bh7_w66_7 :  std_logic;
 signal bh7_w67_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120, Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid121_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid121_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w66_8 :  std_logic;
 signal bh7_w67_7 :  std_logic;
 signal bh7_w68_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122, Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid123_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid123_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w67_8 :  std_logic;
 signal bh7_w68_7 :  std_logic;
 signal bh7_w69_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124, Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid125_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid125_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w68_8 :  std_logic;
 signal bh7_w69_7 :  std_logic;
 signal bh7_w70_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126, Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid127_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid127_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w69_8 :  std_logic;
 signal bh7_w70_7 :  std_logic;
 signal bh7_w71_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128, Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid129_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid129_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w70_8 :  std_logic;
 signal bh7_w71_7 :  std_logic;
 signal bh7_w72_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130, Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid131_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid131_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w71_8 :  std_logic;
 signal bh7_w72_7 :  std_logic;
 signal bh7_w73_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132, Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid133_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid133_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w72_8 :  std_logic;
 signal bh7_w73_7 :  std_logic;
 signal bh7_w74_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134, Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid135_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid135_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w73_8 :  std_logic;
 signal bh7_w74_7 :  std_logic;
 signal bh7_w75_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136, Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid137_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid137_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w74_8 :  std_logic;
 signal bh7_w75_7 :  std_logic;
 signal bh7_w76_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138, Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid139_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid139_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w75_8 :  std_logic;
 signal bh7_w76_7 :  std_logic;
 signal bh7_w77_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140, Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid141_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid141_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w76_8 :  std_logic;
 signal bh7_w77_7 :  std_logic;
 signal bh7_w78_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142, Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid143_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid143_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w77_8 :  std_logic;
 signal bh7_w78_7 :  std_logic;
 signal bh7_w79_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144, Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid145_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid145_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w78_8 :  std_logic;
 signal bh7_w79_7 :  std_logic;
 signal bh7_w80_6 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146, Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid147_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid147_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w79_8 :  std_logic;
 signal bh7_w80_7 :  std_logic;
 signal bh7_w81_5 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148, Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid149_In0 :  std_logic_vector(5 downto 0);
 signal Compressor_6_3_Freq300_uid90_bh7_uid149_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w80_8 :  std_logic;
 signal bh7_w81_6 :  std_logic;
 signal bh7_w82_4 :  std_logic;
-signal Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150 :  std_logic_vector(2 downto 0);
+signal Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150, Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid151_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid151_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid151_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w81_7 :  std_logic;
 signal bh7_w82_5 :  std_logic;
 signal bh7_w83_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152, Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid153_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid153_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w82_6 :  std_logic;
 signal bh7_w83_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154, Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid155_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid155_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid155_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w83_6 :  std_logic;
 signal bh7_w84_4 :  std_logic;
 signal bh7_w85_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156, Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid157_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid157_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w84_5 :  std_logic;
 signal bh7_w85_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158, Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid159_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid159_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid159_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w85_6 :  std_logic;
 signal bh7_w86_4 :  std_logic;
 signal bh7_w87_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160, Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid161_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid161_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w86_5 :  std_logic;
 signal bh7_w87_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162, Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid163_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid163_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid163_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w87_6 :  std_logic;
 signal bh7_w88_3 :  std_logic;
 signal bh7_w89_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164, Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid165_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid165_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w88_4 :  std_logic;
 signal bh7_w89_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166, Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid167_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid167_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid167_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w89_6 :  std_logic;
 signal bh7_w90_4 :  std_logic;
 signal bh7_w91_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168, Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid169_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid169_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w90_5 :  std_logic;
 signal bh7_w91_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170, Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid171_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid171_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid171_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w91_6 :  std_logic;
 signal bh7_w92_4 :  std_logic;
 signal bh7_w93_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172, Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid173_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid173_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w92_5 :  std_logic;
 signal bh7_w93_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174, Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid175_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid175_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid175_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w93_6 :  std_logic;
 signal bh7_w94_4 :  std_logic;
 signal bh7_w95_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176, Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid177_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid177_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w94_5 :  std_logic;
 signal bh7_w95_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178, Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid179_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid179_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid179_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w95_6 :  std_logic;
 signal bh7_w96_4 :  std_logic;
 signal bh7_w97_4 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180, Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid181_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_3_2_Freq300_uid40_bh7_uid181_Out0 :  std_logic_vector(1 downto 0);
 signal bh7_w96_5 :  std_logic;
 signal bh7_w97_5 :  std_logic;
-signal Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182 :  std_logic_vector(1 downto 0);
+signal Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182, Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182_d1 :  std_logic_vector(1 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid183_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid183_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid183_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w97_6 :  std_logic;
 signal bh7_w98_4 :  std_logic;
 signal bh7_w99_3 :  std_logic;
-signal Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184 :  std_logic_vector(2 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184, Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid185_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid185_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid185_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w98_5 :  std_logic;
 signal bh7_w99_4 :  std_logic;
 signal bh7_w100_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186, Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid187_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid187_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid187_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w100_4 :  std_logic;
 signal bh7_w101_3 :  std_logic;
 signal bh7_w102_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188, Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid189_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid189_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid189_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w102_4 :  std_logic;
 signal bh7_w103_3 :  std_logic;
 signal bh7_w104_3 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190, Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid191_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid191_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid191_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w104_4 :  std_logic;
 signal bh7_w105_2 :  std_logic;
 signal bh7_w106_2 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192, Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid193_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid193_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid193_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w106_3 :  std_logic;
 signal bh7_w107_2 :  std_logic;
 signal bh7_w108_2 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194, Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid195_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid195_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid195_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w108_3 :  std_logic;
 signal bh7_w109_2 :  std_logic;
 signal bh7_w110_2 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196, Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid197_In0 :  std_logic_vector(2 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid197_In1 :  std_logic_vector(1 downto 0);
 signal Compressor_23_3_Freq300_uid32_bh7_uid197_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w110_3 :  std_logic;
 signal bh7_w111_2 :  std_logic;
 signal bh7_w112_1 :  std_logic;
-signal Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198 :  std_logic_vector(2 downto 0);
+signal Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198, Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198_d1 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid199_In0 :  std_logic_vector(3 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid199_In1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid199_Out0 :  std_logic_vector(2 downto 0);
@@ -1859,7 +1838,7 @@ signal bh7_w49_7 :  std_logic;
 signal bh7_w50_8 :  std_logic;
 signal Compressor_14_3_Freq300_uid54_bh7_uid229_Out0_copy230 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid231_In0 :  std_logic_vector(3 downto 0);
-signal Compressor_14_3_Freq300_uid54_bh7_uid231_In1 :  std_logic_vector(0 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid231_In1, Compressor_14_3_Freq300_uid54_bh7_uid231_In1_d1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid231_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w50_9 :  std_logic;
 signal bh7_w51_9 :  std_logic;
@@ -1971,7 +1950,7 @@ signal bh7_w80_9 :  std_logic;
 signal bh7_w81_8 :  std_logic;
 signal Compressor_23_3_Freq300_uid32_bh7_uid261_Out0_copy262 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid263_In0 :  std_logic_vector(3 downto 0);
-signal Compressor_14_3_Freq300_uid54_bh7_uid263_In1 :  std_logic_vector(0 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid263_In1, Compressor_14_3_Freq300_uid54_bh7_uid263_In1_d1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid263_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w81_9 :  std_logic;
 signal bh7_w82_7 :  std_logic;
@@ -2081,7 +2060,7 @@ signal bh7_w111_3 :  std_logic;
 signal bh7_w112_2 :  std_logic;
 signal Compressor_14_3_Freq300_uid54_bh7_uid293_Out0_copy294 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid295_In0 :  std_logic_vector(3 downto 0);
-signal Compressor_14_3_Freq300_uid54_bh7_uid295_In1 :  std_logic_vector(0 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid295_In1, Compressor_14_3_Freq300_uid54_bh7_uid295_In1_d1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid295_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w112_3 :  std_logic;
 signal bh7_w113_1 :  std_logic;
@@ -2406,7 +2385,7 @@ signal bh7_w113_2 :  std_logic;
 signal bh7_w114_2 :  std_logic;
 signal Compressor_14_3_Freq300_uid54_bh7_uid387_Out0_copy388 :  std_logic_vector(2 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid389_In0 :  std_logic_vector(3 downto 0);
-signal Compressor_14_3_Freq300_uid54_bh7_uid389_In1 :  std_logic_vector(0 downto 0);
+signal Compressor_14_3_Freq300_uid54_bh7_uid389_In1, Compressor_14_3_Freq300_uid54_bh7_uid389_In1_d1 :  std_logic_vector(0 downto 0);
 signal Compressor_14_3_Freq300_uid54_bh7_uid389_Out0 :  std_logic_vector(2 downto 0);
 signal bh7_w114_3 :  std_logic;
 signal bh7_w115_1 :  std_logic;
@@ -2422,6 +2401,132 @@ begin
    process(clk)
       begin
          if clk'event and clk = '1' then
+            bh7_w0_0_d1 <=  bh7_w0_0;
+            bh7_w1_0_d1 <=  bh7_w1_0;
+            bh7_w2_0_d1 <=  bh7_w2_0;
+            bh7_w3_0_d1 <=  bh7_w3_0;
+            bh7_w4_0_d1 <=  bh7_w4_0;
+            bh7_w5_0_d1 <=  bh7_w5_0;
+            bh7_w6_0_d1 <=  bh7_w6_0;
+            bh7_w7_0_d1 <=  bh7_w7_0;
+            bh7_w8_0_d1 <=  bh7_w8_0;
+            bh7_w9_0_d1 <=  bh7_w9_0;
+            bh7_w10_0_d1 <=  bh7_w10_0;
+            bh7_w11_0_d1 <=  bh7_w11_0;
+            bh7_w12_0_d1 <=  bh7_w12_0;
+            bh7_w13_0_d1 <=  bh7_w13_0;
+            bh7_w14_0_d1 <=  bh7_w14_0;
+            bh7_w15_0_d1 <=  bh7_w15_0;
+            bh7_w16_0_d1 <=  bh7_w16_0;
+            bh7_w25_2_d1 <=  bh7_w25_2;
+            bh7_w27_2_d1 <=  bh7_w27_2;
+            bh7_w29_2_d1 <=  bh7_w29_2;
+            bh7_w31_2_d1 <=  bh7_w31_2;
+            bh7_w33_2_d1 <=  bh7_w33_2;
+            bh7_w48_4_d1 <=  bh7_w48_4;
+            bh7_w50_4_d1 <=  bh7_w50_4;
+            bh7_w81_4_d1 <=  bh7_w81_4;
+            bh7_w99_2_d1 <=  bh7_w99_2;
+            bh7_w101_2_d1 <=  bh7_w101_2;
+            bh7_w103_2_d1 <=  bh7_w103_2;
+            bh7_w112_0_d1 <=  bh7_w112_0;
+            bh7_w114_0_d1 <=  bh7_w114_0;
+            bh7_w116_0_d1 <=  bh7_w116_0;
+            bh7_w117_0_d1 <=  bh7_w117_0;
+            bh7_w118_0_d1 <=  bh7_w118_0;
+            bh7_w119_0_d1 <=  bh7_w119_0;
+            bh7_w120_0_d1 <=  bh7_w120_0;
+            bh7_w121_0_d1 <=  bh7_w121_0;
+            bh7_w122_0_d1 <=  bh7_w122_0;
+            bh7_w123_0_d1 <=  bh7_w123_0;
+            bh7_w124_0_d1 <=  bh7_w124_0;
+            bh7_w125_0_d1 <=  bh7_w125_0;
+            bh7_w126_0_d1 <=  bh7_w126_0;
+            bh7_w127_0_d1 <=  bh7_w127_0;
+            Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34;
+            Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36;
+            Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38;
+            Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42;
+            Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44;
+            Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46;
+            Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48;
+            Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50;
+            Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52;
+            Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56;
+            Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58;
+            Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60;
+            Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62;
+            Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64;
+            Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66;
+            Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68;
+            Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70;
+            Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72;
+            Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74;
+            Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76;
+            Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78;
+            Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80;
+            Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82;
+            Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84;
+            Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86;
+            Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88;
+            Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92;
+            Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94;
+            Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96;
+            Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98;
+            Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100;
+            Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102;
+            Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104;
+            Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106;
+            Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108;
+            Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110;
+            Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112;
+            Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114;
+            Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116;
+            Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118;
+            Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120;
+            Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122;
+            Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124;
+            Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126;
+            Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128;
+            Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130;
+            Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132;
+            Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134;
+            Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136;
+            Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138;
+            Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140;
+            Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142;
+            Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144;
+            Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146;
+            Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148;
+            Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150_d1 <=  Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150;
+            Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152;
+            Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154;
+            Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156;
+            Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158;
+            Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160;
+            Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162;
+            Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164;
+            Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166;
+            Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168;
+            Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170;
+            Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172;
+            Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174;
+            Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176;
+            Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178;
+            Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180;
+            Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182_d1 <=  Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182;
+            Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184;
+            Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186;
+            Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188;
+            Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190;
+            Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192;
+            Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194;
+            Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196;
+            Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198_d1 <=  Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198;
+            Compressor_14_3_Freq300_uid54_bh7_uid231_In1_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid231_In1;
+            Compressor_14_3_Freq300_uid54_bh7_uid263_In1_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid263_In1;
+            Compressor_14_3_Freq300_uid54_bh7_uid295_In1_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid295_In1;
+            Compressor_14_3_Freq300_uid54_bh7_uid389_In1_d1 <=  Compressor_14_3_Freq300_uid54_bh7_uid389_In1;
             tmp_bitheapResult_bh7_22_d1 <=  tmp_bitheapResult_bh7_22;
          end if;
       end process;
@@ -2972,7 +3077,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid33_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid33_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34);
-   Compressor_23_3_Freq300_uid32_bh7_uid33_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid33_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid33_Out0_copy34_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid35_In0 <= "" & bh7_w19_0 & bh7_w19_1 & "0";
@@ -2984,7 +3089,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid35_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid35_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36);
-   Compressor_23_3_Freq300_uid32_bh7_uid35_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid35_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid35_Out0_copy36_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid37_In0 <= "" & bh7_w21_0 & bh7_w21_1 & "0";
@@ -2996,7 +3101,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid37_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid37_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38);
-   Compressor_23_3_Freq300_uid32_bh7_uid37_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid37_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid37_Out0_copy38_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid41_In0 <= "" & bh7_w23_0 & bh7_w23_1 & "0";
@@ -3005,7 +3110,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid41: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid41_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42);
-   Compressor_3_2_Freq300_uid40_bh7_uid41_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid41_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid41_Out0_copy42_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid43_In0 <= "" & bh7_w24_0 & bh7_w24_1 & bh7_w24_2;
@@ -3017,7 +3122,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid43_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid43_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44);
-   Compressor_23_3_Freq300_uid32_bh7_uid43_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid43_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid43_Out0_copy44_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid45_In0 <= "" & bh7_w26_0 & bh7_w26_1 & bh7_w26_2;
@@ -3029,7 +3134,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid45_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid45_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46);
-   Compressor_23_3_Freq300_uid32_bh7_uid45_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid45_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid45_Out0_copy46_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid47_In0 <= "" & bh7_w28_0 & bh7_w28_1 & bh7_w28_2;
@@ -3041,7 +3146,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid47_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid47_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48);
-   Compressor_23_3_Freq300_uid32_bh7_uid47_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid47_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid47_Out0_copy48_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid49_In0 <= "" & bh7_w30_0 & bh7_w30_1 & bh7_w30_2;
@@ -3053,7 +3158,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid49_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid49_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50);
-   Compressor_23_3_Freq300_uid32_bh7_uid49_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid49_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid49_Out0_copy50_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid51_In0 <= "" & bh7_w32_0 & bh7_w32_1 & bh7_w32_2;
@@ -3065,7 +3170,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid51_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid51_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52);
-   Compressor_23_3_Freq300_uid32_bh7_uid51_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid51_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid51_Out0_copy52_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid55_In0 <= "" & bh7_w34_0 & bh7_w34_1 & bh7_w34_2 & bh7_w34_3;
@@ -3077,7 +3182,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid55_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid55_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56);
-   Compressor_14_3_Freq300_uid54_bh7_uid55_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid55_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid55_Out0_copy56_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid57_In0 <= "" & bh7_w35_1 & bh7_w35_2 & bh7_w35_3;
@@ -3086,7 +3191,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid57: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid57_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58);
-   Compressor_3_2_Freq300_uid40_bh7_uid57_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid57_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid57_Out0_copy58_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid59_In0 <= "" & bh7_w36_0 & bh7_w36_1 & bh7_w36_2 & bh7_w36_3;
@@ -3098,7 +3203,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid59_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid59_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60);
-   Compressor_14_3_Freq300_uid54_bh7_uid59_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid59_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid59_Out0_copy60_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid61_In0 <= "" & bh7_w37_1 & bh7_w37_2 & bh7_w37_3;
@@ -3107,7 +3212,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid61: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid61_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62);
-   Compressor_3_2_Freq300_uid40_bh7_uid61_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid61_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid61_Out0_copy62_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid63_In0 <= "" & bh7_w38_0 & bh7_w38_1 & bh7_w38_2 & bh7_w38_3;
@@ -3119,7 +3224,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid63_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid63_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64);
-   Compressor_14_3_Freq300_uid54_bh7_uid63_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid63_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid63_Out0_copy64_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid65_In0 <= "" & bh7_w39_1 & bh7_w39_2 & bh7_w39_3;
@@ -3128,7 +3233,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid65: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid65_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66);
-   Compressor_3_2_Freq300_uid40_bh7_uid65_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid65_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid65_Out0_copy66_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid67_In0 <= "" & bh7_w40_0 & bh7_w40_1 & bh7_w40_2 & bh7_w40_3;
@@ -3140,7 +3245,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid67_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid67_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68);
-   Compressor_14_3_Freq300_uid54_bh7_uid67_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid67_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid67_Out0_copy68_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid69_In0 <= "" & bh7_w41_1 & bh7_w41_2 & bh7_w41_3;
@@ -3149,7 +3254,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid69: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid69_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70);
-   Compressor_3_2_Freq300_uid40_bh7_uid69_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid69_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid69_Out0_copy70_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid71_In0 <= "" & bh7_w42_0 & bh7_w42_1 & bh7_w42_2 & bh7_w42_3;
@@ -3161,7 +3266,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid71_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid71_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72);
-   Compressor_14_3_Freq300_uid54_bh7_uid71_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid71_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid71_Out0_copy72_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid73_In0 <= "" & bh7_w43_1 & bh7_w43_2 & bh7_w43_3;
@@ -3170,7 +3275,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid73: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid73_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74);
-   Compressor_3_2_Freq300_uid40_bh7_uid73_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid73_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid73_Out0_copy74_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid75_In0 <= "" & bh7_w44_0 & bh7_w44_1 & bh7_w44_2 & bh7_w44_3;
@@ -3182,7 +3287,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid75_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid75_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76);
-   Compressor_14_3_Freq300_uid54_bh7_uid75_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid75_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid75_Out0_copy76_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid77_In0 <= "" & bh7_w45_1 & bh7_w45_2 & bh7_w45_3;
@@ -3191,7 +3296,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid77: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid77_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78);
-   Compressor_3_2_Freq300_uid40_bh7_uid77_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid77_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid77_Out0_copy78_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid79_In0 <= "" & bh7_w46_0 & bh7_w46_1 & bh7_w46_2 & bh7_w46_3;
@@ -3203,7 +3308,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid79_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid79_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80);
-   Compressor_14_3_Freq300_uid54_bh7_uid79_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid79_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid79_Out0_copy80_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid81_In0 <= "" & bh7_w47_1 & bh7_w47_2 & bh7_w47_3;
@@ -3212,7 +3317,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid81: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid81_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82);
-   Compressor_3_2_Freq300_uid40_bh7_uid81_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid81_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid81_Out0_copy82_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid83_In0 <= "" & bh7_w48_0 & bh7_w48_1 & bh7_w48_2 & bh7_w48_3;
@@ -3224,7 +3329,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid83_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid83_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84);
-   Compressor_14_3_Freq300_uid54_bh7_uid83_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid83_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid83_Out0_copy84_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid85_In0 <= "" & bh7_w49_1 & bh7_w49_2 & bh7_w49_3 & bh7_w49_4;
@@ -3236,7 +3341,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid85_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid85_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86);
-   Compressor_14_3_Freq300_uid54_bh7_uid85_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid85_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid85_Out0_copy86_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid87_In0 <= "" & bh7_w50_1 & bh7_w50_2 & bh7_w50_3;
@@ -3245,7 +3350,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid87: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid87_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88);
-   Compressor_3_2_Freq300_uid40_bh7_uid87_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid87_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid87_Out0_copy88_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid91_In0 <= "" & bh7_w51_0 & bh7_w51_1 & bh7_w51_2 & bh7_w51_3 & bh7_w51_4 & bh7_w51_5;
@@ -3255,7 +3360,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid91: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid91_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92);
-   Compressor_6_3_Freq300_uid90_bh7_uid91_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid91_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid91_Out0_copy92_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid93_In0 <= "" & bh7_w52_0 & bh7_w52_1 & bh7_w52_2 & bh7_w52_3 & bh7_w52_4 & bh7_w52_5;
@@ -3265,7 +3370,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid93: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid93_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94);
-   Compressor_6_3_Freq300_uid90_bh7_uid93_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid93_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid93_Out0_copy94_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid95_In0 <= "" & bh7_w53_0 & bh7_w53_1 & bh7_w53_2 & bh7_w53_3 & bh7_w53_4 & bh7_w53_5;
@@ -3275,7 +3380,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid95: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid95_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96);
-   Compressor_6_3_Freq300_uid90_bh7_uid95_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid95_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid95_Out0_copy96_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid97_In0 <= "" & bh7_w54_0 & bh7_w54_1 & bh7_w54_2 & bh7_w54_3 & bh7_w54_4 & bh7_w54_5;
@@ -3285,7 +3390,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid97: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid97_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98);
-   Compressor_6_3_Freq300_uid90_bh7_uid97_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid97_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid97_Out0_copy98_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid99_In0 <= "" & bh7_w55_0 & bh7_w55_1 & bh7_w55_2 & bh7_w55_3 & bh7_w55_4 & bh7_w55_5;
@@ -3295,7 +3400,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid99: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid99_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100);
-   Compressor_6_3_Freq300_uid90_bh7_uid99_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid99_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid99_Out0_copy100_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid101_In0 <= "" & bh7_w56_0 & bh7_w56_1 & bh7_w56_2 & bh7_w56_3 & bh7_w56_4 & bh7_w56_5;
@@ -3305,7 +3410,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid101: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid101_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102);
-   Compressor_6_3_Freq300_uid90_bh7_uid101_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid101_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid101_Out0_copy102_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid103_In0 <= "" & bh7_w57_0 & bh7_w57_1 & bh7_w57_2 & bh7_w57_3 & bh7_w57_4 & bh7_w57_5;
@@ -3315,7 +3420,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid103: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid103_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104);
-   Compressor_6_3_Freq300_uid90_bh7_uid103_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid103_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid103_Out0_copy104_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid105_In0 <= "" & bh7_w58_0 & bh7_w58_1 & bh7_w58_2 & bh7_w58_3 & bh7_w58_4 & bh7_w58_5;
@@ -3325,7 +3430,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid105: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid105_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106);
-   Compressor_6_3_Freq300_uid90_bh7_uid105_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid105_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid105_Out0_copy106_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid107_In0 <= "" & bh7_w59_0 & bh7_w59_1 & bh7_w59_2 & bh7_w59_3 & bh7_w59_4 & bh7_w59_5;
@@ -3335,7 +3440,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid107: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid107_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108);
-   Compressor_6_3_Freq300_uid90_bh7_uid107_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid107_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid107_Out0_copy108_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid109_In0 <= "" & bh7_w60_0 & bh7_w60_1 & bh7_w60_2 & bh7_w60_3 & bh7_w60_4 & bh7_w60_5;
@@ -3345,7 +3450,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid109: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid109_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110);
-   Compressor_6_3_Freq300_uid90_bh7_uid109_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid109_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid109_Out0_copy110_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid111_In0 <= "" & bh7_w61_0 & bh7_w61_1 & bh7_w61_2 & bh7_w61_3 & bh7_w61_4 & bh7_w61_5;
@@ -3355,7 +3460,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid111: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid111_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112);
-   Compressor_6_3_Freq300_uid90_bh7_uid111_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid111_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid111_Out0_copy112_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid113_In0 <= "" & bh7_w62_0 & bh7_w62_1 & bh7_w62_2 & bh7_w62_3 & bh7_w62_4 & bh7_w62_5;
@@ -3365,7 +3470,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid113: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid113_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114);
-   Compressor_6_3_Freq300_uid90_bh7_uid113_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid113_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid113_Out0_copy114_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid115_In0 <= "" & bh7_w63_0 & bh7_w63_1 & bh7_w63_2 & bh7_w63_3 & bh7_w63_4 & bh7_w63_5;
@@ -3375,7 +3480,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid115: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid115_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116);
-   Compressor_6_3_Freq300_uid90_bh7_uid115_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid115_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid115_Out0_copy116_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid117_In0 <= "" & bh7_w64_0 & bh7_w64_1 & bh7_w64_2 & bh7_w64_3 & bh7_w64_4 & bh7_w64_5;
@@ -3385,7 +3490,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid117: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid117_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118);
-   Compressor_6_3_Freq300_uid90_bh7_uid117_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid117_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid117_Out0_copy118_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid119_In0 <= "" & bh7_w65_0 & bh7_w65_1 & bh7_w65_2 & bh7_w65_3 & bh7_w65_4 & bh7_w65_5;
@@ -3395,7 +3500,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid119: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid119_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120);
-   Compressor_6_3_Freq300_uid90_bh7_uid119_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid119_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid119_Out0_copy120_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid121_In0 <= "" & bh7_w66_0 & bh7_w66_1 & bh7_w66_2 & bh7_w66_3 & bh7_w66_4 & bh7_w66_5;
@@ -3405,7 +3510,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid121: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid121_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122);
-   Compressor_6_3_Freq300_uid90_bh7_uid121_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid121_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid121_Out0_copy122_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid123_In0 <= "" & bh7_w67_0 & bh7_w67_1 & bh7_w67_2 & bh7_w67_3 & bh7_w67_4 & bh7_w67_5;
@@ -3415,7 +3520,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid123: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid123_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124);
-   Compressor_6_3_Freq300_uid90_bh7_uid123_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid123_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid123_Out0_copy124_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid125_In0 <= "" & bh7_w68_0 & bh7_w68_1 & bh7_w68_2 & bh7_w68_3 & bh7_w68_4 & bh7_w68_5;
@@ -3425,7 +3530,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid125: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid125_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126);
-   Compressor_6_3_Freq300_uid90_bh7_uid125_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid125_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid125_Out0_copy126_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid127_In0 <= "" & bh7_w69_0 & bh7_w69_1 & bh7_w69_2 & bh7_w69_3 & bh7_w69_4 & bh7_w69_5;
@@ -3435,7 +3540,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid127: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid127_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128);
-   Compressor_6_3_Freq300_uid90_bh7_uid127_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid127_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid127_Out0_copy128_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid129_In0 <= "" & bh7_w70_0 & bh7_w70_1 & bh7_w70_2 & bh7_w70_3 & bh7_w70_4 & bh7_w70_5;
@@ -3445,7 +3550,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid129: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid129_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130);
-   Compressor_6_3_Freq300_uid90_bh7_uid129_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid129_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid129_Out0_copy130_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid131_In0 <= "" & bh7_w71_0 & bh7_w71_1 & bh7_w71_2 & bh7_w71_3 & bh7_w71_4 & bh7_w71_5;
@@ -3455,7 +3560,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid131: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid131_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132);
-   Compressor_6_3_Freq300_uid90_bh7_uid131_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid131_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid131_Out0_copy132_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid133_In0 <= "" & bh7_w72_0 & bh7_w72_1 & bh7_w72_2 & bh7_w72_3 & bh7_w72_4 & bh7_w72_5;
@@ -3465,7 +3570,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid133: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid133_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134);
-   Compressor_6_3_Freq300_uid90_bh7_uid133_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid133_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid133_Out0_copy134_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid135_In0 <= "" & bh7_w73_0 & bh7_w73_1 & bh7_w73_2 & bh7_w73_3 & bh7_w73_4 & bh7_w73_5;
@@ -3475,7 +3580,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid135: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid135_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136);
-   Compressor_6_3_Freq300_uid90_bh7_uid135_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid135_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid135_Out0_copy136_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid137_In0 <= "" & bh7_w74_0 & bh7_w74_1 & bh7_w74_2 & bh7_w74_3 & bh7_w74_4 & bh7_w74_5;
@@ -3485,7 +3590,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid137: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid137_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138);
-   Compressor_6_3_Freq300_uid90_bh7_uid137_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid137_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid137_Out0_copy138_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid139_In0 <= "" & bh7_w75_0 & bh7_w75_1 & bh7_w75_2 & bh7_w75_3 & bh7_w75_4 & bh7_w75_5;
@@ -3495,7 +3600,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid139: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid139_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140);
-   Compressor_6_3_Freq300_uid90_bh7_uid139_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid139_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid139_Out0_copy140_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid141_In0 <= "" & bh7_w76_0 & bh7_w76_1 & bh7_w76_2 & bh7_w76_3 & bh7_w76_4 & bh7_w76_5;
@@ -3505,7 +3610,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid141: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid141_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142);
-   Compressor_6_3_Freq300_uid90_bh7_uid141_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid141_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid141_Out0_copy142_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid143_In0 <= "" & bh7_w77_0 & bh7_w77_1 & bh7_w77_2 & bh7_w77_3 & bh7_w77_4 & bh7_w77_5;
@@ -3515,7 +3620,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid143: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid143_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144);
-   Compressor_6_3_Freq300_uid90_bh7_uid143_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid143_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid143_Out0_copy144_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid145_In0 <= "" & bh7_w78_0 & bh7_w78_1 & bh7_w78_2 & bh7_w78_3 & bh7_w78_4 & bh7_w78_5;
@@ -3525,7 +3630,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid145: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid145_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146);
-   Compressor_6_3_Freq300_uid90_bh7_uid145_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid145_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid145_Out0_copy146_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid147_In0 <= "" & bh7_w79_0 & bh7_w79_1 & bh7_w79_2 & bh7_w79_3 & bh7_w79_4 & bh7_w79_5;
@@ -3535,7 +3640,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid147: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid147_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148);
-   Compressor_6_3_Freq300_uid90_bh7_uid147_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid147_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid147_Out0_copy148_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_6_3_Freq300_uid90_bh7_uid149_In0 <= "" & bh7_w80_0 & bh7_w80_1 & bh7_w80_2 & bh7_w80_3 & bh7_w80_4 & bh7_w80_5;
@@ -3545,7 +3650,7 @@ begin
    Compressor_6_3_Freq300_uid90_uid149: Compressor_6_3_Freq300_uid90
       port map ( X0 => Compressor_6_3_Freq300_uid90_bh7_uid149_In0,
                  R => Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150);
-   Compressor_6_3_Freq300_uid90_bh7_uid149_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150; -- output copy to hold a pipeline register if needed
+   Compressor_6_3_Freq300_uid90_bh7_uid149_Out0 <= Compressor_6_3_Freq300_uid90_bh7_uid149_Out0_copy150_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid151_In0 <= "" & bh7_w81_0 & bh7_w81_1 & bh7_w81_2 & bh7_w81_3;
@@ -3557,7 +3662,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid151_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid151_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152);
-   Compressor_14_3_Freq300_uid54_bh7_uid151_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid151_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid151_Out0_copy152_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid153_In0 <= "" & bh7_w82_1 & bh7_w82_2 & bh7_w82_3;
@@ -3566,7 +3671,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid153: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid153_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154);
-   Compressor_3_2_Freq300_uid40_bh7_uid153_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid153_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid153_Out0_copy154_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid155_In0 <= "" & bh7_w83_0 & bh7_w83_1 & bh7_w83_2 & bh7_w83_3;
@@ -3578,7 +3683,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid155_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid155_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156);
-   Compressor_14_3_Freq300_uid54_bh7_uid155_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid155_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid155_Out0_copy156_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid157_In0 <= "" & bh7_w84_1 & bh7_w84_2 & bh7_w84_3;
@@ -3587,7 +3692,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid157: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid157_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158);
-   Compressor_3_2_Freq300_uid40_bh7_uid157_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid157_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid157_Out0_copy158_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid159_In0 <= "" & bh7_w85_0 & bh7_w85_1 & bh7_w85_2 & bh7_w85_3;
@@ -3599,7 +3704,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid159_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid159_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160);
-   Compressor_14_3_Freq300_uid54_bh7_uid159_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid159_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid159_Out0_copy160_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid161_In0 <= "" & bh7_w86_1 & bh7_w86_2 & bh7_w86_3;
@@ -3608,7 +3713,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid161: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid161_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162);
-   Compressor_3_2_Freq300_uid40_bh7_uid161_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid161_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid161_Out0_copy162_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid163_In0 <= "" & bh7_w87_0 & bh7_w87_1 & bh7_w87_2 & bh7_w87_3;
@@ -3620,7 +3725,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid163_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid163_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164);
-   Compressor_14_3_Freq300_uid54_bh7_uid163_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid163_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid163_Out0_copy164_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid165_In0 <= "" & bh7_w88_0 & bh7_w88_1 & bh7_w88_2;
@@ -3629,7 +3734,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid165: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid165_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166);
-   Compressor_3_2_Freq300_uid40_bh7_uid165_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid165_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid165_Out0_copy166_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid167_In0 <= "" & bh7_w89_0 & bh7_w89_1 & bh7_w89_2 & bh7_w89_3;
@@ -3641,7 +3746,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid167_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid167_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168);
-   Compressor_14_3_Freq300_uid54_bh7_uid167_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid167_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid167_Out0_copy168_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid169_In0 <= "" & bh7_w90_1 & bh7_w90_2 & bh7_w90_3;
@@ -3650,7 +3755,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid169: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid169_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170);
-   Compressor_3_2_Freq300_uid40_bh7_uid169_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid169_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid169_Out0_copy170_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid171_In0 <= "" & bh7_w91_0 & bh7_w91_1 & bh7_w91_2 & bh7_w91_3;
@@ -3662,7 +3767,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid171_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid171_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172);
-   Compressor_14_3_Freq300_uid54_bh7_uid171_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid171_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid171_Out0_copy172_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid173_In0 <= "" & bh7_w92_1 & bh7_w92_2 & bh7_w92_3;
@@ -3671,7 +3776,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid173: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid173_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174);
-   Compressor_3_2_Freq300_uid40_bh7_uid173_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid173_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid173_Out0_copy174_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid175_In0 <= "" & bh7_w93_0 & bh7_w93_1 & bh7_w93_2 & bh7_w93_3;
@@ -3683,7 +3788,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid175_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid175_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176);
-   Compressor_14_3_Freq300_uid54_bh7_uid175_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid175_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid175_Out0_copy176_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid177_In0 <= "" & bh7_w94_1 & bh7_w94_2 & bh7_w94_3;
@@ -3692,7 +3797,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid177: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid177_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178);
-   Compressor_3_2_Freq300_uid40_bh7_uid177_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid177_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid177_Out0_copy178_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid179_In0 <= "" & bh7_w95_0 & bh7_w95_1 & bh7_w95_2 & bh7_w95_3;
@@ -3704,7 +3809,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid179_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid179_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180);
-   Compressor_14_3_Freq300_uid54_bh7_uid179_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid179_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid179_Out0_copy180_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_3_2_Freq300_uid40_bh7_uid181_In0 <= "" & bh7_w96_1 & bh7_w96_2 & bh7_w96_3;
@@ -3713,7 +3818,7 @@ begin
    Compressor_3_2_Freq300_uid40_uid181: Compressor_3_2_Freq300_uid40
       port map ( X0 => Compressor_3_2_Freq300_uid40_bh7_uid181_In0,
                  R => Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182);
-   Compressor_3_2_Freq300_uid40_bh7_uid181_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182; -- output copy to hold a pipeline register if needed
+   Compressor_3_2_Freq300_uid40_bh7_uid181_Out0 <= Compressor_3_2_Freq300_uid40_bh7_uid181_Out0_copy182_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid183_In0 <= "" & bh7_w97_0 & bh7_w97_1 & bh7_w97_2 & bh7_w97_3;
@@ -3725,7 +3830,7 @@ begin
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid183_In0,
                  X1 => Compressor_14_3_Freq300_uid54_bh7_uid183_In1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184);
-   Compressor_14_3_Freq300_uid54_bh7_uid183_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184; -- output copy to hold a pipeline register if needed
+   Compressor_14_3_Freq300_uid54_bh7_uid183_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid183_Out0_copy184_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid185_In0 <= "" & bh7_w98_1 & bh7_w98_2 & bh7_w98_3;
@@ -3737,7 +3842,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid185_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid185_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186);
-   Compressor_23_3_Freq300_uid32_bh7_uid185_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid185_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid185_Out0_copy186_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid187_In0 <= "" & bh7_w100_0 & bh7_w100_1 & bh7_w100_2;
@@ -3749,7 +3854,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid187_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid187_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188);
-   Compressor_23_3_Freq300_uid32_bh7_uid187_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid187_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid187_Out0_copy188_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid189_In0 <= "" & bh7_w102_0 & bh7_w102_1 & bh7_w102_2;
@@ -3761,7 +3866,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid189_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid189_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190);
-   Compressor_23_3_Freq300_uid32_bh7_uid189_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid189_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid189_Out0_copy190_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid191_In0 <= "" & bh7_w104_0 & bh7_w104_1 & bh7_w104_2;
@@ -3773,7 +3878,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid191_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid191_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192);
-   Compressor_23_3_Freq300_uid32_bh7_uid191_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid191_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid191_Out0_copy192_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid193_In0 <= "" & bh7_w106_0 & bh7_w106_1 & "0";
@@ -3785,7 +3890,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid193_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid193_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194);
-   Compressor_23_3_Freq300_uid32_bh7_uid193_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid193_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid193_Out0_copy194_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid195_In0 <= "" & bh7_w108_0 & bh7_w108_1 & "0";
@@ -3797,7 +3902,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid195_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid195_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196);
-   Compressor_23_3_Freq300_uid32_bh7_uid195_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid195_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid195_Out0_copy196_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_23_3_Freq300_uid32_bh7_uid197_In0 <= "" & bh7_w110_0 & bh7_w110_1 & "0";
@@ -3809,7 +3914,7 @@ begin
       port map ( X0 => Compressor_23_3_Freq300_uid32_bh7_uid197_In0,
                  X1 => Compressor_23_3_Freq300_uid32_bh7_uid197_In1,
                  R => Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198);
-   Compressor_23_3_Freq300_uid32_bh7_uid197_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198; -- output copy to hold a pipeline register if needed
+   Compressor_23_3_Freq300_uid32_bh7_uid197_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid197_Out0_copy198_d1; -- output copy to hold a pipeline register if needed
 
 
    Compressor_14_3_Freq300_uid54_bh7_uid199_In0 <= "" & bh7_w19_3 & bh7_w19_2 & "0" & "0";
@@ -3848,7 +3953,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid203_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid203_Out0_copy204; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid205_In0 <= "" & bh7_w25_2 & bh7_w25_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid205_In0 <= "" & bh7_w25_2_d1 & bh7_w25_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid205_In1 <= "" & bh7_w26_4 & bh7_w26_3;
    bh7_w25_5 <= Compressor_23_3_Freq300_uid32_bh7_uid205_Out0(0);
    bh7_w26_5 <= Compressor_23_3_Freq300_uid32_bh7_uid205_Out0(1);
@@ -3860,7 +3965,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid205_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid205_Out0_copy206; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid207_In0 <= "" & bh7_w27_2 & bh7_w27_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid207_In0 <= "" & bh7_w27_2_d1 & bh7_w27_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid207_In1 <= "" & bh7_w28_4 & bh7_w28_3;
    bh7_w27_5 <= Compressor_23_3_Freq300_uid32_bh7_uid207_Out0(0);
    bh7_w28_5 <= Compressor_23_3_Freq300_uid32_bh7_uid207_Out0(1);
@@ -3872,7 +3977,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid207_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid207_Out0_copy208; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid209_In0 <= "" & bh7_w29_2 & bh7_w29_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid209_In0 <= "" & bh7_w29_2_d1 & bh7_w29_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid209_In1 <= "" & bh7_w30_4 & bh7_w30_3;
    bh7_w29_5 <= Compressor_23_3_Freq300_uid32_bh7_uid209_Out0(0);
    bh7_w30_5 <= Compressor_23_3_Freq300_uid32_bh7_uid209_Out0(1);
@@ -3884,7 +3989,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid209_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid209_Out0_copy210; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid211_In0 <= "" & bh7_w31_2 & bh7_w31_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid211_In0 <= "" & bh7_w31_2_d1 & bh7_w31_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid211_In1 <= "" & bh7_w32_4 & bh7_w32_3;
    bh7_w31_5 <= Compressor_23_3_Freq300_uid32_bh7_uid211_Out0(0);
    bh7_w32_5 <= Compressor_23_3_Freq300_uid32_bh7_uid211_Out0(1);
@@ -3896,7 +4001,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid211_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid211_Out0_copy212; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid213_In0 <= "" & bh7_w33_2 & bh7_w33_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid213_In0 <= "" & bh7_w33_2_d1 & bh7_w33_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid213_In1 <= "" & bh7_w34_5 & bh7_w34_4;
    bh7_w33_5 <= Compressor_23_3_Freq300_uid32_bh7_uid213_Out0(0);
    bh7_w34_6 <= Compressor_23_3_Freq300_uid32_bh7_uid213_Out0(1);
@@ -3989,7 +4094,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid227_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid227_Out0_copy228; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_14_3_Freq300_uid54_bh7_uid229_In0 <= "" & bh7_w48_4 & bh7_w48_7 & bh7_w48_6 & bh7_w48_5;
+   Compressor_14_3_Freq300_uid54_bh7_uid229_In0 <= "" & bh7_w48_4_d1 & bh7_w48_7 & bh7_w48_6 & bh7_w48_5;
    Compressor_14_3_Freq300_uid54_bh7_uid229_In1 <= "" & bh7_w49_6;
    bh7_w48_9 <= Compressor_14_3_Freq300_uid54_bh7_uid229_Out0(0);
    bh7_w49_7 <= Compressor_14_3_Freq300_uid54_bh7_uid229_Out0(1);
@@ -4001,14 +4106,14 @@ begin
    Compressor_14_3_Freq300_uid54_bh7_uid229_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid229_Out0_copy230; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_14_3_Freq300_uid54_bh7_uid231_In0 <= "" & bh7_w50_4 & bh7_w50_7 & bh7_w50_6 & bh7_w50_5;
+   Compressor_14_3_Freq300_uid54_bh7_uid231_In0 <= "" & bh7_w50_4_d1 & bh7_w50_7 & bh7_w50_6 & bh7_w50_5;
    Compressor_14_3_Freq300_uid54_bh7_uid231_In1 <= "" & "0";
    bh7_w50_9 <= Compressor_14_3_Freq300_uid54_bh7_uid231_Out0(0);
    bh7_w51_9 <= Compressor_14_3_Freq300_uid54_bh7_uid231_Out0(1);
    bh7_w52_8 <= Compressor_14_3_Freq300_uid54_bh7_uid231_Out0(2);
    Compressor_14_3_Freq300_uid54_uid231: Compressor_14_3_Freq300_uid54
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid231_In0,
-                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid231_In1,
+                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid231_In1_d1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid231_Out0_copy232);
    Compressor_14_3_Freq300_uid54_bh7_uid231_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid231_Out0_copy232; -- output copy to hold a pipeline register if needed
 
@@ -4193,14 +4298,14 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid261_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid261_Out0_copy262; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_14_3_Freq300_uid54_bh7_uid263_In0 <= "" & bh7_w81_4 & bh7_w81_7 & bh7_w81_6 & bh7_w81_5;
+   Compressor_14_3_Freq300_uid54_bh7_uid263_In0 <= "" & bh7_w81_4_d1 & bh7_w81_7 & bh7_w81_6 & bh7_w81_5;
    Compressor_14_3_Freq300_uid54_bh7_uid263_In1 <= "" & "0";
    bh7_w81_9 <= Compressor_14_3_Freq300_uid54_bh7_uid263_Out0(0);
    bh7_w82_7 <= Compressor_14_3_Freq300_uid54_bh7_uid263_Out0(1);
    bh7_w83_7 <= Compressor_14_3_Freq300_uid54_bh7_uid263_Out0(2);
    Compressor_14_3_Freq300_uid54_uid263: Compressor_14_3_Freq300_uid54
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid263_In0,
-                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid263_In1,
+                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid263_In1_d1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid263_Out0_copy264);
    Compressor_14_3_Freq300_uid54_bh7_uid263_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid263_Out0_copy264; -- output copy to hold a pipeline register if needed
 
@@ -4310,7 +4415,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid281_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid281_Out0_copy282; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid283_In0 <= "" & bh7_w99_2 & bh7_w99_4 & bh7_w99_3;
+   Compressor_23_3_Freq300_uid32_bh7_uid283_In0 <= "" & bh7_w99_2_d1 & bh7_w99_4 & bh7_w99_3;
    Compressor_23_3_Freq300_uid32_bh7_uid283_In1 <= "" & bh7_w100_4 & bh7_w100_3;
    bh7_w99_6 <= Compressor_23_3_Freq300_uid32_bh7_uid283_Out0(0);
    bh7_w100_5 <= Compressor_23_3_Freq300_uid32_bh7_uid283_Out0(1);
@@ -4322,7 +4427,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid283_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid283_Out0_copy284; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid285_In0 <= "" & bh7_w101_2 & bh7_w101_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid285_In0 <= "" & bh7_w101_2_d1 & bh7_w101_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid285_In1 <= "" & bh7_w102_4 & bh7_w102_3;
    bh7_w101_5 <= Compressor_23_3_Freq300_uid32_bh7_uid285_Out0(0);
    bh7_w102_5 <= Compressor_23_3_Freq300_uid32_bh7_uid285_Out0(1);
@@ -4334,7 +4439,7 @@ begin
    Compressor_23_3_Freq300_uid32_bh7_uid285_Out0 <= Compressor_23_3_Freq300_uid32_bh7_uid285_Out0_copy286; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_23_3_Freq300_uid32_bh7_uid287_In0 <= "" & bh7_w103_2 & bh7_w103_3 & "0";
+   Compressor_23_3_Freq300_uid32_bh7_uid287_In0 <= "" & bh7_w103_2_d1 & bh7_w103_3 & "0";
    Compressor_23_3_Freq300_uid32_bh7_uid287_In1 <= "" & bh7_w104_4 & bh7_w104_3;
    bh7_w103_5 <= Compressor_23_3_Freq300_uid32_bh7_uid287_Out0(0);
    bh7_w104_5 <= Compressor_23_3_Freq300_uid32_bh7_uid287_Out0(1);
@@ -4382,14 +4487,14 @@ begin
    Compressor_14_3_Freq300_uid54_bh7_uid293_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid293_Out0_copy294; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_14_3_Freq300_uid54_bh7_uid295_In0 <= "" & bh7_w112_0 & bh7_w112_1 & "0" & "0";
+   Compressor_14_3_Freq300_uid54_bh7_uid295_In0 <= "" & bh7_w112_0_d1 & bh7_w112_1 & "0" & "0";
    Compressor_14_3_Freq300_uid54_bh7_uid295_In1 <= "" & bh7_w113_0;
    bh7_w112_3 <= Compressor_14_3_Freq300_uid54_bh7_uid295_Out0(0);
    bh7_w113_1 <= Compressor_14_3_Freq300_uid54_bh7_uid295_Out0(1);
    bh7_w114_1 <= Compressor_14_3_Freq300_uid54_bh7_uid295_Out0(2);
    Compressor_14_3_Freq300_uid54_uid295: Compressor_14_3_Freq300_uid54
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid295_In0,
-                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid295_In1,
+                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid295_In1_d1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid295_Out0_copy296);
    Compressor_14_3_Freq300_uid54_bh7_uid295_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid295_Out0_copy296; -- output copy to hold a pipeline register if needed
 
@@ -4940,20 +5045,20 @@ begin
    Compressor_14_3_Freq300_uid54_bh7_uid387_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid387_Out0_copy388; -- output copy to hold a pipeline register if needed
 
 
-   Compressor_14_3_Freq300_uid54_bh7_uid389_In0 <= "" & bh7_w114_0 & bh7_w114_1 & "0" & "0";
+   Compressor_14_3_Freq300_uid54_bh7_uid389_In0 <= "" & bh7_w114_0_d1 & bh7_w114_1 & "0" & "0";
    Compressor_14_3_Freq300_uid54_bh7_uid389_In1 <= "" & bh7_w115_0;
    bh7_w114_3 <= Compressor_14_3_Freq300_uid54_bh7_uid389_Out0(0);
    bh7_w115_1 <= Compressor_14_3_Freq300_uid54_bh7_uid389_Out0(1);
    bh7_w116_1 <= Compressor_14_3_Freq300_uid54_bh7_uid389_Out0(2);
    Compressor_14_3_Freq300_uid54_uid389: Compressor_14_3_Freq300_uid54
       port map ( X0 => Compressor_14_3_Freq300_uid54_bh7_uid389_In0,
-                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid389_In1,
+                 X1 => Compressor_14_3_Freq300_uid54_bh7_uid389_In1_d1,
                  R => Compressor_14_3_Freq300_uid54_bh7_uid389_Out0_copy390);
    Compressor_14_3_Freq300_uid54_bh7_uid389_Out0 <= Compressor_14_3_Freq300_uid54_bh7_uid389_Out0_copy390; -- output copy to hold a pipeline register if needed
 
-   tmp_bitheapResult_bh7_22 <= bh7_w22_4 & bh7_w21_6 & bh7_w20_3 & bh7_w19_4 & bh7_w18_2 & bh7_w17_2 & bh7_w16_0 & bh7_w15_0 & bh7_w14_0 & bh7_w13_0 & bh7_w12_0 & bh7_w11_0 & bh7_w10_0 & bh7_w9_0 & bh7_w8_0 & bh7_w7_0 & bh7_w6_0 & bh7_w5_0 & bh7_w4_0 & bh7_w3_0 & bh7_w2_0 & bh7_w1_0 & bh7_w0_0;
+   tmp_bitheapResult_bh7_22 <= bh7_w22_4 & bh7_w21_6 & bh7_w20_3 & bh7_w19_4 & bh7_w18_2 & bh7_w17_2 & bh7_w16_0_d1 & bh7_w15_0_d1 & bh7_w14_0_d1 & bh7_w13_0_d1 & bh7_w12_0_d1 & bh7_w11_0_d1 & bh7_w10_0_d1 & bh7_w9_0_d1 & bh7_w8_0_d1 & bh7_w7_0_d1 & bh7_w6_0_d1 & bh7_w5_0_d1 & bh7_w4_0_d1 & bh7_w3_0_d1 & bh7_w2_0_d1 & bh7_w1_0_d1 & bh7_w0_0_d1;
 
-   bitheapFinalAdd_bh7_In0 <= "0" & bh7_w127_0 & bh7_w126_0 & bh7_w125_0 & bh7_w124_0 & bh7_w123_0 & bh7_w122_0 & bh7_w121_0 & bh7_w120_0 & bh7_w119_0 & bh7_w118_0 & bh7_w117_0 & bh7_w116_0 & bh7_w115_1 & bh7_w114_3 & bh7_w113_2 & bh7_w112_5 & bh7_w111_4 & bh7_w110_7 & bh7_w109_4 & bh7_w108_6 & bh7_w107_4 & bh7_w106_5 & bh7_w105_5 & bh7_w104_6 & bh7_w103_7 & bh7_w102_6 & bh7_w101_7 & bh7_w100_6 & bh7_w99_8 & bh7_w98_7 & bh7_w97_10 & bh7_w96_7 & bh7_w95_10 & bh7_w94_7 & bh7_w93_9 & bh7_w92_7 & bh7_w91_9 & bh7_w90_7 & bh7_w89_9 & bh7_w88_6 & bh7_w87_10 & bh7_w86_7 & bh7_w85_9 & bh7_w84_7 & bh7_w83_10 & bh7_w82_9 & bh7_w81_10 & bh7_w80_11 & bh7_w79_11 & bh7_w78_11 & bh7_w77_11 & bh7_w76_11 & bh7_w75_11 & bh7_w74_11 & bh7_w73_11 & bh7_w72_11 & bh7_w71_11 & bh7_w70_11 & bh7_w69_11 & bh7_w68_11 & bh7_w67_11 & bh7_w66_11 & bh7_w65_11 & bh7_w64_11 & bh7_w63_11 & bh7_w62_11 & bh7_w61_11 & bh7_w60_11 & bh7_w59_11 & bh7_w58_11 & bh7_w57_11 & bh7_w56_11 & bh7_w55_11 & bh7_w54_10 & bh7_w53_11 & bh7_w52_10 & bh7_w51_11 & bh7_w50_11 & bh7_w49_8 & bh7_w48_11 & bh7_w47_7 & bh7_w46_10 & bh7_w45_7 & bh7_w44_10 & bh7_w43_7 & bh7_w42_10 & bh7_w41_7 & bh7_w40_10 & bh7_w39_7 & bh7_w38_9 & bh7_w37_7 & bh7_w36_9 & bh7_w35_9 & bh7_w34_7 & bh7_w33_7 & bh7_w32_6 & bh7_w31_7 & bh7_w30_6 & bh7_w29_7 & bh7_w28_6 & bh7_w27_7 & bh7_w26_6 & bh7_w25_7 & bh7_w24_6 & bh7_w23_7;
+   bitheapFinalAdd_bh7_In0 <= "0" & bh7_w127_0_d1 & bh7_w126_0_d1 & bh7_w125_0_d1 & bh7_w124_0_d1 & bh7_w123_0_d1 & bh7_w122_0_d1 & bh7_w121_0_d1 & bh7_w120_0_d1 & bh7_w119_0_d1 & bh7_w118_0_d1 & bh7_w117_0_d1 & bh7_w116_0_d1 & bh7_w115_1 & bh7_w114_3 & bh7_w113_2 & bh7_w112_5 & bh7_w111_4 & bh7_w110_7 & bh7_w109_4 & bh7_w108_6 & bh7_w107_4 & bh7_w106_5 & bh7_w105_5 & bh7_w104_6 & bh7_w103_7 & bh7_w102_6 & bh7_w101_7 & bh7_w100_6 & bh7_w99_8 & bh7_w98_7 & bh7_w97_10 & bh7_w96_7 & bh7_w95_10 & bh7_w94_7 & bh7_w93_9 & bh7_w92_7 & bh7_w91_9 & bh7_w90_7 & bh7_w89_9 & bh7_w88_6 & bh7_w87_10 & bh7_w86_7 & bh7_w85_9 & bh7_w84_7 & bh7_w83_10 & bh7_w82_9 & bh7_w81_10 & bh7_w80_11 & bh7_w79_11 & bh7_w78_11 & bh7_w77_11 & bh7_w76_11 & bh7_w75_11 & bh7_w74_11 & bh7_w73_11 & bh7_w72_11 & bh7_w71_11 & bh7_w70_11 & bh7_w69_11 & bh7_w68_11 & bh7_w67_11 & bh7_w66_11 & bh7_w65_11 & bh7_w64_11 & bh7_w63_11 & bh7_w62_11 & bh7_w61_11 & bh7_w60_11 & bh7_w59_11 & bh7_w58_11 & bh7_w57_11 & bh7_w56_11 & bh7_w55_11 & bh7_w54_10 & bh7_w53_11 & bh7_w52_10 & bh7_w51_11 & bh7_w50_11 & bh7_w49_8 & bh7_w48_11 & bh7_w47_7 & bh7_w46_10 & bh7_w45_7 & bh7_w44_10 & bh7_w43_7 & bh7_w42_10 & bh7_w41_7 & bh7_w40_10 & bh7_w39_7 & bh7_w38_9 & bh7_w37_7 & bh7_w36_9 & bh7_w35_9 & bh7_w34_7 & bh7_w33_7 & bh7_w32_6 & bh7_w31_7 & bh7_w30_6 & bh7_w29_7 & bh7_w28_6 & bh7_w27_7 & bh7_w26_6 & bh7_w25_7 & bh7_w24_6 & bh7_w23_7;
    bitheapFinalAdd_bh7_In1 <= "0" & "0" & "0" & "0" & "0" & "0" & "0" & "0" & "0" & "0" & "0" & "0" & bh7_w116_1 & "0" & bh7_w114_2 & "0" & bh7_w112_4 & "0" & bh7_w110_6 & "0" & "0" & bh7_w107_3 & "0" & bh7_w105_4 & "0" & bh7_w103_6 & "0" & bh7_w101_6 & "0" & bh7_w99_7 & "0" & bh7_w97_9 & "0" & bh7_w95_9 & "0" & bh7_w93_10 & "0" & bh7_w91_10 & "0" & bh7_w89_10 & "0" & bh7_w87_9 & "0" & "0" & bh7_w84_6 & bh7_w83_11 & bh7_w82_10 & "0" & bh7_w80_10 & "0" & bh7_w78_10 & "0" & bh7_w76_10 & "0" & bh7_w74_10 & "0" & bh7_w72_10 & "0" & bh7_w70_10 & "0" & bh7_w68_10 & "0" & bh7_w66_10 & "0" & bh7_w64_10 & "0" & bh7_w62_10 & "0" & bh7_w60_10 & "0" & bh7_w58_10 & "0" & bh7_w56_10 & "0" & bh7_w54_11 & "0" & bh7_w52_11 & "0" & bh7_w50_10 & "0" & bh7_w48_10 & "0" & bh7_w46_9 & "0" & bh7_w44_9 & "0" & bh7_w42_9 & "0" & bh7_w40_9 & "0" & "0" & bh7_w37_6 & "0" & bh7_w35_8 & "0" & bh7_w33_6 & "0" & bh7_w31_6 & "0" & bh7_w29_6 & "0" & bh7_w27_6 & "0" & bh7_w25_6 & "0" & bh7_w23_6;
    bitheapFinalAdd_bh7_Cin <= '0';
 
@@ -4974,7 +5079,7 @@ end architecture;
 -- All rights reserved 
 -- Authors: Bogdan Pasca, Florent de Dinechin (2008-2016)
 --------------------------------------------------------------------------------
--- Pipeline depth: 1 cycles
+-- Pipeline depth: 3 cycles
 -- Clock period (ns): 3.33333
 -- Target frequency (MHz): 300
 -- Input signals: X Y Cin
@@ -4997,40 +5102,28 @@ entity IntAdder_80_Freq300_uid395 is
 end entity;
 
 architecture arch of IntAdder_80_Freq300_uid395 is
-signal Cin_0, Cin_0_d1 :  std_logic;
-signal X_0, X_0_d1 :  std_logic_vector(39 downto 0);
-signal Y_0, Y_0_d1, Y_0_d2 :  std_logic_vector(39 downto 0);
-signal S_0 :  std_logic_vector(39 downto 0);
-signal R_0 :  std_logic_vector(38 downto 0);
-signal Cin_1 :  std_logic;
-signal X_1, X_1_d1 :  std_logic_vector(41 downto 0);
-signal Y_1, Y_1_d1, Y_1_d2 :  std_logic_vector(41 downto 0);
-signal S_1 :  std_logic_vector(41 downto 0);
-signal R_1 :  std_logic_vector(40 downto 0);
+signal Cin_1, Cin_1_d1 :  std_logic;
+signal X_1, X_1_d1 :  std_logic_vector(80 downto 0);
+signal Y_1, Y_1_d1, Y_1_d2, Y_1_d3 :  std_logic_vector(80 downto 0);
+signal S_1 :  std_logic_vector(80 downto 0);
+signal R_1 :  std_logic_vector(79 downto 0);
 begin
    process(clk)
       begin
          if clk'event and clk = '1' then
-            Cin_0_d1 <=  Cin_0;
-            X_0_d1 <=  X_0;
-            Y_0_d1 <=  Y_0;
-            Y_0_d2 <=  Y_0_d1;
+            Cin_1_d1 <=  Cin_1;
             X_1_d1 <=  X_1;
             Y_1_d1 <=  Y_1;
             Y_1_d2 <=  Y_1_d1;
+            Y_1_d3 <=  Y_1_d2;
          end if;
       end process;
-   Cin_0 <= Cin;
-   X_0 <= '0' & X(38 downto 0);
-   Y_0 <= '0' & Y(38 downto 0);
-   S_0 <= X_0_d1 + Y_0_d2 + Cin_0_d1;
-   R_0 <= S_0(38 downto 0);
-   Cin_1 <= S_0(39);
-   X_1 <= '0' & X(79 downto 39);
-   Y_1 <= '0' & Y(79 downto 39);
-   S_1 <= X_1_d1 + Y_1_d2 + Cin_1;
-   R_1 <= S_1(40 downto 0);
-   R <= R_1 & R_0 ;
+   Cin_1 <= Cin;
+   X_1 <= '0' & X(79 downto 0);
+   Y_1 <= '0' & Y(79 downto 0);
+   S_1 <= X_1_d1 + Y_1_d3 + Cin_1_d1;
+   R_1 <= S_1(79 downto 0);
+   R <= R_1 ;
 end architecture;
 
 --------------------------------------------------------------------------------
@@ -5040,7 +5133,7 @@ end architecture;
 -- All rights reserved 
 -- Authors: Bogdan Pasca, Florent de Dinechin 2008-2021
 --------------------------------------------------------------------------------
--- Pipeline depth: 2 cycles
+-- Pipeline depth: 3 cycles
 -- Clock period (ns): 3.33333
 -- Target frequency (MHz): 300
 -- Input signals: X Y
@@ -5062,7 +5155,7 @@ entity FPMult_15_63_uid2_Freq300_uid3 is
 end entity;
 
 architecture arch of FPMult_15_63_uid2_Freq300_uid3 is
-   component IntMultiplier_Freq300_uid5 is
+   component IntMultiplier_64x64_128_Freq300_uid5 is
       port ( clk : in std_logic;
              X : in  std_logic_vector(63 downto 0);
              Y : in  std_logic_vector(63 downto 0);
@@ -5077,17 +5170,17 @@ architecture arch of FPMult_15_63_uid2_Freq300_uid3 is
              R : out  std_logic_vector(79 downto 0)   );
    end component;
 
-signal sign, sign_d1, sign_d2 :  std_logic;
+signal sign, sign_d1, sign_d2, sign_d3 :  std_logic;
 signal expX :  std_logic_vector(14 downto 0);
 signal expY :  std_logic_vector(14 downto 0);
 signal expSumPreSub :  std_logic_vector(16 downto 0);
 signal bias :  std_logic_vector(16 downto 0);
-signal expSum, expSum_d1 :  std_logic_vector(16 downto 0);
+signal expSum, expSum_d1, expSum_d2 :  std_logic_vector(16 downto 0);
 signal sigX :  std_logic_vector(63 downto 0);
 signal sigY :  std_logic_vector(63 downto 0);
 signal sigProd :  std_logic_vector(127 downto 0);
 signal excSel :  std_logic_vector(3 downto 0);
-signal exc, exc_d1, exc_d2 :  std_logic_vector(1 downto 0);
+signal exc, exc_d1, exc_d2, exc_d3 :  std_logic_vector(1 downto 0);
 signal norm :  std_logic;
 signal expPostNorm :  std_logic_vector(16 downto 0);
 signal sigProdExt :  std_logic_vector(127 downto 0);
@@ -5104,9 +5197,12 @@ begin
          if clk'event and clk = '1' then
             sign_d1 <=  sign;
             sign_d2 <=  sign_d1;
+            sign_d3 <=  sign_d2;
             expSum_d1 <=  expSum;
+            expSum_d2 <=  expSum_d1;
             exc_d1 <=  exc;
             exc_d2 <=  exc_d1;
+            exc_d3 <=  exc_d2;
          end if;
       end process;
    sign <= X(78) xor Y(78);
@@ -5117,7 +5213,7 @@ begin
    expSum <= expSumPreSub - bias;
    sigX <= "1" & X(62 downto 0);
    sigY <= "1" & Y(62 downto 0);
-   SignificandMultiplication: IntMultiplier_Freq300_uid5
+   SignificandMultiplication: IntMultiplier_64x64_128_Freq300_uid5
       port map ( clk  => clk,
                  X => sigX,
                  Y => sigY,
@@ -5130,7 +5226,7 @@ begin
           "11" when others;
    norm <= sigProd(127);
    -- exponent update
-   expPostNorm <= expSum_d1 + ("0000000000000000" & norm);
+   expPostNorm <= expSum_d2 + ("0000000000000000" & norm);
    -- significand normalization shift
    sigProdExt <= sigProd(126 downto 0) & "0" when norm='1' else
                          sigProd(125 downto 0) & "00";
@@ -5149,9 +5245,9 @@ begin
                                "10"             when "01", 
                                "00"             when "11"|"10",
                                "11"             when others;
-   with exc_d2  select  
-   finalExc <= exc_d2 when  "11"|"10"|"00",
+   with exc_d3  select  
+   finalExc <= exc_d3 when  "11"|"10"|"00",
                        excPostNorm when others; 
-   R <= finalExc & sign_d2 & expSigPostRound(77 downto 0);
+   R <= finalExc & sign_d3 & expSigPostRound(77 downto 0);
 end architecture;
 

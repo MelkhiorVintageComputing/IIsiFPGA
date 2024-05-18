@@ -7,7 +7,7 @@ import litex
 from litex.soc.interconnect import wishbone
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False):
+    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9):
 
         if (rd68891 and rd68883):
             print("Only one copro supported for now")
@@ -216,7 +216,7 @@ class MC68030_SYNC_FSM(Module):
 
         # selection logic
         my_slot_space = Signal()
-        self.comb += [ my_slot_space.eq((A_i[24:32] == 0xf9)) ] # fixme: abstract slot $9
+        self.comb += [ my_slot_space.eq((A_i[24:32] == (0xf0 + slot))) ]
         
         my_mem_space = Signal()
         #self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01)) ] # 0x08 >> 3 == 0x01
@@ -225,7 +225,7 @@ class MC68030_SYNC_FSM(Module):
         ###self.comb += [ my_mem_space.eq((A_i[26:32] == 0x1) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x04 >> 2 == 0x1
         
         my_superslot_space = Signal()
-        self.comb += [ my_superslot_space.eq((A_i[28:32] == 0x9)) ] # 0x90 >> 4 == 0x9 # fixme: abstract slot $9
+        self.comb += [ my_superslot_space.eq((A_i[28:32] == slot)) ]
         
         my_device_space = Signal()
         

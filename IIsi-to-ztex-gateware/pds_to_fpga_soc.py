@@ -41,7 +41,7 @@ from VintageBusFPGA_Common.MacPeriphSoC import *
 class _CRG(Module, AutoCSR):
     def __init__(self, platform, version, sys_clk_freq,
                  goblin=False,
-                 pix_clk=0):
+                 pix_clk=0, doIIfx=False):
         self.clock_domains.cd_sys       = ClockDomain() # 100 MHz PLL, reset'ed by PDS (via pll), SoC/Wishbone main clock
         self.clock_domains.cd_sys4x     = ClockDomain(reset_less=True)
         self.clock_domains.cd_sys4x_dqs = ClockDomain(reset_less=True)
@@ -87,15 +87,22 @@ class _CRG(Module, AutoCSR):
             self.comb += self.cd_bank34.clk.eq(self.clk54_bufg)
         else:
              assert(False)   
-        
-        clk_cpu = platform.request("cpuclk_3v3_n")
+
+        if (doIIfx):
+            clk_cpu = platform.request("c16m_3v3_n") # called c16m but it's the (slowed) 20 MHz CPU clock, theoretically we could double it to 40 MHz and use area $7 for higher speed...
+        else:
+            clk_cpu = platform.request("cpuclk_3v3_n")
         if (clk_cpu is None):
             print(" ***** ERROR ***** Can't find the CPU Clock !!!!\n");
             assert(false)
         self.cd_cpu.clk = clk_cpu
         rst_cpu_n = platform.request("reset_3v3_n")
         self.comb += self.cd_cpu.rst.eq(~rst_cpu_n)
-        platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports cpuclk_3v3_n]") # fixme: pretend it's 25 MHz for now
+        
+        if (doIIfx):
+            platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports c16m_3v3_n]") # fixme: pretend it's 25 MHz for now
+        else:
+            platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports cpuclk_3v3_n]") # fixme: pretend it's 25 MHz for now
         
         #led = platform.request("user_led", 0)
         #self.comb += [ led.eq(~rst_cpu_n) ]
@@ -171,7 +178,7 @@ class _CRG(Module, AutoCSR):
             
         
 class IIsiFPGA(MacPeriphSoC):
-    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, **kwargs):
+    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, doIIfx, **kwargs):
         print(f"Building IIsiFPGA for board version {version}")
 
         platform = None
@@ -181,6 +188,11 @@ class IIsiFPGA(MacPeriphSoC):
             platform = trenz0710_pds.Platform(variant = variant, version = version)
             
         self.platform = platform
+
+        if (doIIfx):
+            platform.add_extension(ztex213_pds._pds_pdsmaster_v1_0)
+        else:
+            platform.add_extension(ztex213_pds._pds_pdsled_v1_0)
 
         hdmi = True
         
@@ -197,7 +209,7 @@ class IIsiFPGA(MacPeriphSoC):
 
         self.mem_map.update(self.wb_mem_map)
         
-        self.submodules.crg = _CRG(platform=platform, version=version, sys_clk_freq=sys_clk_freq, goblin=goblin, pix_clk=litex.soc.cores.video.video_timings[goblin_res]["pix_clk"])
+        self.submodules.crg = _CRG(platform=platform, version=version, sys_clk_freq=sys_clk_freq, goblin=goblin, pix_clk=litex.soc.cores.video.video_timings[goblin_res]["pix_clk"], doIIfx=doIIfx)
 
         ## add our custom timings after the clocks have been defined
         xdc_timings_filename = None;
@@ -284,7 +296,8 @@ class IIsiFPGA(MacPeriphSoC):
                                                                         cd_cpu="cpu",
                                                                         trace_inst_fifo=self.ziscreen_fifo,
                                                                         rd68891 = rd68891,
-                                                                        rd68883 = rd68883)
+                                                                        rd68883 = rd68883,
+                                                                        slot = 0xE if doIIfx else 0x9,)
         if (goblin):
             MacPeriphSoC.mac_add_goblin(self, use_goblin_alt = use_goblin_alt, hdmi = hdmi, goblin_res = goblin_res, goblin_irq = fb_irq, audio_irq = audio_irq)
 
@@ -304,6 +317,7 @@ def main():
     parser.add_argument("--goblin", action="store_true", help="add a goblin framebuffer")
     parser.add_argument("--goblin-res", default="1920x1080@60Hz", help="Specify the goblin resolution")
     parser.add_argument("--goblin-alt", action="store_true", help="Use alternate HDMI Phy with Audio support (requires Full HD resolution)")
+    parser.add_argument("--doIIfx", action="store_true", help="Generate the design for a Macintosh IIfx instead of a IIsi or SE/30")
     parser.add_argument("--rd68891", action="store_true", help="Add a RD68891 coprocessor (unfinished)")
     parser.add_argument("--rd68883", action="store_true", help="Add a RD68883 coprocessor (barely started)")
     builder_args(parser)
@@ -326,15 +340,23 @@ def main():
         else:
             f.write(" -DENABLE_HDMI_ALT_CHANGE");
             if (args.version == "V1.0"):
-                f.write(" -DENABLE_HDMI_ALT_CHANGE_48MHZ");
+                f.write(" -DENABLE_HDMI_ALT_CHANGE_48MHZ")
             elif (args.version == "V2.0"):
-                f.write(" -DENABLE_HDMI_ALT_CHANGE_54MHZ");
+                f.write(" -DENABLE_HDMI_ALT_CHANGE_54MHZ")
                 
-        f.write("\n");
-        f.write(f"HRES={hres}\n");
-        f.write(f"VRES={vres}\n");
+        f.write("\n")
+        f.write(f"HRES={hres}\n")
+        f.write(f"VRES={vres}\n")
         f.close()
-    
+
+    if (True):
+        f = open("board.inc", "w+")
+        if (args.doIIfx):
+            f.write(f"            .string        \"IIsiFPGA {args.version} (IIfx)\\0\"        /*  revision level */")
+        else:
+            f.write(f"            .string        \"IIsiFPGA {args.version}\\0\"        /*  revision level */")
+        f.close()
+        
     soc = IIsiFPGA(**soc_core_argdict(args),
                    variant=args.variant,
                    version=args.version,
@@ -345,6 +367,7 @@ def main():
                    use_goblin_alt=args.goblin_alt,
                    rd68891=args.rd68891,
                    rd68883=args.rd68883,
+                   doIIfx=args.doIIfx,
     )
 
     version_for_filename = args.version.replace(".", "_")
@@ -364,6 +387,11 @@ def main():
         csr_base  = soc.mem_regions['csr'].origin)
     for name in csr_contents_dict.keys():
         write_to_file(os.path.join("iisifpga_csr_{}.h".format(name)), csr_contents_dict[name])
+
+    if (args.doIIfx):
+        print("---------------------------------------------------------------------------------------------") 
+        print("------------- Configured for a Macintosh IIfx, check the switch !!! -------------------------") 
+        print("---------------------------------------------------------------------------------------------") 
     
 if __name__ == "__main__":
     main()

@@ -777,7 +777,7 @@ class MC68030_SYNC_FSM(Module):
 
             ## copro debug
                 
-            if (True):
+            if (False):
                 led0 = platform.request("user_led", 0)
                 led1 = platform.request("user_led", 1)
                 led2 = platform.request("user_led", 2)

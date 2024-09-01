@@ -1,13 +1,18 @@
 from migen import *
 from migen.genlib.fifo import *
 
+def busy_primitive(PC = 0):
+    val = 0xa400
+    val = val | (PC << 14)
+    return val
+
 def null_primitive(CA = 0, PC = 0, IA = 0, PF = 0, TF = 0):
     val = 0x0800
-    val = val | (CA << 15)
-    val = val | (PC << 14)
-    val = val | (IA <<  8)
-    val = val | (PF <<  1)
-    val = val | (TF <<  0)
+    val = val | (CA << 15) # Come Again
+    val = val | (PC << 14) # Program Counter (request)
+    val = val | (IA <<  8) # Interrupts Allowed
+    val = val | (PF <<  1) # Processing Finished
+    val = val | (TF <<  0) # True/False
     return val
 
 def ea_transfer_primitive(CA = 0, PC = 0, DR = 0, Valid = None, Length = None):
@@ -16,7 +21,7 @@ def ea_transfer_primitive(CA = 0, PC = 0, DR = 0, Valid = None, Length = None):
     val = 0x1000
     val = val | (CA << 15)
     val = val | (PC << 14)
-    val = val | (DR << 13)
+    val = val | (DR << 13) # Direction Bit
     val = val | (Valid << 8) # 3 bits
     val = val | (Length << 0) # 8 bits
     return val

@@ -51,7 +51,7 @@ class rd68883(Copro):
 
         ### type conversion stuff
         ## signals to 'in' blocks (to FloPoCo type)
-        conv_32_81_in = Signal(64)
+        conv_32_81_in = Signal(32)
         conv_32_81_out = Signal(81)
         conv_64_81_in = Signal(64)
         conv_64_81_out = Signal(81)
@@ -60,6 +60,8 @@ class rd68883(Copro):
         ## signals to 'out' blocks (to IEEE types)
         conv_81_all_in = Signal(81)
         conv_81_79_out = Signal(79)
+        conv_81_64_out = Signal(64)
+        conv_81_32_out = Signal(32)
 
         ## data layout
         fp32_layout = [
@@ -274,13 +276,24 @@ class rd68883(Copro):
                             ),
                        # FIXME: illegal stuff
         )
+        # for some reason, (in FP32/64) if we bypass StartData, something goes wrong...
+        # maybe this is too quick and the respons_re seen is from an earlier transaction?
+        # FIXME: CHECKME: do we need to wait for a response_re after the command_we ?
         fpu_fptomem_fsm.act("SetupData",
                             Case(data_type, {
-                                0x1: [
-                                    # FIXME FP32
+                                # 0x000 => Long
+                                # 0x011 => packed static
+                                # 0x100 => Word
+                                # 0x110 => Bye
+                                # 0x111 => packed dynamic
+                                
+                                0x1: [ # 0x001 => FP32
+                                    #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=4)),
+                                    NextValue(operand, conv_81_32_out),
                                     NextValue(op_cycle,0),
+                                    #NextState("WaitReadResponse1"),
                                 ],
-                                0x2: [
+                                0x2: [ # 0x010 => FP80
                                     #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
                                     #fp79_to_operand.eq(conv_81_79_out),
                                     #NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
@@ -288,20 +301,24 @@ class rd68883(Copro):
                                     #NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
                                     NextValue(fp79_to_operand.raw_bits(), conv_81_79_out),
                                     NextValue(op_cycle,2),
+                                    #NextState("StartData"), # one more cycle of conversion, probably not needed - FIXME
                                 ],
-                                0x5: [
-                                    # FIXME FP64
+                                0x5: [ # 0x101 => FP64
+                                    #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
+                                    NextValue(operand, conv_81_64_out[32:64]),
+                                    NextValue(operands[1], conv_81_64_out[ 0:32]),
                                     NextValue(op_cycle,1),
+                                    #NextState("WaitReadResponse1"),
                                 ],
                             }),
                             #NextState("WaitReadResponse1"),
-                            NextState("StartData"),
+                            NextState("StartData")
                             # FIXME: illegal stuff
         )
         fpu_fptomem_fsm.act("StartData",
                             Case(data_type, {
                                 0x1: [
-                                    # FIXME FP32
+                                    NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=4)),
                                 ],
                                 0x2: [
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
@@ -310,7 +327,7 @@ class rd68883(Copro):
                                     NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
                                 ],
                                 0x5: [
-                                    # FIXME FP64
+                                    NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
                                 ],
                             }),
                             NextState("WaitReadResponse1"),
@@ -369,7 +386,7 @@ class rd68883(Copro):
         ### General, move multiple (opclass 110, 111)
 
         # **********************************************************************************
-        ### Confitional FSM
+        ### Conditional FSM
 
         # **********************************************************************************
         ### Context Switch FSM
@@ -382,7 +399,7 @@ class rd68883(Copro):
         operand1 = Signal(81)
         delay = Signal(8)
 
-        ## pipelines output frol the FloPoCo compute blocks
+        ## pipelines output from the FloPoCo compute blocks
         out_pipelines = Array(Signal(81) for x in range(3))
         pip_idx = Signal(3)
 
@@ -460,7 +477,7 @@ class rd68883(Copro):
                                     NextState("Wait"),
                                 ],
                                 0x23: [ # FMul
-                                    NextValue(delay, 1),
+                                    NextValue(delay, 2),
                                     NextValue(pip_idx, 1),
                                     NextState("Wait"),
                                 ],
@@ -520,6 +537,16 @@ class rd68883(Copro):
                                   i_X = conv_81_all_in,
                                   o_R = conv_81_79_out,)
         platform.add_source("OutputIEEE_15_63_to_15_63_comb_uid2.vhdl", "vhdl")
+        
+        self.specials += Instance("OutputIEEE_15_63_to_11_52_comb_uid2",
+                                  i_X = conv_81_all_in,
+                                  o_R = conv_81_64_out,)
+        platform.add_source("OutputIEEE_15_63_to_11_52_comb_uid2.vhdl", "vhdl")
+        
+        self.specials += Instance("OutputIEEE_15_63_to_8_23_comb_uid2",
+                                  i_X = conv_81_all_in,
+                                  o_R = conv_81_32_out,)
+        platform.add_source("OutputIEEE_15_63_to_8_23_comb_uid2.vhdl", "vhdl")
 
         ## compute
         self.specials += Instance("FPAdd_15_63_Freq100_uid2",
@@ -544,7 +571,7 @@ class rd68883(Copro):
         platform.add_source("FPDiv_15_63_Freq100_uid2.vhdl", "vhdl")
 
 
-        ############ sonst table
+        ############ const table
         self.comb += [
             const_table[0x00].eq(0x4000c90fdaa22168c235), # Pi      
             const_table[0x0b].eq(0x3ffd9a209a84fbcff798), # Log10(2)
@@ -568,4 +595,28 @@ class rd68883(Copro):
             const_table[0x3d].eq(0x4d48c976758681750c17), # 10^1024 
             const_table[0x3e].eq(0x5a929e8b3b5dc53d5de5), # 10^2048 
             const_table[0x3f].eq(0x7525c46052028a20979b), # 10^4096 
+        ]
+
+        led0 = platform.request("user_led", 0)
+        led1 = platform.request("user_led", 1)
+        led2 = platform.request("user_led", 2)
+        led3 = platform.request("user_led", 3)
+        led4 = platform.request("user_led", 4)
+        led5 = platform.request("user_led", 5)
+        led6 = platform.request("user_led", 6)
+        led7 = platform.request("user_led", 7)
+
+        
+        self.comb += [
+            #led0.eq(~fpu_compute_fsm.ongoing("Idle")),
+            #led1.eq(~fpu_fptofp_fsm.ongoing("Idle")),
+            #led2.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+            led0.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+            led1.eq(~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
+            led2.eq(0),
+            led3.eq( fpu_fptomem_fsm.ongoing("WaitCompute")),
+            led4.eq( fpu_fptomem_fsm.ongoing("SetupData")),
+            led5.eq( fpu_fptomem_fsm.ongoing("StartData")),
+            led6.eq( fpu_fptomem_fsm.ongoing("WaitReadResponse1")),
+            led7.eq( fpu_fptomem_fsm.ongoing("WaitData")),
         ]

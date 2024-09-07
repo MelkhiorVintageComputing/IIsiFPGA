@@ -3,6 +3,48 @@ from migen.genlib.fifo import *
 
 from copro import *
 
+class ctz8_comb(Module):
+    def __init__(self):
+        self.input = input = Signal(8)
+        self.output = output = Signal(3)
+        self.valid = valid = Signal(1)
+
+        self.comb += [
+            If(input[0],
+               output.eq(0),
+            ).Elif(input[1],
+                   output.eq(1),
+            ).Elif(input[2],
+                   output.eq(2),
+            ).Elif(input[3],
+                   output.eq(3),
+            ).Elif(input[4],
+                   output.eq(4),
+            ).Elif(input[5],
+                   output.eq(5),
+            ).Elif(input[6],
+                   output.eq(6),
+            ).Elif(input[7],
+                   output.eq(7),
+            ),
+            valid.eq(input[0] | input[1] | input[2] | input[3] | input[4] | input[5] | input[6] | input[7]),
+        ]
+
+#class sum8bits_comb(Module):
+#    def __init__(self):
+#        self.input = input = Signal(8)
+#        self.output = output = Signal(4)
+#        self.comb += [
+#            output.eq(Cat(input[0], Signal(3, reset = 0)) +
+#                      Cat(input[1], Signal(3, reset = 0)) +
+#                      Cat(input[2], Signal(3, reset = 0)) +
+#                      Cat(input[3], Signal(3, reset = 0)) +
+#                      Cat(input[4], Signal(3, reset = 0)) +
+#                      Cat(input[5], Signal(3, reset = 0)) +
+#                      Cat(input[6], Signal(3, reset = 0)) +
+#                      Cat(input[7], Signal(3, reset = 0))),
+#        ]
+
 class rd68883(Copro):
     def __init__(self, platform, cd_fpu = "cpu"):
         
@@ -22,9 +64,9 @@ class rd68883(Copro):
 
         ### FP registers from '881/'882
         self.regs_fp = regs_fp = Array(Signal(81, reset = (0x08DEAD0000BEEF0000000 | x)) for x in range(8))
-        regs_fpcr = Signal(32)
-        regs_fpsr = Signal(32)
-        regs_fpiar = Signal(32)
+        regs_fpcr = Signal(32) # HANDLEME
+        regs_fpsr = Signal(32) # HANDLEME
+        regs_fpiar = Signal(32) # HANDLEME
 
         ### shortcuts for command word
         opclass = command[13:16]
@@ -74,10 +116,11 @@ class rd68883(Copro):
             ( "exponent", 11),
             ( "sign", 1),
         ]
+        # fp80 is stored in 96 bits, and the leading 1 of the mantissa is explicit...
         fp80_layout = [
             ( "mantissa", 63),
             ( "leading1", 1),
-            ( "zero", 16),
+            ( "zero", 16), # zero-padding from 80 to 96 bits
             ( "exponent", 15),
             ( "sign", 1),
         ]
@@ -112,8 +155,25 @@ class rd68883(Copro):
             fp80_to_operand.sign.eq(fp79_to_operand.sign),
             fp80_to_operand.exponent.eq(fp79_to_operand.exponent),
             fp80_to_operand.zero.eq(0),
-            fp80_to_operand.leading1.eq(1), # CHECKME # FIXME
+            #fp80_to_operand.leading1.eq(1), # FIXME!!! this will break zeroes...
+            fp80_to_operand.leading1.eq(fp79_to_operand.exponent[ 0] |
+                                        fp79_to_operand.exponent[ 1] |
+                                        fp79_to_operand.exponent[ 2] |
+                                        fp79_to_operand.exponent[ 3] |
+                                        fp79_to_operand.exponent[ 4] |
+                                        fp79_to_operand.exponent[ 5] |
+                                        fp79_to_operand.exponent[ 6] |
+                                        fp79_to_operand.exponent[ 7] |
+                                        fp79_to_operand.exponent[ 8] |
+                                        fp79_to_operand.exponent[ 9] |
+                                        fp79_to_operand.exponent[10] |
+                                        fp79_to_operand.exponent[11] |
+                                        fp79_to_operand.exponent[12] |
+                                        fp79_to_operand.exponent[13] |
+                                        fp79_to_operand.exponent[14]
+            ), # FIXME!!!
             fp80_to_operand.mantissa.eq(fp79_to_operand.mantissa),
+            fp79_to_operand.raw_bits().eq(conv_81_79_out),
         ]
         
         ### internal command stuff
@@ -126,7 +186,7 @@ class rd68883(Copro):
             ("opcode", 7),
         ]
         ## command FIFO (sync for now)
-        self.submodules.compute_fifo = compute_fifo = ClockDomainsRenamer(cd_fpu)(SyncFIFOBuffered(width=layout_len(internal_command_layout), depth=4))
+        self.submodules.compute_fifo = compute_fifo = ClockDomainsRenamer(cd_fpu)(SyncFIFOBuffered(width=layout_len(internal_command_layout), depth=8))
         compute_fifo_din = Record(internal_command_layout)
         compute_fifo_dout = Record(internal_command_layout)
         self.comb += [
@@ -190,14 +250,13 @@ class rd68883(Copro):
                                   compute_fifo_din.regormem.eq(1),
                                   compute_fifo_din.opcode.eq(0x0), # use FMove
                                   compute_fifo.we.eq(1),
-                                  compute_fifo_din.operand.eq(Cat(const_table[extension[0:6]][0:63], const_table[extension[0:6]][64:80], Signal(2, reset = 0x1))),
+                                  compute_fifo_din.operand.eq(Cat(const_table[extension[0:6]][0:63], const_table[extension[0:6]][64:80], Signal(2, reset = 0x1))), # FIXME: upper two bits should be 0 for 0.0 (# 0xF)
                                   NextValue(response, null_primitive(PF=1)), # IDLE
                                   NextState("Idle"),
                               ]
                           }),
                        )
         )
-
         fpu_memtofp_fsm.act("WaitReadResponse1",
                        If(response_re,
                           NextValue(response, null_primitive(CA=1,IA=1)), # ongoing
@@ -245,7 +304,7 @@ class rd68883(Copro):
                           NextValue(data_type, rx),
                           NextValue(reg_idx, ry),
                           NextValue(opcode, extension),
-                          NextValue(response, null_primitive(CA = 1, IA = 1)),
+                          NextValue(response, null_primitive(CA=1, IA=1)),
                           NextState("WaitCompute"),
                        ),
         )
@@ -277,7 +336,7 @@ class rd68883(Copro):
                        # FIXME: illegal stuff
         )
         # for some reason, (in FP32/64) if we bypass StartData, something goes wrong...
-        # maybe this is too quick and the respons_re seen is from an earlier transaction?
+        # maybe this is too quick and the response_re seen is from an earlier transaction?
         # FIXME: CHECKME: do we need to wait for a response_re after the command_we ?
         fpu_fptomem_fsm.act("SetupData",
                             Case(data_type, {
@@ -295,11 +354,10 @@ class rd68883(Copro):
                                 ],
                                 0x2: [ # 0x010 => FP80
                                     #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
-                                    #fp79_to_operand.eq(conv_81_79_out),
-                                    #NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
-                                    #NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
-                                    #NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
-                                    NextValue(fp79_to_operand.raw_bits(), conv_81_79_out),
+                                    NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
+                                    NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
+                                    NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
+                                    #NextValue(fp79_to_operand.raw_bits(), conv_81_79_out),
                                     NextValue(op_cycle,2),
                                     #NextState("StartData"), # one more cycle of conversion, probably not needed - FIXME
                                 ],
@@ -322,9 +380,6 @@ class rd68883(Copro):
                                 ],
                                 0x2: [
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
-                                    NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
-                                    NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
-                                    NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
                                 ],
                                 0x5: [
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
@@ -337,7 +392,7 @@ class rd68883(Copro):
                           NextValue(response, null_primitive(CA=0,IA=1)), # ongoing
                           NextState("WaitData"),
                        ),
-                       # FIXME: illegal stuff
+                       # FIXME: handle illegal stuff
         )
         fpu_fptomem_fsm.act("WaitData",
                             If(operand_re,
@@ -384,7 +439,217 @@ class rd68883(Copro):
 
         # **********************************************************************************
         ### General, move multiple (opclass 110, 111)
+        # last bit of opclass is direction, so
+        # 110 => (dr == 0) => mem-to-FP (e.g. context restore)
+        # 111 => (dr == 1) => FP-to-mem (e.g. context save)
+        fmovem_mode = Signal(2) # low-order bit is static (0) / dynamic (1) ; high-order bit is predecrement (0, FP7 to FP0) or postincrement (1, FP0 to FP7)
+        #fmovem_dr = Signal(1) # direction - encoded in the opclass and different FSM
+        fmovem_reglist_static = Signal(8) # the reglist in the 'static' case
+        fmovem_reglist_regidx = Signal(3) # the number of the D register where the reglist is in the 'dynamic' case
+        self.comb += [ fmovem_mode.eq(command[11:13]),
+                       #fmovem_dr.eq(command[13]),
+                       fmovem_reglist_static.eq(command[0:8]),
+                       fmovem_reglist_regidx.eq(command[4:7]),
+        ]
 
+        pre_or_post_reg = Signal(1)
+        regselect_buf = Signal(8) # the (live) value for the reglist, will go to 0 during transfer and we can alter it (removing 'done' bits one by one)
+        self.submodules.ctz8 = ctz8 = ctz8_comb() # count-trailing-zero (== rightmost reg number)
+        #self.submodules.sum8 = sum8 = sum8bits_comb() # sum of 8 bits (== number of regs)
+        self.comb += [ ctz8.input.eq(regselect_buf), # dynamically change
+        #               sum8.input.eq(self.regselect[0:8]), # static
+        ]
+        fmovem_reg_idx = Signal(3) # buffered copy of the index of the current FP register being processed
+        
+        self.submodules.fpu_fmovem_tofp_fsm = fpu_fmovem_tofp_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_fmovem_tofp_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_fmovem_tofp_fsm.act("Idle",
+                                If(command_we & (opclass == 6), # 'b110
+                                   #NextValue(pre_or_post_reg, fmovem_mode[1]),
+                                   #If(~compute_fifo.readable, # FIFO empty, let's go # do we need to wait? The write is going in the FIFO anyway...
+                                   If(fmovem_mode[0], # dynamic
+                                      NextValue(response, transfer_singlereg_primitive(CA=1,PC=0,DR=0,DA=0,Register=fmovem_reglist_regidx)),
+                                      NextState("WaitForRegListReadResponse"),
+                                   ).Else( # static
+                                       NextValue(response, null_primitive(CA=1,IA=1)),
+                                       NextValue(self.regselect, Cat(fmovem_reglist_static, Signal(8, reset = 0))),
+                                       NextValue(regselect_buf, Cat(fmovem_reglist_static, Signal(8, reset = 0))), # working copy
+                                       NextState("SetRequestResponse"),
+                                   )
+                                   #).Else(
+                                   # NextValue(response, null_primitive(CA=1, IA=1)),
+                                   # NextState("WaitCompute"),
+                                   #)
+                                ),
+        )
+        fpu_fmovem_tofp_fsm.act("WaitForRegListReadResponse",
+                                If(response_re,
+                                   NextValue(response, null_primitive(CA=1,IA=1)),
+                                   NextState("WaitForRegListWriteOperand"),
+                                ),
+        )
+        fpu_fmovem_tofp_fsm.act("WaitForRegListWriteOperand",
+                                If(operand_we,
+                                   NextValue(self.regselect, Cat(operand[0:8], Signal(8, reset = 0))),
+                                   NextValue(regselect_buf, Cat(operand[0:8], Signal(8, reset = 0))), # working copy
+                                   NextState("SetRequestResponse"),
+                                ),
+        )
+        fpu_fmovem_tofp_fsm.act("SetRequestResponse",
+                                #NextValue(response, (12 * sum8.output) | Signal(16, reset = transfer_multi_copro_regs_primitive(CA=1,PC=0,DR=0,Length=0))),
+                                NextValue(response, transfer_multi_copro_regs_primitive(CA=1,PC=0,DR=0,Length=12)),
+                                NextState("WaitForTransferRequestReadResponse"),
+        )
+        fpu_fmovem_tofp_fsm.act("WaitForTransferRequestReadResponse",
+                                If(response_re,
+                                   NextValue(op_cycle,2),
+                                   NextValue(fmovem_reg_idx, (0x7 - ctz8.output)), # preserve # low-order bit is %fp7 here
+                                   NextValue(regselect_buf, (regselect_buf & (regselect_buf - Signal(8, reset = 1)))),
+                                   If(ctz8.valid,
+                                      NextValue(response, null_primitive(CA=1,IA=1)),
+                                      NextState("WaitForWordWrite"), # BTW, the CPU will read regselect first
+                                   ).Else( # no register in list
+                                       NextValue(response, null_primitive(PF=1)), # IDLE
+                                       NextState("Idle"),
+                                   )
+                                ),
+        )
+        fpu_fmovem_tofp_fsm.act("WaitForWordWrite",
+                                If(operand_we,
+                                   NextValue(op_cycle, op_cycle - 1),
+                                   NextValue(operands[op_cycle], operand),
+                                   If(op_cycle == 0, # fixme: non-FP ?
+                                      compute_fifo_din.regin.eq(0),
+                                      compute_fifo_din.regout.eq(fmovem_reg_idx),
+                                      compute_fifo_din.regormem.eq(1),
+                                      compute_fifo_din.opcode.eq(0), # FMove
+                                      compute_fifo.we.eq(1),
+                                      compute_fifo_din.operand.eq(conv_79_81_out),
+                                      If(ctz8.valid, # next value is valid so we need to keep going
+                                         NextValue(op_cycle,2),
+                                         NextValue(fmovem_reg_idx, (0x7 - ctz8.output)), # preserve
+                                         NextValue(regselect_buf, (regselect_buf & (regselect_buf - Signal(8, reset = 1)))),
+                                      ).Else( # finished
+                                          NextValue(response, null_primitive(PF=1)), # IDLE
+                                          NextState("Idle"),
+                                      )
+                                   ),
+                                ),
+        )
+
+
+        self.submodules.fpu_fmovem_tomem_fsm = fpu_fmovem_tomem_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_fmovem_tomem_fsm.act("Reset",
+                                 NextState("Idle"),
+        )
+        fpu_fmovem_tomem_fsm.act("Idle",
+                                If(command_we & (opclass == 7), # 'b111
+                                   NextValue(pre_or_post_reg, fmovem_mode[1]),
+                                   If(~compute_fifo.readable, # FIFO empty, let's go
+                                      If(fmovem_mode[0], # dynamic
+                                         NextValue(response, transfer_singlereg_primitive(CA=1,PC=0,DR=0,DA=0,Register=fmovem_reglist_regidx)),
+                                         NextState("WaitForRegListReadResponse"),
+                                      ).Else( # static
+                                          NextValue(response, null_primitive(CA=1,IA=1)),
+                                          NextValue(self.regselect, Cat(fmovem_reglist_static, Signal(8, reset = 0))),
+                                          NextValue(regselect_buf, Cat(fmovem_reglist_static, Signal(8, reset = 0))), # working copy
+                                          NextState("DelayOneCycleToAccessRegister"),
+                                      )
+                                   ).Else(
+                                       NextValue(response, null_primitive(CA=1, IA=1)),
+                                       NextState("WaitCompute"),
+                                   )
+                                ),
+        )
+        fpu_fmovem_tomem_fsm.act("WaitCompute",
+                                 If(~compute_fifo.readable, # FIFO empty, let's go
+                                    If(fmovem_mode[0], # dynamic
+                                       NextValue(response, transfer_singlereg_primitive(CA=1,PC=0,DR=0,DA=0,Register=fmovem_reglist_regidx)),
+                                       NextState("WaitForRegListReadResponse"),
+                                    ).Else( # static
+                                        #NextValue(response, null_primitive(CA=1, IA=1)), #already set
+                                        NextValue(self.regselect, Cat(fmovem_reglist_static, Signal(8, reset = 0))),
+                                        NextValue(regselect_buf, Cat(fmovem_reglist_static, Signal(8, reset = 0))), # working copy
+                                        NextState("DelayOneCycleToAccessRegister"),
+                                    )
+                                 )
+        )
+        fpu_fmovem_tomem_fsm.act("WaitForRegListReadResponse",
+                                If(response_re,
+                                   NextValue(response, null_primitive(CA=1,IA=1)),
+                                   NextState("WaitForRegListWriteOperand"),
+                                ),
+        )
+        fpu_fmovem_tomem_fsm.act("WaitForRegListWriteOperand",
+                                If(operand_we,
+                                   NextValue(self.regselect, Cat(operand[0:8], Signal(8, reset = 0))),
+                                   NextValue(regselect_buf, Cat(operand[0:8], Signal(8, reset = 0))), # working copy
+                                   NextState("DelayOneCycleToAccessRegister"),
+                                ),
+        )
+        fpu_fmovem_tomem_fsm.act("DelayOneCycleToAccessRegister", # maybe not necessary ?
+                                 # response must be set here, not in the next cycle, as otherwise it seems we see a response_re from the previous null response...
+                                 # and then we replace the real response by a new null and the '030 never see the proper response
+                                 # ... I think that's what happen anyway
+                                 # might be solved by removing the one cycle delay in copro.py ? needed for _we but not _re ?
+                                 #NextValue(response, (12 * sum8.output) | Signal(16, reset = transfer_multi_copro_regs_primitive(CA=1,PC=0,DR=1,Length=0))),
+                                 NextValue(response, transfer_multi_copro_regs_primitive(CA=1,PC=0,DR=1,Length=12)),
+                                 If(pre_or_post_reg,
+                                    NextValue(conv_81_all_in, regs_fp[0x7 - ctz8.output]), ## mmm, the data will only be available next cycle...
+                                 ).Else(
+                                     NextValue(conv_81_all_in, regs_fp[ctz8.output])
+                                 ),
+                                 NextState("SetOperand"),
+        )
+        fpu_fmovem_tomem_fsm.act("SetOperand",
+                                 #NextValue(response, (12 * sum8.output) | Signal(16, reset = transfer_multi_copro_regs_primitive(CA=1,PC=0,DR=1,Length=0))),
+                                 NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
+                                 NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
+                                 NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
+                                 NextState("WaitForTransferRequestWriteResponse"),
+        )
+        fpu_fmovem_tomem_fsm.act("WaitForTransferRequestWriteResponse",
+                                If(response_re,
+                                   NextValue(op_cycle,2),
+                                   If(ctz8.valid,
+                                      NextValue(response, null_primitive(CA=1,IA=1)),
+                                      NextState("WaitForWordRead"), # BTW, the CPU will read regselect first
+                                   ).Else( # no register in list
+                                       NextValue(response, null_primitive(PF=1)), # IDLE
+                                       NextState("Idle"),
+                                   )
+                                ),
+        )
+        fpu_fmovem_tomem_fsm.act("WaitForWordRead",
+                                If(operand_re,
+                                   NextValue(op_cycle, op_cycle - 1),
+                                   NextValue(operand, operands[op_cycle]),
+                                   If(op_cycle == 2, # can do it here, operand_re will only be valid 1 cycle
+                                      NextValue(regselect_buf, (regselect_buf & (regselect_buf - Signal(8, reset = 1)))),
+                                   ),
+                                   If(op_cycle == 1,
+                                      If(pre_or_post_reg,
+                                         NextValue(conv_81_all_in, regs_fp[0x7 - ctz8.output]), ## mmm, the data will only be available next cycle...
+                                      ).Else(
+                                          NextValue(conv_81_all_in, regs_fp[ctz8.output])
+                                      ),
+                                   ),
+                                   If(op_cycle == 0, # fixme: non-FP ?
+                                      If(ctz8.valid, # next value is valid so we need to keep going
+                                         NextValue(op_cycle,2),
+                                         NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
+                                         NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
+                                         NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
+                                      ).Else( # finished
+                                          NextValue(response, null_primitive(PF=1)), # IDLE
+                                          NextState("Idle"),
+                                      )
+                                   ),
+                                ),
+        )
+        
         # **********************************************************************************
         ### Conditional FSM
 
@@ -572,6 +837,7 @@ class rd68883(Copro):
 
 
         ############ const table
+        # FIXME/ convert from Moto's FP80 to native flopoco
         self.comb += [
             const_table[0x00].eq(0x4000c90fdaa22168c235), # Pi      
             const_table[0x0b].eq(0x3ffd9a209a84fbcff798), # Log10(2)
@@ -611,12 +877,31 @@ class rd68883(Copro):
             #led0.eq(~fpu_compute_fsm.ongoing("Idle")),
             #led1.eq(~fpu_fptofp_fsm.ongoing("Idle")),
             #led2.eq(~fpu_fptomem_fsm.ongoing("Idle")),
-            led0.eq(~fpu_fptomem_fsm.ongoing("Idle")),
-            led1.eq(~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
-            led2.eq(0),
-            led3.eq( fpu_fptomem_fsm.ongoing("WaitCompute")),
-            led4.eq( fpu_fptomem_fsm.ongoing("SetupData")),
-            led5.eq( fpu_fptomem_fsm.ongoing("StartData")),
-            led6.eq( fpu_fptomem_fsm.ongoing("WaitReadResponse1")),
-            led7.eq( fpu_fptomem_fsm.ongoing("WaitData")),
+
+            #led0.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+            #led1.eq(~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
+            #led2.eq(0),
+            #led3.eq( fpu_fptomem_fsm.ongoing("WaitCompute")),
+            #led4.eq( fpu_fptomem_fsm.ongoing("SetupData")),
+            #led5.eq( fpu_fptomem_fsm.ongoing("StartData")),
+            #led6.eq( fpu_fptomem_fsm.ongoing("WaitReadResponse1")),
+            #led7.eq( fpu_fptomem_fsm.ongoing("WaitData")),
+            
+            led0.eq(~fpu_fptomem_fsm.ongoing("Idle") | ~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
+            led1.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
+            led2.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListReadResponse")),
+            led3.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListWriteOperand")),
+            led4.eq( fpu_fmovem_tomem_fsm.ongoing("DelayOneCycleToAccessRegister")),
+            led5.eq( fpu_fmovem_tomem_fsm.ongoing("SetRequestResponse")),
+            led6.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForTransferRequestWriteResponse")),
+            led7.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForWordRead")),
+
+            #led0.eq(regselect_buf[0]),
+            #led1.eq(regselect_buf[1]),
+            #led2.eq(regselect_buf[2]),
+            #led3.eq(regselect_buf[3]),
+            #led4.eq(regselect_buf[4]),
+            #led5.eq(regselect_buf[5]),
+            #led6.eq(regselect_buf[6]),
+            #led7.eq(regselect_buf[7]),
         ]

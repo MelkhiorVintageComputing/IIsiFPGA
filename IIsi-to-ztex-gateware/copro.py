@@ -1,11 +1,13 @@
 from migen import *
 from migen.genlib.fifo import *
 
+# 10.4.3
 def busy_primitive(PC = 0):
     val = 0xa400
     val = val | (PC << 14)
     return val
 
+# 10.4.4
 def null_primitive(CA = 0, PC = 0, IA = 0, PF = 0, TF = 0):
     val = 0x0800
     val = val | (CA << 15) # Come Again
@@ -15,6 +17,7 @@ def null_primitive(CA = 0, PC = 0, IA = 0, PF = 0, TF = 0):
     val = val | (TF <<  0) # True/False
     return val
 
+# 10.4.9
 def ea_transfer_primitive(CA = 0, PC = 0, DR = 0, Valid = None, Length = None):
     assert(Valid != None)
     assert(Length != None)
@@ -26,6 +29,7 @@ def ea_transfer_primitive(CA = 0, PC = 0, DR = 0, Valid = None, Length = None):
     val = val | (Length << 0) # 8 bits
     return val
 
+# 10.4.13
 def transfer_singlereg_primitive(CA = 0, PC = 0, DR = 0, DA = 0, Register = 0):
     val = 0x0C00
     val = val | (CA << 15)
@@ -33,6 +37,16 @@ def transfer_singlereg_primitive(CA = 0, PC = 0, DR = 0, DA = 0, Register = 0):
     val = val | (DR << 13)
     val = val | (DA <<  3)
     val = val | (Register << 0) # 3 bits
+    return val
+
+# 10.4.16
+def transfer_multi_copro_regs_primitive(CA = 0, PC = 0, DR = 0, Length = None):
+    assert(Length != None)
+    val = 0x0100
+    val = val | (CA << 15)
+    val = val | (PC << 14)
+    val = val | (DR << 13) # Direction Bit
+    val = val | (Length << 0) # 8 bits
     return val
 
 class Copro(Module):
@@ -79,11 +93,11 @@ class Copro(Module):
         self.reg_we = reg_we = Array(Signal(1) for x in range(0,16))
         
         # 16-bits granularity
-        # delay by 1 cycle, otherwise it seems the actual registers aren't ready when the strobe arrives
         self.response_re = Signal()
         self.command_we = Signal()
         self.operand_re = Signal()
         self.operand_we = Signal()
+        # not sure we need to delay the read strobe, could be comb ?
         copro_sync += [
             If(reg_re[1],
                self.response_re.eq(1),
@@ -95,6 +109,9 @@ class Copro(Module):
             ).Else(
                 self.operand_re.eq(0),
             ),
+        ]
+        # delay by 1 cycle, otherwise it seems the actual registers aren't ready when the strobe arrives
+        copro_sync += [
             If(reg_we[4],
                self.command_we.eq(1),
             ).Else(

@@ -194,6 +194,7 @@ class rd68883(Copro):
             compute_fifo.din.eq(compute_fifo_din.raw_bits()),
         ]
 
+        # IMPROVEME: use some proper memory? 
         const_table = Array(Signal(80, reset = 0) for x in range(64))
 
         # **********************************************************************************
@@ -250,7 +251,8 @@ class rd68883(Copro):
                                   compute_fifo_din.regormem.eq(1),
                                   compute_fifo_din.opcode.eq(0x0), # use FMove
                                   compute_fifo.we.eq(1),
-                                  compute_fifo_din.operand.eq(Cat(const_table[extension[0:6]][0:63], const_table[extension[0:6]][64:80], Signal(2, reset = 0x1))), # FIXME: upper two bits should be 0 for 0.0 (# 0xF)
+                                  #compute_fifo_din.operand.eq(Cat(const_table[extension[0:6]][0:63], const_table[extension[0:6]][64:80], Signal(2, reset = 0x1))), # FIXME: upper two bits should be 0 for 0.0 (# 0xF)
+                                  compute_fifo_din.operand.eq(Cat(const_table[extension[0:6]], Signal(1, reset = 0x0))),
                                   NextValue(response, null_primitive(PF=1)), # IDLE
                                   NextState("Idle"),
                               ]
@@ -665,6 +667,10 @@ class rd68883(Copro):
         delay = Signal(8)
 
         ## pipelines output from the FloPoCo compute blocks
+        # 0: Add (also sub)
+        # 1: Mult
+        # 2: Div
+        # 3: Sqrt (disabled, too large)
         out_pipelines = Array(Signal(81) for x in range(3))
         pip_idx = Signal(3)
 
@@ -694,7 +700,11 @@ class rd68883(Copro):
                                 # 0x01: ! FInt 
                                 # 0x02: ! FSinh
                                 # 0x03: ! FIntrRZ
-                                # 0x04: FSqrt
+                                #0x04: [ # FSqrt
+                                #    NextValue(delay, 8),
+                                #    NextValue(pip_idx, 3),
+                                #    NextState("Wait"),
+                                #],
                                 # 0x05: --
                                 # 0x06: ! FLognP1
                                 # 0x07: --
@@ -737,7 +747,7 @@ class rd68883(Copro):
                                 ],
                                 # 0x21: ! FMod
                                 0x22: [ # FAdd
-                                    NextValue(delay, 1), # pipeline latency - 1, is that OK ?
+                                    NextValue(delay, 1), # pipeline latency - 1
                                     NextValue(pip_idx, 0),
                                     NextState("Wait"),
                                 ],
@@ -835,32 +845,60 @@ class rd68883(Copro):
                                   o_R = out_pipelines[2],)
         platform.add_source("FPDiv_15_63_Freq100_uid2.vhdl", "vhdl")
 
+        #self.specials += Instance("FPSqrt_15_63",
+        #                          i_clk = ClockSignal(cd_fpu),
+        #                          i_X = operand0,
+        #                          o_R = out_pipelines[3],)
+        #platform.add_source("FPSqrt_15_63_Freq100.vhdl", "vhdl")
 
         ############ const table
-        # FIXME/ convert from Moto's FP80 to native flopoco
         self.comb += [
-            const_table[0x00].eq(0x4000c90fdaa22168c235), # Pi      
-            const_table[0x0b].eq(0x3ffd9a209a84fbcff798), # Log10(2)
-            const_table[0x0c].eq(0x4000adf85458a2bb4a9a), # e       
-            const_table[0x0d].eq(0x3fffb8aa3b295c17f0bc), # Log2(e) 
-            const_table[0x0e].eq(0x3ffdde5bd8a937287195), # Log10(e)
-            const_table[0x0f].eq(0x00000000000000000000), # Zero    
-            const_table[0x30].eq(0x3ffeb17217f7d1cf79ac), # ln(2)   
-            const_table[0x31].eq(0x4000935d8dddaaa8ac17), # ln(10)  
-            const_table[0x32].eq(0x3fff8000000000000000), # 10^0    
-            const_table[0x33].eq(0x4002a000000000000000), # 10^1    
-            const_table[0x34].eq(0x4005c800000000000000), # 10^2    
-            const_table[0x35].eq(0x400c9c40000000000000), # 10^4    
-            const_table[0x36].eq(0x4019bebc200000000000), # 10^8    
-            const_table[0x37].eq(0x40348e1bc9bf04000000), # 10^16   
-            const_table[0x38].eq(0x40699dc5ada82b70b59e), # 10^32   
-            const_table[0x39].eq(0x40d3c2781f49ffcfa6d5), # 10^64   
-            const_table[0x3a].eq(0x41a893ba47c980e98ce0), # 10^128  
-            const_table[0x3b].eq(0x4351aa7eebfb9df9de8e), # 10^256  
-            const_table[0x3c].eq(0x46a3e319a0aea60e91c7), # 10^512  
-            const_table[0x3d].eq(0x4d48c976758681750c17), # 10^1024 
-            const_table[0x3e].eq(0x5a929e8b3b5dc53d5de5), # 10^2048 
-            const_table[0x3f].eq(0x7525c46052028a20979b), # 10^4096 
+            ## native Motorola FP80
+            #const_table[0x00].eq(0x4000c90fdaa22168c235), # Pi      
+            #const_table[0x0b].eq(0x3ffd9a209a84fbcff798), # Log10(2)
+            #const_table[0x0c].eq(0x4000adf85458a2bb4a9a), # e       
+            #const_table[0x0d].eq(0x3fffb8aa3b295c17f0bc), # Log2(e) 
+            #const_table[0x0e].eq(0x3ffdde5bd8a937287195), # Log10(e)
+            #const_table[0x0f].eq(0x00000000000000000000), # Zero    
+            #const_table[0x30].eq(0x3ffeb17217f7d1cf79ac), # ln(2)   
+            #const_table[0x31].eq(0x4000935d8dddaaa8ac17), # ln(10)  
+            #const_table[0x32].eq(0x3fff8000000000000000), # 10^0    
+            #const_table[0x33].eq(0x4002a000000000000000), # 10^1    
+            #const_table[0x34].eq(0x4005c800000000000000), # 10^2    
+            #const_table[0x35].eq(0x400c9c40000000000000), # 10^4    
+            #const_table[0x36].eq(0x4019bebc200000000000), # 10^8    
+            #const_table[0x37].eq(0x40348e1bc9bf04000000), # 10^16   
+            #const_table[0x38].eq(0x40699dc5ada82b70b59e), # 10^32   
+            #const_table[0x39].eq(0x40d3c2781f49ffcfa6d5), # 10^64   
+            #const_table[0x3a].eq(0x41a893ba47c980e98ce0), # 10^128  
+            #const_table[0x3b].eq(0x4351aa7eebfb9df9de8e), # 10^256  
+            #const_table[0x3c].eq(0x46a3e319a0aea60e91c7), # 10^512  
+            #const_table[0x3d].eq(0x4d48c976758681750c17), # 10^1024 
+            #const_table[0x3e].eq(0x5a929e8b3b5dc53d5de5), # 10^2048 
+            #const_table[0x3f].eq(0x7525c46052028a20979b), # 10^4096
+            ## converted to FloPoCo (expect high order bit #80, which is always 0)
+            const_table[0x00].eq(0xa000490fdaa22168c235),
+            const_table[0x0b].eq(0x9ffe9a209a84fbcff798),
+            const_table[0x0c].eq(0xa0002df85458a2bb4a9a),
+            const_table[0x0d].eq(0x9fffb8aa3b295c17f0bc),
+            const_table[0x0e].eq(0x9ffede5bd8a937287195),
+            const_table[0x0f].eq(0x00000000000000000000),
+            const_table[0x30].eq(0x9fff317217f7d1cf79ac),
+            const_table[0x31].eq(0xa000135d8dddaaa8ac17),
+            const_table[0x32].eq(0x9fff8000000000000000),
+            const_table[0x33].eq(0xa0012000000000000000),
+            const_table[0x34].eq(0xa002c800000000000000),
+            const_table[0x35].eq(0xa0061c40000000000000),
+            const_table[0x36].eq(0xa00cbebc200000000000),
+            const_table[0x37].eq(0xa01a0e1bc9bf04000000),
+            const_table[0x38].eq(0xa0349dc5ada82b70b59e),
+            const_table[0x39].eq(0xa069c2781f49ffcfa6d5),
+            const_table[0x3a].eq(0xa0d413ba47c980e98ce0),
+            const_table[0x3b].eq(0xa1a8aa7eebfb9df9de8e),
+            const_table[0x3c].eq(0xa351e319a0aea60e91c7),
+            const_table[0x3d].eq(0xa6a44976758681750c17),
+            const_table[0x3e].eq(0xad491e8b3b5dc53d5de5),
+            const_table[0x3f].eq(0xba92c46052028a20979b),
         ]
 
         led0 = platform.request("user_led", 0)

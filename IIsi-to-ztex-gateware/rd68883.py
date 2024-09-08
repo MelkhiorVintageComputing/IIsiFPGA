@@ -53,20 +53,53 @@ class rd68883(Copro):
         fpu_sync = getattr(self.sync, cd_fpu)
 
         ### shortcuts to copro registers
-        response  = self.response
-        command   = self.command
-        operand   = self.operand
+        response  = self.response # what we tell the CPU
+        condition = self.condition # for conditional branch, ...
+        command   = self.command # what the CPu wants us to do
+        operand   = self.operand # operand in/ou
         
-        response_re = self.response_re
-        command_we  = self.command_we
-        operand_re  = self.operand_re
-        operand_we  = self.operand_we
+        response_re  = self.response_re
+        condition_we = self.condition_we
+        command_we   = self.command_we
+        operand_re   = self.operand_re
+        operand_we   = self.operand_we
 
         ### FP registers from '881/'882
         self.regs_fp = regs_fp = Array(Signal(81, reset = (0x08DEAD0000BEEF0000000 | x)) for x in range(8))
         regs_fpcr = Signal(32) # HANDLEME
         regs_fpsr = Signal(32) # HANDLEME
         regs_fpiar = Signal(32) # HANDLEME
+
+        ### FPSR
+        ## CC byte [24:32[
+        # NaN bit = 24 [NAN]
+        # INF bit = 25 [I]
+        # Zero bit = 26 [Z]
+        # Negative bit = 27 [N]
+        # 28 to 32 are 0
+        fpsr_bit_NAN = 24
+        fpsr_bit_I = 25
+        fpsr_bit_Z = 26
+        fpsr_bit_N = 27
+        ## quotient byte [16:24[
+        # quotient = [16:23[
+        # sign of quotient = [23]
+        ## exception status byte [8:15[
+        # inexact decimal input bit = 8
+        # inexact operation bit = 9
+        # divide by zero bit = 10
+        # underflow bit = 11
+        # overflow bit = 12
+        # operand error bit = 13
+        # signaling NaN bit = 14
+        # branch/set on unordered bit = 15
+        ## accrued exception byte [0:8[ => IEEE 754
+        # 0-2 unused
+        # inexact bit = 3
+        # divide by zero bit = 4
+        # underflow bit = 5
+        # overflow bit = 6
+        # invalid operation bit = 7
 
         ### shortcuts for command word
         opclass = command[13:16]
@@ -106,16 +139,21 @@ class rd68883(Copro):
         conv_81_32_out = Signal(32)
 
         ## data layout
+        # IEEE
         fp32_layout = [
             ( "mantissa", 23),
             ( "exponent", 8),
             ( "sign", 1),
         ]
+        assert(layout_len(fp32_layout) == 32)
+        # IEEE
         fp64_layout = [
             ( "mantissa", 52),
             ( "exponent", 11),
             ( "sign", 1),
         ]
+        assert(layout_len(fp64_layout) == 64)
+        # Motorola
         # fp80 is stored in 96 bits, and the leading 1 of the mantissa is explicit...
         fp80_layout = [
             ( "mantissa", 63),
@@ -124,11 +162,22 @@ class rd68883(Copro):
             ( "exponent", 15),
             ( "sign", 1),
         ]
+        assert(layout_len(fp80_layout) == 96) # !!!
+        # IEEE
         fp79_layout = [
             ( "mantissa", 63),
             ( "exponent", 15),
             ( "sign", 1),
         ]
+        assert(layout_len(fp79_layout) == 79)
+        # FloPoCo
+        fp81_layout = {
+            ( "mantissa", 63),
+            ( "exponent", 15),
+            ( "sign", 1),
+            ( "status", 2 ),
+        }
+        assert(layout_len(fp81_layout) == 81)
 
         ## some conversion wirings
         operand_to_fp32 = Record(fp32_layout)
@@ -307,32 +356,18 @@ class rd68883(Copro):
                           NextValue(reg_idx, ry),
                           NextValue(opcode, extension),
                           NextValue(response, null_primitive(CA=1, IA=1)),
+                          # mmmm, if se wtart here it breaks down...
+                          #If(~compute_fifo.readable, # FIFO empty, let's go
+                          #   NextValue(conv_81_all_in, regs_fp[ry]),
+                          #   NextState("SetupData"),
+                          #).Else(
                           NextState("WaitCompute"),
+                          #)
                        ),
         )
         fpu_fptomem_fsm.act("WaitCompute",
                             If(~compute_fifo.readable, # FIFO empty, let's go
-                               #conv_81_all_in.eq(regs_fp[reg_idx]),
                                NextValue(conv_81_all_in, regs_fp[reg_idx]),
-                               #Case(data_type, {
-                               #    0x1: [
-                               #        # FIXME FP32
-                               #        #NextValue(op_cycle,0),
-                               #    ],
-                               #    0x2: [
-                               #        #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
-                               #        fp79_to_operand.eq(conv_81_79_out),
-                               #        #NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
-                               #        #NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
-                               #        #NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
-                               #        #NextValue(op_cycle,2),
-                               #    ],
-                               #    0x5: [
-                               #        # FIXME FP64
-                               #        #NextValue(op_cycle,1),
-                               #    ],
-                               #}),
-                               #NextState("WaitReadResponse1"),
                                NextState("SetupData"),
                             ),
                        # FIXME: illegal stuff
@@ -653,7 +688,99 @@ class rd68883(Copro):
         )
         
         # **********************************************************************************
-        ### Conditional FSM
+        ### Conditional FSM, triggered when write to condition register
+        # (the table in the 68k manual is botched by the formatting,
+        # the one in the '881/'882 doc seems correct, except for UGE
+        # where the N is not negated and should be)
+        # IEEE not-aware:
+        # menmonic defintion equation    predicate
+        # EQ       equal     Z           000001     0x01
+        # NE       not equal ~Z          001110     0x0E
+        # GT       greater   ~(NAN|Z|N)  010010     0x12
+        # NGT      ~greater  NAN|Z|N     011101     0x1D
+        # GE       gt|eq     Z|~(NAN|N)  010011     0x13
+        # NGE      ~(gt|eq)  NAN|(N&~Z)  011100     0x1C
+        # LT       less      N&~(NAN|Z)  010100     0x14
+        # NLT      not less  NAN|(Z|~N)  011011     0x1B
+        # LE       ls[eq     Z|(N&~NAN)  010101     0x15
+        # NLE      ~(le|eq)  NAN|~(N|Z)  011010     0x1A
+        # GL       (gt|ls)   ~(NAN|Z)    010110     0x16
+        # NGL      ~(gt|ls)  NAN|Z       011001     0x19
+        # GLE      gt|ls[eq  ~NAN        010111     0x17
+        # NGLE     nan       NAN         011000     0x18
+        # AFAICT, this is basically
+        # Z	= 0001
+        # NAN	= 1000
+        # N	= 0100
+        # And the direct applicaiton of the formula ?
+        # the second bit from the right is to indicate non-IEEE so not relevant
+        # anyway to simplify my life, fed the 7-input truth table into a boolean simplifier (BExpred_v0.8) and using that.
+
+        condition_match = Signal(1)
+        if (True):
+            A = Signal(1)
+            B = Signal(1)
+            C = Signal(1)
+            D = Signal(1)
+            Z = Signal(1)
+            X = Signal(1)
+            N = Signal(1)
+            self.comb += [
+                A.eq(condition[3]),
+                B.eq(condition[2]),
+                C.eq(condition[1]),
+                D.eq(condition[0]),
+                Z.eq(regs_fpsr[fpsr_bit_Z]),
+                X.eq(regs_fpsr[fpsr_bit_NAN]),
+                N.eq(regs_fpsr[fpsr_bit_N]),
+                # Don't ask. It's what came out of the simplifier...
+                condition_match.eq((C | N | X | Z) &
+                                   (B | ~N | X | Z) &
+                                   (~B | ~C | D | ~Z) &
+                                   (A | ~B | ~C | ~X) &
+                                   (D | X | ~Z) &
+                                   (A | ~X | Z) &
+                                   (A | D | ~Z)),
+                # alternative (sum of product):
+                # C&~N&~X&~Z | B&N&~X&~Z | ~B&D&Z | ~C&D&Z | A&~B&X | A&~C&X | A&B&C&D | B&C&D&~X | A&B&C&~Z
+            ]
+
+        self.submodules.fpu_condition_fsm = fpu_condition_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_condition_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_condition_fsm.act("Idle",
+                       If(condition_we,
+                          If(~compute_fifo.readable, # FIFO empty, let's go
+                             NextState("WaitForResponseRead"),
+                             If(condition_match,
+                                NextValue(response, null_primitive(TF=1)),
+                             ).Else(
+                                NextValue(response, null_primitive(TF=0)),
+                             ),  
+                          ).Else(
+                              NextValue(response, null_primitive(CA=1,IA=1)),
+                              NextState("WaitCompute"),
+                          )
+                       ),
+        )
+        fpu_condition_fsm.act("WaitCompute",
+                              If(~compute_fifo.readable, # FIFO empty, let's go
+                                 NextState("WaitForResponseRead"),
+                                 If(condition_match,
+                                    NextValue(response, null_primitive(TF=1)),
+                                 ).Else(
+                                     NextValue(response, null_primitive(TF=0)),
+                                 ),  
+                              ),
+        )
+        fpu_condition_fsm.act("WaitForResponseRead",
+                              If(response_re,
+                                 NextValue(response, null_primitive(PF=1)),
+                                 NextState("Idle"),
+                              ),
+        )
+                                 
 
         # **********************************************************************************
         ### Context Switch FSM
@@ -666,13 +793,21 @@ class rd68883(Copro):
         operand1 = Signal(81)
         delay = Signal(8)
 
+        operand0_rec = Record(fp81_layout)
+        self.comb += [ operand0_rec.raw_bits().eq(operand0), ]
+
         ## pipelines output from the FloPoCo compute blocks
         # 0: Add (also sub)
         # 1: Mult
         # 2: Div
         # 3: Sqrt (disabled, too large)
-        out_pipelines = Array(Signal(81) for x in range(3))
+        num_pipelines = 3
+        out_pipelines = Array(Signal(81) for x in range(num_pipelines))
+        out_pipelines_rec = Array(Record(fp81_layout) for x in range(num_pipelines))
+        for x in range(num_pipelines):
+            self.comb += [ out_pipelines_rec[x].raw_bits().eq(out_pipelines[x]), ]
         pip_idx = Signal(3)
+        skip_write = Signal(1)
 
         self.submodules.fpu_compute_fsm = fpu_compute_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
         fpu_compute_fsm.act("Reset",
@@ -680,6 +815,8 @@ class rd68883(Copro):
                        NextState("Idle"),
         )
         fpu_compute_fsm.act("Idle",
+                            # mmm, we don't remove entry from the FIFO until the end...
+                            # so maybe we could comb operand0/operand1 and save a cycle ?
                        If(compute_fifo.readable,
                           If(compute_fifo_dout.regormem,
                              NextValue(operand0, compute_fifo_dout.operand),
@@ -687,6 +824,7 @@ class rd68883(Copro):
                              NextValue(operand0, regs_fp[compute_fifo_dout.regin]),
                           ),
                           NextValue(operand1, regs_fp[compute_fifo_dout.regout]),
+                          NextValue(skip_write, 0),
                           NextState("Compute"),
                        ),
         )
@@ -694,6 +832,10 @@ class rd68883(Copro):
                             Case(compute_fifo_dout.opcode, {
                                 0x00: [ # FMove # no extra compute
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0),
+                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_N],    operand0_rec.sign),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
@@ -726,12 +868,20 @@ class rd68883(Copro):
                                 # 0x17: --
                                 0x18: [ # FAbs
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0 & ~(1 << 78)),
+                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_N], 0), # (!)
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
                                 # 0x19: ! FCosh
                                 0x1A: [ # FNeg
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0 ^ (1 << 78)),
+                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_N], 0x1 ^ operand0_rec.sign), # (!)
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
@@ -768,14 +918,29 @@ class rd68883(Copro):
                                 ],
                                 # 0x29: --
                                 # 0x30 - 0x37 (!): ! FSinCos
-                                # 0x38: FCmp
+                                0x38: [ # FCmp (== FSub no write)
+                                    NextValue(operand0, operand0 ^ (1 << 78)), # invert sign bit
+                                    NextValue(delay, 2), # we're updating the operand, so one more cycle
+                                    NextValue(pip_idx, 0),
+                                    NextValue(skip_write, 1),
+                                    NextState("Wait"),
+                                ],
                                 # 0x39: --
-                                # 0x3A: FTst
+                                0x3A: [ # FTst (== FMove no write)
+                                    #NextValue(regs_fp[compute_fifo_dout.regout], operand0),
+                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpcr[fpsr_bit_N],    operand0_rec.sign),
+                                    compute_fifo.re.eq(1),
+                                    NextState("Idle"),
+                                ],
                                 # 0x3B - 0x3F: --
                                 # 0x40 - 0x7F: undefined
-                                "default": [ # oups
+                                "default": [ # oups # FIXME: notify the issue
                                     NextValue(delay, 1),
                                     NextValue(pip_idx, 0),
+                                    NextValue(skip_write, 1),
                                     NextState("Wait"),
                                 ],
                             }),
@@ -783,7 +948,13 @@ class rd68883(Copro):
         fpu_compute_fsm.act("Wait",
                             NextValue(delay, delay - 1),
                             If(delay == 0,
-                               NextValue(regs_fp[compute_fifo_dout.regout], out_pipelines[pip_idx]),
+                               If(~skip_write,
+                                  NextValue(regs_fp[compute_fifo_dout.regout], out_pipelines[pip_idx]),
+                               ),
+                               NextValue(regs_fpcr[fpsr_bit_NAN],  out_pipelines_rec[pip_idx].status[1] &  out_pipelines_rec[pip_idx].status[0]),
+                               NextValue(regs_fpcr[fpsr_bit_I],    out_pipelines_rec[pip_idx].status[1] & ~out_pipelines_rec[pip_idx].status[0]),
+                               NextValue(regs_fpcr[fpsr_bit_Z],   ~out_pipelines_rec[pip_idx].status[1] & ~out_pipelines_rec[pip_idx].status[0]),
+                               NextValue(regs_fpcr[fpsr_bit_N],    out_pipelines_rec[pip_idx].sign),
                                compute_fifo.re.eq(1),
                                NextState("Idle"),
                             ),

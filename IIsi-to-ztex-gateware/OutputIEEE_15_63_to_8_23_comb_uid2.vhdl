@@ -53,8 +53,8 @@ begin
    expX  <= X(77 downto 63);
    sX  <= X(78) when (exnX = "01" or exnX = "10" or exnX = "00") else '0';
    expZero  <= '1' when expX = (14 downto 0 => '0') else '0';
-   -- min exponent value without underflow, biased with input bias: 16255
-   unSub <= ('0' & expX) - CONV_STD_LOGIC_VECTOR(16255,16);
+   -- min exponent value without underflow, biased with input bias: 16257
+   unSub <= ('0' & expX) - CONV_STD_LOGIC_VECTOR(16257,16);
    underflow <= unSub(15);
    -- max exponent value without overflow, biased with input bias: 16510
    ovSub <= CONV_STD_LOGIC_VECTOR(16510,16)  -  ('0' & expX);
@@ -73,11 +73,11 @@ begin
    expfracR0 <= ('0' & expXO & fracX(62 downto 40))  +  (CONV_STD_LOGIC_VECTOR(0,31) & round);
    roundOverflow <= '1' when (expXO=((7 downto 0 => '1'))) else expfracR0(31);
    fracR <= 
-      expfracR0(22 downto 0) when (in_is_nan or (in_is_normal and not (underflow or overflow or roundOverflow))) else 
+      expfracR0(22 downto 0) when ((in_is_nan = '1') or ((in_is_normal = '1') and not ((underflow = '1') or (overflow = '1') or (roundOverflow = '1')))) else 
       (22 downto 0 => '0');
    expR <=  
-      (7 downto 0 => '0') when (in_is_zero or underflow) else
-      (7 downto 0 => '1') when (in_is_inf or in_is_nan or overflow or roundOverflow) else
+      (7 downto 0 => '0') when ((in_is_zero = '1') or (underflow = '1')) else
+      (7 downto 0 => '1') when ((in_is_inf = '1') or (in_is_nan = '1') or (overflow = '1') or (roundOverflow = '1')) else
       expfracR0(30 downto 23);
    R <= sX & expR & fracR; 
 end architecture;

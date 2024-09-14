@@ -756,19 +756,19 @@ class MC68030_SYNC_FSM(Module):
                           CBACK_o_n.eq(1),
                           BERR_oe.eq(1),
                           BERR_o_n.eq(1),
-                          If(current_sel[0], # CHECKME: endianness
+                          If(current_sel[0],
                              NextValue(regs[A_latch[2:5]][ 0: 8], D_rev_i[24:32]),
                              reg_we[Cat(Signal(1, reset = 0), A_latch[2:5])].eq(1),
                           ),
-                          If(current_sel[1], # CHECKME: endianness
+                          If(current_sel[1],
                              NextValue(regs[A_latch[2:5]][ 8:16], D_rev_i[16:24]),
                              reg_we[Cat(Signal(1, reset = 0), A_latch[2:5])].eq(1),
                           ),
-                          If(current_sel[2], # CHECKME: endianness
+                          If(current_sel[2],
                              NextValue(regs[A_latch[2:5]][16:24], D_rev_i[ 8:16]),
                              reg_we[Cat(Signal(1, reset = 1), A_latch[2:5])].eq(1),
                           ),
-                          If(current_sel[3], # CHECKME: endianness
+                          If(current_sel[3],
                              NextValue(regs[A_latch[2:5]][24:32], D_rev_i[ 0: 8]),
                              reg_we[Cat(Signal(1, reset = 1), A_latch[2:5])].eq(1),
                           ),

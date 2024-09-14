@@ -171,12 +171,12 @@ class rd68883(Copro):
         ]
         assert(layout_len(fp79_layout) == 79)
         # FloPoCo
-        fp81_layout = {
+        fp81_layout = [
             ( "mantissa", 63),
             ( "exponent", 15),
             ( "sign", 1),
             ( "status", 2 ),
-        }
+        ]
         assert(layout_len(fp81_layout) == 81)
 
         ## some conversion wirings
@@ -204,7 +204,6 @@ class rd68883(Copro):
             fp80_to_operand.sign.eq(fp79_to_operand.sign),
             fp80_to_operand.exponent.eq(fp79_to_operand.exponent),
             fp80_to_operand.zero.eq(0),
-            #fp80_to_operand.leading1.eq(1), # FIXME!!! this will break zeroes...
             fp80_to_operand.leading1.eq(fp79_to_operand.exponent[ 0] |
                                         fp79_to_operand.exponent[ 1] |
                                         fp79_to_operand.exponent[ 2] |
@@ -219,9 +218,9 @@ class rd68883(Copro):
                                         fp79_to_operand.exponent[11] |
                                         fp79_to_operand.exponent[12] |
                                         fp79_to_operand.exponent[13] |
-                                        fp79_to_operand.exponent[14]
-            ), # FIXME!!!
+                                        fp79_to_operand.exponent[14]), # FIXME!!!
             fp80_to_operand.mantissa.eq(fp79_to_operand.mantissa),
+            
             fp79_to_operand.raw_bits().eq(conv_81_79_out),
         ]
         
@@ -328,13 +327,13 @@ class rd68883(Copro):
                              compute_fifo_din.opcode.eq(opcode),
                              compute_fifo.we.eq(1),
                              Case(data_type, {
-                                 0x1: [
+                                 0x1: [ # FP32
                                      compute_fifo_din.operand.eq(conv_32_81_out),
                                  ],
-                                 0x2: [
+                                 0x2: [ # FP80
                                      compute_fifo_din.operand.eq(conv_79_81_out),
                                  ],
-                                 0x5: [
+                                 0x5: [ # FP64
                                      compute_fifo_din.operand.eq(conv_64_81_out),
                                  ],
                              }),
@@ -356,7 +355,7 @@ class rd68883(Copro):
                           NextValue(reg_idx, ry),
                           NextValue(opcode, extension),
                           NextValue(response, null_primitive(CA=1, IA=1)),
-                          # mmmm, if se wtart here it breaks down...
+                          # mmmm, if we start here it breaks down... # need to recheck w/ comb read strobe
                           #If(~compute_fifo.readable, # FIFO empty, let's go
                           #   NextValue(conv_81_all_in, regs_fp[ry]),
                           #   NextState("SetupData"),
@@ -400,7 +399,7 @@ class rd68883(Copro):
                                 ],
                                 0x5: [ # 0x101 => FP64
                                     #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
-                                    NextValue(operand, conv_81_64_out[32:64]),
+                                    NextValue(operand,     conv_81_64_out[32:64]),
                                     NextValue(operands[1], conv_81_64_out[ 0:32]),
                                     NextValue(op_cycle,1),
                                     #NextState("WaitReadResponse1"),
@@ -412,13 +411,13 @@ class rd68883(Copro):
         )
         fpu_fptomem_fsm.act("StartData",
                             Case(data_type, {
-                                0x1: [
+                                0x1: [ # FP32
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=4)),
                                 ],
-                                0x2: [
+                                0x2: [ # FP80
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
                                 ],
-                                0x5: [
+                                0x5: [ # FP64
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
                                 ],
                             }),
@@ -473,6 +472,105 @@ class rd68883(Copro):
 
         # **********************************************************************************
         ### General, move control FSM (opclass 100, 101)
+        cr_idx = Signal(3)
+        regselect_buf = Signal(8) # the (live) value for the reglist, will go to 0 during transfer and we can alter it (removing 'done' bits one by one) (also used for fmovem of data register)
+
+        rx_sum = Signal(2)
+        regselect_buf_sum = Signal(2)
+        self.comb += [
+            rx_sum.eq(Cat(rx[0], Signal(1, reset = 0)) +
+                      Cat(rx[1], Signal(1, reset = 0)) +
+                      Cat(rx[2], Signal(1, reset = 0))),
+            regselect_buf_sum.eq(Cat(regselect_buf[0], Signal(1, reset = 0)) +
+                                 Cat(regselect_buf[1], Signal(1, reset = 0)) +
+                                 Cat(regselect_buf[2], Signal(1, reset = 0))),
+        ]
+        
+        self.submodules.fpu_crtomem_fsm = fpu_crtomem_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_crtomem_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_crtomem_fsm.act("Idle",
+                       If(command_we & (opclass == 5), # 'b101
+                          # NextValue(self.regselect, rx & 0x7),
+                          If(~compute_fifo.readable, # FIFO empty, let's go
+                             Case(rx_sum, {
+                                 0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=0)), ],
+                                 0x1: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=4)), ],
+                                 0x2: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=8)), ],
+                                 0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=12)), ],
+                             }),
+                             If((rx & 0x1) == 0x1, # CHECKME: register order
+                                NextValue(operand, regs_fpiar), 
+                                NextValue(regselect_buf, rx & 0x6),
+                             ).Elif((rx & 0x2) == 0x2,
+                                    NextValue(operand, regs_fpsr), 
+                                    NextValue(regselect_buf, rx & 0x4),
+                             ).Elif((rx & 0x4) == 0x4,
+                                    NextValue(operand, regs_fpcr), 
+                                    NextValue(regselect_buf, 0),
+                             ).Else(
+                                 # what now ?
+                             ),
+                             NextState("WaitReadResponse"),
+                          ).Else(
+                              NextValue(regselect_buf, rx & 0x7),
+                              NextValue(response, null_primitive(CA=1, IA=1)),
+                              NextState("WaitCompute"),
+                          )
+                       ),
+        )
+        fpu_crtomem_fsm.act("WaitCompute",
+                            If(~compute_fifo.readable, # FIFO empty, let's go
+                               Case(regselect_buf_sum, {
+                                   0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=0)), ],
+                                   0x1: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=4)), ],
+                                   0x2: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=8)), ],
+                                   0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=12)), ],
+                               }),
+                               If((regselect_buf & 0x1) == 0x1,
+                                  NextValue(operand, regs_fpiar), 
+                                  NextValue(regselect_buf, regselect_buf & 0x6),
+                               ).Elif((regselect_buf & 0x2) == 0x2,
+                                      NextValue(operand, regs_fpsr), 
+                                      NextValue(regselect_buf, regselect_buf & 0x4),
+                               ).Elif((regselect_buf & 0x4) == 0x4,
+                                      NextValue(operand, regs_fpcr), 
+                                      NextValue(regselect_buf, 0),
+                               ).Else(
+                                   # what now ?
+                               ),
+                               NextState("WaitReadResponse"),
+                            ),
+        )
+        fpu_crtomem_fsm.act("WaitReadResponse",
+                       If(response_re,
+                          NextValue(response, null_primitive(CA=0,IA=1)), # ongoing
+                          NextState("WaitData"),
+                       ),
+                       # FIXME: handle illegal stuff
+        )
+        fpu_crtomem_fsm.act("WaitData",
+                            If(operand_re,
+                               If(regselect_buf == 0x0,
+                                  NextValue(response, null_primitive(PF = 1)),
+                                  NextState("Idle"),
+                               ).Else(
+                                   If((regselect_buf & 0x1) == 0x1, # shouldn't happen
+                                      NextValue(operand, regs_fpiar), 
+                                      NextValue(regselect_buf, regselect_buf & 0x6),
+                                   ).Elif((regselect_buf & 0x2) == 0x2,
+                                          NextValue(operand, regs_fpsr), 
+                                          NextValue(regselect_buf, regselect_buf & 0x4),
+                                   ).Elif((regselect_buf & 0x4) == 0x4,
+                                          NextValue(operand, regs_fpcr), 
+                                          NextValue(regselect_buf, 0),
+                                   ).Else(
+                                       # what now ?
+                                   ),
+                               )
+                            ),
+        )
 
         # **********************************************************************************
         ### General, move multiple (opclass 110, 111)
@@ -490,7 +588,6 @@ class rd68883(Copro):
         ]
 
         pre_or_post_reg = Signal(1)
-        regselect_buf = Signal(8) # the (live) value for the reglist, will go to 0 during transfer and we can alter it (removing 'done' bits one by one)
         self.submodules.ctz8 = ctz8 = ctz8_comb() # count-trailing-zero (== rightmost reg number)
         #self.submodules.sum8 = sum8 = sum8bits_comb() # sum of 8 bits (== number of regs)
         self.comb += [ ctz8.input.eq(regselect_buf), # dynamically change
@@ -504,8 +601,6 @@ class rd68883(Copro):
         )
         fpu_fmovem_tofp_fsm.act("Idle",
                                 If(command_we & (opclass == 6), # 'b110
-                                   #NextValue(pre_or_post_reg, fmovem_mode[1]),
-                                   #If(~compute_fifo.readable, # FIFO empty, let's go # do we need to wait? The write is going in the FIFO anyway...
                                    If(fmovem_mode[0], # dynamic
                                       NextValue(response, transfer_singlereg_primitive(CA=1,PC=0,DR=0,DA=0,Register=fmovem_reglist_regidx)),
                                       NextState("WaitForRegListReadResponse"),
@@ -515,10 +610,6 @@ class rd68883(Copro):
                                        NextValue(regselect_buf, Cat(fmovem_reglist_static, Signal(8, reset = 0))), # working copy
                                        NextState("SetRequestResponse"),
                                    )
-                                   #).Else(
-                                   # NextValue(response, null_primitive(CA=1, IA=1)),
-                                   # NextState("WaitCompute"),
-                                   #)
                                 ),
         )
         fpu_fmovem_tofp_fsm.act("WaitForRegListReadResponse",
@@ -759,8 +850,8 @@ class rd68883(Copro):
                                 NextValue(response, null_primitive(TF=0)),
                              ),  
                           ).Else(
-                              NextValue(response, null_primitive(CA=1,IA=1)),
-                              NextState("WaitCompute"),
+                          NextValue(response, null_primitive(CA=1,IA=1)),
+                          NextState("WaitCompute"),
                           )
                        ),
         )
@@ -803,10 +894,20 @@ class rd68883(Copro):
         # 3: Sqrt (disabled, too large)
         num_pipelines = 3
         out_pipelines = Array(Signal(81) for x in range(num_pipelines))
-        out_pipelines_rec = Array(Record(fp81_layout) for x in range(num_pipelines))
-        for x in range(num_pipelines):
-            self.comb += [ out_pipelines_rec[x].raw_bits().eq(out_pipelines[x]), ]
-        pip_idx = Signal(3)
+        pipeline_add = 0
+        pipeline_mul = 1
+        pipeline_div = 2
+        pipeline_sqrt = 3
+        pip_idx = Signal(2)
+        out_pipeline_muxed = Signal(81)
+        out_pipeline_muxed_rec = Record(fp81_layout)
+        self.comb += [
+            out_pipeline_muxed.eq(out_pipelines[pip_idx]),
+            out_pipeline_muxed_rec.raw_bits().eq(out_pipeline_muxed)
+        ]
+        #out_pipelines_rec = Array(Record(fp81_layout) for x in range(num_pipelines))
+        #for x in range(num_pipelines):
+        #    self.comb += [ out_pipelines_rec[x].raw_bits().eq(out_pipelines[x]), ]
         skip_write = Signal(1)
 
         self.submodules.fpu_compute_fsm = fpu_compute_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
@@ -832,10 +933,10 @@ class rd68883(Copro):
                             Case(compute_fifo_dout.opcode, {
                                 0x00: [ # FMove # no extra compute
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0),
-                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_N],    operand0_rec.sign),
+                                    NextValue(regs_fpsr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_N],    operand0_rec.sign),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
@@ -868,20 +969,20 @@ class rd68883(Copro):
                                 # 0x17: --
                                 0x18: [ # FAbs
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0 & ~(1 << 78)),
-                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_N], 0), # (!)
+                                    NextValue(regs_fpsr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_N], 0), # (!)
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
                                 # 0x19: ! FCosh
                                 0x1A: [ # FNeg
                                     NextValue(regs_fp[compute_fifo_dout.regout], operand0 ^ (1 << 78)),
-                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_N], 0x1 ^ operand0_rec.sign), # (!)
+                                    NextValue(regs_fpsr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_N], 0x1 ^ operand0_rec.sign), # (!)
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
@@ -892,18 +993,18 @@ class rd68883(Copro):
                                 # 0x1F: ! FGetMan
                                 0x20: [ # FDiv
                                     NextValue(delay, 7),
-                                    NextValue(pip_idx, 2),
+                                    NextValue(pip_idx, pipeline_div),
                                     NextState("Wait"),
                                 ],
                                 # 0x21: ! FMod
                                 0x22: [ # FAdd
                                     NextValue(delay, 1), # pipeline latency - 1
-                                    NextValue(pip_idx, 0),
+                                    NextValue(pip_idx, pipeline_add),
                                     NextState("Wait"),
                                 ],
                                 0x23: [ # FMul
                                     NextValue(delay, 2),
-                                    NextValue(pip_idx, 1),
+                                    NextValue(pip_idx, pipeline_mul),
                                     NextState("Wait"),
                                 ],
                                 # 0x24: ! FSglDiv
@@ -913,7 +1014,7 @@ class rd68883(Copro):
                                 0x28: [ # FSub
                                     NextValue(operand0, operand0 ^ (1 << 78)), # invert sign bit
                                     NextValue(delay, 2), # we're updating the operand, so one more cycle
-                                    NextValue(pip_idx, 0),
+                                    NextValue(pip_idx, pipeline_add),
                                     NextState("Wait"),
                                 ],
                                 # 0x29: --
@@ -921,17 +1022,17 @@ class rd68883(Copro):
                                 0x38: [ # FCmp (== FSub no write)
                                     NextValue(operand0, operand0 ^ (1 << 78)), # invert sign bit
                                     NextValue(delay, 2), # we're updating the operand, so one more cycle
-                                    NextValue(pip_idx, 0),
+                                    NextValue(pip_idx, pipeline_add),
                                     NextValue(skip_write, 1),
                                     NextState("Wait"),
                                 ],
                                 # 0x39: --
                                 0x3A: [ # FTst (== FMove no write)
                                     #NextValue(regs_fp[compute_fifo_dout.regout], operand0),
-                                    NextValue(regs_fpcr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
-                                    NextValue(regs_fpcr[fpsr_bit_N],    operand0_rec.sign),
+                                    NextValue(regs_fpsr[fpsr_bit_NAN],  operand0_rec.status[1] &  operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_I],    operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_Z],   ~operand0_rec.status[1] & ~operand0_rec.status[0]),
+                                    NextValue(regs_fpsr[fpsr_bit_N],    operand0_rec.sign),
                                     compute_fifo.re.eq(1),
                                     NextState("Idle"),
                                 ],
@@ -939,7 +1040,7 @@ class rd68883(Copro):
                                 # 0x40 - 0x7F: undefined
                                 "default": [ # oups # FIXME: notify the issue
                                     NextValue(delay, 1),
-                                    NextValue(pip_idx, 0),
+                                    NextValue(pip_idx, pipeline_add),
                                     NextValue(skip_write, 1),
                                     NextState("Wait"),
                                 ],
@@ -949,12 +1050,12 @@ class rd68883(Copro):
                             NextValue(delay, delay - 1),
                             If(delay == 0,
                                If(~skip_write,
-                                  NextValue(regs_fp[compute_fifo_dout.regout], out_pipelines[pip_idx]),
+                                  NextValue(regs_fp[compute_fifo_dout.regout], out_pipeline_muxed),
                                ),
-                               NextValue(regs_fpcr[fpsr_bit_NAN],  out_pipelines_rec[pip_idx].status[1] &  out_pipelines_rec[pip_idx].status[0]),
-                               NextValue(regs_fpcr[fpsr_bit_I],    out_pipelines_rec[pip_idx].status[1] & ~out_pipelines_rec[pip_idx].status[0]),
-                               NextValue(regs_fpcr[fpsr_bit_Z],   ~out_pipelines_rec[pip_idx].status[1] & ~out_pipelines_rec[pip_idx].status[0]),
-                               NextValue(regs_fpcr[fpsr_bit_N],    out_pipelines_rec[pip_idx].sign),
+                               NextValue(regs_fpsr[fpsr_bit_NAN],  out_pipeline_muxed_rec.status[1] &  out_pipeline_muxed_rec.status[0]),
+                               NextValue(regs_fpsr[fpsr_bit_I],    out_pipeline_muxed_rec.status[1] & ~out_pipeline_muxed_rec.status[0]),
+                               NextValue(regs_fpsr[fpsr_bit_Z],   ~out_pipeline_muxed_rec.status[1] & ~out_pipeline_muxed_rec.status[0]),
+                               NextValue(regs_fpsr[fpsr_bit_N],    out_pipeline_muxed_rec.sign),
                                compute_fifo.re.eq(1),
                                NextState("Idle"),
                             ),
@@ -963,7 +1064,7 @@ class rd68883(Copro):
 
         # **********************************************************************************
         ### FloPoCo blocks
-        ## conversion
+        ## conversion (input, from IEEE to Flopoco)
         self.specials += Instance("InputIEEE_8_23_to_15_63_comb_uid2",
                                   i_X = conv_32_81_in,
                                   o_R = conv_32_81_out,)
@@ -979,6 +1080,7 @@ class rd68883(Copro):
                                   o_R = conv_79_81_out,)
         platform.add_source("InputIEEE_15_63_to_15_63_comb_uid2.vhdl", "vhdl")
         
+        ## conversion (output, from Flopoco to IEEE)
         self.specials += Instance("OutputIEEE_15_63_to_15_63_comb_uid2",
                                   i_X = conv_81_all_in,
                                   o_R = conv_81_79_out,)
@@ -999,27 +1101,27 @@ class rd68883(Copro):
                                   i_clk = ClockSignal(cd_fpu),
                                   i_X = operand0,
                                   i_Y = operand1,
-                                  o_R = out_pipelines[0],)
+                                  o_R = out_pipelines[pipeline_add],)
         platform.add_source("FPAdd_15_63_Freq100_uid2.vhdl", "vhdl")
 
         self.specials += Instance("FPMult_15_63_uid2_Freq300_uid3",
                                   i_clk = ClockSignal(cd_fpu),
                                   i_X = operand0,
                                   i_Y = operand1,
-                                  o_R = out_pipelines[1],)
+                                  o_R = out_pipelines[pipeline_mul],)
         platform.add_source("FPMult_15_63_uid2_Freq300_uid3.vhdl", "vhdl")
 
         self.specials += Instance("FPDiv_15_63_Freq100_uid2",
                                   i_clk = ClockSignal(cd_fpu),
                                   i_X = operand1, # backward
                                   i_Y = operand0,
-                                  o_R = out_pipelines[2],)
+                                  o_R = out_pipelines[pipeline_div],)
         platform.add_source("FPDiv_15_63_Freq100_uid2.vhdl", "vhdl")
 
         #self.specials += Instance("FPSqrt_15_63",
         #                          i_clk = ClockSignal(cd_fpu),
         #                          i_X = operand0,
-        #                          o_R = out_pipelines[3],)
+        #                          o_R = out_pipelines[pipeline_sqrt],)
         #platform.add_source("FPSqrt_15_63_Freq100.vhdl", "vhdl")
 
         ############ const table
@@ -1096,14 +1198,14 @@ class rd68883(Copro):
             #led6.eq( fpu_fptomem_fsm.ongoing("WaitReadResponse1")),
             #led7.eq( fpu_fptomem_fsm.ongoing("WaitData")),
             
-            led0.eq(~fpu_fptomem_fsm.ongoing("Idle") | ~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
-            led1.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
-            led2.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListReadResponse")),
-            led3.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListWriteOperand")),
-            led4.eq( fpu_fmovem_tomem_fsm.ongoing("DelayOneCycleToAccessRegister")),
-            led5.eq( fpu_fmovem_tomem_fsm.ongoing("SetRequestResponse")),
-            led6.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForTransferRequestWriteResponse")),
-            led7.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForWordRead")),
+            #led0.eq(~fpu_fptomem_fsm.ongoing("Idle") | ~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
+            #led1.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
+            #led2.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListReadResponse")),
+            #led3.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListWriteOperand")),
+            #led4.eq( fpu_fmovem_tomem_fsm.ongoing("DelayOneCycleToAccessRegister")),
+            #led5.eq( fpu_fmovem_tomem_fsm.ongoing("SetRequestResponse")),
+            #led6.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForTransferRequestWriteResponse")),
+            #led7.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForWordRead")),
 
             #led0.eq(regselect_buf[0]),
             #led1.eq(regselect_buf[1]),
@@ -1113,4 +1215,29 @@ class rd68883(Copro):
             #led5.eq(regselect_buf[5]),
             #led6.eq(regselect_buf[6]),
             #led7.eq(regselect_buf[7]),
+
+            #led0.eq(regs_fpsr[fpsr_bit_NAN]),
+            #led1.eq(regs_fpsr[fpsr_bit_I]),
+            #led2.eq(regs_fpsr[fpsr_bit_Z]),
+            #led3.eq(regs_fpsr[fpsr_bit_N]),
+            #led4.eq(condition[3]),
+            #led5.eq(condition[2]),
+            #led6.eq(condition[1]),
+            #led7.eq(condition[0]),
+
+            led0.eq(~fpu_memtofp_fsm.ongoing("Idle") |
+                    ~fpu_fptomem_fsm.ongoing("Idle") |
+                    ~fpu_fptofp_fsm.ongoing("Idle") |
+                    ~fpu_fmovem_tofp_fsm.ongoing("Idle") |
+                    ~fpu_fmovem_tomem_fsm.ongoing("Idle") |
+                    ~fpu_condition_fsm.ongoing("Idle") |
+                    ~fpu_compute_fsm.ongoing("Idle")),
+            led1.eq(~fpu_crtomem_fsm.ongoing("Idle")),
+            led2.eq(0),# fpu_crtomem_fsm.ongoing("")),
+            led3.eq(0),# fpu_crtomem_fsm.ongoing("")),
+            led4.eq(0),# fpu_crtomem_fsm.ongoing("")),
+            led5.eq( fpu_crtomem_fsm.ongoing("WaitCompute")),
+            led6.eq( fpu_crtomem_fsm.ongoing("WaitReadResponse")),
+            led7.eq( fpu_crtomem_fsm.ongoing("WaitData")),
+            
         ]

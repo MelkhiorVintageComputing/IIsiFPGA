@@ -94,11 +94,12 @@ class Copro(Module):
         
         # 16-bits granularity
         self.response_re = Signal()
+        self.condition_we = Signal()
         self.command_we = Signal()
         self.operand_re = Signal()
         self.operand_we = Signal()
         # not sure we need to delay the read strobe, could be comb ?
-        copro_sync += [
+        self.comb += [
             If(reg_re[1],
                self.response_re.eq(1),
             ).Else(
@@ -110,12 +111,17 @@ class Copro(Module):
                 self.operand_re.eq(0),
             ),
         ]
-        # delay by 1 cycle, otherwise it seems the actual registers aren't ready when the strobe arrives
+        # delay by 1 cycle, otherwise the actual registers aren't ready when the strobe arrives
         copro_sync += [
             If(reg_we[4],
                self.command_we.eq(1),
             ).Else(
                 self.command_we.eq(0),
+            ),
+            If(reg_we[6],
+               self.condition_we.eq(1),
+            ).Else(
+                self.condition_we.eq(0),
             ),
             If(reg_we[8],
                self.operand_we.eq(1),

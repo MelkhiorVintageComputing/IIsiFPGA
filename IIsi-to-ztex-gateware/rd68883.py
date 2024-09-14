@@ -494,25 +494,26 @@ class rd68883(Copro):
                        If(command_we & (opclass == 5), # 'b101
                           # NextValue(self.regselect, rx & 0x7),
                           If(~compute_fifo.readable, # FIFO empty, let's go
+                             NextState("WaitReadResponse"),
                              Case(rx_sum, {
                                  0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=0)), ],
                                  0x1: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=4)), ],
                                  0x2: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=8)), ],
                                  0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=12)), ],
                              }),
-                             If((rx & 0x1) == 0x1, # CHECKME: register order
-                                NextValue(operand, regs_fpiar), 
-                                NextValue(regselect_buf, rx & 0x6),
+                             If((rx & 0x4) == 0x4,
+                                NextValue(operand, regs_fpcr), 
+                                NextValue(regselect_buf, rx & 0x3),
                              ).Elif((rx & 0x2) == 0x2,
                                     NextValue(operand, regs_fpsr), 
-                                    NextValue(regselect_buf, rx & 0x4),
-                             ).Elif((rx & 0x4) == 0x4,
-                                    NextValue(operand, regs_fpcr), 
+                                    NextValue(regselect_buf, rx & 0x1),
+                             ).Elif((rx & 0x1) == 0x1,
+                                    NextValue(operand, regs_fpiar), 
                                     NextValue(regselect_buf, 0),
                              ).Else(
                                  # what now ?
+                                 NextState("Idle"),
                              ),
-                             NextState("WaitReadResponse"),
                           ).Else(
                               NextValue(regselect_buf, rx & 0x7),
                               NextValue(response, null_primitive(CA=1, IA=1)),
@@ -522,25 +523,26 @@ class rd68883(Copro):
         )
         fpu_crtomem_fsm.act("WaitCompute",
                             If(~compute_fifo.readable, # FIFO empty, let's go
+                               NextState("WaitReadResponse"),
                                Case(regselect_buf_sum, {
                                    0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=0)), ],
                                    0x1: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=4)), ],
                                    0x2: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=8)), ],
                                    0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=1,Valid=Valid_Data,Length=12)), ],
                                }),
-                               If((regselect_buf & 0x1) == 0x1,
-                                  NextValue(operand, regs_fpiar), 
-                                  NextValue(regselect_buf, regselect_buf & 0x6),
+                               If((regselect_buf & 0x4) == 0x4,
+                                  NextValue(operand, regs_fpcr), 
+                                  NextValue(regselect_buf, regselect_buf & 0x3),
                                ).Elif((regselect_buf & 0x2) == 0x2,
                                       NextValue(operand, regs_fpsr), 
-                                      NextValue(regselect_buf, regselect_buf & 0x4),
-                               ).Elif((regselect_buf & 0x4) == 0x4,
-                                      NextValue(operand, regs_fpcr), 
+                                      NextValue(regselect_buf, regselect_buf & 0x1),
+                               ).Elif((regselect_buf & 0x1) == 0x1,
+                                      NextValue(operand, regs_fpiar), 
                                       NextValue(regselect_buf, 0),
                                ).Else(
                                    # what now ?
+                                   NextState("Idle"),
                                ),
-                               NextState("WaitReadResponse"),
                             ),
         )
         fpu_crtomem_fsm.act("WaitReadResponse",
@@ -556,21 +558,80 @@ class rd68883(Copro):
                                   NextValue(response, null_primitive(PF = 1)),
                                   NextState("Idle"),
                                ).Else(
-                                   If((regselect_buf & 0x1) == 0x1, # shouldn't happen
-                                      NextValue(operand, regs_fpiar), 
-                                      NextValue(regselect_buf, regselect_buf & 0x6),
+                                   If((regselect_buf & 0x4) == 0x4, ## shouldn't happen, always moved first
+                                      NextValue(operand, regs_fpcr), 
+                                      NextValue(regselect_buf, regselect_buf & 0x3),
                                    ).Elif((regselect_buf & 0x2) == 0x2,
                                           NextValue(operand, regs_fpsr), 
-                                          NextValue(regselect_buf, regselect_buf & 0x4),
-                                   ).Elif((regselect_buf & 0x4) == 0x4,
-                                          NextValue(operand, regs_fpcr), 
+                                          NextValue(regselect_buf, regselect_buf & 0x1),
+                                   ).Elif((regselect_buf & 0x1) == 0x1,
+                                          NextValue(operand, regs_fpiar), 
                                           NextValue(regselect_buf, 0),
-                                   ).Else(
-                                       # what now ?
                                    ),
                                )
                             ),
         )
+
+        self.submodules.fpu_memtocr_fsm = fpu_memtocr_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_memtocr_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_memtocr_fsm.act("Idle",
+                       If(command_we & (opclass == 4), # 'b100
+                          # NextValue(self.regselect, rx & 0x7),
+                          If(~compute_fifo.readable, # FIFO empty, let's go
+                             NextValue(regselect_buf, rx & 0x7),
+                             Case(rx_sum, {
+                                 0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=0)), ],
+                                 0x1: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=4)), ],
+                                 0x2: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=8)), ],
+                                 0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=12)), ],
+                             }),
+                             NextState("WaitReadResponse"),
+                          ).Else(
+                              NextValue(response, null_primitive(CA=1, IA=1)),
+                              NextState("WaitCompute"),
+                          )
+                       ),
+        )
+        fpu_memtocr_fsm.act("WaitCompute",
+                            If(~compute_fifo.readable, # FIFO empty, let's go
+                               NextValue(regselect_buf, rx & 0x7),
+                               Case(regselect_buf_sum, {
+                                   0x0: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=0)), ],
+                                   0x1: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=4)), ],
+                                   0x2: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=8)), ],
+                                   0x3: [ NextValue(response, ea_transfer_primitive(CA=1,PC=0,DR=0,Valid=Valid_Data,Length=12)), ],
+                               }),
+                               NextState("WaitReadResponse"),
+                            ),
+        )
+        fpu_memtocr_fsm.act("WaitReadResponse",
+                       If(response_re,
+                          NextValue(response, null_primitive(CA=0,IA=1)), # ongoing
+                          NextState("WaitData"),
+                       ),
+                       # FIXME: handle illegal stuff
+        )
+        fpu_memtocr_fsm.act("WaitData",
+                            If(operand_we,
+                               If((regselect_buf & 0x4) == 0x4,
+                                  NextValue(regs_fpcr, operand),
+                                  NextValue(regselect_buf, regselect_buf & 0x3),
+                               ).Elif((regselect_buf & 0x2) == 0x2,
+                                      NextValue(regs_fpsr, operand),
+                                      NextValue(regselect_buf, regselect_buf & 0x1),
+                               ).Elif((regselect_buf & 0x1) == 0x1,
+                                      NextValue(regs_fpiar, operand),
+                                      NextValue(regselect_buf, 0),
+                               ),
+                               If(regselect_buf_sum == 0x1, # last one
+                                  NextValue(response, null_primitive(PF = 1)),
+                                  NextState("Idle"),
+                               ),
+                            ),
+        )
+
 
         # **********************************************************************************
         ### General, move multiple (opclass 110, 111)

@@ -1,6 +1,7 @@
 from migen import *
 from migen.genlib.fifo import *
 
+### primitives for copro dialog
 # 10.4.3
 def busy_primitive(PC = 0):
     val = 0xa400
@@ -74,19 +75,22 @@ class Copro(Module):
         # register bank (32 bits) and aliases (16 or 32 bits)
         self.regs = Array(Signal(32) for x in range(0,8))
         #aliases 
-        self.response  = self.regs[0][16:32]
-        self.control   = self.regs[0][ 0:16]
-        self.save      = self.regs[1][16:32]
-        self.restore   = self.regs[1][ 0:16]
-        self.operation = self.regs[2][16:32]
-        self.command   = self.regs[2][ 0:16]
-        self.rsvd0     = self.regs[3][16:32]
-        self.condition = self.regs[3][ 0:16]
-        self.operand   = self.regs[4]
-        self.regselect = self.regs[5][16:32]
-        self.rsvd1     = self.regs[5][ 0:16]
-        self.instaddr  = self.regs[6]
-        self.operaddr  = self.regs[7]
+        self.response  = self.regs[0][16:32] # 1
+        self.control   = self.regs[0][ 0:16] # 0
+        self.save      = self.regs[1][16:32] # 3
+        self.restore   = self.regs[1][ 0:16] # 2
+        self.operation = self.regs[2][16:32] # 5
+        self.command   = self.regs[2][ 0:16] # 4
+        self.rsvd0     = self.regs[3][16:32] # 7
+        self.condition = self.regs[3][ 0:16] # 6
+        self.operand   = self.regs[4]        # 8 & 9
+        self.regselect = self.regs[5][16:32] # 11
+        self.rsvd1     = self.regs[5][ 0:16] # 10
+        self.instaddr  = self.regs[6]        # 12 & 13
+        self.operaddr  = self.regs[7]        # 14 & 15
+
+        ## buffer
+        #self.save_buf = Signal(16)
 
         # read/write strobe (16 bits granularity)
         self.reg_re = reg_re = Array(Signal(1) for x in range(0,16))
@@ -94,25 +98,34 @@ class Copro(Module):
         
         # 16-bits granularity
         self.response_re = Signal()
-        self.condition_we = Signal()
+        self.save_re = Signal()
+        self.restore_re = Signal()
+        self.restore_we = Signal()
         self.command_we = Signal()
+        self.condition_we = Signal()
         self.operand_re = Signal()
         self.operand_we = Signal()
-        # not sure we need to delay the read strobe, could be comb ?
+        # shortcuts for read strobe
         self.comb += [
-            If(reg_re[1],
-               self.response_re.eq(1),
-            ).Else(
-                self.response_re.eq(0),
-            ),
-            If(reg_re[8],
-               self.operand_re.eq(1),
-            ).Else(
-                self.operand_re.eq(0),
-            ),
+            self.response_re.eq(reg_re[1]),
+            self.save_re.eq(reg_re[3]),
+            self.restore_re.eq(reg_re[2]),
+            self.operand_re.eq(reg_re[8]),
         ]
+        ## what did the CPU see in save?
+        #self.sync += [
+        #    If(reg_re[2],
+        #       save_buf.eq(save),
+        #    ),
+        #]
+        # shortcuts for write strobe
         # delay by 1 cycle, otherwise the actual registers aren't ready when the strobe arrives
         copro_sync += [
+            If(reg_we[2],
+               self.restore_we.eq(1),
+            ).Else(
+                self.restore_we.eq(0),
+            ),
             If(reg_we[4],
                self.command_we.eq(1),
             ).Else(

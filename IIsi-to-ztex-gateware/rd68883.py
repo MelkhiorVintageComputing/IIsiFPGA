@@ -1121,6 +1121,57 @@ class rd68883(Copro):
                                NextState("Idle"),
                             ),
         )
+        # **********************************************************************************
+        # save register handling
+        fpu_sync += [
+            If((fpu_memtofp_fsm.ongoing("Idle") &
+                fpu_fptomem_fsm.ongoing("Idle") &
+                fpu_fptofp_fsm.ongoing("Idle") &
+                fpu_crtomem_fsm.ongoing("Idle") &
+                fpu_memtocr_fsm.ongoing("Idle") &
+                fpu_fmovem_tofp_fsm.ongoing("Idle") &
+                fpu_fmovem_tomem_fsm.ongoing("Idle") &
+                fpu_condition_fsm.ongoing("Idle") &
+                fpu_compute_fsm.ongoing("Idle") &
+                ~compute_fifo.readable),
+               self.save.eq(0x8304), # Idle, 4 bytes frame
+            ).Else(
+                self.save.eq(0x01000), # come again
+            ),
+        ]
+        
+        self.submodules.fpu_save_fsm = fpu_save_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_save_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_save_fsm.act("Idle",
+                         If(self.save_re & (self.save == 0x8304), # CPU just read an Idle save word
+                            NextValue(operand, 0x00C0FFEE), # we don't have an internal state yet...
+                            NextState("WaitRead"),
+                         ),
+        )
+        fpu_save_fsm.act("WaitRead",
+                         If(operand_re,
+                            NextState("Idle"),
+                         ),
+        )
+        
+        self.submodules.fpu_restore_fsm = fpu_restore_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
+        fpu_restore_fsm.act("Reset",
+                       NextState("Idle"),
+        )
+        fpu_restore_fsm.act("Idle",
+                         If(self.restore_re & (self.restore == 0x8304), # CPU just wrote an Idle restore word
+                            NextState("WaitWrite"),
+                         )#.Elif(restore_re, # oups, wrong restore, HANDLEME
+                         #       NextValue(self.restore, XXX),
+                         #),
+        )
+        fpu_restore_fsm.act("WaitWrite",
+                         If(operand_we,
+                            NextState("Idle"),
+                         ),
+        )
 
 
         # **********************************************************************************

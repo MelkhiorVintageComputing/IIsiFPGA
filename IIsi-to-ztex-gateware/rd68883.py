@@ -247,6 +247,19 @@ class rd68883(Copro):
 
         # **********************************************************************************
         ### General, Mem-to-FP FSM (opclass 010)
+        operand_to_int = Signal(32)
+        operand_from_int = Signal(layout_len(fp81_layout))
+        self.comb += [
+            Case(data_type, {
+                # byte
+                0x6: [ operand_to_int.eq(Cat(operand[24:32], Replicate(operand[31],24))), ],
+                # word
+                0x4: [ operand_to_int.eq(Cat(operand[16:32], Replicate(operand[31],16))), ],
+                # long word, also default
+                "default": [ operand_to_int.eq(operand), ],
+            }),
+        ]
+        
         self.submodules.fpu_memtofp_fsm = fpu_memtofp_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
         fpu_memtofp_fsm.act("Reset",
                        NextState("Idle"),
@@ -335,6 +348,9 @@ class rd68883(Copro):
                                  ],
                                  0x5: [ # FP64
                                      compute_fifo_din.operand.eq(conv_64_81_out),
+                                 ],
+                                 "default": [ # integer, FIXME: other
+                                     compute_fifo_din.operand.eq(operand_from_int),
                                  ],
                              }),
                           ),
@@ -953,7 +969,7 @@ class rd68883(Copro):
         # 1: Mult
         # 2: Div
         # 3: Sqrt (disabled, too large)
-        num_pipelines = 3
+        num_pipelines = 4
         out_pipelines = Array(Signal(81) for x in range(num_pipelines))
         pipeline_add = 0
         pipeline_mul = 1
@@ -1004,11 +1020,11 @@ class rd68883(Copro):
                                 # 0x01: ! FInt 
                                 # 0x02: ! FSinh
                                 # 0x03: ! FIntrRZ
-                                #0x04: [ # FSqrt
-                                #    NextValue(delay, 8),
-                                #    NextValue(pip_idx, 3),
-                                #    NextState("Wait"),
-                                #],
+                                0x04: [ # FSqrt
+                                    NextValue(delay, 8),
+                                    NextValue(pip_idx, 3),
+                                    NextState("Wait"),
+                                ],
                                 # 0x05: --
                                 # 0x06: ! FLognP1
                                 # 0x07: --
@@ -1208,6 +1224,13 @@ class rd68883(Copro):
                                   o_R = conv_81_32_out,)
         platform.add_source("OutputIEEE_15_63_to_8_23_comb_uid2.vhdl", "vhdl")
 
+        ## conversion (input, from integer to flopoco) # flopoco V4.1.1
+        self.specials += Instance("Fix2FP_0_31_S_15_63_F100_uid2",
+                                  i_I = operand_to_int,
+                                  o_O = operand_from_int,)
+        platform.add_source("Fix2FP_0_31_S_15_63_comb_uid2.vhdl", "vhdl")
+        
+
         ## compute
         self.specials += Instance("FPAdd_15_63_Freq100_uid2",
                                   i_clk = ClockSignal(cd_fpu),
@@ -1230,11 +1253,11 @@ class rd68883(Copro):
                                   o_R = out_pipelines[pipeline_div],)
         platform.add_source("FPDiv_15_63_Freq100_uid2.vhdl", "vhdl")
 
-        #self.specials += Instance("FPSqrt_15_63",
-        #                          i_clk = ClockSignal(cd_fpu),
-        #                          i_X = operand0,
-        #                          o_R = out_pipelines[pipeline_sqrt],)
-        #platform.add_source("FPSqrt_15_63_Freq100.vhdl", "vhdl")
+        self.specials += Instance("FPSqrt_15_63",
+                                  i_clk = ClockSignal(cd_fpu),
+                                  i_X = operand0,
+                                  o_R = out_pipelines[pipeline_sqrt],)
+        platform.add_source("FPSqrt_15_63_Freq100.vhdl", "vhdl")
 
         ############ const table
         self.comb += [
@@ -1261,29 +1284,29 @@ class rd68883(Copro):
             #const_table[0x3d].eq(0x4d48c976758681750c17), # 10^1024 
             #const_table[0x3e].eq(0x5a929e8b3b5dc53d5de5), # 10^2048 
             #const_table[0x3f].eq(0x7525c46052028a20979b), # 10^4096
-            ## converted to FloPoCo (expect high order bit #80, which is always 0)
-            const_table[0x00].eq(0xa000490fdaa22168c235),
-            const_table[0x0b].eq(0x9ffe9a209a84fbcff798),
-            const_table[0x0c].eq(0xa0002df85458a2bb4a9a),
-            const_table[0x0d].eq(0x9fffb8aa3b295c17f0bc),
-            const_table[0x0e].eq(0x9ffede5bd8a937287195),
-            const_table[0x0f].eq(0x00000000000000000000),
-            const_table[0x30].eq(0x9fff317217f7d1cf79ac),
-            const_table[0x31].eq(0xa000135d8dddaaa8ac17),
-            const_table[0x32].eq(0x9fff8000000000000000),
-            const_table[0x33].eq(0xa0012000000000000000),
-            const_table[0x34].eq(0xa002c800000000000000),
-            const_table[0x35].eq(0xa0061c40000000000000),
-            const_table[0x36].eq(0xa00cbebc200000000000),
-            const_table[0x37].eq(0xa01a0e1bc9bf04000000),
-            const_table[0x38].eq(0xa0349dc5ada82b70b59e),
-            const_table[0x39].eq(0xa069c2781f49ffcfa6d5),
-            const_table[0x3a].eq(0xa0d413ba47c980e98ce0),
-            const_table[0x3b].eq(0xa1a8aa7eebfb9df9de8e),
-            const_table[0x3c].eq(0xa351e319a0aea60e91c7),
-            const_table[0x3d].eq(0xa6a44976758681750c17),
-            const_table[0x3e].eq(0xad491e8b3b5dc53d5de5),
-            const_table[0x3f].eq(0xba92c46052028a20979b),
+            ## converted to FloPoCo (except high order bit #80, which is always 0)
+            const_table[0x00].eq(0xa000490fdaa22168c235), # Pi
+            const_table[0x0b].eq(0x9ffe9a209a84fbcff798), # Log10(2)
+            const_table[0x0c].eq(0xa0002df85458a2bb4a9a), # e
+            const_table[0x0d].eq(0x9fffb8aa3b295c17f0bc), # Log2(e)
+            const_table[0x0e].eq(0x9ffede5bd8a937287195), # Log10(e)
+            const_table[0x0f].eq(0x00000000000000000000), # Zero
+            const_table[0x30].eq(0x9fff317217f7d1cf79ac), # ln(2)
+            const_table[0x31].eq(0xa000135d8dddaaa8ac17), # ln(10)
+            const_table[0x32].eq(0x9fff8000000000000000), # 10^0
+            const_table[0x33].eq(0xa0012000000000000000), # 10^1
+            const_table[0x34].eq(0xa002c800000000000000), # 10^2
+            const_table[0x35].eq(0xa0061c40000000000000), # 10^4
+            const_table[0x36].eq(0xa00cbebc200000000000), # 10^8
+            const_table[0x37].eq(0xa01a0e1bc9bf04000000), # 10^16
+            const_table[0x38].eq(0xa0349dc5ada82b70b59e), # 10^32
+            const_table[0x39].eq(0xa069c2781f49ffcfa6d5), # 10^64
+            const_table[0x3a].eq(0xa0d413ba47c980e98ce0), # 10^128
+            const_table[0x3b].eq(0xa1a8aa7eebfb9df9de8e), # 10^256
+            const_table[0x3c].eq(0xa351e319a0aea60e91c7), # 10^512
+            const_table[0x3d].eq(0xa6a44976758681750c17), # 10^1024
+            const_table[0x3e].eq(0xad491e8b3b5dc53d5de5), # 10^2048
+            const_table[0x3f].eq(0xba92c46052028a20979b), # 10^4096
         ]
 
         led0 = platform.request("user_led", 0)
@@ -1337,19 +1360,28 @@ class rd68883(Copro):
             #led6.eq(condition[1]),
             #led7.eq(condition[0]),
 
-            led0.eq(~fpu_memtofp_fsm.ongoing("Idle") |
-                    ~fpu_fptomem_fsm.ongoing("Idle") |
-                    ~fpu_fptofp_fsm.ongoing("Idle") |
-                    ~fpu_fmovem_tofp_fsm.ongoing("Idle") |
-                    ~fpu_fmovem_tomem_fsm.ongoing("Idle") |
-                    ~fpu_condition_fsm.ongoing("Idle") |
-                    ~fpu_compute_fsm.ongoing("Idle")),
-            led1.eq(~fpu_crtomem_fsm.ongoing("Idle")),
-            led2.eq(0),# fpu_crtomem_fsm.ongoing("")),
-            led3.eq(0),# fpu_crtomem_fsm.ongoing("")),
-            led4.eq(0),# fpu_crtomem_fsm.ongoing("")),
-            led5.eq( fpu_crtomem_fsm.ongoing("WaitCompute")),
-            led6.eq( fpu_crtomem_fsm.ongoing("WaitReadResponse")),
-            led7.eq( fpu_crtomem_fsm.ongoing("WaitData")),
+            #led0.eq(~fpu_memtofp_fsm.ongoing("Idle") |
+            #        ~fpu_fptomem_fsm.ongoing("Idle") |
+            #        ~fpu_fptofp_fsm.ongoing("Idle") |
+            #        ~fpu_fmovem_tofp_fsm.ongoing("Idle") |
+            #        ~fpu_fmovem_tomem_fsm.ongoing("Idle") |
+            #        ~fpu_condition_fsm.ongoing("Idle") |
+            #        ~fpu_compute_fsm.ongoing("Idle")),
+            #led1.eq(~fpu_crtomem_fsm.ongoing("Idle")),
+            #led2.eq(0),# fpu_crtomem_fsm.ongoing("")),
+            #led3.eq(0),# fpu_crtomem_fsm.ongoing("")),
+            #led4.eq(0),# fpu_crtomem_fsm.ongoing("")),
+            #led5.eq( fpu_crtomem_fsm.ongoing("WaitCompute")),
+            #led6.eq( fpu_crtomem_fsm.ongoing("WaitReadResponse")),
+            #led7.eq( fpu_crtomem_fsm.ongoing("WaitData")),
+
             
+            led0.eq(~fpu_memtofp_fsm.ongoing("Idle")),
+            led1.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+            led2.eq(~fpu_fptofp_fsm.ongoing("Idle")),
+            led3.eq(~fpu_crtomem_fsm.ongoing("Idle")),
+            led4.eq(~fpu_memtocr_fsm.ongoing("Idle")),
+            led5.eq(~fpu_fmovem_tofp_fsm.ongoing("Idle")),
+            led6.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
+            led7.eq(~fpu_condition_fsm.ongoing("Idle")),
         ]

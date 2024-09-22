@@ -110,7 +110,7 @@ class Copro(Module):
             self.response_re.eq(reg_re[1]),
             self.save_re.eq(reg_re[3]),
             self.restore_re.eq(reg_re[2]),
-            self.operand_re.eq(reg_re[8]),
+            self.operand_re.eq(reg_re[8] | reg_re[9]),
         ]
         ## what did the CPU see in save?
         #self.sync += [
@@ -136,7 +136,7 @@ class Copro(Module):
             ).Else(
                 self.condition_we.eq(0),
             ),
-            If(reg_we[8],
+            If(reg_we[8] | reg_we[9],
                self.operand_we.eq(1),
             ).Else(
                 self.operand_we.eq(0),

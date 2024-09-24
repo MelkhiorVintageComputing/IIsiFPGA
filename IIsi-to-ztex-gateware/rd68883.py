@@ -247,16 +247,16 @@ class rd68883(Copro):
 
         # **********************************************************************************
         ### General, Mem-to-FP FSM (opclass 010)
-        operand_to_int = Signal(32)
-        operand_from_int = Signal(layout_len(fp81_layout))
+        fix2fp_input = Signal(32)
+        fix2fp_output = Signal(layout_len(fp81_layout))
         self.comb += [
             Case(data_type, {
                 # byte
-                0x6: [ operand_to_int.eq(Cat(operand[24:32], Replicate(operand[31],24))), ],
+                0x6: [ fix2fp_input.eq(Cat(operand[24:32], Replicate(operand[31],24))), ],
                 # word
-                0x4: [ operand_to_int.eq(Cat(operand[16:32], Replicate(operand[31],16))), ],
+                0x4: [ fix2fp_input.eq(Cat(operand[16:32], Replicate(operand[31],16))), ],
                 # long word, also default
-                "default": [ operand_to_int.eq(operand), ],
+                "default": [ fix2fp_input.eq(operand), ],
             }),
         ]
         
@@ -350,7 +350,7 @@ class rd68883(Copro):
                                      compute_fifo_din.operand.eq(conv_64_81_out),
                                  ],
                                  "default": [ # integer, FIXME: other
-                                     compute_fifo_din.operand.eq(operand_from_int),
+                                     compute_fifo_din.operand.eq(fix2fp_output),
                                  ],
                              }),
                           ),
@@ -360,6 +360,12 @@ class rd68883(Copro):
 
         # **********************************************************************************
         ### General, FP-to-Mem FSM (opclass 011)
+        fp2fix_longword_output = Signal(32)
+        fp2fix_longword_input = Signal(layout_len(fp81_layout))
+        self.comb += [
+            fp2fix_longword_input.eq(conv_81_all_in),
+        ]
+        
         self.submodules.fpu_fptomem_fsm = fpu_fptomem_fsm = ClockDomainsRenamer(cd_fpu)(FSM(reset_state="Reset"))
 
         fpu_fptomem_fsm.act("Reset",
@@ -392,33 +398,35 @@ class rd68883(Copro):
         # FIXME: CHECKME: do we need to wait for a response_re after the command_we ?
         fpu_fptomem_fsm.act("SetupData",
                             Case(data_type, {
-                                # 0x000 => Long
-                                # 0x011 => packed static
-                                # 0x100 => Word
-                                # 0x110 => Bye
-                                # 0x111 => packed dynamic
-                                
-                                0x1: [ # 0x001 => FP32
-                                    #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=4)),
+                                # b'011 => packed static
+                                # b'111 => packed dynamic
+
+                                0x0: [ # b'000 => Long
+                                    NextValue(operand, fp2fix_longword_output),
+                                    NextValue(op_cycle,0),
+                                ],
+                                0x1: [ # b'001 => FP32
                                     NextValue(operand, conv_81_32_out),
                                     NextValue(op_cycle,0),
-                                    #NextState("WaitReadResponse1"),
                                 ],
-                                0x2: [ # 0x010 => FP80
-                                    #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
+                                0x2: [ # b'010 => FP80
                                     NextValue(operand,     fp80_to_operand.raw_bits()[64:96]),
                                     NextValue(operands[2], fp80_to_operand.raw_bits()[32:64]),
                                     NextValue(operands[1], fp80_to_operand.raw_bits()[ 0:32]),
-                                    #NextValue(fp79_to_operand.raw_bits(), conv_81_79_out),
                                     NextValue(op_cycle,2),
-                                    #NextState("StartData"), # one more cycle of conversion, probably not needed - FIXME
                                 ],
-                                0x5: [ # 0x101 => FP64
-                                    #NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
+                                0x4: [ # b'100 => Word # FIXME!!! truncated, not rounded
+                                    NextValue(operand, Cat(Signal(16, reset = 0), fp2fix_longword_output[0:16])),
+                                    NextValue(op_cycle,0),
+                                ],
+                                0x5: [ # b'101 => FP64
                                     NextValue(operand,     conv_81_64_out[32:64]),
                                     NextValue(operands[1], conv_81_64_out[ 0:32]),
                                     NextValue(op_cycle,1),
-                                    #NextState("WaitReadResponse1"),
+                                ],
+                                0x6: [ # b'110 => Byte # FIXME!!! truncated, not rounded
+                                    NextValue(operand, Cat(Signal(24, reset = 0), fp2fix_longword_output[0:8])),
+                                    NextValue(op_cycle,0),
                                 ],
                             }),
                             #NextState("WaitReadResponse1"),
@@ -427,14 +435,23 @@ class rd68883(Copro):
         )
         fpu_fptomem_fsm.act("StartData",
                             Case(data_type, {
+                                0x0: [ # Long
+                                    NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=4)),
+                                ],
                                 0x1: [ # FP32
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=4)),
                                 ],
                                 0x2: [ # FP80
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=12)),
                                 ],
+                                0x4: [ # Word
+                                    NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=2)),
+                                ],
                                 0x5: [ # FP64
                                     NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=8)),
+                                ],
+                                0x6: [ # Byte
+                                    NextValue(response, ea_transfer_primitive(CA=0,PC=0,DR=1,Valid=Valid_Memory_Alterable,Length=1)),
                                 ],
                             }),
                             NextState("WaitReadResponse1"),
@@ -884,6 +901,8 @@ class rd68883(Copro):
         # the second bit from the right is to indicate non-IEEE so not relevant
         # anyway to simplify my life, fed the 7-input truth table into a boolean simplifier (BExpred_v0.8) and using that.
 
+        # CHECKME: FNop is using a form of branch
+
         condition_match = Signal(1)
         if (True):
             A = Signal(1)
@@ -1224,11 +1243,16 @@ class rd68883(Copro):
                                   o_R = conv_81_32_out,)
         platform.add_source("OutputIEEE_15_63_to_8_23_comb_uid2.vhdl", "vhdl")
 
-        ## conversion (input, from integer to flopoco) # flopoco V4.1.1
+        ## conversion (input, from/to integer to/from flopoco) # flopoco V4.1.1
         self.specials += Instance("Fix2FP_0_31_S_15_63_F100_uid2",
-                                  i_I = operand_to_int,
-                                  o_O = operand_from_int,)
+                                  i_I = fix2fp_input,
+                                  o_O = fix2fp_output,)
         platform.add_source("Fix2FP_0_31_S_15_63_comb_uid2.vhdl", "vhdl")
+        
+        self.specials += Instance("FP2Fix_15_63_0_31_S_NT_F100_uid2",
+                                  i_I = fp2fix_longword_input,
+                                  o_O = fp2fix_longword_output,)
+        platform.add_source("FP2Fix_15_63_0_31_S_NT_comb_uid2.vhdl", "vhdl")
         
 
         ## compute

@@ -212,7 +212,7 @@ class IIsiFPGA(MacPeriphSoC):
         self.submodules.crg = _CRG(platform=platform, version=version, sys_clk_freq=sys_clk_freq, goblin=goblin, pix_clk=litex.soc.cores.video.video_timings[goblin_res]["pix_clk"], doIIfx=doIIfx)
 
         ## add our custom timings after the clocks have been defined
-        xdc_timings_filename = None;
+        xdc_timings_filename = "iisi_fpga_V1_0_timings.xdc" #None
 
         if (xdc_timings_filename != None):
             xdc_timings_file = open(xdc_timings_filename)
@@ -334,6 +334,8 @@ def main():
         vres = int(args.goblin_res.split("@")[0].split("x")[1])
         f.write("TARGET=IISIFPGA\n")
         f.write("FEATURES+= -DIISIFPGA")
+        if (not args.goblin):
+            f.write(" -DDISABLE_GOBLIN")
         # f.write(" -DENABLE_RAMDSK") # only NuBusFPGA for now
         if (args.goblin_alt):
             f.write(" -DENABLE_HDMIAUDIO") # no audio in litex-style not-hdmi phy

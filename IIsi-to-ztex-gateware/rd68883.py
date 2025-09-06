@@ -178,6 +178,16 @@ class rd68883(Copro):
             ( "status", 2 ),
         ]
         assert(layout_len(fp81_layout) == 81)
+        # Motorola packed decimal
+        fp_bcd96_layout = [
+            ( "mantissa_bcd", 68),
+            ( "zero", 12 ), # *Unless a binary-to-decimal conversion overflow occurs [sec 3.3]
+            ( "exponent_bcd", 12),
+            ( "status", 2 ),
+            ( "sign_exponent", 1 ),
+            ( "sign_mantissa", 1 ),
+        ]
+        assert(layout_len(fp_bcd96_layout) == 96)
 
         ## some conversion wirings
         operand_to_fp32 = Record(fp32_layout)
@@ -1333,79 +1343,80 @@ class rd68883(Copro):
             const_table[0x3f].eq(0xba92c46052028a20979b), # 10^4096
         ]
 
-        led0 = platform.request("user_led", 0)
-        led1 = platform.request("user_led", 1)
-        led2 = platform.request("user_led", 2)
-        led3 = platform.request("user_led", 3)
-        led4 = platform.request("user_led", 4)
-        led5 = platform.request("user_led", 5)
-        led6 = platform.request("user_led", 6)
-        led7 = platform.request("user_led", 7)
-
+        if (False):
+            led0 = platform.request("user_led", 0)
+            led1 = platform.request("user_led", 1)
+            led2 = platform.request("user_led", 2)
+            led3 = platform.request("user_led", 3)
+            led4 = platform.request("user_led", 4)
+            led5 = platform.request("user_led", 5)
+            led6 = platform.request("user_led", 6)
+            led7 = platform.request("user_led", 7)
+            
         
-        self.comb += [
-            #led0.eq(~fpu_compute_fsm.ongoing("Idle")),
-            #led1.eq(~fpu_fptofp_fsm.ongoing("Idle")),
-            #led2.eq(~fpu_fptomem_fsm.ongoing("Idle")),
-
-            #led0.eq(~fpu_fptomem_fsm.ongoing("Idle")),
-            #led1.eq(~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
-            #led2.eq(0),
-            #led3.eq( fpu_fptomem_fsm.ongoing("WaitCompute")),
-            #led4.eq( fpu_fptomem_fsm.ongoing("SetupData")),
-            #led5.eq( fpu_fptomem_fsm.ongoing("StartData")),
-            #led6.eq( fpu_fptomem_fsm.ongoing("WaitReadResponse1")),
-            #led7.eq( fpu_fptomem_fsm.ongoing("WaitData")),
-            
-            #led0.eq(~fpu_fptomem_fsm.ongoing("Idle") | ~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
-            #led1.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
-            #led2.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListReadResponse")),
-            #led3.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListWriteOperand")),
-            #led4.eq( fpu_fmovem_tomem_fsm.ongoing("DelayOneCycleToAccessRegister")),
-            #led5.eq( fpu_fmovem_tomem_fsm.ongoing("SetRequestResponse")),
-            #led6.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForTransferRequestWriteResponse")),
-            #led7.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForWordRead")),
-
-            #led0.eq(regselect_buf[0]),
-            #led1.eq(regselect_buf[1]),
-            #led2.eq(regselect_buf[2]),
-            #led3.eq(regselect_buf[3]),
-            #led4.eq(regselect_buf[4]),
-            #led5.eq(regselect_buf[5]),
-            #led6.eq(regselect_buf[6]),
-            #led7.eq(regselect_buf[7]),
-
-            #led0.eq(regs_fpsr[fpsr_bit_NAN]),
-            #led1.eq(regs_fpsr[fpsr_bit_I]),
-            #led2.eq(regs_fpsr[fpsr_bit_Z]),
-            #led3.eq(regs_fpsr[fpsr_bit_N]),
-            #led4.eq(condition[3]),
-            #led5.eq(condition[2]),
-            #led6.eq(condition[1]),
-            #led7.eq(condition[0]),
-
-            #led0.eq(~fpu_memtofp_fsm.ongoing("Idle") |
-            #        ~fpu_fptomem_fsm.ongoing("Idle") |
-            #        ~fpu_fptofp_fsm.ongoing("Idle") |
-            #        ~fpu_fmovem_tofp_fsm.ongoing("Idle") |
-            #        ~fpu_fmovem_tomem_fsm.ongoing("Idle") |
-            #        ~fpu_condition_fsm.ongoing("Idle") |
-            #        ~fpu_compute_fsm.ongoing("Idle")),
-            #led1.eq(~fpu_crtomem_fsm.ongoing("Idle")),
-            #led2.eq(0),# fpu_crtomem_fsm.ongoing("")),
-            #led3.eq(0),# fpu_crtomem_fsm.ongoing("")),
-            #led4.eq(0),# fpu_crtomem_fsm.ongoing("")),
-            #led5.eq( fpu_crtomem_fsm.ongoing("WaitCompute")),
-            #led6.eq( fpu_crtomem_fsm.ongoing("WaitReadResponse")),
-            #led7.eq( fpu_crtomem_fsm.ongoing("WaitData")),
-
-            
-            led0.eq(~fpu_memtofp_fsm.ongoing("Idle")),
-            led1.eq(~fpu_fptomem_fsm.ongoing("Idle")),
-            led2.eq(~fpu_fptofp_fsm.ongoing("Idle")),
-            led3.eq(~fpu_crtomem_fsm.ongoing("Idle")),
-            led4.eq(~fpu_memtocr_fsm.ongoing("Idle")),
-            led5.eq(~fpu_fmovem_tofp_fsm.ongoing("Idle")),
-            led6.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
-            led7.eq(~fpu_condition_fsm.ongoing("Idle")),
-        ]
+            self.comb += [
+                #led0.eq(~fpu_compute_fsm.ongoing("Idle")),
+                #led1.eq(~fpu_fptofp_fsm.ongoing("Idle")),
+                #led2.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+                
+                #led0.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+                #led1.eq(~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
+                #led2.eq(0),
+                #led3.eq( fpu_fptomem_fsm.ongoing("WaitCompute")),
+                #led4.eq( fpu_fptomem_fsm.ongoing("SetupData")),
+                #led5.eq( fpu_fptomem_fsm.ongoing("StartData")),
+                #led6.eq( fpu_fptomem_fsm.ongoing("WaitReadResponse1")),
+                #led7.eq( fpu_fptomem_fsm.ongoing("WaitData")),
+                
+                #led0.eq(~fpu_fptomem_fsm.ongoing("Idle") | ~fpu_compute_fsm.ongoing("Idle") | ~fpu_fptofp_fsm.ongoing("Idle") | ~fpu_memtofp_fsm.ongoing("Idle")),
+                #led1.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
+                #led2.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListReadResponse")),
+                #led3.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForRegListWriteOperand")),
+                #led4.eq( fpu_fmovem_tomem_fsm.ongoing("DelayOneCycleToAccessRegister")),
+                #led5.eq( fpu_fmovem_tomem_fsm.ongoing("SetRequestResponse")),
+                #led6.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForTransferRequestWriteResponse")),
+                #led7.eq( fpu_fmovem_tomem_fsm.ongoing("WaitForWordRead")),
+                
+                #led0.eq(regselect_buf[0]),
+                #led1.eq(regselect_buf[1]),
+                #led2.eq(regselect_buf[2]),
+                #led3.eq(regselect_buf[3]),
+                #led4.eq(regselect_buf[4]),
+                #led5.eq(regselect_buf[5]),
+                #led6.eq(regselect_buf[6]),
+                #led7.eq(regselect_buf[7]),
+                
+                #led0.eq(regs_fpsr[fpsr_bit_NAN]),
+                #led1.eq(regs_fpsr[fpsr_bit_I]),
+                #led2.eq(regs_fpsr[fpsr_bit_Z]),
+                #led3.eq(regs_fpsr[fpsr_bit_N]),
+                #led4.eq(condition[3]),
+                #led5.eq(condition[2]),
+                #led6.eq(condition[1]),
+                #led7.eq(condition[0]),
+                
+                #led0.eq(~fpu_memtofp_fsm.ongoing("Idle") |
+                #        ~fpu_fptomem_fsm.ongoing("Idle") |
+                #        ~fpu_fptofp_fsm.ongoing("Idle") |
+                #        ~fpu_fmovem_tofp_fsm.ongoing("Idle") |
+                #        ~fpu_fmovem_tomem_fsm.ongoing("Idle") |
+                #        ~fpu_condition_fsm.ongoing("Idle") |
+                #        ~fpu_compute_fsm.ongoing("Idle")),
+                #led1.eq(~fpu_crtomem_fsm.ongoing("Idle")),
+                #led2.eq(0),# fpu_crtomem_fsm.ongoing("")),
+                #led3.eq(0),# fpu_crtomem_fsm.ongoing("")),
+                #led4.eq(0),# fpu_crtomem_fsm.ongoing("")),
+                #led5.eq( fpu_crtomem_fsm.ongoing("WaitCompute")),
+                #led6.eq( fpu_crtomem_fsm.ongoing("WaitReadResponse")),
+                #led7.eq( fpu_crtomem_fsm.ongoing("WaitData")),
+                
+                
+                led0.eq(~fpu_memtofp_fsm.ongoing("Idle")),
+                led1.eq(~fpu_fptomem_fsm.ongoing("Idle")),
+                led2.eq(~fpu_fptofp_fsm.ongoing("Idle")),
+                led3.eq(~fpu_crtomem_fsm.ongoing("Idle")),
+                led4.eq(~fpu_memtocr_fsm.ongoing("Idle")),
+                led5.eq(~fpu_fmovem_tofp_fsm.ongoing("Idle")),
+                led6.eq(~fpu_fmovem_tomem_fsm.ongoing("Idle")),
+                led7.eq(~fpu_condition_fsm.ongoing("Idle")),
+            ]

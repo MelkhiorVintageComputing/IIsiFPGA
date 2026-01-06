@@ -66,8 +66,8 @@ class rd68883(Copro):
 
         ### FP registers from '881/'882
         self.regs_fp = regs_fp = Array(Signal(81, reset = (0x08DEAD0000BEEF0000000 | x)) for x in range(8))
-        regs_fpcr = Signal(32) # HANDLEME
-        regs_fpsr = Signal(32) # HANDLEME
+        regs_fpcr = Signal(32) # FINISHME
+        regs_fpsr = Signal(32) # FINISHME
         regs_fpiar = Signal(32) # HANDLEME
 
         ### FPSR
@@ -1035,6 +1035,7 @@ class rd68883(Copro):
                           NextState("Compute"),
                        ),
         )
+        # instructions flagged by a " ! " prefix are not supported on the MC68040, so we won't bother
         fpu_compute_fsm.act("Compute",
                             Case(compute_fifo_dout.opcode, {
                                 0x00: [ # FMove # no extra compute

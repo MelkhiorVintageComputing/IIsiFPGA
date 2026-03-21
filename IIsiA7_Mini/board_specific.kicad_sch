@@ -6856,7 +6856,7 @@
 				)
 			)
 		)
-		(property "Value" "74LVC1G125DRL"
+		(property "Value" "74LVC1G125DCK"
 			(at 209.2741 102.8577 0)
 			(effects
 				(font
@@ -6891,7 +6891,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "SN74LVC1G125DRLR-TP"
+		(property "MPN" "SN74LVC1G125DCKR"
 			(at 195.58 106.68 0)
 			(effects
 				(font

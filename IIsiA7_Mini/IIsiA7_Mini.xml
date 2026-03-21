@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/home/dolbeau/MAC/IIsiFPGA.IIsiA7_Mini/IIsiA7_Mini/IIsiA7_Mini.kicad_sch</source>
-    <date>2026-02-22T10:11:49+0100</date>
+    <date>2026-03-06T08:34:53+0100</date>
     <tool>Eeschema 9.0.7</tool>
     <textvar name="PROJECTNAME"/>
     <textvar name="SHEETTOTAL">1</textvar>
@@ -3880,18 +3880,18 @@
       <tstamps>3520c21f-3381-4eef-8907-eb73d6ba60d4</tstamps>
     </comp>
     <comp ref="U7">
-      <value>74LVC1G125DRL</value>
+      <value>74LVC1G125DCK</value>
       <footprint>Package_TO_SOT_SMD:Texas_R-PDSO-G5_DCK-5</footprint>
       <datasheet>http://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf</datasheet>
       <description>Single Buffer Gate Tri-State, Low-Voltage CMOS, SOT-353</description>
       <fields>
-        <field name="MPN">SN74LVC1G125DRLR-TP</field>
+        <field name="MPN">SN74LVC1G125DCKR</field>
         <field name="Footprint">Package_TO_SOT_SMD:Texas_R-PDSO-G5_DCK-5</field>
         <field name="Datasheet">http://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf</field>
         <field name="Description">Single Buffer Gate Tri-State, Low-Voltage CMOS, SOT-353</field>
       </fields>
       <libsource lib="74xGxx" part="SN74LVC1G125DCK" description="Single Buffer Gate Tri-State, Low-Voltage CMOS, SOT-353"/>
-      <property name="MPN" value="SN74LVC1G125DRLR-TP"/>
+      <property name="MPN" value="SN74LVC1G125DCKR"/>
       <property name="Sheetname" value="Board Specific"/>
       <property name="Sheetfile" value="board_specific.kicad_sch"/>
       <property name="ki_keywords" value="Single Gate Buff Tri-State LVC CMOS"/>
@@ -6651,7 +6651,7 @@
       <node ref="R50" pin="2" pintype="passive"/>
       <node ref="U13" pin="8" pinfunction="PG" pintype="open_collector"/>
     </net>
-    <net code="46" name="/PWRGOOD_5V" class="5V,Default">
+    <net code="46" name="/PWRGOOD_5V" class="Default">
       <node ref="C85" pin="1" pintype="passive"/>
       <node ref="R24" pin="1" pintype="passive"/>
       <node ref="U4" pin="2" pinfunction="EN" pintype="passive"/>

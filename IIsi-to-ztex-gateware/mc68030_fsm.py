@@ -7,7 +7,7 @@ import litex
 from litex.soc.interconnect import wishbone
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9):
+    def __init__(self, soc, wb_read, wb_write, wb_dma, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9, doMaster = False, mem_mib = 256 ):
 
         if (rd68891 and rd68883):
             print("Only one copro supported for now")
@@ -17,30 +17,31 @@ class MC68030_SYNC_FSM(Module):
 
         sync_cpu = getattr(self.sync, cd_cpu)
         
-        # 68030
+        # 68030: device,[dma master]
         A = platform.request("A_3v3") # 32 # address, I[O]
         D = platform.request("D_3v3") # 32 # data, IO
-        RW_n = platform.request("rw_3v3_n") #  direction of bus transfer with respect to the main processor, I [three-state, high read, write low]
+        RW_n = platform.request("rw_3v3_n") #  direction of bus transfer with respect to the main processor, I[O] [three-state, high read, write low]
         DS_n = platform.request("ds_3v3_n") # data strobe, I[O]
         BERR_n = platform.request("berr_3v3_n") # bus error, [I]O
         #HALT_n = platform.request("halt_3v3_n") # Signal indicating that main processor should suspend all bus activity, O
-        SIZ = platform.request("siz_3v3") # 2 # in conjunction with processor’s dynamic bus sizing capabilities to indicate number of bytes remaining to be transferred during current bus cycle, I [three-state]
+        SIZ = platform.request("siz_3v3") # 2 # in conjunction with processor’s dynamic bus sizing capabilities to indicate number of bytes remaining to be transferred during current bus cycle, I[O]
 
         FC = platform.request("fc_3v3") # 3 # Function code used to identify address space of current bus cycle, I[O]
         # RESET_n = platform.request("RESET_n") # Bidirectional signal that initiates system reset
         # RMC = platform.request("RMC") #  identifies current bus cycle as part of indivisible read-modify-write operation, three-state
         DSACK_n = platform.request("dsack_3v3_n") # 2 # Data transfer acknowledge, I[O]
-        CBREQ_n = platform.request("cbreq_3v3_n") # CPU burst reuqest, I ?
-        CBACK_n = platform.request("cback_3v3_n") # CPU burst ack, w/ STERM, IO ?
+        CBREQ_n = platform.request("cbreq_3v3_n") # CPU burst request, I[O]
+        CBACK_n = platform.request("cback_3v3_n") # CPU burst ack, w/ STERM, [I]O
         STERM_n = platform.request("sterm_3v3_n") # indicates termination of a transfer using the MC68030 synchronous cycle, [I]O
         # in this version STERM is negated by the driver
 
-        AS_n = platform.request("as_3v3_n") # address strobe, I [three-state]
+        AS_n = platform.request("as_3v3_n") # address strobe, I[O]
         CIOUT_n = platform.request("ciout_3v3_n") # cache inhibit out (from cpu), I
 
-        # BR_n = platform.request("BR_n") # bus request, I
-        # CPU_BG_n = platform.request("CPU_BG_n") # processor bus grant, I ?
-        # BGACK_n = platform.request("BGACK_n") # bus grant ack, I
+        if (doMaster):
+            BR_n = platform.request("br_3v3_n") # bus request, [O]
+            BG_n = platform.request("bg_3v3_n") # processor bus grant, [I]
+            BGACK_n = platform.request("bgack_3v3_n") # bus grant ack, [IO]
         
         # IPL = platform.request("IPL") # 3 # Interrupt priority-level lines.
         ## DBEN_n not in PDS slot (buffer enable)
@@ -60,8 +61,8 @@ class MC68030_SYNC_FSM(Module):
         # PDS_DSACK not connected (16 MHz DSACK)
         # 16MASTER not connected (grounded on board for 32 bits)
         # SLOT_BG_n = platform.request("SLOT_BG_n") # Bus grant signal to the expansion card. # not in IIci
-        #SLOTIRQ_E_n = platform.request("SLOTIRQ_n") # IRQ for (pseudo-)slot E # not in IIci
-        # SLOTIRQ_C_n # not supported on LCIII/LC520 # IRQ for (pseudo-)slot C # not in IIci
+        # SLOTIRQ_E_n = platform.request("SLOTIRQ_n") # IRQ for (pseudo-)slot E # not in IIci
+        # SLOTIRQ_C_n # not supported on LCIII/LC520 # IRQ for (pseudo-)slot C # not in IIci => connected as IRQ in the SoC directly
         # SLOTIRQ_D_n # not supported on LCIII/LC520 # IRQ for (pseudo-)slot D # not in IIci
         # SNDOUT not connected (Apple II-style sound) # not in IIci
 	# # ROMOE_n only in IIci
@@ -75,11 +76,11 @@ class MC68030_SYNC_FSM(Module):
         #self.comb += card_select.eq(A[31] & (~FC[0] | ~FC[1] | ~FC[2])) # high-order address bit set & not in CPU spac
 
         A_i = Signal(32)
-        #A_o = Signal(32)
-        #A_oe = Signal(reset = 0)
-        #self.specials += Tristate(A, A_o, A_oe, A_i)
+        A_o = Signal(32)
+        A_oe = Signal(reset = 0) # only needed for DMA bus mastering
+        self.specials += Tristate(A, A_o, A_oe, A_i)
+        #self.comb += [ A_i.eq(A) ]
         A_latch = Signal(32)
-        self.comb += [ A_i.eq(A) ]
         #A_i_le = Signal(32)
         #A_latch_le = Signal(32)
         #self.comb += [ A_i_le.eq(Cat(A[24:32], A[16:24], A[8:16], A[0:8])) ]
@@ -108,16 +109,16 @@ class MC68030_SYNC_FSM(Module):
         ]
         
         RW_i_n = Signal(1)
-        #RW_o_n = Signal(1, reset = 1)
-        #RW_oe = Signal(reset = 0)
-        #self.specials += Tristate(RW_n, RW_o_n, RW_oe, RW_i_n)
-        self.comb += [ RW_i_n.eq(RW_n) ]
+        RW_o_n = Signal(1, reset = 1)
+        RW_oe = Signal(reset = 0) # only needed for DMA
+        self.specials += Tristate(RW_n, RW_o_n, RW_oe, RW_i_n)
+        #self.comb += [ RW_i_n.eq(RW_n) ]
         
         DS_i_n = Signal()
-        #DS_o_n = Signal()
-        #DS_oe = Signal(reset = 0)
-        #self.specials += Tristate(DS_n, DS_o_n, DS_oe, DS_i_n)
-        self.comb += [ DS_i_n.eq(DS_n) ]
+        DS_o_n = Signal()
+        DS_oe = Signal(reset = 0) # only needed for DMA
+        self.specials += Tristate(DS_n, DS_o_n, DS_oe, DS_i_n)
+        #self.comb += [ DS_i_n.eq(DS_n) ]
 
         # force tristate
         BERR_i_n = Signal(1)
@@ -133,7 +134,7 @@ class MC68030_SYNC_FSM(Module):
         
         CBREQ_i_n = Signal(1)
         #CBREQ_o_n = Signal(1, reset = 1)
-        #CBREQ_oe = Signal(reset = 0)
+        #CBREQ_oe = Signal(reset = 0) # only needed for burst DMA
         #self.specials += Tristate(CBREQ_n, CBREQ_o_n, CBREQ_oe, CBREQ_i_n)
         self.comb += [ CBREQ_i_n.eq(CBREQ_n) ]
 
@@ -150,22 +151,22 @@ class MC68030_SYNC_FSM(Module):
         self.specials += Tristate(STERM_n, STERM_o_n, STERM_oe, STERM_i_n)
         
         SIZ_i = Signal(2)
-        #SIZ_o = Signal(2)
-        #SIZ_oe = Signal(reset = 0)
-        #self.specials += Tristate(SIZ, SIZ_o, SIZ_oe, SIZ_i)
-        self.comb += [ SIZ_i.eq(SIZ) ]
+        SIZ_o = Signal(2)
+        SIZ_oe = Signal(reset = 0) # only needed for DMA
+        self.specials += Tristate(SIZ, SIZ_o, SIZ_oe, SIZ_i)
+        #self.comb += [ SIZ_i.eq(SIZ) ]
         
         FC_i = Signal(3)
-        #FC_o = Signal(3)
-        #FC_oe = Signal(reset = 0)
-        #self.specials += Tristate(FC, FC_o, FC_oe, FC_i)
-        self.comb += [ FC_i.eq(FC) ]
+        FC_o = Signal(3)
+        FC_oe = Signal(reset = 0) # only needed for DMA
+        self.specials += Tristate(FC, FC_o, FC_oe, FC_i)
+        #self.comb += [ FC_i.eq(FC) ]
         
         AS_i_n = Signal()
-        #AS_o_n = Signal()
-        #AS_oe = Signal(reset = 0)
-        #self.specials += Tristate(CPU_AS_n, AS_o_n, AS_oe, AS_i_n)
-        self.comb += [ AS_i_n.eq(AS_n) ]
+        AS_o_n = Signal()
+        AS_oe = Signal(reset = 0) # only needed for DMA
+        self.specials += Tristate(AS_n, AS_o_n, AS_oe, AS_i_n)
+        #self.comb += [ AS_i_n.eq(AS_n) ]
         
         CIOUT_i_n = Signal(1)
         #CIOUT_o_n = Signal(1, reset = 1)
@@ -179,12 +180,31 @@ class MC68030_SYNC_FSM(Module):
         #self.specials += Tristate(CACHE, CACHE_o, CACHE_oe, CACHE_i)
         self.comb += [ CACHE.eq(CACHE_o) ]
 
+        ##### bus mastering
+        if (doMaster):
+            BR_o_n = Signal(1, reset = 1)
+            self.comb += [ BR_n.eq(BR_o_n) ]
+            BGACK_i_n = Signal(1)
+            BGACK_o_n = Signal(1, reset = 1)
+            BGACK_oe = Signal(reset = 0)
+            self.specials += Tristate(BGACK_n, BGACK_o_n, BGACK_oe, BGACK_i_n)
+            BG_i_n = Signal(1)
+            self.comb += [ BG_i_n.eq(BG_n) ]
+        #####
+
         # 23 first bits not rewritten (8 MiB)
         # address rewriting (slot)
         slot_processed_ad = Signal(32)
+        fb_remap_prefix = 0
+        if (mem_mib == 128):
+            fb_remap_prefix = 0x87
+        elif (mem_mib == 256):
+            fb_remap_prefix = 0x8f
+        else:
+            assert(False)
         self.comb += [
             If(~A_i[23], # first 8 MiB of slot space: remap to last 8 Mib of SDRAM
-               slot_processed_ad[23:32].eq(Cat(Signal(1, reset=1), Signal(8, reset = 0x8f))), # 0x8f8...
+               slot_processed_ad[23:32].eq(Cat(Signal(1, reset=1), Signal(8, reset = fb_remap_prefix))), # 0x8f8...
             ).Else( # second 8 MiB: direct access
                 slot_processed_ad[23:32].eq((Cat(Signal(1, reset=1), Signal(8, reset = 0xf0)))), # 24 bits, a.k.a 22 bits of words
             )
@@ -595,8 +615,111 @@ class MC68030_SYNC_FSM(Module):
                        wb_write.sel.eq(write_fifo_dout.sel),
                        write_fifo.re.eq(wb_write.ack),
         ]
+
         
-        #
+        ############################################## DMA stuff
+        if (doMaster):
+            self.submodules.dma_fsm = dma_fsm = ClockDomainsRenamer(cd_cpu)(FSM(reset_state="Reset"))
+            #dma_write_fifo_layout = [
+            #    ("adr", 32),
+            #    ("data", 32),
+            #]
+            #self.submodules.dma_write_fifo = dma_write_fifo = ClockDomainsRenamer({"read": "cpu", "write": "sys"})(AsyncFIFOBuffered(width=layout_len(dma_write_fifo_layout), depth=4))
+            #dma_write_fifo_dout = Record(dma_write_fifo_layout)
+            #self.comb += dma_write_fifo_dout.raw_bits().eq(dma_write_fifo.dout) # might need byte-reversal
+            #dma_write_fifo_din = Record(dma_write_fifo_layout)
+            #self.comb += dma_write_fifo.din.eq(dma_write_fifo_din.raw_bits()) # might need byte-reversal
+            
+            dma_fsm.act("Reset",
+                        NextState("Idle")
+            )
+            dma_fsm.act("Idle",
+                        BGACK_oe.eq(0),
+                        AS_oe.eq(0),
+                        DS_oe.eq(0),
+                        RW_oe.eq(0),
+                        SIZ_oe.eq(0),
+                        FC_oe.eq(0),
+                        If(wb_dma.cyc & wb_dma.stb, # we want to do a DMA write to memory (32-bits for now)
+                           BR_o_n.eq(0), # request bus no matter what
+                           If(~BG_i_n & AS_i_n & STERM_i_n & DSACK_i_n[0] & DSACK_i_n[1] & BGACK_i_n,
+                              # we have the bus, and it isn't busy: no ongoing bus cycle, no other device or master ACKing the bus
+                              BGACK_oe.eq(1),
+                              BGACK_o_n.eq(0), # take the bus
+                              BR_o_n.eq(0), # remove request for now
+                              A_oe.eq(1),
+                              A_o.eq(Cat(Signal(2, reset = 0), wb_dma.adr)),
+                              D_oe.eq(wb_dma.we), # enable D output only on write
+                              D_o.eq(wb_dma.dat_w), # 32-bits, FIXME: if not 32-bits then need to move data to upper byte, FIXME: endianness
+                              RW_oe.eq(1),
+                              RW_o_n.eq(~wb_dma.we), # write or read
+                              DS_oe.eq(1),
+                              DS_o_n.eq(0), # data on bus
+                              AS_oe.eq(1),
+                              AS_o_n.eq(0), # address on bus
+                              SIZ_oe.eq(1),
+                              SIZ_o.eq(0), # long word, FIXME: use wb_dma.sel to setup A_o[0], A_o[1] and SIZ
+                              FC_oe.eq(1),
+                              FC_o.eq(0x5), # checkme, using supervisor data for now
+                              If(wb_dma.we,
+                                 NextState("WriteWaitForSTERM"),
+                              ).Else(
+                                 NextState("ReadWaitForSTERM"),
+                              )
+                           ),
+                        ),
+            )
+            dma_fsm.act("WriteWaitForSTERM",
+                        BGACK_oe.eq(1),
+                        BGACK_o_n.eq(0), # take the bus
+                        A_oe.eq(1),
+                        A_o.eq(Cat(Signal(2, reset = 0), wb_dma.adr)),
+                        D_oe.eq(1),
+                        D_o.eq(wb_dma.dat_w),
+                        RW_oe.eq(1),
+                        RW_o_n.eq(0), # write
+                        DS_oe.eq(1),
+                        DS_o_n.eq(0), # data on bus
+                        AS_oe.eq(1),
+                        AS_o_n.eq(0), # address on bus
+                        SIZ_oe.eq(1),
+                        SIZ_o.eq(0), # long word
+                        FC_oe.eq(1),
+                        FC_o.eq(0x5), # checkme
+                        If(~STERM_i_n, # FIXME: what about async cycle with DSACK ?
+                           wb_dma.ack.eq(1),
+                           BGACK_o_n.eq(1), # drop the bus
+                           DS_o_n.eq(1),
+                           AS_o_n.eq(1),
+                           NextState("Idle"),
+                        ),
+            )
+            dma_fsm.act("ReadWaitForSTERM",
+                        BGACK_oe.eq(1),
+                        BGACK_o_n.eq(0), # take the bus
+                        A_oe.eq(1),
+                        A_o.eq(Cat(Signal(2, reset = 0), wb_dma.adr)),
+                        wb_dma.dat_r.eq(D_i),
+                        RW_oe.eq(1),
+                        RW_o_n.eq(1), # read
+                        DS_oe.eq(1),
+                        DS_o_n.eq(0), # data on bus
+                        AS_oe.eq(1),
+                        AS_o_n.eq(0), # address on bus
+                        SIZ_oe.eq(1),
+                        SIZ_o.eq(0), # long word
+                        FC_oe.eq(1),
+                        FC_o.eq(0x5), # checkme
+                        If(~STERM_i_n, # FIXME: what about async cycle with DSACK ?
+                           wb_dma.ack.eq(1),
+                           BGACK_o_n.eq(1), # drop the bus
+                           DS_o_n.eq(1),
+                           AS_o_n.eq(1),
+                           NextState("Idle"),
+                        ),
+            )
+        
+        ############################################## COPROCESSOR stuff
 
         copro = (rd68891 or rd68883)
 
@@ -651,7 +774,7 @@ class MC68030_SYNC_FSM(Module):
                                  BERR_oe.eq(1),
                                  BERR_o_n.eq(1),
                                  NextValue(A_latch, processed_ad),
-                                 Case(SIZ_i, { # IMPROVEME: duplicate code, CHECKME: endianess
+                                 Case(SIZ_i, { # IMPROVEME: duplicate code
                                      0x0: [ # long word
                                          Case(processed_ad[0:2], {
                                              0x0: [
@@ -776,7 +899,6 @@ class MC68030_SYNC_FSM(Module):
             )
 
             ## copro debug
-                
             if (False):
                 led0 = platform.request("user_led", 0)
                 led1 = platform.request("user_led", 1)

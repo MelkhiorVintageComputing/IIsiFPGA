@@ -1052,7 +1052,7 @@ class rd68883(Copro):
                                 # 0x03: ! FIntrRZ
                                 0x04: [ # FSqrt
                                     NextValue(delay, 8),
-                                    NextValue(pip_idx, 3),
+                                    NextValue(pip_idx, pipeline_sqrt),
                                     NextState("Wait"),
                                 ],
                                 # 0x05: --

@@ -1,0 +1,42 @@
+
+export BUILDDIR=build/IIsiA7_Mini_pds_V3_0/gateware
+
+
+(cd VintageBusFPGA_Common && ./blit_goblin_nubus.sh 0x87800000 )
+
+(
+source /opt/Xilinx/Vivado/2023.2/settings64.sh
+export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
+
+python3 pds_to_fpga_soc.py \
+	--vivado-synth-directive Default \
+        --vivado-opt-directive Explore \
+        --vivado-place-directive Explore \
+        --vivado-post-place-phys-opt-directive Explore \
+        --vivado-route-directive Explore \
+        --vivado-post-route-phys-opt-directive Explore \
+	--build --csr-csv csr.csv --csr-json csr.json \
+	--sys-clk-freq 100e6 \
+	--variant=IIsiA7_Mini_A50T-1 --version=V3.0 \
+	--goblin --goblin-res 1920x1080@60Hz \
+	--config-flash \
+	# --rd68883
+	# --rd68891
+	# --goblin-alt
+
+
+) 2>&1 | tee build_V3_0.log
+# --goblin --goblin-res 1280x1024@60Hz
+# --hdmi
+
+# generates ROM with proper headers / config
+( cd VintageBusFPGA_Common/DeclROM/ && make clean all || echo '$$ ROM build failed' )
+
+# substitute ROM in cfgmem file
+( dd if=VintageBusFPGA_Common/DeclROM/vid_decl_rom.bin bs=32768 seek=80 count=1 conv=notrunc of=$BUILDDIR/IIsiA7_Mini_pds_V3_0.bit.bin )
+
+grep -A10 'Design Timing Summary' $BUILDDIR/IIsiA7_Mini_pds_V3_0_timing.rpt
+
+grep '^\$\$' build_V3_0.log
+
+VintageBusFPGA_Common/check_sdram_init.sh

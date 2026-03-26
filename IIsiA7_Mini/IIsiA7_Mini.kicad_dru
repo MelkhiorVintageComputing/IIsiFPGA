@@ -1,0 +1,17 @@
+(version 1)
+(rule NetLenghs
+   (condition "A.NetName=='DDR2_*' && 1 == 0")
+	(layer "B.Cu")
+   (constraint length (min 31,1794mm) (max 31,1796mm))
+)
+(rule NetLenghs
+   (condition "A.NetName=='DDR2_*' && 1 == 0")
+	(layer "F.Cu")
+   (constraint length (min 34,1794mm) (max 34,1796mm))
+)
+
+(rule NetLenghs
+   (condition "A.NetName=='*HDMI_*' && 1 == 0")
+	(layer "F.Cu")
+   (constraint length (min 57.3375mm) (max 57.3377mm))
+)

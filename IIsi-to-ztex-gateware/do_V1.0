@@ -1,20 +1,33 @@
-(
-#source /opt/Xilinx/Vivado/2020.1/settings64.sh
-#export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2020.1/lib/lnx64.o/SuSE
-source /opt/Xilinx/Vivado/2023.2/settings64.sh
-export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
+
+export BUILDDIR=build/ztex213_pds_V1_0/gateware
+
 
 (cd VintageBusFPGA_Common && ./blit_goblin_nubus.sh 0x8F800000 )
 
-#python3 pds_to_fpga_soc.py --build --csr-csv csr.csv --csr-json csr.json --variant=ztex2.12b --version=V1.0 --sys-clk-freq 100e6 --goblin --goblin-res 1920x1080@60Hz --config-flash # --goblin-alt # --rd68891
+(
+source /opt/Xilinx/Vivado/2023.2/settings64.sh
+export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
 
-python3 pds_to_fpga_soc.py --build --csr-csv csr.csv --csr-json csr.json --variant=ztex2.12b --version=V1.0 --sys-clk-freq 100e6 --goblin --goblin-res 1920x1080@60Hz --goblin-alt --config-flash --doMaster #--rd68883 # --doIIfx
+python3 pds_to_fpga_soc.py \
+	--build --csr-csv csr.csv --csr-json csr.json \
+	--sys-clk-freq 100e6 \
+	--variant=ztex2.12b --version=V1.0 \
+	--goblin --goblin-res 1920x1080@60Hz \
+	--goblin-alt \
+	--config-flash \
+	#--doMaster #--rd68883 # --doIIfx
 
 ) 2>&1 | tee build_V1_0.log
 # --goblin --goblin-res 1280x1024@60Hz
 # --hdmi
 
-grep -A10 'Design Timing Summary' build/ztex213_pds_V1_0/gateware/ztex213_pds_V1_0_timing.rpt
+# generates ROM with proper headers / config
+( cd VintageBusFPGA_Common/DeclROM/ && make clean all || echo '$$ ROM build failed' )
+
+# substitute ROM in cfgmem file
+( dd if=VintageBusFPGA_Common/DeclROM/vid_decl_rom.bin bs=32768 seek=80 count=1 conv=notrunc of=$BUILDDIR/IIsiA7_Mini_pds_V3_0.bit.bin )
+
+grep -A10 'Design Timing Summary' $BUILDDIR/ztex213_pds_V1_0_timing.rpt
 
 grep '^\$\$' build_V1_0.log
 

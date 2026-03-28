@@ -299,7 +299,6 @@ class IIsiFPGA(MacPeriphSoC):
             self.specials += Tristate(halt_n, halt_n_o, halt_n_oe, halt_n_i)
             self.comb += [ halt_n_o.eq(0), ]
             self.comb += [ halt_n_oe.eq(hold_reset), ]
-            #self.comb += [ halt_n_oe.eq(0), ] # FIXME: TEMPORARY FOR TESTS
         else:
             assert(False) # V2.0 TODO
                 
@@ -446,6 +445,8 @@ def main():
         f.write("FEATURES+= -DIISIFPGA")
         if (args.version == "V3.0"):
             f.write(" -DSDRAM_DDR2")
+        else:
+            f.write(" -DSDRAM_DDR3")
         if (not args.goblin):
             f.write(" -DDISABLE_GOBLIN")
         # f.write(" -DENABLE_RAMDSK") # only NuBusFPGA for now

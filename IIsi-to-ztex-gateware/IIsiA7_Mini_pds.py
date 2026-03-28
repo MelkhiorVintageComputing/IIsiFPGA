@@ -94,7 +94,7 @@ _pds_pds_v3_0 = [
      ("A_3v3",        0, Pins(" M1  M2  L4  N1  L5  N2  P1  M4 "
                               " N3  R1  P3  N4  T2  R2  R3  T3"
                               " M5  P4  T4  P5  M6  T5  R5  N6"
-                              " R6  P6  T7  P8  R7  T8  R8  P9 "), IOStandard("lvttl")),
+                              " R6  P6  T7  R7  P8  T8  R8  P9 "), IOStandard("lvttl")),
      ("as_3v3_n",     0, Pins("F15"), IOStandard("lvttl")),
      ("berr_3v3_n",   0, Pins("J16"), IOStandard("lvttl")),
      ("bg_3v3_n",     0, Pins("G16"), IOStandard("lvttl")),

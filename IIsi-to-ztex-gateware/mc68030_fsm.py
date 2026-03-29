@@ -13,6 +13,14 @@ class MC68030_SYNC_FSM(Module):
             print("Only one copro supported for now")
             assert(False)
 
+        if (rd68891):
+            print("$$ adding RD68891 crypto co-processor")
+        if (rd68883):
+            print("$$ adding RD66883 FP co-processor")
+        if (doMaster):
+            print("$$ adding busmaster support (pointlessly as this stage)")
+        print(f"$$ Selected Slot is {slot}")
+
         platform = soc.platform
 
         sync_cpu = getattr(self.sync, cd_cpu)
@@ -202,10 +210,11 @@ class MC68030_SYNC_FSM(Module):
             fb_remap_prefix = 0x8f
         else:
             assert(False)
+        
         self.comb += [
-            If(~A_i[23], # first 8 MiB of slot space: remap to last 8 Mib of SDRAM
+            If(~A_i[23], # first 8 MiB of slot space: remap to last 8 MiB of SDRAM
                slot_processed_ad[23:32].eq(Cat(Signal(1, reset=1), Signal(8, reset = fb_remap_prefix))), # 0x8f8...
-            ).Else( # second 8 MiB: direct access
+            ).Else( # second 8 MiB: direct access to the 0xf0 range
                 slot_processed_ad[23:32].eq((Cat(Signal(1, reset=1), Signal(8, reset = 0xf0)))), # 24 bits, a.k.a 22 bits of words
             )
         ]
@@ -213,17 +222,15 @@ class MC68030_SYNC_FSM(Module):
         # address rewriting (mem)
         mem_processed_ad = Signal(32)
         self.comb += [
-            #mem_processed_ad[23:27].eq(A_i[23:27]),
-            #mem_processed_ad[27:32].eq(Signal(5, reset=0x10)), # 0x80 >> 3 == 0x10
+            # mem range is mapped 1:1 to the (internal) memory range
             mem_processed_ad[23:28].eq(A_i[23:28]),
             mem_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
-            ##mem_processed_ad[23:26].eq(A_i[23:26]),
-            ##mem_processed_ad[26:32].eq(Signal(6, reset=0x20)), # 0x80 >> 2 == 0x20
         ]
 
         # address rewriting (superslot)
         superslot_processed_ad = Signal(32)
         self.comb += [
+            # superslot range is mapped 1:1 to the (internal) memory range
             superslot_processed_ad[23:28].eq(A_i[23:28]),
             superslot_processed_ad[28:32].eq(Signal(4, reset=0x8)), # 0x80 >> 4 == 0x8
         ]
@@ -236,15 +243,18 @@ class MC68030_SYNC_FSM(Module):
 
         # selection logic
         my_slot_space = Signal()
+        # match for 32-bits addressing (only), 16 Mib at 0xFc000000 
         self.comb += [ my_slot_space.eq((A_i[24:32] == (0xf0 + slot))) ]
         
         my_mem_space = Signal()
+        # match 0x20000000 to 0x2FFFFFFF (256 MiB)
         #self.comb += [ my_mem_space.eq((A_i[27:32] == 0x01)) ] # 0x08 >> 3 == 0x01
         ####self.comb += [ my_mem_space.eq((A_i[27:32] == 0x04) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x20 >> 3 == 0x04
         self.comb += [ my_mem_space.eq((A_i[28:32] == 0x2)) ] # 0x20 >> 4 == 0x2
         ###self.comb += [ my_mem_space.eq((A_i[26:32] == 0x1) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2])) ] # 0x04 >> 2 == 0x1
         
         my_superslot_space = Signal()
+        # match 0xc0000000 to 0xcFFFFFFF (256 MiB, the entire superslot range)
         self.comb += [ my_superslot_space.eq((A_i[28:32] == slot)) ]
         
         my_device_space = Signal()
@@ -258,7 +268,8 @@ class MC68030_SYNC_FSM(Module):
         ##platform.add_platform_command("set_max_delay -from [get_ports A_3v3] -to [get_ports cache_3v3] 10")
         ###self.comb += [ CACHE_o.eq(~((A_i[26:32] == 0x0) & (~FC_i[0] | ~FC_i[1] | ~FC_i[2]))), ] # disable for bank A, enable for everything else
         ####self.comb += [ CACHE_o.eq(A_i[29:32] != 0x0), ]
-        ####platform.add_platform_command("set_max_delay -from [get_ports A_3v3] -to [get_ports cache_3v3] 10")
+        ####platform.add_platform_command("set_max_delay -from [get_ports A_3v3]")
+        #platform.add_platform_command("set_input_delay -clock cpu_clk -min  [get_ports A_3v3]")
 
         # more selection logic
         processed_ad = Signal(32)
@@ -311,6 +322,7 @@ class MC68030_SYNC_FSM(Module):
         #self.comb += [ led.eq(my_mem_space_reg), ]
 
         ### dram_native_r
+        assert(dram_native_r.data_width == 128)
         self.comb += [
             dram_native_r.cmd.we.eq(0), # never write
             dram_native_r.cmd.addr.eq(processed_ad[4:]), # assume 128 bits (16 bytes)
@@ -718,6 +730,46 @@ class MC68030_SYNC_FSM(Module):
                            NextState("Idle"),
                         ),
             )
+
+        if (True):
+            diag_leds = platform.request_all("diag_leds")
+            ##seen_ss = Signal(1, reset = 0)
+            ##sync_cpu += [
+            ##    seen_ss.eq(seen_ss | (my_superslot_space & ~cpu_mgt_cycle & ~AS_i_n)),
+            ##]
+            #prefix = Signal(8)
+            #sync_cpu += [
+            #    If(my_device_space & ~my_slot_space & ~cpu_mgt_cycle & ~AS_i_n,
+            #       prefix.eq(A_i[24:32]),
+            #    ),
+            #]
+            self.comb += [
+                diag_leds.eq(
+                    #prefix
+                    Cat(
+                    ~A_i[24],
+                    ~A_i[25],
+                    ~A_i[26],
+                    ~A_i[27],
+                    ~A_i[28],
+                    ~A_i[29],
+                    ~A_i[30],
+                    ~A_i[31],
+                    ##my_superslot_space,
+                    ##Signal(3, reset = 0),
+                    ##seen_ss,
+                    ##Signal(3, reset = 0),
+                    #my_slot_space,
+                    #my_mem_space,
+                    #my_superslot_space,
+                    #~slave_fsm.ongoing("Idle"),
+                    #~AS_i_n,
+                    #~STERM_i_n,
+                    #~CBREQ_i_n,
+                    #~CBACK_i_n,
+                    ),
+            ),
+            ]
         
         ############################################## COPROCESSOR stuff
 

@@ -7,6 +7,8 @@ export BUILDDIR=build/IIsiA7_Mini_pds_V3_0/gateware
 (
 source /opt/Xilinx/Vivado/2023.2/settings64.sh
 export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
+#source /opt/Xilinx/2025.2/Vivado/settings64.sh
+#export LD_LIBRARY_PATH=/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/SuSE/
 
 python3 pds_to_fpga_soc.py \
 	--vivado-synth-directive Default \

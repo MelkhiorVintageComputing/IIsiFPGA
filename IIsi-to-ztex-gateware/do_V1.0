@@ -9,6 +9,12 @@ source /opt/Xilinx/Vivado/2023.2/settings64.sh
 export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
 
 python3 pds_to_fpga_soc.py \
+	--vivado-synth-directive Default \
+        --vivado-opt-directive Explore \
+        --vivado-place-directive Explore \
+        --vivado-post-place-phys-opt-directive Explore \
+        --vivado-route-directive Explore \
+        --vivado-post-route-phys-opt-directive Explore \
 	--build --csr-csv csr.csv --csr-json csr.json \
 	--sys-clk-freq 100e6 \
 	--variant=ztex2.12b --version=V1.0 \

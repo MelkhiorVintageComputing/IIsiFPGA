@@ -53,8 +53,8 @@ _io = [
     ## Serial
     # CH340N so accessed via USB
     ("serial", 0,
-        Subsignal("tx", Pins("D10")),
-        Subsignal("rx", Pins("K12")),
+        Subsignal("rx", Pins("D10")),
+        Subsignal("tx", Pins("K12")),
         IOStandard("LVCMOS33")
     ),
 

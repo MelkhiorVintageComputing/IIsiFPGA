@@ -5,9 +5,10 @@ from migen.fhdl.specials import Tristate
 
 import litex
 from litex.soc.interconnect import wishbone
+from litedram import frontend
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, wb_dma, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9, doMaster = False, mem_mib = 256 ):
+    def __init__(self, soc, wb_read, wb_write, wb_dma, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9, doMaster = False, mem_mib = 256, debug_val = None ):
 
         if (rd68891 and rd68883):
             print("Only one copro supported for now")
@@ -163,6 +164,7 @@ class MC68030_SYNC_FSM(Module):
         SIZ_oe = Signal(reset = 0) # only needed for DMA
         self.specials += Tristate(SIZ, SIZ_o, SIZ_oe, SIZ_i)
         #self.comb += [ SIZ_i.eq(SIZ) ]
+        SIZ_latch = Signal(2)
         
         FC_i = Signal(3)
         FC_o = Signal(3)
@@ -323,16 +325,262 @@ class MC68030_SYNC_FSM(Module):
 
         ### dram_native_r
         assert(dram_native_r.data_width == 128)
-        self.comb += [
-            dram_native_r.cmd.we.eq(0), # never write
-            dram_native_r.cmd.addr.eq(processed_ad[4:]), # assume 128 bits (16 bytes)
-        ]
+        #self.comb += [
+        #    dram_native_r.cmd.we.eq(0), # never write
+        #    dram_native_r.cmd.addr.eq(processed_ad[4:]), # assume 128 bits (16 bytes)
+        #]
         ## dram_native_r.cmd.valid ->
         ## dram_native_r.cmd.ready <-
         ## dram_native_r.rdata.valid <-
         ## self.dram_native_r.rdata.data <-
         burst_counter = Signal(2)
+        burst_active = Signal()
         burst_buffer = Signal(128)
+        #if (debug_val is not None):
+        #    self.comb += [ debug_val.eq(burst_buffer), ]
+
+        ## req/data FIFO for memory accesses
+        # layouts
+        mem_req_fifo_layout = [
+            ("addr", 32),
+            ("siz", 2),
+            ("data", 32), # write are 32-bits max
+            ("we", 1),
+        ]
+        mem_data_fifo_layout = [
+            ("data", 128), # always readback full cacheline
+        ]
+        # FIFO components
+        self.submodules.mem_req_fifo = mem_req_fifo = ClockDomainsRenamer({"read": "sys", "write": "cpu"})(AsyncFIFOBuffered(width=layout_len(mem_req_fifo_layout), depth=16))
+        self.submodules.mem_data_fifo = mem_data_fifo = ClockDomainsRenamer({"read": "cpu", "write": "sys"})(AsyncFIFOBuffered(width=layout_len(mem_data_fifo_layout), depth=4))
+        # wiring w/ layouts
+        mem_req_fifo_dout = Record(mem_req_fifo_layout)
+        self.comb += mem_req_fifo_dout.raw_bits().eq(mem_req_fifo.dout)
+        mem_req_fifo_din = Record(mem_req_fifo_layout)
+        self.comb += mem_req_fifo.din.eq(mem_req_fifo_din.raw_bits())
+        mem_data_fifo_dout = Record(mem_data_fifo_layout)
+        self.comb += mem_data_fifo_dout.raw_bits().eq(mem_data_fifo.dout)
+        mem_data_fifo_din = Record(mem_data_fifo_layout)
+        self.comb += mem_data_fifo.din.eq(mem_data_fifo_din.raw_bits())
+        word_mask = Signal(16)
+        # wiring FIFO <=> native interface
+        #self.comb += [
+        #    dram_native_r.cmd.valid.eq(mem_req_fifo.readable),
+        #    dram_native_r.cmd.addr.eq(mem_req_fifo_dout.addr[4:]),
+        #    dram_native_r.cmd.we.eq(mem_req_fifo_dout.we),
+        #    dram_native_r.wdata.valid.eq(mem_req_fifo.readable & mem_req_fifo_dout.we),
+        #    dram_native_r.wdata.data.eq(Cat(mem_req_fifo_dout.data, # replicate 32-bits to all doublewords, .we (byte enable) will filter
+        #                                    mem_req_fifo_dout.data,
+        #                                    mem_req_fifo_dout.data,
+        #                                    mem_req_fifo_dout.data,),),
+        #    Case(mem_req_fifo_dout.addr[2:4], {
+        #        0x0: [ word_mask.eq(0x000F),],
+        #        0x1: [ word_mask.eq(0x00F0),],
+        #        0x2: [ word_mask.eq(0x0F00),],
+        #        0x3: [ word_mask.eq(0xF000),],
+        #    }),
+        #    If(mem_req_fifo_dout.we,
+        #       Case(mem_req_fifo_dout.siz, {
+        #           0x0: [ # long word
+        #               Case(mem_req_fifo_dout.addr[0:2], {
+        #                   0x0: [
+        #                       dram_native_r.wdata.we.eq(0xFFFF & word_mask),
+        #                   ],
+        #                   0x1: [
+        #                       dram_native_r.wdata.we.eq(0xEEEE & word_mask),
+        #                   ],
+        #                   0x2: [
+        #                       dram_native_r.wdata.we.eq(0xCCCC & word_mask),
+        #                   ],
+        #                   0x3: [
+        #                       dram_native_r.wdata.we.eq(0x8888 & word_mask),
+        #                   ],
+        #               }),
+        #           ],
+        #           0x1: [ # byte
+        #               Case(mem_req_fifo_dout.addr[0:2], {
+        #                   0x0: [
+        #                       dram_native_r.wdata.we.eq(0x1111 & word_mask),
+        #                   ],
+        #                   0x1: [
+        #                       dram_native_r.wdata.we.eq(0x2222 & word_mask),
+        #                   ],
+        #                   0x2: [
+        #                       dram_native_r.wdata.we.eq(0x4444 & word_mask),
+        #                   ],
+        #                   0x3: [
+        #                       dram_native_r.wdata.we.eq(0x8888 & word_mask),
+        #                   ],
+        #               }),
+        #           ],
+        #           0x2: [ # word
+        #               Case(mem_req_fifo_dout.addr[0:2], {
+        #                   0x0: [
+        #                       dram_native_r.wdata.we.eq(0x3333 & word_mask),
+        #                   ],
+        #                   0x1: [
+        #                       dram_native_r.wdata.we.eq(0x6666 & word_mask),
+        #                   ],
+        #                   0x2: [
+        #                       dram_native_r.wdata.we.eq(0xCCCC & word_mask),
+        #                   ],
+        #                   0x3: [
+        #                       dram_native_r.wdata.we.eq(0x8888 & word_mask),
+        #                   ],
+        #               }),
+        #           ],
+        #           0x3: [ # 3-bytes
+        #               Case(mem_req_fifo_dout.addr[0:2], {
+        #                   0x0: [
+        #                       dram_native_r.wdata.we.eq(0x7777 & word_mask),
+        #                   ],
+        #                   0x1: [
+        #                       dram_native_r.wdata.we.eq(0xEEEE & word_mask),
+        #                   ],
+        #                   0x2: [
+        #                       dram_native_r.wdata.we.eq(0xCCCC & word_mask),
+        #                   ],
+        #                   0x3: [
+        #                       dram_native_r.wdata.we.eq(0x8888 & word_mask),
+        #                   ],
+        #               }),
+        #           ],
+        #       }),
+        #    ).Else(
+        #        dram_native_r.wdata.we.eq(0xFFFF),
+        #    ),
+        #    mem_req_fifo.re.eq(dram_native_r.cmd.ready),
+        #    
+        #    mem_data_fifo_din.data.eq(dram_native_r.rdata.data),
+        #    mem_data_fifo.we.eq(dram_native_r.rdata.valid),
+        #    dram_native_r.rdata.ready.eq(mem_data_fifo.writable),
+        #    
+        #    mem_req_fifo_din.data.eq(D_rev_i), # always live
+        #]
+        #if (debug_val is not None):
+            #sync_cpu += [
+                #If(mem_req_fifo.we,
+                #   debug_val.eq(Cat(
+                #       (debug_val[  0: 32] + 1)[0:32],
+                #       Signal(32, reset = 0),
+                #       (debug_val[ 64: 96] + mem_req_fifo_din.we)[0:32],
+                #       (debug_val[ 96:128] + (~CBREQ_i_n)[0])[0:32],
+                #   ),),
+                #),
+                #If(mem_req_fifo.we & mem_req_fifo_din.we,
+                #   debug_val.eq(Cat(mem_req_fifo_din.data,
+                #                    mem_req_fifo_din.addr,
+                #                    Cat(mem_req_fifo_din.siz, Signal(30, reset = 0)),
+                #                    Signal(32, reset = 0),
+                #   ),),
+                #),
+            #]
+            #sync_sys = getattr(self.sync, "sys")
+            #sync_sys += [
+            #    If(dram_native_r.cmd.valid & mem_req_fifo_dout.we,
+            #       debug_val.eq(Cat(mem_req_fifo_dout.data,
+            #                        mem_req_fifo_dout.addr,
+            #                        Cat(mem_req_fifo_dout.siz, Signal(30, reset = 0)),
+            #                        Cat(dram_native_r.wdata.we, Signal(16, reset = 0)),
+            #       ),),
+            #    ),
+            #    ]
+        w2n = wishbone.Interface(data_width=dram_native_r.data_width, adr_width=dram_native_r.address_width)
+        print(f"$$$$ data_width={dram_native_r.data_width}, adr_width={dram_native_r.address_width}, sel_width={len(w2n.sel)}")
+        self.submodules.wishbone2native = frontend.wishbone.LiteDRAMWishbone2Native(w2n, dram_native_r)
+        self.comb += [
+            w2n.cyc.eq(mem_req_fifo.readable),
+            w2n.stb.eq(mem_req_fifo.readable),
+            w2n.adr.eq(mem_req_fifo_dout.addr[4:]),
+            w2n.we.eq(mem_req_fifo_dout.we),
+            w2n.dat_w.eq(Cat(mem_req_fifo_dout.data, # replicate 32-bits to all doublewords, .we (byte enable) will filter
+                             mem_req_fifo_dout.data,
+                             mem_req_fifo_dout.data,
+                             mem_req_fifo_dout.data,),),
+            Case(mem_req_fifo_dout.addr[2:4], {
+                0x0: [ word_mask.eq(0x000F),],
+                0x1: [ word_mask.eq(0x00F0),],
+                0x2: [ word_mask.eq(0x0F00),],
+                0x3: [ word_mask.eq(0xF000),],
+            }),
+            If(mem_req_fifo_dout.we,
+               Case(mem_req_fifo_dout.siz, {
+                   0x0: [ # long word
+                       Case(mem_req_fifo_dout.addr[0:2], {
+                           0x0: [
+                               w2n.sel.eq(0xFFFF & word_mask),
+                           ],
+                           0x1: [
+                               w2n.sel.eq(0xEEEE & word_mask),
+                           ],
+                           0x2: [
+                               w2n.sel.eq(0xCCCC & word_mask),
+                           ],
+                           0x3: [
+                               w2n.sel.eq(0x8888 & word_mask),
+                           ],
+                       }),
+                   ],
+                   0x1: [ # byte
+                       Case(mem_req_fifo_dout.addr[0:2], {
+                           0x0: [
+                               w2n.sel.eq(0x1111 & word_mask),
+                           ],
+                           0x1: [
+                               w2n.sel.eq(0x2222 & word_mask),
+                           ],
+                           0x2: [
+                               w2n.sel.eq(0x4444 & word_mask),
+                           ],
+                           0x3: [
+                               w2n.sel.eq(0x8888 & word_mask),
+                           ],
+                       }),
+                   ],
+                   0x2: [ # word
+                       Case(mem_req_fifo_dout.addr[0:2], {
+                           0x0: [
+                               w2n.sel.eq(0x3333 & word_mask),
+                           ],
+                           0x1: [
+                               w2n.sel.eq(0x6666 & word_mask),
+                           ],
+                           0x2: [
+                               w2n.sel.eq(0xCCCC & word_mask),
+                           ],
+                           0x3: [
+                               w2n.sel.eq(0x8888 & word_mask),
+                           ],
+                       }),
+                   ],
+                   0x3: [ # 3-bytes
+                       Case(mem_req_fifo_dout.addr[0:2], {
+                           0x0: [
+                               w2n.sel.eq(0x7777 & word_mask),
+                           ],
+                           0x1: [
+                               w2n.sel.eq(0xEEEE & word_mask),
+                           ],
+                           0x2: [
+                               w2n.sel.eq(0xCCCC & word_mask),
+                           ],
+                           0x3: [
+                               w2n.sel.eq(0x8888 & word_mask),
+                           ],
+                       }),
+                   ],
+               }),
+            ).Else(
+                w2n.sel.eq(0xFFFF),
+            ),
+            mem_req_fifo.re.eq(w2n.ack),
+            
+            mem_data_fifo_din.data.eq(w2n.dat_r),
+            mem_data_fifo.we.eq(w2n.ack & ~w2n.we),
+            
+            mem_req_fifo_din.data.eq(D_rev_i), # always live
+        ]
+
         
         #led = platform.request("user_led", 0)
         #saw_cbreq = Signal()
@@ -344,7 +592,7 @@ class MC68030_SYNC_FSM(Module):
         slave_fsm.act("Idle",
                       #STERM_oe.eq(0),
                       #D_oe.eq(0),
-                      If(my_mem_space & ~cpu_mgt_cycle & ~AS_i_n & ~CBREQ_i_n & RW_i_n, # Burst read to memory
+                      If(my_mem_space & ~cpu_mgt_cycle & ~AS_i_n, # access to memory => direct mem access through FIFO+native (for both R/W)
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
                          CBACK_oe.eq(1),
@@ -352,13 +600,21 @@ class MC68030_SYNC_FSM(Module):
                          BERR_oe.eq(1),
                          BERR_o_n.eq(1),
                          NextValue(burst_counter, processed_ad[2:4]),
-                         If(~write_fifo_readable_in_cpu, # previous write(s) done
-                            dram_native_r.cmd.valid.eq(1),
-                            If(dram_native_r.cmd.ready, # interface available
-                               NextState("BurstReadWait"),
+                         If(mem_req_fifo.writable,
+                            NextValue(A_latch, processed_ad),
+                            NextValue(SIZ_latch, SIZ_i),
+                            mem_req_fifo_din.addr.eq(processed_ad), # for R
+                            mem_req_fifo_din.siz.eq(SIZ_i), # for R
+                            mem_req_fifo_din.we.eq(~RW_i_n),
+                            If(RW_i_n, # Read: we have what we need already (addr, siz)
+                               NextValue(burst_active, ~CBREQ_i_n), # was a burst requested ?
+                               mem_req_fifo.we.eq(1), # immediately send request through request FIFO
+                               NextState("BurstReadWait"), # we use the same state for burst and non-burst, just shortened (as we get data back in burst_buffer anyway)
+                            ).Else( # Write, data not ready just yet, capture on next cycle
+                                STERM_o_n.eq(0), # assert /STERM immediately (we already have a wait state)
+                                NextState("MemFinishWrite"),
                             ),
                          ),
-                         ##NextValue(saw_cbreq, 1), ###############################"
                       ).Elif((my_device_space & ~cpu_mgt_cycle & ~AS_i_n & RW_i_n), # Read
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
@@ -493,13 +749,14 @@ class MC68030_SYNC_FSM(Module):
                       BERR_o_n.eq(1),
                       NextState("Idle"),
         )
-        slave_fsm.act("FinishWrite", # unnecessary ?
+        slave_fsm.act("FinishWrite",
                       STERM_oe.eq(1), # enable STERM
                       STERM_o_n.eq(1), # finish ACK after one cycle
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
                       BERR_oe.eq(1),
                       BERR_o_n.eq(1),
+                      D_oe.eq(0),
                       write_fifo.we.eq(1), # we only strobe the FIFO here, all other connections are comb
                       NextState("Idle"),
         )
@@ -511,23 +768,22 @@ class MC68030_SYNC_FSM(Module):
                       BERR_oe.eq(1),
                       BERR_o_n.eq(1),
                       D_oe.eq(1),
-                      dram_native_r.rdata.ready.eq(1),
                       D_rev_o.eq(0), # too early for the CPU to get
-                      NextValue(burst_buffer, dram_native_r.rdata.data),
-                      If(dram_native_r.rdata.valid,
+                      NextValue(burst_buffer, mem_data_fifo_dout.data),
+                      If(mem_data_fifo.readable,
                          STERM_oe.eq(1), # enable STERM for B0
                          STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
                          CBACK_oe.eq(1), # burst
                          CBACK_o_n.eq(0), # burst cycle 0
-                         #NextValue(burst_counter, burst_counter + 1),
+                         mem_data_fifo.re.eq(1),
                          NextState("Burst0"),
                       ),
         )
         slave_fsm.act("Burst0",
                       STERM_oe.eq(1), # enable STERM for B1
-                      STERM_o_n.eq(0), # ACK 32-bits for 1 cycle
-                      CBACK_oe.eq(1), # burst
-                      CBACK_o_n.eq(0), # burst cycle 1
+                      STERM_o_n.eq(~burst_active), # ACK 32-bits for 1 cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(~burst_active), # burst cycle 1
                       BERR_oe.eq(1),
                       BERR_o_n.eq(1),
                       D_oe.eq(1),
@@ -538,7 +794,11 @@ class MC68030_SYNC_FSM(Module):
                           0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
                           0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
                       }),
-                      NextState("Burst1"),
+                      If(burst_active,
+                         NextState("Burst1"),
+                      ).Else(
+                          NextState("Idle"),
+                      ),
         )
         slave_fsm.act("Burst1",
                       STERM_oe.eq(1), # enable STERM for B2
@@ -593,24 +853,20 @@ class MC68030_SYNC_FSM(Module):
                       NextState("Idle"),
                       ##NextValue(saw_cbreq, 0), ###############################"
         )
-        #slave_fsm.act("FinishBurstRead",
-        #              D_oe.eq(1), # keep data one more cycle
-        #              #Case(burst_counter, {
-        #              #    0x0: [D_rev_o.eq(burst_buffer[ 0: 32]), ],
-        #              #    0x1: [D_rev_o.eq(burst_buffer[32: 64]), ],
-        #              #    0x2: [D_rev_o.eq(burst_buffer[64: 96]), ],
-        #              #    0x3: [D_rev_o.eq(burst_buffer[96:128]), ],
-        #              #}),
-        #              D_rev_o.eq(Cat(burst_counter, Signal(14, reset = 0), Signal(16, reset = 0xFF04))),
-        #              STERM_oe.eq(1), # enable STERM
-        #              STERM_o_n.eq(1), # ACK finished after 1 cycle
-        #              CBACK_oe.eq(1),
-        #              CBACK_o_n.eq(1),
-        #              BERR_oe.eq(1),
-        #              BERR_o_n.eq(1),
-        #              NextState("Idle"),
-        #              NextValue(saw_cbreq, 0), ###############################"
-        #)
+        slave_fsm.act("MemFinishWrite",
+                      STERM_oe.eq(1), # enable STERM
+                      STERM_o_n.eq(1), # finish ACK after one cycle
+                      CBACK_oe.eq(1),
+                      CBACK_o_n.eq(1),
+                      BERR_oe.eq(1),
+                      BERR_o_n.eq(1),
+                      D_oe.eq(0),
+                      mem_req_fifo_din.we.eq(1), # write
+                      mem_req_fifo_din.addr.eq(A_latch), # latched
+                      mem_req_fifo_din.siz.eq(SIZ_latch), # latched
+                      mem_req_fifo.we.eq(1), # strobe fifo
+                      NextState("Idle"),
+        )
                       
         
         # connect the write FIFO inputs
@@ -747,26 +1003,26 @@ class MC68030_SYNC_FSM(Module):
                 diag_leds.eq(
                     #prefix
                     Cat(
-                    ~A_i[24],
-                    ~A_i[25],
-                    ~A_i[26],
-                    ~A_i[27],
-                    ~A_i[28],
-                    ~A_i[29],
-                    ~A_i[30],
-                    ~A_i[31],
+                    #~A_i[24],
+                    #~A_i[25],
+                    #~A_i[26],
+                    #~A_i[27],
+                    #~A_i[28],
+                    #~A_i[29],
+                    #~A_i[30],
+                    #~A_i[31],
                     ##my_superslot_space,
                     ##Signal(3, reset = 0),
                     ##seen_ss,
                     ##Signal(3, reset = 0),
-                    #my_slot_space,
-                    #my_mem_space,
-                    #my_superslot_space,
-                    #~slave_fsm.ongoing("Idle"),
-                    #~AS_i_n,
-                    #~STERM_i_n,
-                    #~CBREQ_i_n,
-                    #~CBACK_i_n,
+                    my_slot_space,
+                    my_mem_space,
+                    my_superslot_space,
+                    ~slave_fsm.ongoing("Idle"),
+                    ~AS_i_n,
+                    ~STERM_i_n,
+                    ~CBREQ_i_n,
+                    ~CBACK_i_n,
                     ),
             ),
             ]
@@ -1096,7 +1352,6 @@ class MC68030_SYNC_FSM(Module):
             read_or_write = Signal()
             
             self.submodules.write_fifo_check_latency  = write_fifo_check_latency =  ClockDomainsRenamer({"read": "sys",  "write": cd_cpu})(AsyncFIFOBuffered(width=(buffer_data_bits+1+buffer_addr_bits), depth=8))
-            from litex.soc.interconnect import wishbone
             wishbone_check = wishbone.Interface(data_width=soc.bus.data_width)
             soc.bus.add_master(name="PDSBridgeToWishbone_Check_Write", master=wishbone_check)
             # deal with emptying the Write FIFO to the write WB

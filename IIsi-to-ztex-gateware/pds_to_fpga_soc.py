@@ -380,6 +380,14 @@ class IIsiFPGA(MacPeriphSoC):
             self.submodules.wishbone_slave_sys = WishboneDomainCrossingMaster(platform=self.platform, slave=wishbone_slave_pds, cd_master="sys", cd_slave="cpu", force_delay=4) # force delay needed to avoid back-to-back transaction running into issue https://github.com/alexforencich/verilog-wishbone/issues/4
         else:
             wishbone_slave_pds = None
+
+        debug_val = None
+        if (True):
+            import debug_regs
+            #debug_val = Signal(128, reset = 0xBADF000DBADC0FFEEDEADBEEFDEADF00D)
+            debug_val = Signal(128, reset = 0)
+            self.submodules.zzzz_debug_registers = debug_regs.DebugRegs(debug_val = debug_val)
+        #    debug_val = None
             
         print(f"Adding the PDS bridge")
         import mc68030_fsm
@@ -388,14 +396,16 @@ class IIsiFPGA(MacPeriphSoC):
                                                                         #wb_write=self.wishbone_writemaster_pds,
                                                                         wb_write=wishbone_writemaster_sys,
                                                                         wb_dma=wishbone_slave_pds,
-                                                                        dram_native_r=self.sdram.crossbar.get_port(mode="read", data_width=128, clock_domain="cpu"),
+                                                                        dram_native_r=self.sdram.crossbar.get_port(mode="both", data_width=128, clock_domain="sys", convert_in_sys=True),
                                                                         cd_cpu="cpu",
                                                                         trace_inst_fifo=self.ziscreen_fifo,
                                                                         rd68891 = rd68891,
                                                                         rd68883 = rd68883,
                                                                         slot = 0xE if doIIfx else 0x9,
                                                                         doMaster = doMaster,
-                                                                        mem_mib = 128 if (version == "V3.0") else 256) # improveme: could use avail_sdram ? but goblin already stole some
+                                                                        mem_mib = 128 if (version == "V3.0") else 256, # improveme: could use avail_sdram ? but goblin already stole some
+                                                                        debug_val = debug_val,
+                                                                        )
         if (goblin):
             MacPeriphSoC.mac_add_goblin(self, use_goblin_alt = use_goblin_alt, hdmi = hdmi, goblin_res = goblin_res, goblin_irq = fb_irq, audio_irq = audio_irq)
 

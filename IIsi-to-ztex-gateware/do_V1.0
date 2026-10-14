@@ -19,9 +19,9 @@ python3 pds_to_fpga_soc.py \
 	--sys-clk-freq 100e6 \
 	--variant=ztex2.12b --version=V1.0 \
 	--goblin --goblin-res 1920x1080@60Hz \
-	--goblin-alt \
 	--config-flash \
 	#--doMaster #--rd68883 # --doIIfx
+	#--goblin-alt \
 
 ) 2>&1 | tee build_V1_0.log
 # --goblin --goblin-res 1280x1024@60Hz

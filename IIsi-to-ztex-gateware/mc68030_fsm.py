@@ -8,11 +8,16 @@ from litex.soc.interconnect import wishbone
 from litedram import frontend
 
 class MC68030_SYNC_FSM(Module):
-    def __init__(self, soc, wb_read, wb_write, wb_dma, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9, doMaster = False, mem_mib = 256, debug_val = None ):
+    def __init__(self, soc, wb_read, wb_write, wb_dma, dram_native_r, cd_cpu="cpu", trace_inst_fifo = None, rd68891 = False, rd68883 = False, slot = 0x9, doMaster = False, mem_mib = 256, rd68884 = False, rd68884_model = 68881, cd_fpu = "fpu", debug_val = None ):
 
-        if (rd68891 and rd68883):
+        if ((rd68891 + rd68883 + rd68884) > 1):
             print("Only one copro supported for now")
             assert(False)
+        if (rd68884):
+            # RD68884 (MC68881) or RD68885 (MC68882, rd68884_model = 68882): a
+            # SystemVerilog FPU with its own MC68881 bus interface, answering
+            # coprocessor ID 1 with DSACK, clocked by cd_fpu (see the CRG).
+            print(f"$$ adding RD6888{4 if rd68884_model == 68881 else 5} FP co-processor (MC{rd68884_model})")
 
         if (rd68891):
             print("$$ adding RD68891 crypto co-processor")
@@ -98,7 +103,18 @@ class MC68030_SYNC_FSM(Module):
         D_i = Signal(32)
         D_o = Signal(32)
         D_oe = Signal(reset = 0)
-        self.specials += Tristate(D, D_o, D_oe, D_i)
+        # RD68884's side of the data bus: one output enable per byte lane
+        # (its d_oe), zero when there is no RD68884 or it is not answering.
+        fpu_d_o = Signal(32)
+        fpu_d_oe = Signal(4)
+        for l in range(4):
+            lane_o = Signal(8)
+            lane_oe = Signal()
+            self.comb += [
+                lane_o.eq(Mux(fpu_d_oe[l], fpu_d_o[8*l:8*l+8], D_o[8*l:8*l+8])),
+                lane_oe.eq(D_oe | fpu_d_oe[l]),
+            ]
+            self.specials += Tristate(D[8*l:8*l+8], lane_o, lane_oe, D_i[8*l:8*l+8])
         D_latch = Signal(32)
 
         D_rev_i = Signal(32)
@@ -1029,6 +1045,52 @@ class MC68030_SYNC_FSM(Module):
         
         ############################################## COPROCESSOR stuff
 
+        if (rd68884):
+            # RD68884 / RD68885 (https://github.com/MelkhiorVintageComputing/RD68884,
+            # doc/boards.md there): connected as on its own IIsiA7 Mini top,
+            # boards/iisia7_mini/rd68884_iisia7_top.sv.
+            #   - early chip select: FC = 7, A19-A16 = 2 (coprocessor space),
+            #     A15-A13 = 1, coprocessor ID 1 (FPU 10.3); no AS in the decode;
+            #   - a 32-bit port: SIZE and A0 strapped high (FPU table 9-2);
+            #   - its asynchronous BIU (BUS_SYNC = 0) synchronises the strobes
+            #     into cd_fpu itself, and gates DSACK and the data enables
+            #     combinationally by the raw strobes; DSACK is negated before
+            #     it is released (DSACK_NEGATE = 1, FPU 9.8);
+            #   - its data lanes are the bus's own (byte 0 on D31-D24), so it
+            #     uses D_i/D_o, not the byte-reversed D_rev_*;
+            #   - DSACK is otherwise unused in this design (it terminates with
+            #     STERM), so RD68884 owns it.
+            fpu_cs_n = Signal()
+            fpu_dsack_n = Signal(2)
+            fpu_dsack_oe = Signal()
+            self.comb += [
+                fpu_cs_n.eq(~(cpu_mgt_cycle &
+                              (A_i[16:20] == 0x2) & # coprocessor space
+                              (A_i[13:16] == 0x1))), # coprocessor ID 1
+                DSACK_o_n.eq(fpu_dsack_n),
+                DSACK_oe.eq(fpu_dsack_oe),
+            ]
+            self.specials += Instance("rd68884_top",
+                                      name = "fpu_rd68884",
+                                      p_BUS_SYNC = 0,
+                                      p_DSACK_NEGATE = 1,
+                                      p_MODEL = rd68884_model,
+                                      i_clk = ClockSignal(cd_fpu),
+                                      i_rst_n = ~ResetSignal(cd_fpu),
+                                      i_reset_n_i = soc.crg.rst_cpu_n, # the PDS RESET pin: the FPU's architectural reset (FPU 9.9)
+                                      i_cs_n_i = fpu_cs_n,
+                                      i_as_n_i = AS_i_n,
+                                      i_ds_n_i = DS_i_n,
+                                      i_rw_i = RW_i_n,
+                                      i_size_n_i = 1,
+                                      i_a_i = Cat(C(1, 1), A_i[1:5]),
+                                      i_d_i = D_i,
+                                      o_d_o = fpu_d_o,
+                                      o_d_oe = fpu_d_oe,
+                                      o_dsack_n_o = fpu_dsack_n,
+                                      o_dsack_oe = fpu_dsack_oe)
+            rd68884_add_sources(platform, rd68884_model)
+
         copro = (rd68891 or rd68883)
 
         if (copro):
@@ -1476,3 +1538,39 @@ class MC68030_SYNC_FSM(Module):
                              NextState("Idle"),
                           #)
             )
+
+
+# RD68884 / RD68885 -------------------------------------------------------------------------------
+# The SystemVerilog sources, in the order the RD68884 Makefile's RTL list has
+# them (packages first). RD68884_DIR: a checkout of RD68884, by default next
+# to this repository.
+import os
+
+RD68884_DIR = os.environ.get("RD68884_DIR",
+                             os.path.join(os.path.dirname(os.path.abspath(__file__)), ".", "RD68884"))
+RD68884_RTL = ["rtl/rd68884_pkg.sv", "rtl/gen/rd68884_ucode_pkg.sv",
+               "rtl/gen/rd68884_crom.sv", "rtl/gen/rd68884_ucode_rom.sv",
+               "rtl/gen/rd68885_ucode_rom.sv",
+               "rtl/rd68884_sync.sv", "rtl/rd68884_cu_decode.sv", "rtl/rd68884_biu.sv",
+               "rtl/rd68884_regfile.sv", "rtl/rd68884_seq.sv", "rtl/rd68884_top.sv"]
+
+def rd68884_add_sources(platform, model):
+    for f in RD68884_RTL:
+        platform.add_source(os.path.join(RD68884_DIR, f), "systemverilog")
+    # Timing, from RD68884's boards/iisia7_mini/timing.xdc. The bus is
+    # asynchronous to the FPU's clock: its BIU synchronises the strobes and
+    # samples A, R/W and the data only once they say they are stable, so no
+    # pin-to-register path into it is a timed one (and this design sets no
+    # input delays on the bus pins). What is timed is what its BIU does
+    # combinationally from the pins: START falling releases the data and
+    # negates DSACK (MC68881 specifications 16, 21, 22: 30/30/40 ns at
+    # 20 MHz), and the data and DSACK leave its registers together.
+    platform.add_platform_command("set_max_delay -datapath_only 25.000 "
+        "-from [get_ports {{A_3v3[*] fc_3v3[*] as_3v3_n ds_3v3_n rw_3v3_n reset_3v3_n D_3v3[*]}}] "
+        "-to [get_ports {{D_3v3[*] dsack_3v3_n[*]}}]")
+    platform.add_platform_command("set_max_delay -datapath_only 15.000 "
+        "-from [get_cells -hierarchical -filter {{NAME =~ fpu_rd68884/* && IS_SEQUENTIAL}}] "
+        "-to [get_ports {{D_3v3[*] dsack_3v3_n[*]}}]")
+    # Both ranks of each of its synchronisers.
+    platform.add_platform_command("set_property ASYNC_REG TRUE [get_cells -hierarchical -filter "
+        "{{NAME =~ fpu_rd68884/*u_sync*/rank0_reg* || NAME =~ fpu_rd68884/*u_sync*/q_reg*}}]")

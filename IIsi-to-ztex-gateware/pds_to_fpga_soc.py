@@ -42,7 +42,7 @@ from VintageBusFPGA_Common.MacPeriphSoC import *
 class _CRG(Module, AutoCSR):
     def __init__(self, platform, version, sys_clk_freq,
                  goblin=False,
-                 pix_clk=0, doIIfx=False):
+                 pix_clk=0, doIIfx=False, fpu_clk_freq=None):
         self.clock_domains.cd_sys       = ClockDomain() # 100 MHz PLL, reset'ed by PDS (via pll), SoC/Wishbone main clock
         if ((version == "V1.0") or (version == "V2.0")):
             self.clock_domains.cd_sys4x     = ClockDomain(reset_less=True)
@@ -166,6 +166,27 @@ class _CRG(Module, AutoCSR):
         num_adv = num_adv + 1
         num_clk = 0
 
+        # RD68884/RD68885's core clock (mc68030_fsm.py), from an MMCM of its
+        # own that a Macintosh RESET does not reset: the FPU's architectural
+        # reset is the PDS RESET pin, and its clock must not stop for it. It
+        # met timing alone on the IIsiA7 Mini at 71.43 MHz and was tested in
+        # a IIsi at 66.67 MHz (RD68884's doc/boards.md).
+        fpu_locked = Signal(reset = 1)
+        if (fpu_clk_freq is not None):
+            self.clock_domains.cd_fpu = ClockDomain()
+            self.submodules.pll_fpu = pll_fpu = S7MMCM(speedgrade=platform.speedgrade)
+            pll_fpu.register_clkin(self.board_clk_bufg, board_clk_freq)
+            pll_fpu.create_clkout(self.cd_fpu, fpu_clk_freq)
+            platform.add_platform_command("create_generated_clock -name fpuclk [get_pins {{{{MMCME2_ADV_{}/CLKOUT{}}}}}]".format(num_adv, num_clk))
+            self.comb += pll_fpu.reset.eq(~por_done)
+            self.comb += fpu_locked.eq(pll_fpu.locked)
+            platform.add_false_path_constraints(self.cd_fpu.clk, self.cd_cpu.clk)
+            platform.add_false_path_constraints(self.cd_cpu.clk, self.cd_fpu.clk)
+            platform.add_false_path_constraints(self.cd_fpu.clk, self.cd_sys.clk)
+            platform.add_false_path_constraints(self.cd_sys.clk, self.cd_fpu.clk)
+            num_adv = num_adv + 1
+            num_clk = 0
+
         self.locked = locked = Signal()
         
         if (goblin):
@@ -193,13 +214,13 @@ class _CRG(Module, AutoCSR):
             num_adv = num_adv + 1
             num_clk = 0
 
-            self.comb += [ locked.eq(video_pll.locked & pll_idelay.locked & pll.locked) ]
+            self.comb += [ locked.eq(video_pll.locked & pll_idelay.locked & pll.locked & fpu_locked) ]
         else:
-            self.comb += [ locked.eq(pll_idelay.locked & pll.locked) ]
+            self.comb += [ locked.eq(pll_idelay.locked & pll.locked & fpu_locked) ]
 
             
 class IIsiFPGA(MacPeriphSoC):
-    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, doIIfx, doMaster, **kwargs):
+    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, doIIfx, doMaster, rd68884=False, rd68884_model=68881, fpu_clk_freq=66.67e6, **kwargs):
         print(f"Building IIsiFPGA for board version {version}")
 
         platform = None
@@ -234,7 +255,8 @@ class IIsiFPGA(MacPeriphSoC):
 
         self.mem_map.update(self.wb_mem_map)
         
-        self.submodules.crg = _CRG(platform=platform, version=version, sys_clk_freq=sys_clk_freq, goblin=goblin, pix_clk=litex.soc.cores.video.video_timings[goblin_res]["pix_clk"], doIIfx=doIIfx)
+        self.submodules.crg = _CRG(platform=platform, version=version, sys_clk_freq=sys_clk_freq, goblin=goblin, pix_clk=litex.soc.cores.video.video_timings[goblin_res]["pix_clk"], doIIfx=doIIfx,
+                                   fpu_clk_freq=fpu_clk_freq if rd68884 else None)
 
         ## add our custom timings after the clocks have been defined
         xdc_timings_filename = None # "iisi_fpga_V1_0_timings.xdc"
@@ -401,6 +423,9 @@ class IIsiFPGA(MacPeriphSoC):
                                                                         trace_inst_fifo=self.ziscreen_fifo,
                                                                         rd68891 = rd68891,
                                                                         rd68883 = rd68883,
+                                                                        rd68884 = rd68884,
+                                                                        rd68884_model = rd68884_model,
+                                                                        cd_fpu = "fpu",
                                                                         slot = 0xE if doIIfx else 0x9,
                                                                         doMaster = doMaster,
                                                                         mem_mib = 128 if (version == "V3.0") else 256, # improveme: could use avail_sdram ? but goblin already stole some
@@ -439,6 +464,9 @@ def main():
     parser.add_argument("--doMaster", action="store_true", help="Enables master signals rather than PMod")
     parser.add_argument("--rd68891", action="store_true", help="Add a RD68891 coprocessor (unfinished)")
     parser.add_argument("--rd68883", action="store_true", help="Add a RD68883 coprocessor (barely started)")
+    parser.add_argument("--rd68884", action="store_true", help="Add RD68884, an MC68881 (coprocessor ID 1; RD68884_DIR: its checkout)")
+    parser.add_argument("--rd68884-model", default=68881, type=int, choices=(68881, 68882), help="With --rd68884: 68882 for RD68885, an MC68882")
+    parser.add_argument("--fpu-clk-freq", default=66.67e6, help="With --rd68884: its core clock (default 66.67 MHz)")
     builder_args(parser)
     vivado_build_args(parser)
     args = parser.parse_args()
@@ -494,6 +522,9 @@ def main():
                    use_goblin_alt=args.goblin_alt,
                    rd68891=args.rd68891,
                    rd68883=args.rd68883,
+                   rd68884=args.rd68884,
+                   rd68884_model=args.rd68884_model,
+                   fpu_clk_freq=float(args.fpu_clk_freq),
                    doIIfx=args.doIIfx,
                    doMaster=args.doMaster,
     )

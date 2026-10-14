@@ -4,3 +4,6 @@
 [submodule "IIsi-to-ztex-gateware/hdl-util_hdmi"]
 	path = IIsi-to-ztex-gateware/hdl-util_hdmi
 	url = https://github.com/hdl-util/hdmi
+[submodule "IIsi-to-ztex-gateware/RD68884"]
+	path = IIsi-to-ztex-gateware/RD68884
+	url = git@github.com:MelkhiorVintageComputing/RD68884.git

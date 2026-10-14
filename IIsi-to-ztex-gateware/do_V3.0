@@ -22,6 +22,7 @@ python3 pds_to_fpga_soc.py \
 	--variant=IIsiA7_Mini_A50T-1 --version=V3.0 \
 	--goblin --goblin-res 1920x1080@60Hz \
 	--config-flash \
+	--rd68884 --rd68884-mode 68882
 	# --rd68883
 	# --rd68891
 	# --goblin-alt

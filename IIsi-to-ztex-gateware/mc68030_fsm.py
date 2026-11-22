@@ -318,6 +318,8 @@ class MC68030_SYNC_FSM(Module):
         self.comb += write_fifo.din.eq(write_fifo_din.raw_bits())
         # for storing SEL
         current_sel = Signal(4)
+        # set once AS has been seen negated since the last write we terminated (see below)
+        as_armed = Signal(reset = 1)
 
         # back-pressure from sys to cpu clock domain
         self.submodules.write_fifo_readable_sync = BusSynchronizer(width = 1, idomain = "sys", odomain = "cpu")
@@ -608,7 +610,7 @@ class MC68030_SYNC_FSM(Module):
         slave_fsm.act("Idle",
                       #STERM_oe.eq(0),
                       #D_oe.eq(0),
-                      If(my_mem_space & ~cpu_mgt_cycle & ~AS_i_n, # access to memory => direct mem access through FIFO+native (for both R/W)
+                      If(my_mem_space & ~cpu_mgt_cycle & ~AS_i_n & as_armed, # access to memory => direct mem access through FIFO+native (for both R/W)
                          STERM_oe.eq(1), # enable STERM
                          STERM_o_n.eq(1), # insert delay
                          CBACK_oe.eq(1),
@@ -647,7 +649,7 @@ class MC68030_SYNC_FSM(Module):
                             NextValue(A_latch, processed_ad),
                             NextState("Read"),
                          ),
-                      ).Elif((my_device_space & ~cpu_mgt_cycle & ~AS_i_n & ~RW_i_n), # Write, data not ready just yet
+                      ).Elif((my_device_space & ~cpu_mgt_cycle & ~AS_i_n & ~RW_i_n & as_armed), # Write, data not ready just yet
                              # we detect ~AS_i_n at the beginning of S2.
                              # theoretically, we could have asserted /STERM already...
                              # but there's just no time to do it properly
@@ -767,7 +769,7 @@ class MC68030_SYNC_FSM(Module):
         )
         slave_fsm.act("FinishWrite",
                       STERM_oe.eq(1), # enable STERM
-                      STERM_o_n.eq(1), # finish ACK after one cycle
+                      STERM_o_n.eq(AS_i_n), # keep STERM while AS is asserted: if the CPU missed it at S2 (late AS), it takes it now
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
                       BERR_oe.eq(1),
@@ -871,7 +873,7 @@ class MC68030_SYNC_FSM(Module):
         )
         slave_fsm.act("MemFinishWrite",
                       STERM_oe.eq(1), # enable STERM
-                      STERM_o_n.eq(1), # finish ACK after one cycle
+                      STERM_o_n.eq(AS_i_n), # same as FinishWrite
                       CBACK_oe.eq(1),
                       CBACK_o_n.eq(1),
                       BERR_oe.eq(1),
@@ -885,6 +887,20 @@ class MC68030_SYNC_FSM(Module):
         )
                       
         
+        # A write cycle is accepted only once AS has been seen negated since the last
+        # write we terminated. If the CPU missed STERM at S2 (AS too late for the
+        # combinational STERM, see iisi_fpga_V3_0_timings.xdc), it holds AS through a
+        # wait state; FinishWrite/MemFinishWrite then terminate it, and Idle must not
+        # take that same cycle a second time (a duplicate write rotates the CLUT's
+        # R->G->B sequence).
+        sync_cpu += [
+            If(AS_i_n,
+               as_armed.eq(1),
+            ).Elif(slave_fsm.ongoing("FinishWrite") | slave_fsm.ongoing("MemFinishWrite"),
+               as_armed.eq(0),
+            ),
+        ]
+
         # connect the write FIFO inputs
         self.comb += [ write_fifo_din.adr.eq(A_latch), # recorded
                        write_fifo_din.data.eq(D_rev_i), # live

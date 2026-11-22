@@ -114,7 +114,7 @@ class _CRG(Module, AutoCSR):
         if (doIIfx):
             platform.add_platform_command("create_clock -name cpu_clk -period 40.0 -waveform {{0.0 20.0}} [get_ports c16m_3v3_n]") # fixme: pretend it's 25 MHz for now
         else:
-            platform.add_platform_command("create_clock -name cpu_clk -period 25.0 -waveform {{0.0 12.5}} [get_ports cpuclk_3v3_n]") # fixme: pretend it's 40 MHz for now
+            platform.add_platform_command("create_clock -name cpu_clk -period 50.0 -waveform {{0.0 25.0}} [get_ports cpuclk_3v3_n]") # the IIsi's MC68030 runs at 20 MHz; the bus I/O delays (iisi_fpga_V3_0_timings.xdc) are relative to it
         
         #led = platform.request("user_led", 0)
         #self.comb += [ led.eq(reset_cd) ]
@@ -263,6 +263,7 @@ class IIsiFPGA(MacPeriphSoC):
         xdc_timings_filename = None # "iisi_fpga_V1_0_timings.xdc"
         xdc_power_filename = None # "iisi_fpga_V1_0_power.xdc"
         if (version == "V3.0"):
+           xdc_timings_filename = "iisi_fpga_V3_0_timings.xdc"
            xdc_power_filename =  "iisi_fpga_V3_0_power.xdc"
 
         if (xdc_timings_filename != None):

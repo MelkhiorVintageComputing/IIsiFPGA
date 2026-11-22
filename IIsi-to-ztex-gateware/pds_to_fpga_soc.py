@@ -207,8 +207,9 @@ class _CRG(Module, AutoCSR):
             platform.add_platform_command("create_generated_clock -name hdmi5x_clk [get_pins {{{{MMCME2_ADV_{}/CLKOUT{}}}}}]".format(num_adv, num_clk))
             num_clk = num_clk + 1
             video_pll.expose_drp()
+            video_pll.drp_reset = CSRStorage(1, description="Video MMCM reset (held while 1).")  # replaces the unused strobe CSR in current (...) litex
                 
-            self.comb += video_pll.reset.eq(reset_cd | ~por_done)
+            self.comb += video_pll.reset.eq(reset_cd | ~por_done | video_pll.drp_reset.storage)
             #platform.add_false_path_constraints(self.cd_sys.clk, self.cd_vga.clk)
             platform.add_false_path_constraints(self.cd_sys.clk, video_pll.clkin)
             num_adv = num_adv + 1

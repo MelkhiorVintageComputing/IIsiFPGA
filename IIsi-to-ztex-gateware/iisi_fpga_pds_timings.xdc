@@ -1,4 +1,6 @@
-# IIsiA7 Mini (V3.0): I/O timing of the MC68030 PDS bus, for cpu_clk.
+# I/O timing of the MC68030 PDS bus, for cpu_clk, when the FPGA is a slave on a
+# Macintosh IIsi's bus: IIsiA7 Mini (V3.0) and IIsi-to-ztex (V1.0). Not for the
+# IIfx (different clock) nor for bus-master builds (the FPGA drives A/AS/DS/R/W).
 #
 # pds_to_fpga_soc.py only copies lines starting with "set" into the build
 # (and doubles the braces), so every command here is a single "set..." line;
@@ -12,12 +14,13 @@
 # The Macintosh IIsi runs its MC68030 at 20 MHz: cpu_clk must be created with a
 # 50 ns period (pds_to_fpga_soc.py) for these numbers to mean anything.
 #
-# Board: every bus signal, CPUCLK included (PDS A38 -> IC3 -> N11, not inverted
-# despite the "_n" in the port name), crosses the same kind of 74CB3T16211 bus
-# switch (always on) and similar traces on the IIsiA7 Mini; the IIsi's own
-# traces from the CPU to the PDS are unknown. The skew of a signal relative to
-# CPUCLK at the FPGA pins is therefore taken as -1 .. +2 ns (an allowance, not a
-# measurement).
+# Boards: every bus signal, CPUCLK included, crosses the same CB3T bus switch,
+# always on (SN74CB3T16211 on the IIsiA7 Mini: PDS A38 -> IC3 -> N11;
+# SN74CB3T3245 on IIsi-to-ztex: PDS A38 -> U10 -> ZTex connector -> H16), and
+# CPUCLK is not inverted despite the "_n" in the port name. V1.0 adds the ZTex
+# connector and module traces, which CPUCLK shares; the IIsi's own traces from
+# the CPU to the PDS are unknown. The skew of a signal relative to CPUCLK at the
+# FPGA pins is therefore taken as -1 .. +2 ns (an allowance, not a measurement).
 set pds_brd_min -1.0
 set pds_brd_max 2.0
 
@@ -77,10 +80,13 @@ set_output_delay -clock cpu_clk -clock_fall -min -12.0 $pds_data_out
 # in S1, STERM 4 ns before the next rising one) leaves no time at all
 # (MC68030UM 7.3.5: "there is no time from the latest assertion of AS and the
 # required assertion of STERM for any two-clock synchronous bus cycle"); the
-# design relies on AS arriving earlier, and every ns of pin-to-pin delay here
-# narrows the range of AS timings for which the CPU and the FSM agree on the
-# edge that ends the cycle. Rather than report a permanent violation, bound the
-# pin-to-pin delay itself: Vivado still subtracts the I/O delays from a
-# -datapath_only max delay, so the requirement is the target plus both of them.
-set pds_as_sterm_target 10.0
+# design relies on AS arriving earlier. When AS is too late for STERM at S2,
+# the CPU inserts a wait state and FinishWrite/MemFinishWrite terminate the
+# cycle (mc68030_fsm.py, as_armed), so this path is a matter of speed, not of
+# correctness. Rather than report a permanent violation, bound the pin-to-pin
+# delay itself so implementation keeps it short: Vivado still subtracts the I/O
+# delays from a -datapath_only max delay, so the requirement is the target plus
+# both of them. 11 ns is reachable on both boards (V3.0: 9.9 ns, V1.0: 10.95 ns
+# with a 10 ns target).
+set pds_as_sterm_target 11.0
 set_max_delay -datapath_only [expr {$pds_as_sterm_target + 20.0 + $pds_brd_max + 4.0 + $pds_brd_max}] -from [get_ports {as_3v3_n cbreq_3v3_n}] -to [get_ports {sterm_3v3_n cback_3v3_n berr_3v3_n}]

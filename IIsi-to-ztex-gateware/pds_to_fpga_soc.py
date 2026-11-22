@@ -260,10 +260,12 @@ class IIsiFPGA(MacPeriphSoC):
                                    fpu_clk_freq=fpu_clk_freq if rd68884 else None)
 
         ## add our custom timings after the clocks have been defined
-        xdc_timings_filename = None # "iisi_fpga_V1_0_timings.xdc"
+        xdc_timings_filename = None
         xdc_power_filename = None # "iisi_fpga_V1_0_power.xdc"
+        if (((version == "V1.0") or (version == "V3.0")) and (not doIIfx) and (not doMaster)):
+           # slave on a IIsi's 20 MHz MC68030 bus, through CB3T bus switches: same on both boards
+           xdc_timings_filename = "iisi_fpga_pds_timings.xdc"
         if (version == "V3.0"):
-           xdc_timings_filename = "iisi_fpga_V3_0_timings.xdc"
            xdc_power_filename =  "iisi_fpga_V3_0_power.xdc"
 
         if (xdc_timings_filename != None):

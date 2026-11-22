@@ -5,8 +5,10 @@ export BUILDDIR=build/ztex213_pds_V1_0/gateware
 (cd VintageBusFPGA_Common && ./blit_goblin_nubus.sh 0x8F800000 )
 
 (
-source /opt/Xilinx/Vivado/2023.2/settings64.sh
-export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
+#source /opt/Xilinx/Vivado/2023.2/settings64.sh
+#export LD_LIBRARY_PATH=/opt/Xilinx/Vivado/2023.2/lib/lnx64.o/SuSE
+source /opt/Xilinx/2025.2/Vivado/settings64.sh
+export LD_LIBRARY_PATH=/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/SuSE/
 
 python3 pds_to_fpga_soc.py \
 	--vivado-synth-directive Default \
@@ -31,7 +33,7 @@ python3 pds_to_fpga_soc.py \
 ( cd VintageBusFPGA_Common/DeclROM/ && make clean all || echo '$$ ROM build failed' )
 
 # substitute ROM in cfgmem file
-( dd if=VintageBusFPGA_Common/DeclROM/vid_decl_rom.bin bs=32768 seek=80 count=1 conv=notrunc of=$BUILDDIR/IIsiA7_Mini_pds_V3_0.bit.bin )
+( dd if=VintageBusFPGA_Common/DeclROM/vid_decl_rom.bin bs=32768 seek=80 count=1 conv=notrunc of=$BUILDDIR/ztex213_pds_V1_0.bit.bin )
 
 grep -A10 'Design Timing Summary' $BUILDDIR/ztex213_pds_V1_0_timing.rpt
 

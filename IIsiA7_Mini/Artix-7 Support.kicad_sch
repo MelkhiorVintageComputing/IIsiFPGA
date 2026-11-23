@@ -8397,7 +8397,7 @@
 		(uuid "18a1e833-b3c5-4abe-b660-53d66c140fc1")
 	)
 	(label "TDI_0"
-		(at 27.94 194.31 0)
+		(at 27.94 191.77 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8517,7 +8517,7 @@
 		(uuid "cc8d0d1e-8ed1-49b6-a112-3ae5976254c5")
 	)
 	(label "TMS_0"
-		(at 27.94 191.77 0)
+		(at 27.94 194.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -12237,7 +12237,7 @@
 				)
 			)
 		)
-		(property "Value" "TL3342F"
+		(property "Value" "TS-1187A-B-A-B"
 			(at 139.7 108.1024 0)
 			(effects
 				(font
@@ -12245,7 +12245,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+		(property "Footprint" "ForJLCPCB:SW_SPST_TS-1187A"
 			(at 139.7 107.95 0)
 			(effects
 				(font
@@ -12272,7 +12272,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TL3342F"
+		(property "MPN" "TS-1187A-B-A-B"
 			(at 139.7 113.03 0)
 			(effects
 				(font

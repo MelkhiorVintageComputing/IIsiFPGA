@@ -3876,7 +3876,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1nF 1kV 1206"
+		(property "Value" "1nF >=1kV 1206"
 			(at 211.201 119.253 0)
 			(effects
 				(font

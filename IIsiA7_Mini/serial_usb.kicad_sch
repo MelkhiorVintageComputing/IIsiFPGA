@@ -1706,7 +1706,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MICROXNJ"
+		(property "MPN" "MicroXNJ"
 			(at 35.56 50.8 0)
 			(effects
 				(font

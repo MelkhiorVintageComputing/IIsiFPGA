@@ -1005,7 +1005,7 @@
 				)
 			)
 		)
-		(property "Value" "A2541HWR-2x6P (Pmod 2x6 F R)"
+		(property "Value" "PMod 2x6 pins, 2.54mm 90° socket"
 			(at 187.96 78.0796 0)
 			(effects
 				(font
@@ -1049,7 +1049,16 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "DW254W-22-12-85"
+		(property "MPN-ALT2" "DW254W-22-12-85"
+			(at 186.69 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "HC-PM254-8.5H-2x6PW"
 			(at 186.69 88.9 0)
 			(effects
 				(font

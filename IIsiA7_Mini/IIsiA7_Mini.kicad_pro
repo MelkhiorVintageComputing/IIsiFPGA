@@ -671,6 +671,12 @@
           "label": "DNP",
           "name": "DNP",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MPN-ALT2",
+          "name": "MPN-ALT2",
+          "show": false
         }
       ],
       "filter_string": "",

@@ -6688,16 +6688,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MICROXNJ"
-			(at 261.62 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "FT Rotation Offset" "180"
+		(property "MPN" "MicroXNJ"
 			(at 261.62 147.32 0)
 			(effects
 				(font

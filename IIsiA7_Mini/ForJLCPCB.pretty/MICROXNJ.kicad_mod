@@ -267,15 +267,15 @@
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(uuid "7ec016c1-28b8-4c57-ae00-161ce2907b64")
 	)
-	(pad "MH1" thru_hole circle
-		(at 2.425 2.68)
-		(size 1.3 1.3)
-		(drill 0.7)
+	(pad "6" thru_hole circle
+		(at -3.625 0)
+		(size 1.9 1.9)
+		(drill oval 0.7 1.1)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
-		(uuid "7dd7c892-01e2-4447-985a-7393eb179ac7")
+		(uuid "16dc46db-9438-41a8-8b21-fae2f0d729de")
 	)
-	(pad "MH2" thru_hole circle
+	(pad "6" thru_hole circle
 		(at -2.425 2.68)
 		(size 1.3 1.3)
 		(drill 0.7)
@@ -283,21 +283,21 @@
 		(remove_unused_layers no)
 		(uuid "3bcea642-78d8-4d82-affd-8e80bdd84b41")
 	)
-	(pad "MH3" thru_hole circle
+	(pad "6" thru_hole circle
+		(at 2.425 2.68)
+		(size 1.3 1.3)
+		(drill 0.7)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "7dd7c892-01e2-4447-985a-7393eb179ac7")
+	)
+	(pad "6" thru_hole circle
 		(at 3.625 0)
 		(size 1.9 1.9)
 		(drill oval 0.7 1.1)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(uuid "52737f31-a913-4e61-b2fa-0082152d5321")
-	)
-	(pad "MH4" thru_hole circle
-		(at -3.625 0)
-		(size 1.9 1.9)
-		(drill oval 0.7 1.1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "16dc46db-9438-41a8-8b21-fae2f0d729de")
 	)
 	(embedded_fonts no)
 	(model "MICROXNJ.stp"

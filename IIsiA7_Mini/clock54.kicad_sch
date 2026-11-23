@@ -773,7 +773,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 81.28 66.04 0)
 			(effects
 				(font
@@ -868,7 +868,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/clocks/SX3M54_000M20F30TNN.pdf"
 			(at 97.79 77.47 0)
 			(effects
 				(font
@@ -1145,7 +1145,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 111.76 77.47 0)
 			(effects
 				(font
@@ -1295,7 +1295,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 88.9 77.47 0)
 			(effects
 				(font
@@ -1373,7 +1373,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 87.63 66.04 0)
 			(effects
 				(font

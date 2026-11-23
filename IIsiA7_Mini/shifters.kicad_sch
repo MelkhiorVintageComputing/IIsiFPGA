@@ -6068,7 +6068,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 226.06 119.38 0)
 			(effects
 				(font
@@ -6497,7 +6497,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 35.56 119.38 0)
 			(effects
 				(font
@@ -7124,7 +7124,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/sn74cb3t16211.pdf"
 			(at 97.79 105.41 0)
 			(effects
 				(font
@@ -7576,7 +7576,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 99.06 119.38 0)
 			(effects
 				(font
@@ -7806,7 +7806,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/sn74cb3t16211.pdf"
 			(at 161.29 105.41 0)
 			(effects
 				(font
@@ -8324,7 +8324,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/sn74cb3t16211.pdf"
 			(at 224.79 105.41 0)
 			(effects
 				(font
@@ -8641,7 +8641,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/sn74cb3t16211.pdf"
 			(at 34.29 105.41 0)
 			(effects
 				(font
@@ -9427,7 +9427,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 162.56 119.38 0)
 			(effects
 				(font

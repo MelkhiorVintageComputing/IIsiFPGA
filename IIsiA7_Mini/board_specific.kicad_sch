@@ -6347,7 +6347,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 165.1 39.37 0)
 			(effects
 				(font
@@ -6518,7 +6518,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 226.06 110.49 0)
 			(effects
 				(font
@@ -6670,7 +6670,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/MICROXNJ.pdf"
 			(at 265.43 148.59 0)
 			(effects
 				(font
@@ -6760,7 +6760,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 172.72 39.37 0)
 			(effects
 				(font
@@ -6864,7 +6864,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf"
+		(property "Datasheet" "${KIPRJMOD}/datasheets/sn74lvc1g125.pdf"
 			(at 195.58 106.68 0)
 			(effects
 				(font
@@ -7215,7 +7215,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 146.05 39.37 0)
 			(effects
 				(font

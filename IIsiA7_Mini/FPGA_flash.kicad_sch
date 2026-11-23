@@ -1050,7 +1050,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 31.75 27.94 0)
 			(effects
 				(font
@@ -1145,7 +1145,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 31.75 53.34 0)
 			(effects
 				(font
@@ -1372,7 +1372,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 31.75 50.8 0)
 			(effects
 				(font
@@ -1599,7 +1599,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 31.75 43.18 0)
 			(effects
 				(font
@@ -1696,7 +1696,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 35.56 27.94 0)
 			(effects
 				(font
@@ -1793,7 +1793,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 82.55 26.67 0)
 			(effects
 				(font
@@ -1888,7 +1888,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 31.75 48.26 0)
 			(effects
 				(font
@@ -2183,7 +2183,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/W25Q128JVSIQ.pdf"
 			(at 55.88 22.86 0)
 			(effects
 				(font
@@ -2287,7 +2287,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 31.75 45.72 0)
 			(effects
 				(font
@@ -2384,7 +2384,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 72.39 26.67 0)
 			(effects
 				(font
@@ -2481,7 +2481,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 27.94 27.94 0)
 			(effects
 				(font

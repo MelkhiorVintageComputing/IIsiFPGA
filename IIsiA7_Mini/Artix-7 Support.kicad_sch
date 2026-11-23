@@ -8863,7 +8863,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/power/AP1606.pdf"
 			(at 104.14 152.4 0)
 			(effects
 				(font
@@ -8955,7 +8955,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 233.68 85.09 0)
 			(effects
 				(font
@@ -9316,7 +9316,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 251.46 85.09 0)
 			(effects
 				(font
@@ -9745,7 +9745,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 224.79 64.77 0)
 			(effects
 				(font
@@ -9906,7 +9906,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 53.34 194.31 0)
 			(effects
 				(font
@@ -10004,7 +10004,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 278.13 64.77 0)
 			(effects
 				(font
@@ -10365,7 +10365,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/ds181_Artix_7_Data_Sheet.pdf"
 			(at 59.69 62.23 0)
 			(effects
 				(font
@@ -11223,7 +11223,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KT-0603R.pdf"
 			(at 101.6 139.7 0)
 			(effects
 				(font
@@ -11435,7 +11435,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 233.68 64.77 0)
 			(effects
 				(font
@@ -11864,7 +11864,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 269.24 64.77 0)
 			(effects
 				(font
@@ -12094,7 +12094,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 215.9 64.77 0)
 			(effects
 				(font
@@ -12254,7 +12254,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/TS-1187A-B-A-B.pdf"
 			(at 139.7 107.95 0)
 			(effects
 				(font
@@ -12531,7 +12531,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 215.9 106.68 0)
 			(effects
 				(font
@@ -12692,7 +12692,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 101.6 113.03 0)
 			(effects
 				(font
@@ -12789,7 +12789,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 242.57 85.09 0)
 			(effects
 				(font
@@ -12953,7 +12953,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 224.79 85.09 0)
 			(effects
 				(font
@@ -13313,7 +13313,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 101.6 119.38 0)
 			(effects
 				(font
@@ -13408,7 +13408,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 40.64 189.23 0)
 			(effects
 				(font
@@ -13770,7 +13770,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 215.9 85.09 0)
 			(effects
 				(font
@@ -13867,7 +13867,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 260.35 85.09 0)
 			(effects
 				(font
@@ -14096,7 +14096,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 242.57 128.27 0)
 			(effects
 				(font
@@ -14191,7 +14191,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/ds181_Artix_7_Data_Sheet.pdf"
 			(at 171.45 66.04 0)
 			(effects
 				(font
@@ -15179,7 +15179,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 101.6 110.49 0)
 			(effects
 				(font
@@ -15276,7 +15276,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 242.57 64.77 0)
 			(effects
 				(font
@@ -15505,7 +15505,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 100.33 24.13 0)
 			(effects
 				(font
@@ -15799,7 +15799,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/PZ254V-11.pdf"
 			(at 21.59 186.69 0)
 			(effects
 				(font
@@ -15974,7 +15974,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 215.9 22.86 0)
 			(effects
 				(font
@@ -16335,7 +16335,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 215.9 127 0)
 			(effects
 				(font
@@ -16564,7 +16564,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 251.46 64.77 0)
 			(effects
 				(font
@@ -16661,7 +16661,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 224.79 22.86 0)
 			(effects
 				(font
@@ -17218,7 +17218,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 101.6 77.47 0)
 			(effects
 				(font
@@ -17315,7 +17315,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 242.57 22.86 0)
 			(effects
 				(font
@@ -17476,7 +17476,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 46.99 191.77 0)
 			(effects
 				(font
@@ -17639,7 +17639,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 260.35 64.77 0)
 			(effects
 				(font
@@ -17736,7 +17736,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 215.9 43.18 0)
 			(effects
 				(font
@@ -17899,7 +17899,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 233.68 22.86 0)
 			(effects
 				(font
@@ -17996,7 +17996,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 224.79 43.18 0)
 			(effects
 				(font
@@ -18225,7 +18225,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 101.6 132.08 0)
 			(effects
 				(font
@@ -18379,7 +18379,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 224.79 106.68 0)
 			(effects
 				(font
@@ -18807,7 +18807,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KEM_T2076_T52X-530.pdf"
 			(at 303.53 85.09 0)
 			(effects
 				(font
@@ -19036,7 +19036,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 242.57 43.18 0)
 			(effects
 				(font
@@ -19199,7 +19199,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 278.13 85.09 0)
 			(effects
 				(font
@@ -19296,7 +19296,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 109.22 24.13 0)
 			(effects
 				(font
@@ -19457,7 +19457,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 34.29 186.69 0)
 			(effects
 				(font

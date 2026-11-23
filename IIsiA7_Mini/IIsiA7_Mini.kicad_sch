@@ -1934,7 +1934,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "${KIPRJMOD}/datasheets/power/694106301002.pdf"
 			(at 27.94 94.996 0)
 			(effects
 				(font
@@ -2017,7 +2017,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/power/AP1606.pdf"
 			(at 95.25 118.11 0)
 			(effects
 				(font
@@ -2439,7 +2439,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KT-0603R.pdf"
 			(at 92.71 105.41 0)
 			(effects
 				(font
@@ -2584,7 +2584,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 147.32 97.79 0)
 			(effects
 				(font
@@ -2672,7 +2672,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KEM_T2076_T52X-530.pdf"
 			(at 99.06 147.32 0)
 			(effects
 				(font
@@ -2778,7 +2778,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KEM_T2076_T52X-530.pdf"
 			(at 59.69 147.32 0)
 			(effects
 				(font
@@ -2886,7 +2886,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/power/AP1606.pdf"
 			(at 149.86 118.11 0)
 			(effects
 				(font
@@ -2978,7 +2978,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KEM_T2076_T52X-530.pdf"
 			(at 69.85 147.32 0)
 			(effects
 				(font
@@ -3216,7 +3216,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KEM_T2076_T52X-530.pdf"
 			(at 109.22 147.32 0)
 			(effects
 				(font
@@ -3388,7 +3388,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KT-0603R.pdf"
 			(at 120.65 105.41 0)
 			(effects
 				(font
@@ -3731,7 +3731,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KT-0603R.pdf"
 			(at 147.32 105.41 0)
 			(effects
 				(font
@@ -3810,7 +3810,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/KEM_T2076_T52X-530.pdf"
 			(at 88.9 147.32 0)
 			(effects
 				(font
@@ -4048,7 +4048,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 120.65 97.79 0)
 			(effects
 				(font
@@ -4202,7 +4202,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 113.03 118.11 0)
 			(effects
 				(font
@@ -4281,7 +4281,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 139.7 118.11 0)
 			(effects
 				(font
@@ -4360,7 +4360,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 85.09 118.11 0)
 			(effects
 				(font
@@ -4439,7 +4439,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/uniroyal-thick-film-chip-resistor.pdf"
 			(at 92.71 97.79 0)
 			(effects
 				(font
@@ -4855,7 +4855,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/power/AP1606.pdf"
 			(at 123.19 118.11 0)
 			(effects
 				(font

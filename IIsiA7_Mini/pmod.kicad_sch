@@ -1022,7 +1022,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/pmod/HC-PM254-8.5H-2x6PW.pdf"
 			(at 186.69 88.9 0)
 			(effects
 				(font
@@ -1296,7 +1296,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 207.01 82.55 0)
 			(effects
 				(font
@@ -1455,7 +1455,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 217.17 71.12 0)
 			(effects
 				(font

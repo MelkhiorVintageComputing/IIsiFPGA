@@ -1271,7 +1271,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 74.93 30.48 0)
 			(effects
 				(font
@@ -1518,7 +1518,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Capacitor_MLCC_Samsung.pdf"
 			(at 53.34 30.48 0)
 			(effects
 				(font
@@ -1688,7 +1688,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/MICROXNJ.pdf"
 			(at 39.37 52.07 0)
 			(effects
 				(font
@@ -1872,7 +1872,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "${KIPRJMOD}/datasheets/serial/CH340DS1.PDF"
 			(at 66.04 43.18 0)
 			(effects
 				(font

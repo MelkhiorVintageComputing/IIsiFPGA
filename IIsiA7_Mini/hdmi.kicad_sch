@@ -3375,7 +3375,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ForJLPCB:HDMI_A_Amphenol_10029449-111"
+		(property "Footprint" "ForJLCPCB:HDMI_A_Amphenol_10029449-111"
 			(at 169.545 64.77 0)
 			(effects
 				(font

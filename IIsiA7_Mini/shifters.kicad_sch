@@ -1562,6 +1562,18 @@
 		)
 		(uuid "15bfe9ac-5171-49d2-8cef-8cf46e5d56f0")
 	)
+	(text "~{RBV}_5V"
+		(exclude_from_sim no)
+		(at 292.1 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(italic yes)
+			)
+			(justify left)
+		)
+		(uuid "1b2e2657-da2f-4595-a12e-8cf60527eea1")
+	)
 	(text "\"NuBus\"\n(indicate another master is using the bus)"
 		(exclude_from_sim no)
 		(at 307.086 103.124 0)
@@ -1616,6 +1628,18 @@
 		)
 		(uuid "7017cbd3-fba9-4e2c-99b1-a67b5837ebe1")
 	)
+	(text "~{TM1A}_5V"
+		(exclude_from_sim no)
+		(at 292.1 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(italic yes)
+			)
+			(justify left)
+		)
+		(uuid "b40573c7-acde-4d3b-a6f8-1d0ed5db25e5")
+	)
 	(text "Direct interrupt to core _ unused\n(can't implement an accelerator...)"
 		(exclude_from_sim no)
 		(at 318.262 80.264 0)
@@ -1625,6 +1649,18 @@
 			)
 		)
 		(uuid "bf0a8f3a-7e17-44e0-87d9-6cde3f12585b")
+	)
+	(text "~{TM0A}_5V"
+		(exclude_from_sim no)
+		(at 292.1 110.49 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(italic yes)
+			)
+			(justify left)
+		)
+		(uuid "d8f53e40-ab9c-4a43-ac30-c1d89fe93174")
 	)
 	(junction
 		(at 93.98 105.41)
@@ -2211,27 +2247,6 @@
 			)
 		)
 	)
-	(global_label "~{RBV}_5V"
-		(shape input)
-		(at 292.1 127 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(italic yes)
-			)
-			(justify left)
-		)
-		(uuid "26e53499-0f42-4f11-9f39-b2dcbc30427a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 292.1 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "~{BERR}_5V"
 		(shape input)
 		(at 157.48 90.17 180)
@@ -2786,27 +2801,6 @@
 		(uuid "4a15a440-f96d-455e-8e49-d970637fc53d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 30.48 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "~{TM0A}_5V"
-		(shape input)
-		(at 292.1 110.49 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(italic yes)
-			)
-			(justify left)
-		)
-		(uuid "4a28eaab-52d8-47aa-beac-5e349041669c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 292.1 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4791,27 +4785,6 @@
 		(uuid "bdbe73cc-1761-47a7-b9a1-6549e1a49291")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 220.98 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "~{TM1A}_5V"
-		(shape input)
-		(at 292.1 113.03 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(italic yes)
-			)
-			(justify left)
-		)
-		(uuid "be9adc39-8729-4fe7-ab24-b72e401285d4")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 292.1 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)

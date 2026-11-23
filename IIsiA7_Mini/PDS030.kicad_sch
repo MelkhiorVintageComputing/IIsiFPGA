@@ -2907,6 +2907,18 @@
 			(embedded_fonts no)
 		)
 	)
+	(no_connect
+		(at 72.39 67.31)
+		(uuid "5dacf090-19f8-4e73-8c47-2a5224f522d2")
+	)
+	(no_connect
+		(at 58.42 176.53)
+		(uuid "c4aa48ae-5b26-4d6e-ac20-504d0c1d6194")
+	)
+	(no_connect
+		(at 58.42 179.07)
+		(uuid "f9b50221-7736-4ed6-b4bf-e3d35309f45f")
+	)
 	(global_label "IPL0_5V"
 		(shape input)
 		(at 58.42 85.09 0)
@@ -4817,7 +4829,7 @@
 	)
 	(global_label "VIACLK_5V"
 		(shape input)
-		(at 66.04 67.31 0)
+		(at 72.39 67.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4827,7 +4839,7 @@
 		)
 		(uuid "e985cdf0-fbe3-4927-b16a-b585d47b94a3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 66.04 67.31 0)
+			(at 72.39 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)

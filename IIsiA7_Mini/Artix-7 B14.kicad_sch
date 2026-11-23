@@ -5314,17 +5314,6 @@
 		)
 		(uuid "12dee26f-11b3-4f2d-a5e8-a0ef058d319e")
 	)
-	(text "• For master modes: The FPGA can optionally switch to\n  EMCCLK as the clock source, instead of the internal\n  oscillator, for driving the internal configuration engine. The\n  EMCCLK frequency can optionally be divided via a\n  bitstream setting (ExtMasterCclk_en) and is forwarded for\n  output as the master CCLK signal.\n• For JTAG and slave modes: EMCCLK is ignored in the\n  JTAG and slave modes and can be left unconnected.\n\n=> we leave EMCCLK unconnected and don't use it in either JTAG  (never used) or SPI 4x mode (optional)"
-		(exclude_from_sim no)
-		(at -70.612 76.2 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "27682e32-9e7d-4057-aa36-aa688a55c9e3")
-	)
 	(text "oups, backward (14 <=> 15)"
 		(exclude_from_sim no)
 		(at 213.106 58.928 90)
@@ -5582,16 +5571,6 @@
 		)
 		(uuid "7ed0d731-63a2-4505-9880-54b2b690a39d")
 	)
-	(label "IO_L3N_T0_DQS_EMCCLK_14"
-		(at 24.13 64.77 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b6251f98-abe5-4a7c-8a31-4545664a2c53")
-	)
 	(label "CLK_100_000"
 		(at 58.42 107.95 180)
 		(effects
@@ -5611,16 +5590,6 @@
 			(justify right bottom)
 		)
 		(uuid "c9cb9f82-15c7-43f8-8299-5160f624e901")
-	)
-	(label "IO_L3P_T0_DQS_PUDC_B_14"
-		(at 24.13 62.23 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d46c7b1e-d8d0-42e7-b6cc-7eb2a8710899")
 	)
 	(global_label "IO_L23P_T3_A03_D19_14"
 		(shape input)

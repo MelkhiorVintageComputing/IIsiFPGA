@@ -1107,12 +1107,16 @@
 		(uuid "aa0555bf-eb14-4d3a-80ea-0babc32d4022")
 	)
 	(no_connect
+		(at 76.2 34.29)
+		(uuid "2a36bdd0-70a9-4132-ab1e-39619c5ec17b")
+	)
+	(no_connect
 		(at 269.24 147.32)
 		(uuid "5d9e1b84-a697-429d-a4ab-9534da1d21a5")
 	)
 	(no_connect
-		(at 259.08 157.48)
-		(uuid "9f6c0027-057a-4d33-beef-5e39aab1d3bb")
+		(at 76.2 29.21)
+		(uuid "6f5cf0f2-5edc-4411-a264-8edd790cef63")
 	)
 	(no_connect
 		(at 269.24 149.86)
@@ -1121,6 +1125,14 @@
 	(no_connect
 		(at 269.24 152.4)
 		(uuid "ae838752-f361-45f4-9afc-ad4feb61d9aa")
+	)
+	(no_connect
+		(at 76.2 36.83)
+		(uuid "c08f8c88-1e13-4c5e-9607-b31a4e8d5b79")
+	)
+	(no_connect
+		(at 76.2 31.75)
+		(uuid "faddfd27-3d89-42a8-983b-78b7ab3c1b51")
 	)
 	(wire
 		(pts
@@ -7048,6 +7060,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 259.08 157.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6c102b70-81f8-4365-99d0-e764a4f1782e")
+		(property "Reference" "#PWR0264"
+			(at 259.08 163.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 259.08 161.6131 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 259.08 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 259.08 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 259.08 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9cccaadd-d720-41d4-8507-d4ad18acc539")
+		)
+		(instances
+			(project "IIsiA7_Mini"
+				(path "/3d522736-eb6f-4e13-b5d4-24ccb2c303bc/0b53e95f-739a-4663-aba2-0140b7c57035"
+					(reference "#PWR0264")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3V3")
 		(at 146.05 35.56 0)
 		(unit 1)
@@ -7964,16 +8042,6 @@
 				(justify left top)
 			)
 		)
-		(pin "HDMI_CEC_A" input
-			(at 76.2 27.94 180)
-			(uuid "a0f9a28a-7d23-4dd9-b634-2806f519c3fb")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "HDMI_CLK+" input
 			(at 101.6 30.48 0)
 			(uuid "8ea38715-0ab5-49ac-b203-845bf4be98f5")
@@ -8054,9 +8122,39 @@
 				(justify right)
 			)
 		)
+		(pin "HDMI_CEC_A" input
+			(at 76.2 29.21 180)
+			(uuid "9058fe8e-c182-4847-8141-36ba2ede7c95")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(pin "HDMI_HPD_A" input
-			(at 76.2 35.56 180)
-			(uuid "9c909022-1c2e-4992-afbd-93c3968640bb")
+			(at 76.2 31.75 180)
+			(uuid "4e5db0ed-17ea-49fb-b817-05bd2b9cbc87")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HDMI_SCL_A" input
+			(at 76.2 34.29 180)
+			(uuid "f4468633-fc0e-4112-a723-28281e035691")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "HDMI_SDA_A" input
+			(at 76.2 36.83 180)
+			(uuid "22f8918e-a1a2-49db-82c5-cd67d7ef41f6")
 			(effects
 				(font
 					(size 1.27 1.27)

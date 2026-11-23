@@ -5505,7 +5505,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CL10A105KB8NNNC "
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 114.3 31.75 0)
 			(effects
 				(font
@@ -5555,7 +5555,7 @@
 				)
 			)
 		)
-		(property "Footprint" "BGA84C80P9X15_900X1250X120"
+		(property "Footprint" "ForJLCPCB:BGA84C80P9X15_900X1250X120"
 			(at 182.88 135.56 0)
 			(effects
 				(font
@@ -6020,7 +6020,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CL10A105KB8NNNC "
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 123.19 31.75 0)
 			(effects
 				(font
@@ -9178,7 +9178,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CL10A105KB8NNNC "
+		(property "MPN" "CL10A105KB8NNNC"
 			(at 104.14 31.75 0)
 			(effects
 				(font

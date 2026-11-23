@@ -5181,7 +5181,6 @@
 		)
 		(symbol "Transistor_FET:2N7002"
 			(pin_names
-				(offset 0)
 				(hide yes)
 			)
 			(exclude_from_sim no)
@@ -5397,7 +5396,7 @@
 				)
 				(polyline
 					(pts
-						(xy 2.921 0.381) (xy 3.683 0.381)
+						(xy 2.794 0.508) (xy 2.921 0.381) (xy 3.683 0.381) (xy 3.81 0.254)
 					)
 					(stroke
 						(width 0)
@@ -5896,7 +5895,7 @@
 		)
 		(uuid d8655104-2224-4b81-92b3-d7444b9dea7c)
 	)
-	(text "Bank 35 is 1.8V and dedicated to DDR2.\nLeftovers 4 signals can be used for 1.8V\noperations, and are used as active-low\nuser leds by default.\n\nBank 34 is 3.3V by default and for user."
+	(text "Bank 35 is 1.8V and dedicated to DDR2.\nLeftovers 4 signals can be used for 1.8V\noperations, and are used as active-high\nuser leds by default.\n\nBank 34 is 3.3V by default and for user."
 		(exclude_from_sim no)
 		(at 152.908 30.226 0)
 		(effects

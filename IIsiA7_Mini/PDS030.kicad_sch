@@ -2907,9 +2907,117 @@
 			(embedded_fonts no)
 		)
 	)
-	(no_connect
-		(at 72.39 67.31)
-		(uuid "5dacf090-19f8-4e73-8c47-2a5224f522d2")
+	(text "connect"
+		(exclude_from_sim no)
+		(at 76.2 87.63 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "10a8d46b-e101-46db-845c-16a686f40f6b")
+	)
+	(text "IIfx: /PDS.MASTER"
+		(exclude_from_sim no)
+		(at 12.7 29.464 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "1e5cd5c4-d6f4-43bb-8962-a63399173239")
+	)
+	(text "replace"
+		(exclude_from_sim no)
+		(at 17.526 133.35 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "4560dc0f-fc31-47ef-b148-665d711828cb")
+	)
+	(text "VIACLK_5V"
+		(exclude_from_sim no)
+		(at 70.358 67.818 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(italic yes)
+			)
+			(justify left)
+		)
+		(uuid "4bd63172-0739-4874-bfc6-d8f520691a59")
+	)
+	(text "connect"
+		(exclude_from_sim no)
+		(at 17.272 138.684 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "6c9441cf-a2fd-4edc-b077-302dbc6c66f4")
+	)
+	(text "connect"
+		(exclude_from_sim no)
+		(at 17.78 36.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ad248bfe-4df3-4411-a6a4-6778b91e29b4")
+	)
+	(text "replace"
+		(exclude_from_sim no)
+		(at 18.542 26.67 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "b142e152-38a3-4c25-adfd-1804cea001d0")
+	)
+	(text "replace"
+		(exclude_from_sim no)
+		(at 76.454 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "c0cf6d26-cea2-4e1c-9b7d-9b32b552a760")
+	)
+	(text "connect"
+		(exclude_from_sim no)
+		(at 75.692 85.344 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "c7ccd6ab-da0f-458e-9495-2b17a1cb62cf")
+	)
+	(text "IIfx: /IRQ6"
+		(exclude_from_sim no)
+		(at 75.946 82.804 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "cffb5639-0649-4b10-8826-ac9b8770272f")
+	)
+	(text "replace"
+		(exclude_from_sim no)
+		(at 17.526 34.29 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "d7a900b4-be81-4094-8f17-a8d5fe81f638")
 	)
 	(no_connect
 		(at 58.42 176.53)
@@ -4819,27 +4927,6 @@
 		(uuid "e90dadef-0c4c-4239-8c1b-234490f01270")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 33.02 54.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "VIACLK_5V"
-		(shape input)
-		(at 72.39 67.31 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(italic yes)
-			)
-			(justify left)
-		)
-		(uuid "e985cdf0-fbe3-4927-b16a-b585d47b94a3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 72.39 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)

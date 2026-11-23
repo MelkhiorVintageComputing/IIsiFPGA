@@ -8,7 +8,8 @@
       "GND",
       "+1V8",
       "+1V0",
-      "+3V3"
+      "+3V3",
+      "IO_L15P_T2_DQS_15"
     ],
     "high_contrast_mode": 0,
     "net_color_mode": 1,

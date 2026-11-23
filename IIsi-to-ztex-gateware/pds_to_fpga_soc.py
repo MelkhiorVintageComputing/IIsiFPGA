@@ -47,7 +47,7 @@ class _CRG(Module, AutoCSR):
         if ((version == "V1.0") or (version == "V2.0")):
             self.clock_domains.cd_sys4x     = ClockDomain(reset_less=True)
             self.clock_domains.cd_sys4x_dqs = ClockDomain(reset_less=True)
-        elif (version == "V3.0"):
+        elif (version in ("V3.0", "V3.1")):
             self.clock_domains.cd_sys2x     = ClockDomain(reset_less=True)
             self.clock_domains.cd_sys2x_dqs = ClockDomain(reset_less=True)
         else:
@@ -81,7 +81,7 @@ class _CRG(Module, AutoCSR):
             self.specials += Instance("BUFG", i_I=board_clk, o_O=self.board_clk_bufg)
             self.comb += self.cd_native.clk.eq(self.board_clk_bufg)                
             #self.cd_native.clk = board_clk
-        elif ((version == "V2.0") or (version == "V3.0")):
+        elif ((version == "V2.0") or (version in ("V3.0", "V3.1"))):
             board_clk = platform.request("clk100")
             board_clk_freq = 100e6
             platform.add_platform_command("create_clock -name clk100 -period 10.0 [get_nets clk100]")
@@ -135,7 +135,7 @@ class _CRG(Module, AutoCSR):
             pll.create_clkout(self.cd_sys4x_dqs, 4*sys_clk_freq, phase=90)
             platform.add_platform_command("create_generated_clock -name sys4x90clk [get_pins {{{{MMCME2_ADV/CLKOUT{}}}}}]".format(num_clk))
             num_clk = num_clk + 1
-        elif (version == "V3.0"):
+        elif (version in ("V3.0", "V3.1")):
             pll.create_clkout(self.cd_sys2x,     2*sys_clk_freq)
             platform.add_platform_command("create_generated_clock -name sys2xclk [get_pins {{{{MMCME2_ADV/CLKOUT{}}}}}]".format(num_clk))
             num_clk = num_clk + 1
@@ -234,7 +234,7 @@ class IIsiFPGA(MacPeriphSoC):
         elif (version == "V2.0"): # never made
             platform = trenz0710_pds.Platform(variant = variant, version = version)
             # TODO: handle Iifx/master mode, if needed
-        elif (version == "V3.0"):
+        elif (version in ("V3.0", "V3.1")):
             platform =  IIsiA7_Mini_pds.Platform(variant = variant, version = version)
             platform.add_extension(IIsiA7_Mini_pds._diag_leds_pmod_io)
             # TODO: handle Iifx/master mode, if needed
@@ -262,10 +262,10 @@ class IIsiFPGA(MacPeriphSoC):
         ## add our custom timings after the clocks have been defined
         xdc_timings_filename = None
         xdc_power_filename = None # "iisi_fpga_V1_0_power.xdc"
-        if (((version == "V1.0") or (version == "V3.0")) and (not doIIfx) and (not doMaster)):
+        if (((version == "V1.0") or (version in ("V3.0", "V3.1"))) and (not doIIfx) and (not doMaster)):
            # slave on a IIsi's 20 MHz MC68030 bus, through CB3T bus switches: same on both boards
            xdc_timings_filename = "iisi_fpga_pds_timings.xdc"
-        if (version == "V3.0"):
+        if (version in ("V3.0", "V3.1")):
            xdc_power_filename =  "iisi_fpga_V3_0_power.xdc"
 
         if (xdc_timings_filename != None):
@@ -319,7 +319,7 @@ class IIsiFPGA(MacPeriphSoC):
         if (version == "V1.0"):
             # on V1.0, halt_n is tri-stated in hardware
             self.comb += [ halt_n.eq(~hold_reset) ] # release the 68030 only when everything's fine
-        elif (version == "V3.0"):
+        elif (version in ("V3.0", "V3.1")):
             # on V3.0, must tri-state halt_n
             # fixme: we might also need halt_n in the actual bus handler if we want to deal with bus retries (e.g. L2 caches)
             self.specials += Tristate(halt_n, halt_n_o, halt_n_oe, halt_n_i)
@@ -330,7 +330,7 @@ class IIsiFPGA(MacPeriphSoC):
                 
         #self.comb += [ halt_n.eq(1) ] # release the 68030 only when everything's fine
 
-        if (version == "V3.0"): # TEMPORARY DEBUG
+        if (version in ("V3.0", "V3.1")): # TEMPORARY DEBUG
             leds0 = platform.request("user_leds", 0) # active high, pair on the right (not far from the HDMI)
             self.comb += [
                 #leds0.eq(Cat(hold_reset, self.crg.locked)),
@@ -342,7 +342,7 @@ class IIsiFPGA(MacPeriphSoC):
             ]
 
             
-        #if (version == "V3.0"): # TEMPORARY DEBUG
+        #if (version in ("V3.0", "V3.1")): # TEMPORARY DEBUG
         #    diag_leds = platform.request_all("diag_leds")
         #    ledctr = Signal(30)
         #    self.sync += [ ledctr.eq(ledctr+1), ]
@@ -432,7 +432,7 @@ class IIsiFPGA(MacPeriphSoC):
                                                                         cd_fpu = "fpu",
                                                                         slot = 0xE if doIIfx else 0x9,
                                                                         doMaster = doMaster,
-                                                                        mem_mib = 128 if (version == "V3.0") else 256, # improveme: could use avail_sdram ? but goblin already stole some
+                                                                        mem_mib = 128 if (version in ("V3.0", "V3.1")) else 256, # improveme: could use avail_sdram ? but goblin already stole some
                                                                         debug_val = debug_val,
                                                                         )
         if (goblin):
@@ -485,7 +485,7 @@ def main():
         vres = int(args.goblin_res.split("@")[0].split("x")[1])
         f.write("TARGET=IISIFPGA\n")
         f.write("FEATURES+= -DIISIFPGA")
-        if (args.version == "V3.0"):
+        if (args.version in ("V3.0", "V3.1")):
             f.write(" -DSDRAM_DDR2")
         else:
             f.write(" -DSDRAM_DDR3")
@@ -498,7 +498,7 @@ def main():
             f.write(" -DENABLE_HDMI_ALT_CHANGE");
             if (args.version == "V1.0"):
                 f.write(" -DENABLE_HDMI_ALT_CHANGE_48MHZ")
-            elif ((args.version == "V2.0") or (args.version == "V3.0")):
+            elif ((args.version == "V2.0") or (args.version in ("V3.0", "V3.1"))):
                 f.write(" -DENABLE_HDMI_ALT_CHANGE_54MHZ")
                 
         f.write("\n")

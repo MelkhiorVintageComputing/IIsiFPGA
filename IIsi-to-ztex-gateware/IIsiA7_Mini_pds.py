@@ -125,10 +125,46 @@ _pds_pds_v3_0 = [
      ("tm0a_3v3",     0, Pins("B14"), IOStandard("lvttl")),
      ("tm1a_3v3",     0, Pins("A15"), IOStandard("lvttl")),
     ]
+_pds_pds_v3_1 = [
+     ("A_3v3",        0, Pins(" M1  M2  L4  N1  L5  N2  P1  M4 "
+                              " N3  R1  P3  N4  T2  R2  R3  T3"
+                              " M5  P4  T4  P5  M6  T5  R5  N6"
+                              " R6  P6  T7  R7  P8  T8  R8  P9 "), IOStandard("lvttl")),
+     ("as_3v3_n",     0, Pins("F15"), IOStandard("lvttl")),
+     ("berr_3v3_n",   0, Pins("J16"), IOStandard("lvttl")),
+     ("bg_3v3_n",     0, Pins("G16"), IOStandard("lvttl")),
+     ("bgack_3v3_n",  0, Pins("F13"), IOStandard("lvttl")),
+     ("br_3v3_n",     0, Pins("F12"), IOStandard("lvttl")),
+     ("c16m_3v3",     0, Pins("N13"), IOStandard("lvttl")),
+     ("cache_3v3",    0, Pins("C11"), IOStandard("lvttl"), Misc("PULLDOWN True")),
+     ("cback_3v3_n",  0, Pins("E12"), IOStandard("lvttl")),
+     ("cbreq_3v3_n",  0, Pins("D15"), IOStandard("lvttl")),
+     ("ciout_3v3_n",  0, Pins("B16"), IOStandard("lvttl"), Misc("PULLUP True")),
+     ("cpuclk_3v3_n", 0, Pins("N11"), IOStandard("lvttl")),
+     ("D_3v3",        0, Pins("J15 H14 H13 H12 M16 H11 N16 K13 "
+                              "P16 L14 R16 L13 P15 R15 T15 M14 "
+                              "P14 T14 P13 R13 T13 M12 R12 T12 "
+                              "N12 R11 P11 R10 T10 P10  N9  T9 "), IOStandard("lvttl")),
+     ("ds_3v3_n",     0, Pins("C14"), IOStandard("lvttl")),
+     ("dsack_3v3_n",  0, Pins("E13 D16"), IOStandard("lvttl")),
+     ("fc_3v3",       0, Pins("G14 H16 G15 "), IOStandard("lvttl")),
+     ("halt_3v3_n",   0, Pins("G11"), IOStandard("lvttl")),
+     ("irq1_3v3_n",   0, Pins("A15"), IOStandard("lvttl"), Misc("PULLUP True")),
+     ("irq2_3v3_n",   0, Pins("C12"), IOStandard("lvttl"), Misc("PULLUP True")),
+     ("reset_3v3_n",  0, Pins("G12"), IOStandard("lvttl")),
+     ("rw_3v3_n",     0, Pins("E15"), IOStandard("lvttl")),
+     ("siz_3v3",      0, Pins("F14 E16"), IOStandard("lvttl")),
+     ("sterm_3v3_n",  0, Pins("C16"), IOStandard("lvttl")),
+     ("ipl0_3v3_n",  0, Pins("C13"), IOStandard("lvttl")),
+     ("ipl1_3v3_n",  0, Pins("B15"), IOStandard("lvttl")),
+     ("ipl2_3v3_n",  0, Pins("B14"), IOStandard("lvttl")),
+     ("rmc_3v3_n",  0, Pins("D14"), IOStandard("lvttl")),
+    ]
 
 # IO/s
 connectors_v3_0 = [
     ("P1", "D11 E11 D9 D8 A9 A8 C9 C8"), # check sequence! currently in pmod-* order
+    #("P1", "C9 A9 D9 D11 C8 A8 D8 E11"),  # Digilent Pmod pins 1-4, 7-10
     ]
 
 def diag_leds_pmod_io(pmod):
@@ -183,6 +219,7 @@ class IIsiA7_Mini(XilinxPlatform):
              "set_property CONFIG_VOLTAGE 3.3 [current_design]",
              "set_property CONFIG_MODE SPIx4 [current_design]",
              "set_property CFGBVS VCCO [current_design]",
+             "set_property BITSTREAM.CONFIG.UNUSEDPIN PULLNONE [current_design]",
              #             "set_property STEPS.SYNTH_DESIGN.ARGS.DIRECTIVE AreaOptimized_high [get_runs synth_1]",
              ]
         self.add_platform_command("set_property INTERNAL_VREF 0.900 [get_iobanks 35]")
@@ -199,9 +236,11 @@ class Platform(IIsiA7_Mini):
     def __init__(self, variant="IIsiA7_Mini_A50T-1", version="V3.0"):
         connectors = {
             "V3.0" : connectors_v3_0,
+            "V3.1" : connectors_v3_0, # unchanged
         }[version]
         pds_pds = {
             "V3.0" : _pds_pds_v3_0,
+            "V3.1" : _pds_pds_v3_1,
         }[version]
         
         IIsiA7_Mini.__init__(self, variant=variant, version=version, connectors=connectors)

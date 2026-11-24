@@ -18,6 +18,7 @@ from litex.build.xilinx import XilinxPlatform
 from litex.build.openocd import OpenOCD
 
 from VintageBusFPGA_Common.ztex_21x_common import ZTexPlatform
+from VintageBusFPGA_Common.pmods import diag_leds_pmod_io
 
 # IOs ----------------------------------------------------------------------------------------------
 
@@ -69,9 +70,7 @@ _pds_pds_v1_0 = [
     ("irq1_3v3_n",           0, Pins("L1"), IOStandard("lvttl")),
 ]
 
-_pds_pdsled_v1_0 = [
-    ("diag_leds", 0, Pins("M6 N6 P5 N5 T3 R3 V1 U1"),  IOStandard("lvcmos33")),
-]
+_pds_pdsled_v1_0 = diag_leds_pmod_io("P1", upside_down=True) # LEDS PMOD; J4 is backward, the PMod is plugged upside-down
 
 _pds_pdsmaster_v1_0 = [
     ("fpu_3v3_n",          0, Pins("T3"), IOStandard("lvttl")),
@@ -87,7 +86,7 @@ _pds_pdsmaster_v1_0 = [
 
 # Connectors ---------------------------------------------------------------------------------------
 connectors_v1_0 = [
-    ("P1", "U1 V1 R3 T3 N5 P5 M6 N6"), # check sequence! currently in pmod-* order
+    ("P1", "M6 P5 T3 V1 N6 N5 R3 U1"), # J4, Digilent PMod pins 1-4, 7-10 (see VintageBusFPGA_Common/pmods.py); shared with the master-mode signals
     ]
 
 # Platform -----------------------------------------------------------------------------------------

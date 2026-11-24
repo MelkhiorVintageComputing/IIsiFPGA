@@ -6,6 +6,8 @@ from litex.build.generic_platform import *
 from litex.build.xilinx import XilinxPlatform
 from litex.build.openocd import OpenOCD
 
+from VintageBusFPGA_Common.pmods import diag_leds_pmod_io
+
 # IOs ----------------------------------------------------------------------------------------------
 
 _io = [
@@ -163,14 +165,9 @@ _pds_pds_v3_1 = [
 
 # IO/s
 connectors_v3_0 = [
-    ("P1", "D11 E11 D9 D8 A9 A8 C9 C8"), # check sequence! currently in pmod-* order
-    #("P1", "C9 A9 D9 D11 C8 A8 D8 E11"),  # Digilent Pmod pins 1-4, 7-10
+    ("P1", "C9 A9 D9 D11 C8 A8 D8 E11"),  # J3, Digilent PMod pins 1-4, 7-10 (see VintageBusFPGA_Common/pmods.py)
     ]
 
-def diag_leds_pmod_io(pmod):
-    return [
-        ("diag_leds", 0, Pins(f"{pmod}:0 {pmod}:1 {pmod}:2 {pmod}:3 {pmod}:4 {pmod}:5 {pmod}:6 {pmod}:7"), IOStandard("LVCMOS33")),
-]
 _diag_leds_pmod_io = diag_leds_pmod_io("P1") # LEDS PMOD
 
 class IIsiA7_Mini(XilinxPlatform):

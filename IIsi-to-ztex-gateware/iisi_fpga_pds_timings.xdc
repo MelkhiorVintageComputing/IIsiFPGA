@@ -25,10 +25,14 @@ set pds_brd_min -1.0
 set pds_brd_max 2.0
 
 # ---------------------------------------------------------------- inputs
-# Address, function codes, size, R/W, CIOUT: valid at most 25 ns after the
+# Address, function codes, size, R/W, CIOUT, RMC: valid at most 25 ns after the
 # rising edge starting S0 (spec 6, 18, 20), invalid no earlier than that edge of
 # the next cycle (spec 8: 0 ns).
-set pds_adr_in [get_ports {A_3v3[*] fc_3v3[*] siz_3v3[*] rw_3v3_n ciout_3v3_n}]
+# RMC only exists on boards that wire it (IIsiA7 Mini V3.1) and only once the
+# gateware requests it, hence -quiet: a missing port is simply not matched
+# (the other names are always present, so the collection is never empty).
+# The IPL lines are asynchronous and unused: not constrained.
+set pds_adr_in [get_ports -quiet {A_3v3[*] fc_3v3[*] siz_3v3[*] rw_3v3_n ciout_3v3_n rmc_3v3_n}]
 set_input_delay -clock cpu_clk -max [expr {25.0 + $pds_brd_max}] $pds_adr_in
 set_input_delay -clock cpu_clk -min [expr {0.0 + $pds_brd_min}] $pds_adr_in
 # ...and they are only looked at while AS is asserted (mc68030_fsm.py, Idle:

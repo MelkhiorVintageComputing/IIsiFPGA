@@ -221,22 +221,28 @@ class _CRG(Module, AutoCSR):
 
             
 class IIsiFPGA(MacPeriphSoC):
-    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, doIIfx, doMaster, rd68884=False, rd68884_model=68881, fpu_clk_freq=66.67e6, **kwargs):
+    def __init__(self, variant, version, sys_clk_freq, config_flash, goblin, goblin_res, use_goblin_alt, rd68891, rd68883, doIIfx, doMaster, rd68884=False, rd68884_model=68881, fpu_clk_freq=66.67e6, diag_leds=False, sdcard=False, **kwargs):
         print(f"Building IIsiFPGA for board version {version}")
 
         platform = None
         if (version == "V1.0"):
             platform = ztex213_pds.Platform(variant = variant, version = version)
+            # the PMod pins double as the master-mode signals (exclusive, checked in main())
             if (doIIfx or doMaster):
                 platform.add_extension(ztex213_pds._pds_pdsmaster_v1_0)
-            else:
+            if (diag_leds):
                 platform.add_extension(ztex213_pds._pds_pdsled_v1_0)
+            if (sdcard):
+                platform.add_extension(ztex213_pds._pds_pdssdcard_v1_0)
         elif (version == "V2.0"): # never made
             platform = trenz0710_pds.Platform(variant = variant, version = version)
             # TODO: handle Iifx/master mode, if needed
         elif (version in ("V3.0", "V3.1")):
             platform =  IIsiA7_Mini_pds.Platform(variant = variant, version = version)
-            platform.add_extension(IIsiA7_Mini_pds._diag_leds_pmod_io)
+            if (diag_leds):
+                platform.add_extension(IIsiA7_Mini_pds._diag_leds_pmod_io)
+            if (sdcard):
+                platform.add_extension(IIsiA7_Mini_pds._sdcard_pmod_io)
             # TODO: handle Iifx/master mode, if needed
             
         self.platform = platform
@@ -288,10 +294,18 @@ class IIsiFPGA(MacPeriphSoC):
 
         MacPeriphSoC.mac_add_declrom(self, version = version, flash = False, config_flash = config_flash)
         
+        # The hardware DDR init needs the DFII/PHY CSR addresses now, but CSR
+        # locations are only allocated at finalize (first free slot), so other
+        # CSR modules (e.g. --sdcard's sdblock2mem/sdcore/...) would push them
+        # elsewhere: pin both to the locations the addresses below assume.
+        sdram_dfii_base = 0xf0a02800
+        ddrphy_base = 0xf0a01800
+        self.csr.add("ddrphy", n=(ddrphy_base - self.mem_map["csr"]) // self.csr.paging)
+        self.csr.add("sdram", n=(sdram_dfii_base - self.mem_map["csr"]) // self.csr.paging)
         MacPeriphSoC.mac_add_sdram(self,
                                    hwinit = True,
-                                   sdram_dfii_base = 0xf0a02800,
-                                   ddrphy_base = 0xf0a01800,
+                                   sdram_dfii_base = sdram_dfii_base,
+                                   ddrphy_base = ddrphy_base,
                                    version = version) # FIXME: can we get the appropriate value here ??? or are they only available after finalize ???
         
         if (goblin):
@@ -438,6 +452,12 @@ class IIsiFPGA(MacPeriphSoC):
         if (goblin):
             MacPeriphSoC.mac_add_goblin(self, use_goblin_alt = use_goblin_alt, hdmi = hdmi, goblin_res = goblin_res, goblin_irq = fb_irq, audio_irq = audio_irq)
 
+        if (sdcard): # Digilent PmodMicroSD, same controller as the NuBusFPGA's on-board slot
+            self.add_sdcard()
+            # dedicated staging buffer for the SD DMAs
+            # (DeclROM: SDCARD_BUF_OFFSET/SDCARD_BUF_DMA_ADDR/SDCARD_BUF_SIZE in NuBusFPGASDCardDrvr.h)
+            self.add_ram("sd_buf", origin=self.mem_map["sd_buf"], size=2**14, mode="rw")
+
         if (doMaster):
             self.bus.add_slave("DMA", self.wishbone_slave_sys, SoCRegion(origin=self.mem_map.get("master", None), size=0x10000000, cached=False)) # 1 GiB
 
@@ -471,12 +491,27 @@ def main():
     parser.add_argument("--rd68884", action="store_true", help="Add RD68884, an MC68881 (coprocessor ID 1; RD68884_DIR: its checkout)")
     parser.add_argument("--rd68884-model", default=68881, type=int, choices=(68881, 68882), help="With --rd68884: 68882 for RD68885, an MC68882")
     parser.add_argument("--fpu-clk-freq", default=66.67e6, help="With --rd68884: its core clock (default 66.67 MHz)")
+    parser.add_argument("--diag-leds", action="store_true", help="PMod: PMOD-LEDS.SIMPLE diagnostic LEDs (as 'diag_leds')")
+    parser.add_argument("--sdcard", action="store_true", help="PMod: Digilent PmodMicroSD, with the DeclROM's SD card driver")
     builder_args(parser)
     vivado_build_args(parser)
     args = parser.parse_args()
 
     if (args.goblin_alt and (args.goblin_res != "1920x1080@60Hz")):
         print(" ***** ERROR ***** : Goblin Alt PHY currently only supports Full HD\n");
+        assert(False)
+
+    # PMod users: a single PMod connector, so at most one of them
+    pmod_options = [ name for (name, on) in (("--diag-leds", args.diag_leds),
+                                             ("--sdcard", args.sdcard)) if on ]
+    if (len(pmod_options) > 1):
+        print(f" ***** ERROR ***** : {' and '.join(pmod_options)} all use the (single) PMod, pick one\n");
+        assert(False)
+    if (pmod_options and (args.version == "V2.0")):
+        print(" ***** ERROR ***** : no PMod defined for V2.0\n");
+        assert(False)
+    if (pmod_options and (args.version == "V1.0") and (args.doIIfx or args.doMaster)):
+        print(f" ***** ERROR ***** : on V1.0 the PMod pins carry the IIfx/master signals, {pmod_options[0]} is incompatible with --doIIfx/--doMaster\n");
         assert(False)
 
     if (True):
@@ -492,6 +527,8 @@ def main():
         if (not args.goblin):
             f.write(" -DDISABLE_GOBLIN")
         # f.write(" -DENABLE_RAMDSK") # only NuBusFPGA for now
+        if (args.sdcard):
+            f.write(" -DENABLE_SDCARD")
         if (args.goblin_alt):
             f.write(" -DENABLE_HDMIAUDIO") # no audio in litex-style not-hdmi phy
         else:
@@ -531,6 +568,8 @@ def main():
                    fpu_clk_freq=float(args.fpu_clk_freq),
                    doIIfx=args.doIIfx,
                    doMaster=args.doMaster,
+                   diag_leds=args.diag_leds,
+                   sdcard=args.sdcard,
     )
 
     version_for_filename = args.version.replace(".", "_")

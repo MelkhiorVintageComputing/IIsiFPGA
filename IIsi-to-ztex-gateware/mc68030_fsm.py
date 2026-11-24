@@ -1019,7 +1019,7 @@ class MC68030_SYNC_FSM(Module):
                         ),
             )
 
-        if (True):
+        if (False):
             diag_leds = platform.request_all("diag_leds")
             ##seen_ss = Signal(1, reset = 0)
             ##sync_cpu += [

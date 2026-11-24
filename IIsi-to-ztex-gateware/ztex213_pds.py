@@ -18,7 +18,7 @@ from litex.build.xilinx import XilinxPlatform
 from litex.build.openocd import OpenOCD
 
 from VintageBusFPGA_Common.ztex_21x_common import ZTexPlatform
-from VintageBusFPGA_Common.pmods import diag_leds_pmod_io
+from VintageBusFPGA_Common.pmods import diag_leds_pmod_io, sdcard_pmod_io
 
 # IOs ----------------------------------------------------------------------------------------------
 
@@ -71,6 +71,7 @@ _pds_pds_v1_0 = [
 ]
 
 _pds_pdsled_v1_0 = diag_leds_pmod_io("P1", upside_down=True) # LEDS PMOD; J4 is backward, the PMod is plugged upside-down
+_pds_pdssdcard_v1_0 = sdcard_pmod_io("P1", upside_down=True) # Digilent PmodMicroSD, also upside-down
 
 _pds_pdsmaster_v1_0 = [
     ("fpu_3v3_n",          0, Pins("T3"), IOStandard("lvttl")),

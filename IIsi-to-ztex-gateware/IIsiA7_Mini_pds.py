@@ -6,7 +6,7 @@ from litex.build.generic_platform import *
 from litex.build.xilinx import XilinxPlatform
 from litex.build.openocd import OpenOCD
 
-from VintageBusFPGA_Common.pmods import diag_leds_pmod_io
+from VintageBusFPGA_Common.pmods import diag_leds_pmod_io, sdcard_pmod_io
 
 # IOs ----------------------------------------------------------------------------------------------
 
@@ -169,6 +169,7 @@ connectors_v3_0 = [
     ]
 
 _diag_leds_pmod_io = diag_leds_pmod_io("P1") # LEDS PMOD
+_sdcard_pmod_io = sdcard_pmod_io("P1") # Digilent PmodMicroSD
 
 class IIsiA7_Mini(XilinxPlatform):
 

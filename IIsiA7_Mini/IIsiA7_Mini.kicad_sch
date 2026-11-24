@@ -1960,6 +1960,15 @@
 				(hide yes)
 			)
 		)
+		(property "FT Rotation Offset" "90"
+			(at 26.67 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "9b66a941-29b1-4fbc-b808-c13aa040741e")
 		)

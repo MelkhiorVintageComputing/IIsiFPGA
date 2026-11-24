@@ -5611,7 +5611,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "W971GG6NB25I"
+		(property "MPN-V3.0" "W971GG6NB25I"
 			(at 148.59 40.64 0)
 			(effects
 				(font
@@ -5687,6 +5687,24 @@
 					(size 1.27 1.27)
 				)
 				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "MPN" "W9751G6NB-25"
+			(at 148.59 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Rotation Offset" "270"
+			(at 148.59 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 				(hide yes)
 			)
 		)

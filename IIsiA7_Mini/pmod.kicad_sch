@@ -1067,6 +1067,15 @@
 				(hide yes)
 			)
 		)
+		(property "FT Rotation Offset" "270"
+			(at 186.69 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "10"
 			(uuid "21a81e55-8e6e-4033-8cef-fcd49137dd68")
 		)

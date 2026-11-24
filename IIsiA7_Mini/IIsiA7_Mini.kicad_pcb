@@ -768,6 +768,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "90"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "274e0a1d-1b6e-4524-9c06-8d5f3124393b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "USB*Micro*B*")
 		(path "/0b53e95f-739a-4663-aba2-0140b7c57035/3520c21f-3381-4eef-8907-eb73d6ba60d4")
 		(sheetname "/Board Specific/")
@@ -1022,7 +1035,7 @@
 			(net 53 "GND")
 			(pinfunction "Shield")
 			(pintype "passive")
-			(uuid "0812740b-da08-4cf4-ba17-a2778394cd1b")
+			(uuid "a721fc3a-110f-4756-9a6e-c6c4c7d23ddb")
 		)
 		(pad "6" thru_hole circle
 			(at 2.425 2.68 180)
@@ -1033,7 +1046,7 @@
 			(net 53 "GND")
 			(pinfunction "Shield")
 			(pintype "passive")
-			(uuid "0812740b-da08-4cf4-ba17-a2778394cd1b")
+			(uuid "33c4057a-5972-4afc-af2b-da9e309de250")
 		)
 		(pad "6" thru_hole circle
 			(at 3.625 0 180)
@@ -1044,7 +1057,7 @@
 			(net 53 "GND")
 			(pinfunction "Shield")
 			(pintype "passive")
-			(uuid "0812740b-da08-4cf4-ba17-a2778394cd1b")
+			(uuid "ed8ec67a-8b0e-4747-8f53-8fce280a8387")
 		)
 		(embedded_fonts no)
 		(model "MICROXNJ.stp"
@@ -3721,7 +3734,7 @@
 				)
 			)
 		)
-		(property "MPN" "W971GG6NB25I"
+		(property "MPN" "W9751G6NB-25"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3831,6 +3844,32 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1a66ae22-a293-44a4-96ef-3c8b984bd8ac")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN-V3.0" "W971GG6NB25I"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f44bf61c-274c-4618-9b1d-d996527b4b9c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "FT Rotation Offset" "270"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8c28701c-9291-4368-9f6a-2bc49ca44892")
 			(effects
 				(font
 					(size 1 1)
@@ -8891,6 +8930,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "270"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "df25b97f-8f88-49d0-9f9a-8cf6fb9812e7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "Texas*VSON*HR*1.5x2mm*P0.5mm*")
 		(path "/396e9550-4c28-4764-8829-824f29b1d5c6/6ae431e9-4e1c-4d91-b865-973c7b521234")
 		(sheetname "/power_rail_3V3/")
@@ -10712,7 +10764,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "${KIPRJMOD}/datasheets/Yageo_RT_series.pdf"
+		(property "Datasheet" "${KIPRJMOD}/datasheets/Yageo_AT_series.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -10736,7 +10788,7 @@
 				)
 			)
 		)
-		(property "MPN" "RT0402BRD0766K5L"
+		(property "MPN" "AT0402BRD0766K5L"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -11245,6 +11297,19 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "fb59abf4-64f2-4406-947a-44ec3cfa7a47")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "FT Rotation Offset" "270"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e918ddf1-5b37-47c5-a0de-db42d7e761af")
 			(effects
 				(font
 					(size 1 1)
@@ -13718,6 +13783,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "270"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7c3fe5dd-ad61-442f-95f9-6edb3466fd52")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "Texas*VSON*HR*1.5x2mm*P0.5mm*")
 		(path "/33defe1f-7b78-4c22-b01d-cab4411c07b1/61275d03-87b3-4062-b59f-27d41ed6125f")
 		(sheetname "/power_rail_1V8/")
@@ -14236,6 +14314,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "270"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a50533f7-e620-48f5-a411-e7f034304d73")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "JEITA?SOIC*3.9x4.9mm*P1.27mm*")
 		(path "/0b53e95f-739a-4663-aba2-0140b7c57035/359b2b54-93ad-43a4-9900-4c9e95562750/0ed17e0c-ff36-452b-b24c-52522e038585")
 		(sheetname "/Board Specific/serial_usb/")
@@ -14627,6 +14718,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "90"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f90e03dd-dc5d-4b51-9a7c-34d470aeda49")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/427b2045-ff61-4c97-8ab4-9959fa683ffb/00000000-0000-0000-0000-00006113b8ab")
 		(sheetname "/power_sequencing/")
 		(sheetfile "power_sequencing.kicad_sch")
@@ -14999,6 +15103,19 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "489295b0-28f5-4461-83bb-2cccc58c2d8f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "FT Rotation Offset" "90"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f9825c1a-294c-4b26-91be-176ef53077f3")
 			(effects
 				(font
 					(size 1 1)
@@ -17155,6 +17272,19 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1293c665-4880-4431-99bd-ce1f13f9c550")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "FT Rotation Offset" "270"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2e4af392-a8c9-44c2-99e4-f946a93902c4")
 			(effects
 				(font
 					(size 1 1)
@@ -21195,6 +21325,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "90"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "cfefa9ae-3829-4458-a896-a34c5e4d7f04")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/505a3d6b-611b-4a9a-8615-95de09e99834/97b118ea-52a9-4eea-b91f-fc7b3d12d89b")
 		(sheetname "/Artix-7 Support/")
@@ -21478,7 +21621,7 @@
 				)
 			)
 		)
-		(property "FT Rotation Offset" "180"
+		(property "FT Rotation Offset" "90"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -21745,7 +21888,7 @@
 			(net 312 "SHIELD")
 			(pinfunction "Shield")
 			(pintype "passive")
-			(uuid "2a0328b5-3429-4408-9d55-8261a5068818")
+			(uuid "5c1ceb5f-2f02-4c97-aa7d-29b13f294445")
 		)
 		(pad "6" thru_hole circle
 			(at 2.425 2.68)
@@ -21756,7 +21899,7 @@
 			(net 312 "SHIELD")
 			(pinfunction "Shield")
 			(pintype "passive")
-			(uuid "2a0328b5-3429-4408-9d55-8261a5068818")
+			(uuid "4da593b1-b49e-4f03-8397-fc98338ce884")
 		)
 		(pad "6" thru_hole circle
 			(at 3.625 0)
@@ -21767,7 +21910,7 @@
 			(net 312 "SHIELD")
 			(pinfunction "Shield")
 			(pintype "passive")
-			(uuid "2a0328b5-3429-4408-9d55-8261a5068818")
+			(uuid "052d5f71-ad63-4083-9c15-356d01d5f57b")
 		)
 		(embedded_fonts no)
 		(model "MICROXNJ.stp"
@@ -23021,7 +23164,7 @@
 			(net 312 "SHIELD")
 			(pinfunction "SH")
 			(pintype "passive")
-			(uuid "a70da535-9e79-4960-a4d5-a0dbabd70d72")
+			(uuid "1983ca4e-3da4-4a5e-a672-5ff7499ad502")
 		)
 		(pad "SH" thru_hole circle
 			(at 7.25 -2.05 90)
@@ -23032,7 +23175,7 @@
 			(net 312 "SHIELD")
 			(pinfunction "SH")
 			(pintype "passive")
-			(uuid "a70da535-9e79-4960-a4d5-a0dbabd70d72")
+			(uuid "9c875615-6131-4314-9563-0fcc27ae7fdc")
 		)
 		(pad "SH" thru_hole circle
 			(at 7.85 2.9 90)
@@ -23043,7 +23186,7 @@
 			(net 312 "SHIELD")
 			(pinfunction "SH")
 			(pintype "passive")
-			(uuid "a70da535-9e79-4960-a4d5-a0dbabd70d72")
+			(uuid "b9c520ab-5e93-4383-9986-145e6f0bd40c")
 		)
 		(embedded_fonts no)
 		(model "10029449-111RLF.stp"
@@ -26290,6 +26433,19 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "ea5cf734-655d-4884-9a82-30a9540a4664")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "FT Rotation Offset" "180"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "528cb9c7-7e96-4b93-81a6-96dc8f9b0d1f")
 			(effects
 				(font
 					(size 1 1)
@@ -48761,7 +48917,7 @@
 			(net 65 "/Artix-7 Support/PROGRAM_B_0")
 			(pinfunction "1")
 			(pintype "passive")
-			(uuid "698f69ee-f0f2-4016-9d6c-438eb379522e")
+			(uuid "128227df-2d9a-4efe-8a80-96f1adf7b95f")
 		)
 		(pad "2" smd rect
 			(at -3 -1.875)
@@ -48779,7 +48935,7 @@
 			(net 53 "GND")
 			(pinfunction "2")
 			(pintype "passive")
-			(uuid "240f88e5-65d3-47ff-a7bf-fc3484b940d7")
+			(uuid "3e813052-84da-451f-b68b-e0093c377a1b")
 		)
 		(embedded_fonts no)
 	)

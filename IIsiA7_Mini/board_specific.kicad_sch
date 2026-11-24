@@ -6707,6 +6707,15 @@
 				(hide yes)
 			)
 		)
+		(property "FT Rotation Offset" "90"
+			(at 261.62 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "08391042-c677-4b9b-9be0-2d0f4cc98bc7")
 		)
@@ -6893,6 +6902,15 @@
 			)
 		)
 		(property "MPN" "SN74LVC1G125DCKR"
+			(at 195.58 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Rotation Offset" "180"
 			(at 195.58 106.68 0)
 			(effects
 				(font

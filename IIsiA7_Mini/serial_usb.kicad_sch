@@ -2403,7 +2403,7 @@
 				(hide yes)
 			)
 		)
-		(property "FT Rotation Offset" "180"
+		(property "FT Rotation Offset" "90"
 			(at 35.56 50.8 0)
 			(effects
 				(font
@@ -2579,6 +2579,15 @@
 			)
 		)
 		(property "MPN" "CH340N"
+			(at 68.58 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Rotation Offset" "270"
 			(at 68.58 48.26 0)
 			(effects
 				(font

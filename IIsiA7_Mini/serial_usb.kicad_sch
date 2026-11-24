@@ -522,7 +522,7 @@
 					(justify right)
 				)
 			)
-			(property "Footprint" "Package_SO:SOP-8_3.9x4.9mm_P1.27mm"
+			(property "Footprint" "Package_SO:JEITA_SOIC-8_3.9x4.9mm_P1.27mm"
 				(at -3.81 19.05 0)
 				(effects
 					(font
@@ -540,7 +540,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "USB serial converter, 2Mbps, UART, SOP-8"
+			(property "Description" "USB serial converter, 2Mbps, UART, JEITA SOIC-8 (SOP-8)"
 				(at 0 0 0)
 				(effects
 					(font
@@ -558,7 +558,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "SOP*3.9x4.9mm*P1.27mm*"
+			(property "ki_fp_filters" "JEITA?SOIC*3.9x4.9mm*P1.27mm*"
 				(at 0 0 0)
 				(effects
 					(font
